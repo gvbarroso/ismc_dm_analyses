@@ -23,7 +23,7 @@ theme.blank <- theme_bw() + theme(panel.border = element_blank(), panel.grid.maj
                                   panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 setwd("~")
-setwd("Data/theta_paper/rs.sim_results/texp/")
+setwd("Data/iSMC/theta_paper/sim_data/rs.sim_results/texp/")
 
 ###################################################
 #

@@ -1,5 +1,5 @@
 # Created: 03/07/2019
-# Last modified: 17/07/2019
+# Last modified: 11/08/2020
 # Author: Gustavo Barroso
 
 library(ppcor)
@@ -18,7 +18,7 @@ library(plyr)
 library(GenomicRanges)
 
 setwd("~")
-setwd("Data/theta_paper/real_data/droso.chr2L.phased/")
+setwd("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/")
 
 # R_2 table for plotting at the end
 r2.tab <- as.data.frame(matrix(ncol = 5, nrow = 3))
@@ -27,31 +27,42 @@ colnames(r2.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Bin_size(kb)")
 theme.blank <- theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                                   panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-
-
-
-
-
-
-
-#####################
+######################################
 #
-# Suggestions
+# Drosophila-like neutral simulations [TODO]
 #
-#####################
-
-
-# Comeron 2014 PloS Genetics B-value statistic across the Drosophila Genome
-
-
-
-
-
-
-
-
-
 ########################################
+
+# building linear models
+
+nreps <- 10
+
+# 50 kb
+for(in in 1:nreps)
+{
+  p <- paste("bedgraph/rs.pair_", i, ".", sep = "")
+  pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
+  pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
+  tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
+  tmrca.50k$avg <- apply(tmrca.50k[4:ncol(tmrca.50k)], 1, mean)
+  rho.50k <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
+  theta.50k <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+  
+  inf.lands.50k <- as.data.frame(cbind(pi.50k$avg, theta.50k$sample_mean, rho.50k$sample_mean, tmrca.50k$avg))
+  names(inf.lands.50k) <- c("diversity", "theta", "rho", "tmrca")
+  
+  m.diversity <- lm(diversity ~ theta + rho + tmrca, data = inf.lands.50k)
+  
+  # type 2
+  anova.diversity <- Anova(m.diversity.bc)
+  apiss <- anova.diversity$"Sum Sq"
+  anova.diversity$VarExp <- apiss / sum(apiss)
+  
+  anova.diversity
+}
+
+
+######################################
 #
 # 30x5x5 --- 50kb
 #
@@ -106,7 +117,6 @@ pcor.mat[2, 1] <- 0.97
 pcor.test(x = dm.lands.50kb$theta, y = dm.lands.50kb$tmrca, z = dm.lands.50kb$rho, method = "spearman")
 pcor.mat[4, 2] <- 0.48
 
-pcor.test(x = dm.lands.50kb$tmrca, y = dm.lands.50kb$diversity, z = dm.lands.50kb$rho, method = "spearman")
 pcor.test(x = dm.lands.50kb$tmrca, y = dm.lands.50kb$diversity, z = dm.lands.50kb$theta, method = "spearman")
 pcor.test(x = dm.lands.50kb$tmrca, y = dm.lands.50kb$diversity, z = cbind(dm.lands.50kb$theta, dm.lands.50kb$rho), method = "spearman")
 pcor.mat[4, 1] <- 0.72
@@ -135,7 +145,7 @@ diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = 
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
 diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-diversity.map <- diversity.map + annotate("text", x = 4100, y = 0.016, label = "CV = 27%")
+diversity.map <- diversity.map + annotate("text", x = 4100, y = 0.005, label = "CV = 27%")
 
 molten.rho <- melt(dm.lands.50kb[c(3,5)], id.vars = "bin")
 rho.map <- ggplot(data = molten.rho, aes(x = bin * 20, y = value)) 
@@ -162,10 +172,10 @@ tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d
 tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
 tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-tmrca.map <- tmrca.map + annotate("text", x = 4100, y = 1.15, label = "CV = 7%")
+tmrca.map <- tmrca.map + annotate("text", x = 4100, y = 0.7, label = "CV = 7%")
 
-p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-p
+p1 <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1)
+p1
 
 cowplot::save_plot("dm.maps.50kb.pdf", plot = p, device = "pdf", dpi = 500, base_width = 10, base_height = 8)
 
@@ -227,9 +237,6 @@ summary(g.diversity)
 
 
 
-
-
-
 # Linear model without TMRCA  -> rho becomes significant
 m.diversity <- lm(diversity ~ rho + theta, data = dm.lands.50kb)
 plot(m.diversity, which = 2)
@@ -241,106 +248,6 @@ summary(m.diversity)
 
 
 
-
-
-# filtering out windows with low TMRCA (selection?) leads to similar results
-dm.lands.3 <- dm.lands.2[which(dm.lands.50kb$tmrca >= 0.9),]
-
-dm.scatter <- ggplot(data = dm.lands.3, aes(x = dm.lands.3$rho, y = dm.lands.3$tmrca, colour = dm.lands.3$diversity))
-dm.scatter <- dm.scatter + geom_point(shape = 16, size = 4,  alpha = 0.75) + theme.blank
-dm.scatter <- dm.scatter + theme(legend.position = "left", text = element_text(size = 20),
-                                 axis.title.x = element_text(size = 26), axis.title.y = element_text(size = 26))
-
-dm.scatter <- ggplot(data = dm.lands.3, aes(x = dm.lands.3$rho, y = dm.lands.3$tmrca, colour = dm.lands.3$theta))
-dm.scatter <- dm.scatter + geom_point(shape = 16, size = 4,  alpha = 0.75) + theme.blank
-dm.scatter <- dm.scatter + theme(legend.position = "left", text = element_text(size = 20),
-                                 axis.title.x = element_text(size = 26), axis.title.y = element_text(size = 26))
-
-cor.mat <- cor(dm.lands.3[,1:4], method = "spearman")
-corrplot(cor.mat, method = "color", addCoef.col = "black", is.corr = T, cl.lim = c(0, 1),
-         tl.col = "black", number.cex = 1.5, diag = F, type = "lower")
-
-pcor.mat <- cor.mat
-
-pcor.test(x = dm.lands.3$rho, y = dm.lands.3$tmrca, z = dm.lands.3$theta, method = "spearman")
-pcor.mat [4, 3] <- 0.30
-pcor.test(x = dm.lands.3$rho, y = dm.lands.3$diversity, z = dm.lands.3$tmrca, method = "spearman")
-pcor.test(x = dm.lands.3$rho, y = dm.lands.3$diversity, z = dm.lands.3$theta, method = "spearman")
-pcor.test(x = dm.lands.3$rho, y = dm.lands.3$diversity, z = cbind(dm.lands.3$tmrca, dm.lands.3$theta), method = "spearman")
-pcor.mat[3, 1] <- 0
-pcor.test(x = dm.lands.3$rho, y = dm.lands.3$theta, z = dm.lands.3$tmrca, method = "spearman")
-pcor.mat[3, 2] <- 0
-
-pcor.test(x = dm.lands.3$theta, y = dm.lands.3$diversity, z = dm.lands.3$tmrca, method = "spearman")
-pcor.test(x = dm.lands.3$theta, y = dm.lands.3$diversity, z = dm.lands.3$rho, method = "spearman")
-pcor.test(x = dm.lands.3$theta, y = dm.lands.3$diversity, z = cbind(dm.lands.3$rho, dm.lands.3$tmrca), method = "spearman")
-pcor.mat[2, 1] <- 0.96
-
-pcor.test(x = dm.lands.3$theta, y = dm.lands.3$tmrca, z = dm.lands.3$rho, method = "spearman")
-pcor.mat[4, 2] <- 0.44
-
-pcor.test(x = dm.lands.3$tmrca, y = dm.lands.3$diversity, z = dm.lands.3$rho, method = "spearman")
-pcor.test(x = dm.lands.3$tmrca, y = dm.lands.3$diversity, z = dm.lands.3$theta, method = "spearman")
-pcor.test(x = dm.lands.3$tmrca, y = dm.lands.3$diversity, z = cbind(dm.lands.3$theta, dm.lands.3$rho), method = "spearman")
-pcor.mat[4, 1] <- 0.70
-
-pdf("dm.pcor.50kb.tmrca-filtered.pdf")
-corrplot(pcor.mat, method = "color", addCoef.col = "black", is.corr = T, cl.lim = c(0, 1),
-         tl.col = "black", number.cex = 1.5, diag = F, type = "lower")
-dev.off()
-
-
-m.diversity <- lm(diversity ~ theta + rho + tmrca, data = dm.lands.3)
-plot(m.diversity, which = 2)
-
-bc.diversity <- boxcox(m.diversity, lambda = seq(0.2, 1.2, len = 500))
-l <- bc.diversity$x[which.max(bc.diversity$y)]
-m.diversity.bc <- update(m.diversity, (diversity^l -1)/l~.)
-plot(m.diversity.bc, which = 2)
-
-shapiro.test(resid(m.diversity.bc)) #*
-hist(resid(m.diversity.bc), nclass = 30) # not too bad?
-hmctest(m.diversity.bc, nsim = 3000) # NS
-dwtest(m.diversity.bc) # ***
-Box.test(resid(m.diversity.bc)[order(predict(m.diversity.bc))], type = "Ljung-Box") # NS
-
-summary(m.diversity.bc)
-# (Intercept) -1.0538455  0.0003033 -3474.374   <2e-16 ***
-# theta        1.1897576  0.0062695   189.770   <2e-16 ***
-# rho          0.0026247  0.0017517     1.498    0.135    
-# tmrca        0.0171271  0.0003460    49.506   <2e-16 ***
-
-vif(m.diversity.bc)
-# theta      rho    tmrca 
-# 1.114186 1.167579 1.287255 
-
-# type 2
-anova.diversity <- Anova(m.diversity.bc)
-apiss <- anova.diversity$"Sum Sq"
-anova.diversity$VarExp <- apiss / sum(apiss)
-
-anova.diversity
-# theta     0.00189797   1 36012.8166 0.00000 0.92771
-# rho       0.00000012   1     2.2452 0.13493 0.00006
-# tmrca     0.00012916   1  2450.8042 0.00000 0.06313
-# Residuals 0.00001860 353                    0.00909
-
-# Because of (small) auto-correlation we compute p-values for the variables using a GLS
-g.diversity <- gls(diversity ~ theta + rho + tmrca, data = dm.lands.3, corr = corAR1(0, ~bin))
-
-summary(g.diversity)
-# Parameter estimate(s):
-#  Phi 
-# 0.1735055 
-
-# Coefficients:
-#  Value   Std.Error   t-value p-value
-# (Intercept) -0.0141507 0.000252565 -56.02791  0.0000
-# theta        0.9960450 0.005929192 167.99000  0.0000
-# rho          0.0024128 0.001567335   1.53942  0.1246
-# tmrca        0.0148462 0.000288739  51.41739  0.0000
-
-
 ########################################
 #
 # 30x5x5 --- 200kb
@@ -348,21 +255,21 @@ summary(g.diversity)
 ########################################
 
 # recombination landscapes
-rho.dm.200kb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.rho.200kb.bedgraph", header = T)
+rho.dm.200kb <- read.table("dm_30x5x5.rho.200kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.200kb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb <- read.table("dm_30x5x5.diversity.200kb.bedgraph", header = T)
 diversity.dm.200kb$avg <- apply(diversity.dm.200kb[4:ncol(diversity.dm.200kb)], 1, mean)
 
 # mutation landscapes
-theta.dm.200kb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.theta.200kb.bedgraph", header = T)
+theta.dm.200kb <- read.table("dm_30x5x5.theta.200kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.200kb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb <- read.table("dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
 tmrca.dm.200kb$sample_mean <- apply(tmrca.dm.200kb[4:ncol(tmrca.dm.200kb)], 1, mean)
 
 # missing data
-missing.prop.200kb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+missing.prop.200kb <- read.table("dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
 intersect.200kb <- apply(missing.prop.200kb[4:ncol(missing.prop.200kb)], 1, function(x) any(x > 0.25)) 
 
 dm.lands.200kb <- as.data.frame(cbind(diversity.dm.200kb$avg, theta.dm.200kb$sample_mean, rho.dm.200kb$sample_mean, tmrca.dm.200kb$sample_mean))
@@ -398,7 +305,7 @@ pcor.test(x = dm.lands.200kb$tmrca, y = dm.lands.200kb$diversity, z = dm.lands.2
 pcor.test(x = dm.lands.200kb$tmrca, y = dm.lands.200kb$diversity, z = cbind(dm.lands.200kb$theta, dm.lands.200kb$rho), method = "spearman")
 pcor.mat[4, 1] <- 0.65
 
-pdf("Data/iSMC/theta_paper/submission/Figures/dm.pcor.200kb.pdf")
+pdf("dm.pcor.200kb.pdf")
 corrplot(pcor.mat, method = "color", addCoef.col = "black", is.corr = T, cl.lim = c(0, 1),
          tl.col = "black", number.cex = 1.5, diag = F, type = "lower")
 dev.off()
@@ -420,8 +327,8 @@ diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F
 diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D")
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
-diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-diversity.map <- diversity.map + annotate("text", x = 11000, y = 0.014, label = "CV = 24%")
+diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+diversity.map <- diversity.map + annotate("text", x = 11000, y = 0.005, label = "CV = 24%")
 
 molten.rho <- melt(dm.lands.200kb[c(3,5)], id.vars = "bin")
 rho.map <- ggplot(data = molten.rho, aes(x = bin * 200, y = value)) 
@@ -429,8 +336,8 @@ rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00")
 rho.map <- rho.map + geom_smooth(method = "loess", se = F, colour = "#7CAE00")
 rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
-rho.map <- rho.map + theme(axis.title.x = element_text(size = 50), axis.title.y = element_text(size = 20))
-rho.map <- rho.map + annotate("text", x = 11000, y = 0.05, label = "CV = 16%")
+rho.map <- rho.map + theme(axis.title.x = element_text(size = 50), axis.title.y = element_text(size = 20)) + theme.blank
+rho.map <- rho.map + annotate("text", x = 11000, y = 0.0475, label = "CV = 16%")
 
 molten.theta <- melt(dm.lands.200kb[c(2,5)], id.vars = "bin")
 theta.map <- ggplot(data = molten.theta, aes(x = bin * 200, y = value)) 
@@ -438,8 +345,8 @@ theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4")
 theta.map <- theta.map + geom_smooth(method = "loess", se = F, colour = "#00BFC4")
 theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta)) 
-theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-theta.map <- theta.map + annotate("text", x = 11000, y = 0.013, label = "CV = 21%")
+theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+theta.map <- theta.map + annotate("text", x = 11000, y = 0.006, label = "CV = 21%")
 
 molten.tmrca <- melt(dm.lands.200kb[c(4,5)], id.vars = "bin")
 tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 200, y = value)) 
@@ -447,15 +354,14 @@ tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d")
 tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d")
 tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
-tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-tmrca.map <- tmrca.map + annotate("text", x = 11000, y = 1.07, label = "CV = 5%")
+tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+tmrca.map <- tmrca.map + annotate("text", x = 11000, y = 0.75, label = "CV = 5%")
 
-p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-p
+p2 <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1)
+p2
 
 
-cowplot::ggsave("dm.maps.200kb.pdf", plot = p, device = "pdf", dpi = 500, width = 10, height = 8,
-                path = "Data/iSMC/theta_paper/submission/Figures/")
+cowplot::save_plot("dm.maps.200kb.pdf", plot = p, device = "pdf", dpi = 500, base_width = 10, base_height = 8)
 
 
 
@@ -499,6 +405,23 @@ anova.diversity
 
 r2.tab[2,] <- c(95.7 + 3.5, 95.7, 0, 3.5, 200)
 
+# Because of auto-correlation we compute p-values for the variables using a GLS
+g.diversity <- gls(diversity ~ theta + rho + tmrca, data = dm.lands.200kb, corr = corAR1(0, ~bin))
+
+summary(g.diversity)
+# Parameter estimate(s):
+#  Phi 
+# 0.2781892
+
+# Coefficients:
+#  Value   Std.Error   t-value p-value
+# (Intercept) -0.0080258 0.000461083 -17.40640  0.0000
+# theta        0.9956466 0.013381379  74.40538  0.0000
+# rho          0.0125460 0.004487122   2.79601  0.0062
+# tmrca        0.0081182 0.000621129  13.07013  0.0000
+
+
+
 
 ########################################
 #
@@ -507,21 +430,21 @@ r2.tab[2,] <- c(95.7 + 3.5, 95.7, 0, 3.5, 200)
 ########################################
 
 # recombination landscapes
-rho.dm.1Mb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+rho.dm.1Mb <- read.table("dm_30x5x5.rho.1Mb.bedgraph", header = T)
 
 # diversity
-diversity.dm.1Mb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb <- read.table("dm_30x5x5.diversity.1Mb.bedgraph", header = T)
 diversity.dm.1Mb$avg <- apply(diversity.dm.1Mb[4:ncol(diversity.dm.1Mb)], 1, mean)
 
 # mutation landscapes
-theta.dm.1Mb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+theta.dm.1Mb <- read.table("dm_30x5x5.theta.1Mb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.1Mb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb <- read.table("dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
 tmrca.dm.1Mb$sample_mean <- apply(tmrca.dm.1Mb[4:ncol(tmrca.dm.1Mb)], 1, mean)
 
 # missing data
-missing.prop.1Mb <- read.table("Data/iSMC/theta_paper/real_data/droso.chr2L.phased/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+missing.prop.1Mb <- read.table("dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
 intersect.1Mb <- apply(missing.prop.1Mb[4:ncol(missing.prop.1Mb)], 1, function(x) any(x > 0.25)) 
 
 dm.lands.1Mb <- as.data.frame(cbind(diversity.dm.1Mb$avg, theta.dm.1Mb$sample_mean, rho.dm.1Mb$sample_mean, tmrca.dm.1Mb$sample_mean))
@@ -557,7 +480,7 @@ pcor.test(x = dm.lands.1Mb$tmrca, y = dm.lands.1Mb$diversity, z = dm.lands.1Mb$t
 pcor.test(x = dm.lands.1Mb$tmrca, y = dm.lands.1Mb$diversity, z = cbind(dm.lands.1Mb$rho, dm.lands.1Mb$theta), method = "spearman")
 pcor.mat[4, 1] <- 0
 
-pdf("Data/iSMC/theta_paper/submission/Figures/dm.pcor.1Mb.pdf")
+pdf("dm.pcor.1Mb.pdf")
 corrplot(pcor.mat, method = "color", addCoef.col = "black", is.corr = T, cl.lim = c(0, 1),
          tl.col = "black", number.cex = 1.5, diag = F, type = "lower")
 dev.off()
@@ -579,8 +502,8 @@ diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F
 diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D")
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
-diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-diversity.map <- diversity.map + annotate("text", x = 11000, y = 0.013, label = "CV = 16%")
+diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+diversity.map <- diversity.map + annotate("text", x = 11000, y = 0.008, label = "CV = 16%")
 
 molten.rho <- melt(dm.lands.1Mb[c(3,5)], id.vars = "bin")
 rho.map <- ggplot(data = molten.rho, aes(x = bin * 1000, y = value)) 
@@ -588,8 +511,8 @@ rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00")
 rho.map <- rho.map + geom_smooth(method = "loess", se = F, colour = "#7CAE00")
 rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
-rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-rho.map <- rho.map + annotate("text", x = 11000, y = 0.045, label = "CV = 12%")
+rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+rho.map <- rho.map + annotate("text", x = 11000, y = 0.0425, label = "CV = 12%")
 
 molten.theta <- melt(dm.lands.1Mb[c(2,5)], id.vars = "bin")
 theta.map <- ggplot(data = molten.theta, aes(x = bin * 1000, y = value)) 
@@ -597,8 +520,8 @@ theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4")
 theta.map <- theta.map + geom_smooth(method = "loess", se = F, colour = "#00BFC4")
 theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta)) 
-theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-theta.map <- theta.map + annotate("text", x = 11000, y = 0.016, label = "CV = 15%")
+theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+theta.map <- theta.map + annotate("text", x = 11000, y = 0.008, label = "CV = 15%")
 
 molten.tmrca <- melt(dm.lands.1Mb[c(4,5)], id.vars = "bin")
 tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 1000, y = value)) 
@@ -606,14 +529,13 @@ tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d")
 tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d")
 tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
-tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
-tmrca.map <- tmrca.map + annotate("text", x = 11000, y = 1.0, label = "CV = 3%")
+tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
+tmrca.map <- tmrca.map + annotate("text", x = 11000, y = 0.9, label = "CV = 3%")
 
-p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-p
+p3 <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1)
+p3
 
-cowplot::ggsave("dm.maps.1Mb.pdf", plot = p, device = "pdf", dpi = 500, width = 10, height = 8,
-                path = "Data/iSMC/theta_paper/submission/Figures/")
+cowplot::save_plot("dm.maps.1Mb.pdf", plot = p, device = "pdf", dpi = 500, base_width = 10, base_height = 8)
 
 
 
@@ -652,6 +574,31 @@ anova.diversity
 
 r2.tab[3,] <- c(96.3 + 3.1, 96.3, 0, 3.1, 1000)
 
+# Because of auto-correlation we compute p-values for the variables using a GLS
+g.diversity <- gls(diversity ~ theta + rho + tmrca, data = dm.lands.1Mb, corr = corAR1(0, ~bin))
+
+summary(g.diversity)
+# Parameter estimate(s):
+#  Phi 
+# 0.2781892
+
+# Coefficients:
+#  Value   Std.Error  t-value p-value
+# (Intercept) -0.0083513 0.001171002 -7.13176  0.0000
+# theta        0.9887601 0.025653413 38.54302  0.0000
+# rho          0.0170698 0.006551188  2.60560  0.0191
+# tmrca        0.0083624 0.001481556  5.64431  0.0000
+
+
+########################################
+#
+# Maps Plot [WEIRD ISSUE WITH FONT SIZE FOR P1]
+#
+########################################
+
+
+pcomb <- plot_grid(p1, p2, p3, nrow = 1, labels = "AUTO", label_size = 18, scale = 0.9)
+cowplot::save_plot("dm.maps.pdf", pcomb, base_height = 6, base_width = 15)
 
 ########################################
 #
@@ -671,7 +618,7 @@ r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks(), limits = c(0, 
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Var. Explained")
 r2.plot <- r2.plot + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
 
-ggsave("Data/iSMC/theta_paper/submission/Figures/lm.r2.dm.pdf", plot = r2.plot, dpi = 500, width = 7, height = 7)
+ggsave("lm.r2.dm.pdf", plot = r2.plot, dpi = 500, width = 7, height = 7)
 
 
 ########################################
@@ -680,8 +627,8 @@ ggsave("Data/iSMC/theta_paper/submission/Figures/lm.r2.dm.pdf", plot = r2.plot, 
 #
 ########################################
 
-# divergence data from Z. tritici and Z. ardabiliae
-div <- read.table("Data/iSMC/theta_paper/real_data/droso.misc/Droso2L_divergence.statistics5kb.csv", header = T)
+# divergence data from D. melanogaster and D. yakuba
+div <- read.table("~/Data/iSMC/theta_paper/real_data/droso.misc/Droso2L_divergence.statistics5kb.csv", header = T)
 div <- div[which(div$Chr == "2L"), c(1:3, 6)] 
 
 # to get the ranges
@@ -756,7 +703,7 @@ theta.div.scatter <- theta.div.scatter + labs(title = NULL, # "Mutation rate vs 
                                               y = "Divergence")
 theta.div.scatter <- theta.div.scatter + annotate("text", x = 0.008, y = 0.095, label = "Spearman's rank partial correlation = 0.17, p = 0.011")
 
-ggsave("Data/iSMC/theta_paper/submission/Figures/divergence.dm.50kb.pdf", plot = theta.div.scatter, dpi = 500, width = 7, height = 7)
+ggsave("divergence.dm.50kb.pdf", plot = theta.div.scatter, dpi = 500, width = 7, height = 7)
 
 
 ########################################
@@ -765,8 +712,8 @@ ggsave("Data/iSMC/theta_paper/submission/Figures/divergence.dm.50kb.pdf", plot =
 #
 ########################################
 
-# divergence data from Z. tritici and Z. ardabiliae
-div <- read.table("Data/iSMC/theta_paper/real_data/droso.misc/Droso2L_divergence.statistics5kb.csv", header = T)
+# divergence data from D. melanogaster and D. yakuba
+div <- read.table("~/Data/iSMC/theta_paper/real_data/droso.misc/Droso2L_divergence.statistics5kb.csv", header = T)
 div <- div[which(div$Chr == "2L"), c(1:3, 6)] 
 
 # to get the ranges
@@ -800,7 +747,7 @@ names(lands.div.dm)[ncol(lands.div.dm)] <- "divergence"
 
 cor.test(lands.div.dm$theta, lands.div.dm$divergence, method = "spearman")
 # S = 30874, p-value = 0.0407
-#sample estimates:
+# sample estimates:
 #  rho 
 # 0.2589766 
 
@@ -840,7 +787,7 @@ theta.div.scatter <- theta.div.scatter + labs(title = NULL, #"Mutation rate vs D
                                               y = "Divergence")
 theta.div.scatter <- theta.div.scatter + annotate("text", x = 0.008, y = 0.075, label = "Spearman's rank partial correlation = 0.25, p = 0.05")
 
-ggsave("Data/iSMC/theta_paper/submission/Figures/divergence.dm.200kb.pdf", plot = theta.div.scatter, dpi = 2000, width = 7, height = 7)
+ggsave("divergence.dm.200kb.pdf", plot = theta.div.scatter, dpi = 2000, width = 7, height = 7)
 
 
 
@@ -907,7 +854,62 @@ theta.div.scatter <- theta.div.scatter + labs(title = NULL, #"Mutation rate vs D
                                               y = "Divergence")
 theta.div.scatter <- theta.div.scatter + annotate("text", x = 0.009, y = 0.069, label = "Spearman's rank partial correlation = 0.57, p = 0.05")
 
-ggsave("Data/iSMC/theta_paper/submission/Figures/divergence.dm.1Mb.pdf", plot = theta.div.scatter, dpi = 2000, width = 7, height = 7)
+ggsave("divergence.dm.1Mb.pdf", plot = theta.div.scatter, dpi = 2000, width = 7, height = 7)
+
+########################################
+#
+# TMRCA in coding vs non-coding regions
+#
+########################################
+
+# TODO bin TMRCA landscapes in 1KB windows for this analysis!
+  
+dm.genes.coord <- read.table("~/Data/iSMC/theta_paper/real_data/droso.misc/Dmel_trans_nooverlaps-final.txt", header = F)
+dm.genes.coord <- dm.genes.coord[which(dm.genes.coord$V1 == "2L"), c(1, 2, 3, 5, 6)]
+names(dm.genes.coord) <- c("chrom", "chromStart", "chromEnd", "gene", "length")
+
+dm.maps.50k <- as.data.frame(cbind(diversity.dm.50kb$chrom, diversity.dm.50kb$chromStart, diversity.dm.50kb$chromEnd,
+                                   diversity.dm.50kb$avg, theta.dm.50kb$sample_mean, rho.dm.50kb$sample_mean, tmrca.dm.50kb$sample_mean))
+names(dm.maps.50k) <- c("chrom", "chromStart", "chromEnd", "diversity", "theta", "rho", "tmrca")
+dm.maps.50k$chrom <- "2L"
+
+# filters based on missing data ( > 50% per window)
+dm.maps.50k <- dm.maps.50k[which(intersect.50kb == F),]
+
+# grouping per window of constant rates
+dm.maps.gr <- makeGRangesFromDataFrame(dm.maps.50k)
+values(dm.maps.gr) <- dm.maps.50k[,(4:7)]
+genes.gr <- makeGRangesFromDataFrame(dm.genes.coord)
+values(genes.gr) <- dm.genes.coord[,(5)]
+
+hits <- findOverlaps(dm.maps.gr, genes.gr) 
+ranges(genes.gr)[subjectHits(hits)] <- ranges(dm.maps.gr)[queryHits(hits)]
+
+genes.gr.df <- as.data.frame(genes.gr)
+dm.maps.gr.df <- as.data.frame(dm.maps.gr)
+
+# gets mean of a statistic for all genes in the window
+tmp <- ddply(.data = genes.gr.df[-c(1,5)], .variables = "X", .fun = colMeans, .progress = "text")
+genes.gr.df.2 <- tmp %>% arrange(start)
+
+# due to previously filtering out windows based on missing data,
+# some genes do not match to a window
+genes.gr.df.2 <- genes.gr.df.2[which(((genes.gr.df.2$width - 1) %% 50000) == 0),]
+
+dm.maps.gr.df.overlap <- dm.maps.gr.df[which(dm.maps.gr.df$start %in% genes.gr.df.2$start),]
+
+`%notin%` <- Negate(`%in%`)
+dm.maps.gr.df.NOT.overlap <- dm.maps.gr.df[which(dm.maps.gr.df$start %notin% genes.gr.df.2$start),]
+
+wilcox.test(dm.maps.gr.df.overlap$tmrca, dm.maps.gr.df.NOT.overlap$tmrca)
+
+dm.maps.genes <- merge(dm.maps.gr.df.overlap, genes.gr.df.2, by = "start")
+
+pcor.test(dm.maps.genes$tmrca, dm.maps.genes$X, dm.maps.genes$theta, method = "spearman")
+plot(x=dm.maps.genes$tmrca, y=dm.maps.genes$X)
+boxplot(dm.maps.gr.df.overlap$tmrca, dm.maps.gr.df.NOT.overlap$tmrca)
+
+
 
 ########################################
 #
@@ -916,7 +918,7 @@ ggsave("Data/iSMC/theta_paper/submission/Figures/divergence.dm.1Mb.pdf", plot = 
 ########################################
 
 # loads 
-dm.raw <- read.table("Data/iSMC/theta_paper/real_data/droso.misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
+dm.raw <- read.table("~/Data/iSMC/theta_paper/real_data/droso.misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
 dm.tbl <- na.omit(dm.raw)
 
 # gets ratios (following Filipa's instructions)
@@ -949,7 +951,8 @@ dm.tbl.popstats$dNdS <- as.numeric(dm.tbl.popstats$dNdS)
 dm.tbl.popstats.clean <- dm.tbl.popstats[which(dm.tbl.popstats$PiNPiS > 0),]
 dm.tbl.popstats.clean <- dm.tbl.popstats.clean[which(dm.tbl.popstats.clean$dNdS > 0),]
 
-dm.genes.coord <- read.table("Data/iSMC/theta_paper/real_data/droso.misc/Dmel_trans_nooverlaps-final.txt", header = T)
+dm.genes.coord <- read.table("~/Data/iSMC/theta_paper/real_data/droso.misc/Dmel_trans_nooverlaps-final.txt", header = F)
+names(dm.genes.coord) <- c("chr", "start", "end", "x", "geneID", "length")
 dm.genes.coord <- dm.genes.coord[which(dm.genes.coord$chr == "2L"), c(1, 2, 3, 5, 6)]
 
 dm.evol <- merge(dm.genes.coord, dm.tbl.popstats.clean, by = "geneID")
@@ -963,60 +966,6 @@ names(dm.50kb) <- c("chr", "start", "end", names(dm.lands.50kb))
 dm.50kb$chr <- "2L"
 
 
-
-
-
-
-
-############### 
-# grouping per window of constant theta
-dm.lands.gr <- makeGRangesFromDataFrame(dm.50kb)
-values(dm.lands.gr) <- dm.50kb[,(4:7)]
-evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
-values(evolrate.gr) <- dm.evol[,(5:11)]
-
-hits <- findOverlaps(dm.lands.gr, evolrate.gr) 
-ranges(evolrate.gr)[subjectHits(hits)] <- ranges(dm.lands.gr)[queryHits(hits)]
-
-evolrate.gr.df <- as.data.frame(evolrate.gr)
-dm.lands.gr.df <- as.data.frame(dm.lands.gr)
-
-# gets mean of a statistic for all genes in the window
-tmp <- ddply(.data = evolrate.gr.df[-c(1,5)], .variables = "start", .fun = colMeans, .progress = "text")
-evolrate.gr.df.2 <- evolrate.gr.df[!duplicated(evolrate.gr.df$start),]
-evolrate.gr.df.2$score <- tmp$PiNPiS
-
-# due to previously filtering out windows based on missing data,
-# some genes do not match to a window
-evolrate.gr.df.2 <- evolrate.gr.df.2[which(((evolrate.gr.df.2$width - 1) %% 50000) == 0),]
-
-dm.lands.gr.df.2 <- dm.lands.gr.df[which(dm.lands.gr.df$start %in% evolrate.gr.df.2$start),]
-
-dm.lands.evolrate <- merge(dm.lands.gr.df.2, evolrate.gr.df.2, by = "start")
-
-# for filtering when score is PiN/PiS or dN/dS
-dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$score > 0),]
-dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$score < 1),]
-
-cor.test(dm.lands.evolrate$score, dm.lands.evolrate$theta, method = "spearman")
-pcor.test(dm.lands.evolrate$score, dm.lands.evolrate$theta, dm.lands.evolrate$rho, method = "spearman") 
-
-# plot
-evolrate.scatter <- ggplot(data = dm.lands.evolrate, aes(x = dm.lands.evolrate$theta, y = dm.lands.evolrate$score, color =  dm.lands.evolrate$rho))
-evolrate.scatter <- evolrate.scatter + geom_point(shape = 16, size = 4,  alpha = 0.8)
-evolrate.scatter <- evolrate.scatter + theme(plot.title = element_text(size = 20),
-                                             axis.title.x = element_text(size = 20),
-                                             axis.title.y = element_text(size = 20))
-evolrate.scatter <- evolrate.scatter + labs(title = NULL, # "Mutation rate vs Divergence D. melanogaster : D. yakuba",
-                                              color = expression(rho),
-                                              x = "Scaled Mutation Rate in D. melanogaster",
-                                              y = "Evol. Rate")
-evolrate.scatter
-
-
-
-
-############### 
 # grouping per gene coordinate
 dm.lands.gr <- makeGRangesFromDataFrame(dm.50kb)
 values(dm.lands.gr) <- dm.50kb[,(4:7)]
@@ -1035,200 +984,77 @@ names(dm.lands.evolrate)[2] <- "end.window"
 names(dm.lands.evolrate)[7] <- "start.gene"
 names(dm.lands.evolrate)[8] <- "end.gene"
 
+# linear model in coding regions
+m.diversity.cds <- lm(diversity ~ theta + rho + tmrca, data = dm.lands.evolrate)
+plot(m.diversity.cds, which = 2) 
+shapiro.test(resid(m.diversity.cds)) # ***
+hmctest(m.diversity.cds, nsim = 3000) # NS
+dwtest(m.diversity.cds) # ***
 
-# basic checking
-cor.test(dm.lands.evolrate$diversity, dm.lands.evolrate$PiS, method = "spearman")
-cor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$PiS, method = "spearman")
-cor.test(dm.lands.evolrate$diversity, dm.lands.evolrate$PiNPiS, method = "spearman")
-pcor.test(dm.lands.evolrate$diversity, dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, method = "spearman")
+bc.diversity.cds <- boxcox(m.diversity.cds, lambda = seq(0.2, 1.2, len = 500))
+l <- bc.diversity.cds$x[which.max(bc.diversity.cds$y)]
+m.diversity.cds.bc <- update(m.diversity.cds, (diversity^l -1)/l~.)
+plot(m.diversity.cds.bc, which = 2)
+shapiro.test(resid(m.diversity.cds.bc)) # *** and worse than before => discard BC transform
 
+dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
+# Because of auto-correlation we compute p-values for the variables using a GLS
+g.diversity <- gls(diversity ~ theta + rho + tmrca, data = dm.lands.evolrate, corr = corAR1(0, ~bin))
+
+summary(m.diversity.cds)
+# Coefficients:
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept) -0.0100127  0.0002685 -37.290   <2e-16 ***
+# theta        0.9371188  0.0118775  78.899   <2e-16 ***
+# rho          0.0061516  0.0028670   2.146   0.0326 *  
+# tmrca        0.0111534  0.0003803  29.330   <2e-16 ***
+
+summary(g.diversity)
+#  Phi 
+# 0.7088267 
+
+# Coefficients:
+#   Value   Std.Error   t-value p-value
+# (Intercept) -0.0111820 0.000267317 -41.83045  0.0000
+# theta        0.9457321 0.016595598  56.98693  0.0000
+# rho          0.0057487 0.003302340   1.74080  0.0827
+# tmrca        0.0123129 0.000370546  33.22915  0.0000
+
+# type 2 anova
+anova.diversity.cds <- Anova(m.diversity.cds)
+apiss <- anova.diversity.cds$"Sum Sq"
+anova.diversity.cds$VarExp <- apiss / sum(apiss)
+
+anova.diversity.cds
+# Anova Table (Type II tests)
+
+# Response: diversity
+# Sum Sq  Df   F value   Pr(>F)  VarExp
+# theta     0.00077936   1 6224.9834 0.000000 0.83896
+# rho       0.00000058   1    4.6039 0.032629 0.00062
+# tmrca     0.00010770   1  860.2648 0.000000 0.11594
+# Residuals 0.00004132 330                    0.04448
 
 #
-cor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, method = "spearman")
 cor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$rho, method = "spearman")
 pcor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, dm.lands.evolrate$rho, method = "spearman") 
+pcor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman") 
+
 # decomposing PiN/PiS
-cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, method = "spearman")
-pcor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, dm.lands.evolrate$rho, method = "spearman") 
+pcor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman") 
+pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman") 
 
-# dN/dS is affected by both negative and positive selection
-cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$dNdS, dm.lands.evolrate$theta, method = "spearman")
+cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
+pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+pcor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+pcor.test(dm.lands.evolrate$dNdS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
 
-
-# plot
-evolrate.scatter <- ggplot(data = dm.lands.evolrate, aes(x = dm.lands.evolrate$theta, y = dm.lands.evolrate$dNdS, color =  dm.lands.evolrate$PiNPiS))
-evolrate.scatter <- evolrate.scatter + geom_point(shape = 16, size = 4,  alpha = 0.8)
-evolrate.scatter <- evolrate.scatter + theme(plot.title = element_text(size = 20),
-                                             axis.title.x = element_text(size = 20),
-                                             axis.title.y = element_text(size = 20))
-evolrate.scatter <- evolrate.scatter + labs(title = NULL, # "Mutation rate vs Divergence D. melanogaster : D. yakuba",
-                                            color = expression(pi),
-                                            x = "Scaled Mutation Rate in D. melanogaster",
-                                            y = "Evol. Rate")
-evolrate.scatter
-
-
-
-########################################
+#####################
 #
-# Mutation x Evolutionary (Protein) Rates --- 200 kb
+# B-value statistic across the Drosophila Genome
 #
-########################################
+#####################
 
-# loads 
-dm.raw <- read.table("Data/iSMC/theta_paper/real_data/droso.misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
-dm.tbl <- na.omit(dm.raw)
+# TODO
 
-# gets ratios (following Filipa's instructions)
-dm.tbl$PiS <- dm.tbl$PiS / dm.tbl$MeanNumberSynPos
-dm.tbl$PiN <- dm.tbl$PiN / (3 - dm.tbl$MeanNumberSynPos)
-dm.tbl$dS <- as.numeric(dm.tbl$dS) / dm.tbl$MeanNumberSynPosDiv
-dm.tbl$dN <- dm.tbl$dN / (3 - dm.tbl$MeanNumberSynPosDiv)
-# cleans
-dm.tbl.popgen <- as.data.frame(cbind(dm.tbl$PiN, dm.tbl$PiS, dm.tbl$dN, dm.tbl$dS, dm.tbl$GeneID))
-dm.tbl.popgen <- na.omit(dm.tbl.popgen)
-names(dm.tbl.popgen) <- c("PiN", "PiS", "dN", "dS", "geneID")
-
-# for each gene, sums ratios of each codon
-dm.tbl.genes <- ddply(.data = dm.tbl.popgen, .variables = "geneID", .fun = colSums, na.rm = T, .progress = "text")
-# substitutes gene id and computes ratios
-dm.tbl.genes$geneID <- unique(dm.tbl$GeneID)
-dm.tbl.genes$dNdS <- dm.tbl.genes$dN / dm.tbl.genes$dS
-dm.tbl.genes$PiNPiS <- dm.tbl.genes$PiN / dm.tbl.genes$PiS
-dm.tbl.popstats <- cbind.data.frame(as.character(dm.tbl.genes$geneID), dm.tbl.genes$PiN, dm.tbl.genes$PiS, dm.tbl.genes$PiNPiS,
-                                    dm.tbl.genes$dN, dm.tbl.genes$dS, dm.tbl.genes$dNdS)
-names(dm.tbl.popstats) <- c("geneID", "PiN", "PiS", "PiNPiS", "dN", "dS", "dNdS")
-dm.tbl.popstats$PiS <- as.numeric(dm.tbl.popstats$PiS)
-dm.tbl.popstats$dS <- as.numeric(dm.tbl.popstats$dS)
-dm.tbl.popstats$PiN <- as.numeric(dm.tbl.popstats$PiN)
-dm.tbl.popstats$dN <- as.numeric(dm.tbl.popstats$dN)
-dm.tbl.popstats$PiNPiS <- as.numeric(dm.tbl.popstats$PiNPiS)
-dm.tbl.popstats$dNdS <- as.numeric(dm.tbl.popstats$dNdS)
-
-dm.tbl.popstats.clean <- dm.tbl.popstats[which(dm.tbl.popstats$PiNPiS > 0),]
-dm.tbl.popstats.clean <- dm.tbl.popstats.clean[which(dm.tbl.popstats.clean$dNdS > 0),]
-
-dm.genes.coord <- read.table("Data/iSMC/theta_paper/real_data/droso.misc/Dmel_trans_nooverlaps-final.txt", header = T)
-dm.genes.coord <- dm.genes.coord[which(dm.genes.coord$chr == "2L"), c(1, 2, 3, 5, 6)]
-
-dm.evol <- merge(dm.genes.coord, dm.tbl.popstats.clean, by = "geneID")
-dm.evol <- dm.evol[order(dm.evol$start),]
-
-
-# to get the ranges
-diversity.dm <- diversity.dm.200kb[which(intersect.200kb == F),]
-dm.200kb <- as.data.frame(cbind(diversity.dm[,(1:3)], dm.lands.200kb)) 
-names(dm.200kb) <- c("chr", "start", "end", names(dm.lands.200kb))
-dm.200kb$chr <- "2L"
-
-
-
-
-
-
-
-############### 
-# grouping per window of constant theta
-dm.lands.gr <- makeGRangesFromDataFrame(dm.200kb)
-values(dm.lands.gr) <- dm.200kb[,(4:7)]
-evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
-values(evolrate.gr) <- dm.evol[,(5:11)]
-
-hits <- findOverlaps(dm.lands.gr, evolrate.gr) 
-ranges(evolrate.gr)[subjectHits(hits)] <- ranges(dm.lands.gr)[queryHits(hits)]
-
-evolrate.gr.df <- as.data.frame(evolrate.gr)
-dm.lands.gr.df <- as.data.frame(dm.lands.gr)
-
-# gets mean of a statistic for all genes in the window
-tmp <- ddply(.data = evolrate.gr.df[-c(1,5)], .variables = "start", .fun = colMeans, .progress = "text")
-evolrate.gr.df.2 <- evolrate.gr.df[!duplicated(evolrate.gr.df$start),]
-evolrate.gr.df.2$score <- tmp$PiN
-
-# due to previously filtering out windows based on missing data,
-# some genes do not match to a window
-evolrate.gr.df.2 <- evolrate.gr.df.2[which(((evolrate.gr.df.2$width - 1) %% 200000) == 0),]
-
-dm.lands.gr.df.2 <- dm.lands.gr.df[which(dm.lands.gr.df$start %in% evolrate.gr.df.2$start),]
-
-dm.lands.evolrate <- merge(dm.lands.gr.df.2, evolrate.gr.df.2, by = "start")
-
-# for filtering when score is PiN/PiS or dN/dS
-dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$score > 0),]
-dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$score < 1),]
-
-cor.test(dm.lands.evolrate$score, dm.lands.evolrate$theta, method = "spearman")
-pcor.test(dm.lands.evolrate$score, dm.lands.evolrate$theta, dm.lands.evolrate$rho, method = "spearman") 
-
-# plot
-evolrate.scatter <- ggplot(data = dm.lands.evolrate, aes(x = dm.lands.evolrate$theta, y = dm.lands.evolrate$score, color =  dm.lands.evolrate$rho))
-evolrate.scatter <- evolrate.scatter + geom_point(shape = 16, size = 4,  alpha = 0.8)
-evolrate.scatter <- evolrate.scatter + theme(plot.title = element_text(size = 20),
-                                             axis.title.x = element_text(size = 20),
-                                             axis.title.y = element_text(size = 20))
-evolrate.scatter <- evolrate.scatter + labs(title = NULL, # "Mutation rate vs Divergence D. melanogaster : D. yakuba",
-                                            color = expression(rho),
-                                            x = "Scaled Mutation Rate in D. melanogaster",
-                                            y = "Evol. Rate")
-evolrate.scatter
-
-
-
-
-############### 
-# grouping per gene coordinate
-dm.lands.gr <- makeGRangesFromDataFrame(dm.200kb)
-values(dm.lands.gr) <- dm.200kb[,(4:7)]
-evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
-values(evolrate.gr) <- dm.evol[,(5:11)]
-
-hits <- findOverlaps(evolrate.gr, dm.lands.gr) 
-
-evolrate.gr.df <- as.data.frame(evolrate.gr[queryHits(hits)], row.names = NULL)
-dm.lands.gr.df <- as.data.frame(dm.lands.gr[subjectHits(hits)], row.names = NULL)
-
-dm.lands.evolrate <- cbind.data.frame(dm.lands.gr.df[,c(2,3,6:9)], evolrate.gr.df[,c(2,3,6:12)])
-dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$PiNPiS < 1),]
-names(dm.lands.evolrate)[1] <- "start.window"
-names(dm.lands.evolrate)[2] <- "end.window"
-names(dm.lands.evolrate)[7] <- "start.gene"
-names(dm.lands.evolrate)[8] <- "end.gene"
-
-
-# basic checking
-cor.test(dm.lands.evolrate$diversity, dm.lands.evolrate$PiS, method = "spearman")
-cor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$PiS, method = "spearman")
-cor.test(dm.lands.evolrate$diversity, dm.lands.evolrate$PiNPiS, method = "spearman")
-pcor.test(dm.lands.evolrate$diversity, dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, method = "spearman")
-
-
-#
-cor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$rho, method = "spearman")
-pcor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, dm.lands.evolrate$rho, method = "spearman") 
-# decomposing PiN/PiS
-cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, method = "spearman")
-pcor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, dm.lands.evolrate$rho, method = "spearman") 
-
-# dN/dS is affected by both negative and positive selection
-cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$dNdS, dm.lands.evolrate$theta, method = "spearman")
-
-
-# plot
-evolrate.scatter <- ggplot(data = dm.lands.evolrate, aes(x = dm.lands.evolrate$theta, y = dm.lands.evolrate$dNdS, color =  dm.lands.evolrate$PiNPiS))
-evolrate.scatter <- evolrate.scatter + geom_point(shape = 16, size = 4,  alpha = 0.8)
-evolrate.scatter <- evolrate.scatter + theme(plot.title = element_text(size = 20),
-                                             axis.title.x = element_text(size = 20),
-                                             axis.title.y = element_text(size = 20))
-evolrate.scatter <- evolrate.scatter + labs(title = NULL, # "Mutation rate vs Divergence D. melanogaster : D. yakuba",
-                                            color = expression(pi),
-                                            x = "Scaled Mutation Rate in D. melanogaster",
-                                            y = "Evol. Rate")
-evolrate.scatter
 
