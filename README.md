@@ -1,2 +1,2 @@
-# ismc_theta_analyses
-Scripts for reproducing results from the analyses of the mutation landscape
+# ismc_dm_analyses
+Scripts for reproducing results from Barroso & Dutheil 2020
