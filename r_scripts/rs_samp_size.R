@@ -1,5 +1,5 @@
 # Created: 17/06/2019
-# Last modified: 09/07/2019
+# Last modified: 12/08/2020
 # Author: Gustavo Barroso
 
 
@@ -22,8 +22,11 @@ bin_sizes <- c(50000, 200e+3, 1e+6)
 theme.blank <- theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                                   panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
+no.legend <- theme(legend.position = "none", legend.title = NULL)
+
+
 setwd("~")
-setwd("Data/iSMC/theta_paper/sim_data/rs.sim_results/texp/")
+setwd("Data/iSMC/theta_paper/sim_data/rs.sim_results/")
 
 ###################################################
 #
@@ -32,7 +35,7 @@ setwd("Data/iSMC/theta_paper/sim_data/rs.sim_results/texp/")
 ###################################################
 
 # parameters used in the simulation
-sim_params <- read.table("../raw_data/Misc/sim_params.txt")
+sim_params <- read.table("raw_data/Misc/sim_params.txt")
 sim_params <- sim_params[c(3:6, 8, 9),]
 sim_params[4, 2] <- 1 - sim_params[4, 2]
 sim_params[6, 2] <- 1 - sim_params[6, 2]
@@ -89,7 +92,6 @@ sim.mle$type <- c(rep("single_diploid", 45), "5-unphased", "45-phased")
 # plotting
 scaleFUN <- function(x) sprintf("%.4f", x) # digits shown in y axis
 no.x.axis <- theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
-no.legend <- theme(legend.position = "none", legend.title = NULL)
 
 
 rho.delta.df <- as.data.frame(cbind(as.numeric(sim.mle$rho.delta), sim.mle$sample, sim.mle$type), stringsAsFactors = F)
@@ -186,7 +188,7 @@ cowplot::ggsave("mle.pdf", mle.fig, width = 12, height = 12)
 ###################################################
   
 # sim landscapes 50 kb
-sim.rho.50k <- read.table("../raw_data/rig.sims.rho.50000.bins.txt")
+sim.rho.50k <- read.table("raw_data/rig.sims.rho.50000.bins.txt")
 
 nbins <- 3e+7 / 5e+4
   
@@ -288,7 +290,7 @@ cor.dotplot
 
 # 200 kb
 
-sim.rho.200k <- read.table("../raw_data/rig.sims.rho.2e+05.bins.txt")
+sim.rho.200k <- read.table("raw_data/rig.sims.rho.2e+05.bins.txt")
 
 nbins <- 3e+7 / 2e+5
 
@@ -387,7 +389,7 @@ cor.dotplot
 
 # 1 Mb
 
-sim.rho.1M <- read.table("../raw_data/rig.sims.rho.1e+06.bins.txt")
+sim.rho.1M <- read.table("raw_data/rig.sims.rho.1e+06.bins.txt")
 
 nbins <- 3e+7 / 1e+6
 
@@ -500,7 +502,7 @@ ggplot2::ggsave("cor.rho.pdf", cor.dotplot, device = "pdf", width = 12, height =
 
 
 # 50 kb
-sim.theta.50k <- read.table("../raw_data/rig.sims.theta.50000.bins.txt")
+sim.theta.50k <- read.table("raw_data/rig.sims.theta.50000.bins.txt")
 
 nbins <- 3e+7 / 5e+4
 
@@ -598,7 +600,7 @@ cor.dotplot
 
 # 200 kb
 
-sim.theta.200k <- read.table("../raw_data/rig.sims.theta.2e+05.bins.txt")
+sim.theta.200k <- read.table("raw_data/rig.sims.theta.2e+05.bins.txt")
 
 nbins <- 3e+7 / 2e+5
 
@@ -695,7 +697,7 @@ cor.dotplot
 
 # 1 Mb
 
-sim.theta.1M <- read.table("../raw_data/rig.sims.theta.1e+06.bins.txt")
+sim.theta.1M <- read.table("raw_data/rig.sims.theta.1e+06.bins.txt")
 
 nbins <- 3e+7 / 1e+6
 
@@ -806,7 +808,7 @@ ggplot2::ggsave("cor.theta.pdf", cor.dotplot, device = "pdf", width = 12, height
 ###################################################
   
 # gets nucleotide spans of each tree
-arg <- readLines("../raw_data/rep_1/rep_1.ARG")
+arg <- readLines("raw_data/rep_1/rep_1.ARG")
 tmp <- list()
 for(i in 1:length(arg)) {
   tmp[i] <- data.matrix(strsplit(arg[i], '"', fixed = F))
@@ -833,7 +835,7 @@ for(i in 1:length(tree.spans)) {
 nuc.spans <- as.numeric(nuc.spans)
 summary(nuc.spans)
 
-sim.ARG <- read.tree("../raw_data/rep_1/rep_1.ARG")
+sim.ARG <- read.tree("raw_data/rep_1/rep_1.ARG")
 
 lst <- llply(sim.ARG, cophenetic.phylo, .progress = "text")
 
@@ -1079,8 +1081,8 @@ no.x.axis <- theme(axis.title.x = element_blank(), axis.text.x = element_blank()
 no.legend <- theme(legend.position = "none", legend.title = NULL)
 
 # sim landscapes 50 kb
-sim.rho.50k <- read.table("../raw_data/rig.sims.rho.50000.bins.txt")
-sim.theta.50k <- read.table("../raw_data/rig.sims.theta.50000.bins.txt")
+sim.rho.50k <- read.table("raw_data/rig.sims.rho.50000.bins.txt")
+sim.theta.50k <- read.table("raw_data/rig.sims.theta.50000.bins.txt")
 
 # loading computed diversity landscape
 unphased.diversity.50k <- read.table("maps/rep_1.unphased.diversity.block.1.50kb.0-29999999.bedgraph", header = T)
@@ -1159,7 +1161,7 @@ tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.titl
 theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-lands.plot <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+lands.plot.50k <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
 cowplot::save_plot("landscapes.50kb.unphased.pdf", lands.plot, base_width = 9, base_height = 15)
 
 
@@ -1226,8 +1228,8 @@ summary(g.diversity)
 ###################################################
 
 # sim landscapes 200 kb
-sim.rho.200k <- read.table("../raw_data/rig.sims.rho.2e+05.bins.txt")
-sim.theta.200k <- read.table("../raw_data/rig.sims.theta.2e+05.bins.txt")
+sim.rho.200k <- read.table("raw_data/rig.sims.rho.2e+05.bins.txt")
+sim.theta.200k <- read.table("raw_data/rig.sims.theta.2e+05.bins.txt")
 
 # loading computed diversity landscape
 unphased.diversity.200k <- read.table("maps/rep_1.unphased.diversity.block.1.200kb.0-29999999.bedgraph", header = T)
@@ -1306,7 +1308,7 @@ tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.titl
 theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-lands.plot <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+lands.plot.200k <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
 cowplot::ggsave("landscapes.200kb.unphased.pdf", lands.plot, width = 9, height = 15)
 
 
@@ -1366,8 +1368,8 @@ summary(g.diversity)
 ###################################################
 
 # sim landscapes
-sim.rho.1M <- read.table("../raw_data/rig.sims.rho.1e+06.bins.txt")
-sim.theta.1M <- read.table("../raw_data/rig.sims.theta.1e+06.bins.txt")
+sim.rho.1M <- read.table("raw_data/rig.sims.rho.1e+06.bins.txt")
+sim.theta.1M <- read.table("raw_data/rig.sims.theta.1e+06.bins.txt")
 
 # loading computed diversity landscape
 unphased.diversity.1M <- read.table("maps/rep_1.unphased.diversity.block.1.1Mb.0-29999999.bedgraph", header = T)
@@ -1446,7 +1448,7 @@ tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.titl
 theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-lands.plot <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+lands.plot.1M <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
 cowplot::ggsave("landscapes.1Mb.unphased.pdf", lands.plot, width = 9, height = 15)
 
 
@@ -1584,8 +1586,8 @@ colnames(cor.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Bin_size(kb)")
 
 
 # sim landscapes 50 kb
-sim.rho.50k <- read.table("../raw_data/rig.sims.rho.50000.bins.txt")
-sim.theta.50k <- read.table("../raw_data/rig.sims.theta.50000.bins.txt")
+sim.rho.50k <- read.table("raw_data/rig.sims.rho.50000.bins.txt")
+sim.theta.50k <- read.table("raw_data/rig.sims.theta.50000.bins.txt")
 
 # loading computed diversity landscape
 joint.diversity.50k <- read.table("maps/rep_1.joint.diversity.block.1.50kb.0-29999999.bedgraph", header = T)
@@ -1601,57 +1603,19 @@ inf.lands <- as.data.frame(cbind(joint.diversity.50k$avg, joint.theta.50k$sample
 names(inf.lands) <- c("diversity", "theta", "rho", "tmrca")
 inf.lands$bin <- 1:nrow(inf.lands)
 
-# start test
-plot(diversity ~ theta, data = inf.lands)
-plot(diversity ~ rho, data = inf.lands)
-plot(diversity ~ tmrca, data = inf.lands)
-plot(theta ~ rho, data = inf.lands)
-plot(tmrca ~ rho, data = inf.lands)
-plot(theta ~ tmrca, data = inf.lands)
-cor.test(inf.lands$theta, inf.lands$tmrca, method = "spearman")
-
-inf.lands$theta.rho.ratios <- (inf.lands$theta / mean(inf.lands$theta) / (inf.lands$rho / mean(inf.lands$rho)))
-plot(x = inf.lands$bin, y = inf.lands$theta.rho.ratios, type = "l")
-plot(x = inf.lands$bin, y = inf.lands$theta.rho.ratios, type = "l")
-
-inf.lands.2 <- inf.lands[which(inf.lands$tmrca >= 0.5),]
-inf.lands.2 <- inf.lands.2[which(inf.lands.2$tmrca <= 1.5),]
-plot(theta ~ tmrca, data = inf.lands.2)
-cor.test(inf.lands.2$theta, inf.lands.2$tmrca, method = "spearman")
-cor.test(inf.lands.2$theta, inf.lands.2$tmrca, method = "kendall")
-# end test
-
 cor.mat <- cor(inf.lands[,1:4], method = "spearman")
 # non-significant correlations
 cor.mat[3, 1] <- 0
 cor.mat[3, 2] <- 0
 cor.mat[4, 3] <- 0
 
-# does same analyses using the TRUE, SIMULATED landscapes
-sim.lands <- as.data.frame(cbind(joint.diversity.50k$avg, sim.theta.50k$sim, sim.rho.50k$sim, sim.tmrca.50k$tmrca))
-names(sim.lands) <- c("diversity", "theta", "rho", "tmrca")
-cor.mat.truth <- cor(sim.lands[,1:4], method = "spearman")
-
-# adds it to upper triangle of cor.mat
-cor.mat[1, 2] <- 0.89
-cor.mat[1, 3] <- 0
-cor.mat[1, 4] <- 0.46
-cor.mat[2, 3] <- 0
-cor.mat[2, 4] <- 0
-cor.mat[3, 4] <- 0
-
-pdf("sim.cor.50kb.pdf")
-corrplot(cor.mat, method = "color", addCoef.col = "black", is.corr = T, cl.lim = c(0, 1),
-         tl.col = "black", number.cex = 1.5, diag = F, type = "full")
-dev.off()
-
 
 # plots
 scale.3d <- function(x) sprintf("%.3f", x) # digits shown in y axis
 
 molten.diversity <- melt(inf.lands[c(1,5)], id.vars = "bin")
-diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 50, y = value, colour = "#F8766D")) 
-diversity.map <- diversity.map + geom_line(data = molten.diversity) + theme.blank
+diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 50, y = value, colour = "#F8766D")) + theme.blank
+diversity.map <- diversity.map + geom_line(data = molten.diversity)
 diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D") + no.legend
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
@@ -1694,8 +1658,9 @@ tmrca.map <- tmrca.map + annotate("text", x = 15000, y = 2.2, label = "Cor = 0.6
 theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-lands.plot <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
-cowplot::save_plot("landscapes.50kb.phased.pdf", lands.plot, base_width = 9, base_height = 15)
+lands.plot.50k <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+
+cowplot::save_plot("landscapes.50kb.phased.pdf", lands.plot.50k, base_width = 9, base_height = 15)
 
 
 
@@ -1764,8 +1729,8 @@ summary(g.diversity)
 ###################################################
 
 # sim landscapes 200 kb
-sim.rho.200k <- read.table("../raw_data/rig.sims.rho.2e+05.bins.txt")
-sim.theta.200k <- read.table("../raw_data/rig.sims.theta.2e+05.bins.txt")
+sim.rho.200k <- read.table("raw_data/rig.sims.rho.2e+05.bins.txt")
+sim.theta.200k <- read.table("raw_data/rig.sims.theta.2e+05.bins.txt")
 
 # loading computed diversity landscape
 joint.diversity.200k <- read.table("maps/rep_1.joint.diversity.block.1.200kb.0-29999999.bedgraph", header = T)
@@ -1810,8 +1775,8 @@ dev.off()
 scale.3d <- function(x) sprintf("%.3f", x) # digits shown in y axis
 
 molten.diversity <- melt(inf.lands[c(1,5)], id.vars = "bin")
-diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 200, y = value, colour = "#F8766D")) 
-diversity.map <- diversity.map + geom_line(data = molten.diversity) + theme.blank
+diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 200, y = value, colour = "#F8766D")) + theme.blank
+diversity.map <- diversity.map + geom_line(data = molten.diversity) 
 diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D") + no.legend
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
@@ -1820,8 +1785,8 @@ diversity.map <- diversity.map + theme(text = element_text(size = 20), axis.titl
 rho.plot <- as.data.frame(cbind(inf.lands$bin, 2 * inf.lands$rho, sim.rho.200k$sim)) # adds simulated rec. map
 names(rho.plot) <- c("bin", "inf", "sim")
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map <- ggplot(data = molten.rho, aes(x = bin * 200, y = value, colour = variable)) 
-rho.map <- rho.map + geom_line(data = molten.rho) + theme.blank
+rho.map <- ggplot(data = molten.rho, aes(x = bin * 200, y = value, colour = variable)) + theme.blank
+rho.map <- rho.map + geom_line(data = molten.rho) 
 rho.map <- rho.map + geom_smooth(method = "loess", se = F) + no.legend
 rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
@@ -1831,8 +1796,8 @@ rho.map <- rho.map + annotate("text", x = 15000, y = 0.007, label = "Cor = 0.95"
 theta.plot <- as.data.frame(cbind(inf.lands$bin, inf.lands$theta, sim.theta.200k$sim)) # adds simulated mut. map
 names(theta.plot) <- c("bin", "inf", "sim")
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map <- ggplot(data = molten.theta, aes(x = bin * 200, y = value, colour = variable)) 
-theta.map <- theta.map + geom_line(data = molten.theta) + theme.blank
+theta.map <- ggplot(data = molten.theta, aes(x = bin * 200, y = value, colour = variable)) + theme.blank
+theta.map <- theta.map + geom_line(data = molten.theta)
 theta.map <- theta.map + geom_smooth(method = "loess", se = F) + no.legend
 theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta))
@@ -1842,8 +1807,8 @@ theta.map <- theta.map + annotate("text", x = 15000, y = 0.0085, label = "Cor = 
 tmrca.plot <- as.data.frame(cbind(inf.lands$bin, inf.lands$tmrca, sim.tmrca.200k$tmrca))
 names(tmrca.plot) <- c("bin", "inf", "sim")
 molten.tmrca <- melt(tmrca.plot, id.vars = "bin")
-tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 200, y = value, colour = variable)) 
-tmrca.map <- tmrca.map + geom_line(data = molten.tmrca) + scale_fill_manual(values = c("#fee08b", "#3288bd")) + theme.blank
+tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 200, y = value, colour = variable)) + theme.blank
+tmrca.map <- tmrca.map + geom_line(data = molten.tmrca) + scale_fill_manual(values = c("#fee08b", "#3288bd"))
 tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F) + no.legend
 tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
@@ -1854,7 +1819,7 @@ tmrca.map <- tmrca.map + annotate("text", x = 15000, y = 1.65, label = "Cor = 0.
 theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-lands.plot <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+lands.plot.200k <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
 cowplot::save_plot("landscapes.200kb.phased.pdf", lands.plot, base_width = 9, base_height = 15)
 
 
@@ -1919,8 +1884,8 @@ summary(g.diversity)
 ###################################################
 
 # sim landscapes
-sim.rho.1M <- read.table("../raw_data/rig.sims.rho.1e+06.bins.txt")
-sim.theta.1M <- read.table("../raw_data/rig.sims.theta.1e+06.bins.txt")
+sim.rho.1M <- read.table("raw_data/rig.sims.rho.1e+06.bins.txt")
+sim.theta.1M <- read.table("raw_data/rig.sims.theta.1e+06.bins.txt")
 
 # loading computed diversity landscape
 joint.diversity.1M <- read.table("maps/rep_1.joint.diversity.block.1.1Mb.0-29999999.bedgraph", header = T)
@@ -1965,7 +1930,7 @@ dev.off()
 scale.3d <- function(x) sprintf("%.3f", x) # digits shown in y axis
 
 molten.diversity <- melt(inf.lands[c(1,5)], id.vars = "bin")
-diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 1000, y = value)) 
+diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 1000, y = value)) + theme.blank
 diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F8766D")
 diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D") + no.legend
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1975,8 +1940,8 @@ diversity.map <- diversity.map + theme(text = element_text(size = 20), axis.titl
 rho.plot <- as.data.frame(cbind(inf.lands$bin, 2 * inf.lands$rho, sim.rho.1M$sim)) # adds simulated mut. map
 names(rho.plot) <- c("bin", "inf", "sim")
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map <- ggplot(data = molten.rho, aes(x = bin * 1000, y = value, colour = variable)) 
-rho.map <- rho.map + geom_line(data = molten.rho) + theme.blank
+rho.map <- ggplot(data = molten.rho, aes(x = bin * 1000, y = value, colour = variable)) + theme.blank
+rho.map <- rho.map + geom_line(data = molten.rho)
 rho.map <- rho.map + geom_smooth(method = "loess", se = F) + no.legend
 rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
@@ -1986,8 +1951,8 @@ rho.map <- rho.map + annotate("text", x = 15000, y = 0.0025, label = "Cor = 0.92
 theta.plot <- as.data.frame(cbind(inf.lands$bin, inf.lands$theta, sim.theta.1M$sim)) # adds simulated mut. map
 names(theta.plot) <- c("bin", "inf", "sim")
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map <- ggplot(data = molten.theta, aes(x = bin * 1000, y = value, colour = variable)) 
-theta.map <- theta.map + geom_line(data = molten.theta) + theme.blank
+theta.map <- ggplot(data = molten.theta, aes(x = bin * 1000, y = value, colour = variable)) + theme.blank
+theta.map <- theta.map + geom_line(data = molten.theta)
 theta.map <- theta.map + geom_smooth(method = "loess", se = F) + no.legend
 theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta))
@@ -1997,8 +1962,8 @@ theta.map <- theta.map + annotate("text", x = 15000, y = 0.006, label = "Cor = 0
 tmrca.plot <- as.data.frame(cbind(inf.lands$bin, inf.lands$tmrca, sim.tmrca.1M$tmrca))
 names(tmrca.plot) <- c("bin", "inf", "sim")
 molten.tmrca <- melt(tmrca.plot, id.vars = "bin")
-tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 1000, y = value, colour = variable)) 
-tmrca.map <- tmrca.map + geom_line(data = molten.tmrca) + scale_fill_manual(values = c("#fee08b", "#3288bd")) + theme.blank
+tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 1000, y = value, colour = variable)) + theme.blank
+tmrca.map <- tmrca.map + geom_line(data = molten.tmrca) + scale_fill_manual(values = c("#fee08b", "#3288bd"))
 tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F) + no.legend
 tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
@@ -2010,7 +1975,7 @@ tmrca.map <- tmrca.map + annotate("text", x = 15000, y = 1.125, label = "Cor = 0
 theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
-lands.plot <-  plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+lands.plot.1M <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
 cowplot::save_plot("landscapes.1Mb.phased.pdf", lands.plot, base_width = 9, base_height = 15)
 
 
@@ -2049,6 +2014,16 @@ anova.diversity
 cor.tab[3,] <- c(87.6 + 8.5, 87.6, 0, 8.5, 1000)
 
 
+
+
+########################################
+#
+# Lands Plot
+#
+#######################################
+
+lands.plot.all <- plot_grid(lands.plot.50k, lands.plot.200k, lands.plot.1M, ncol = 3, labels = "AUTO", label_size = 36)
+cowplot::save_plot("sim.landscapes.pdf", lands.plot.all, base_width = 27, base_height = 15)
 
 ###################################################
 #
@@ -2148,7 +2123,7 @@ cor.tab[6,] <- c(91.9 + 4.9, 91.9, 0, 4.9, 1000)
 
 ########################################
 #
-# cor Plot
+# R2 Plot
 #
 ########################################
 

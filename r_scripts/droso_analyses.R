@@ -29,7 +29,8 @@ theme.blank <- theme_bw() + theme(panel.border = element_blank(), panel.grid.maj
 
 ######################################
 #
-# Drosophila-like neutral simulations [TODO]
+# Drosophila-like neutral simulations T
+# TODO
 #
 ########################################
 
@@ -140,38 +141,38 @@ setTimeLimit(cpu = Inf, elapsed = Inf, transient = F)
 
 molten.diversity <- melt(dm.lands.50kb[c(1,5)], id.vars = "bin")
 diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 20, y = value)) 
-diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F8766D") + theme.blank
+diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F8766D")
 diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D")
 diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
-diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
 diversity.map <- diversity.map + annotate("text", x = 4100, y = 0.005, label = "CV = 27%")
 
 molten.rho <- melt(dm.lands.50kb[c(3,5)], id.vars = "bin")
 rho.map <- ggplot(data = molten.rho, aes(x = bin * 20, y = value)) 
-rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00") + theme.blank
+rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00")
 rho.map <- rho.map + geom_smooth(method = "loess", se = F, colour = "#7CAE00")
 rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
-rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
 rho.map <- rho.map + annotate("text", x = 4100, y = 0.06, label = "CV = 22%")
 
 molten.theta <- melt(dm.lands.50kb[c(2,5)], id.vars = "bin")
 theta.map <- ggplot(data = molten.theta, aes(x = bin * 20, y = value)) 
-theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4") + theme.blank
+theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4")
 theta.map <- theta.map + geom_smooth(method = "loess", se = F, colour = "#00BFC4")
 theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta)) 
-theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
 theta.map <- theta.map + annotate("text", x = 4100, y = 0.0145, label = "CV = 24%")
 
 molten.tmrca <- melt(dm.lands.50kb[c(4,5)], id.vars = "bin")
 tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 20, y = value)) 
-tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d") + theme.blank
+tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d")
 tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d")
 tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
-tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme.blank
 tmrca.map <- tmrca.map + annotate("text", x = 4100, y = 0.7, label = "CV = 7%")
 
 p1 <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1)
@@ -1044,10 +1045,18 @@ pcor.test(dm.lands.evolrate$PiNPiS, dm.lands.evolrate$theta, dm.lands.evolrate$t
 pcor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman") 
 pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman") 
 
+cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
+cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
+
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
-pcor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
-pcor.test(dm.lands.evolrate$dNdS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
+
+mean(dm.lands.evolrate$dS)
+mean(div$MLModelFit.BrLen0)
+
+sd(dm.lands.evolrate$theta) / mean(dm.lands.evolrate$theta)
+sd(dm.50kb$theta) / mean(dm.50kb$theta)
 
 #####################
 #

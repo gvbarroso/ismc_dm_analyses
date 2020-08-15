@@ -9,10 +9,10 @@ library(cowplot)
 library(grid)
 library(MASS)
 
-setwd("~/Data/iSMC/theta_paper/simulated_data/")
+setwd("~/Data/iSMC/theta_paper/sim_data/single_diploid_sim/")
 
 num_reps <- 10
-bin_sizes <- c(50000, 200e+3, 500e+3, 1e+6)
+bin_sizes <- c(50000, 200e+3, 1e+6)
 
 ###################################################
 #
@@ -22,8 +22,8 @@ bin_sizes <- c(50000, 200e+3, 500e+3, 1e+6)
 
 # simulation parameters: alpha = 0.5, g = 1e-5
 ## matrices to store correlations and p-values
-r2.mat.sim1.alpha0.5_100kb <- as.data.frame(matrix(ncol = 10, nrow = 4))
-rownames(r2.mat.sim1.alpha0.5_100kb) <- c("50kb.1a", "200kb.1a", "500kb.1a", "1Mb.1a")
+r2.mat.sim1.alpha0.5_100kb <- as.data.frame(matrix(ncol = 10, nrow = 3))
+rownames(r2.mat.sim1.alpha0.5_100kb) <- c("50kb.1a", "200kb.1a", "1Mb.1a")
 reps <- character(length = num_reps)
 for(i in 1: num_reps) {
   reps[i] <- paste("rep", as.character(i), sep = ".")
@@ -47,8 +47,8 @@ for(j in 1:length(bin_sizes)) {
 
 # simulation parameters: alpha = 0.5, g = 1e-6
 ## matrices to store correlations and p-values
-r2.mat.sim1.alpha0.5_1mb <- as.data.frame(matrix(ncol = 10, nrow = 4))
-rownames(r2.mat.sim1.alpha0.5_1mb) <- c("50kb.1b", "200kb.1b", "500kb.1b", "1Mb.1b")
+r2.mat.sim1.alpha0.5_1mb <- as.data.frame(matrix(ncol = 10, nrow = 3))
+rownames(r2.mat.sim1.alpha0.5_1mb) <- c("50kb.1b", "200kb.1b", "1Mb.1b")
 reps <- character(length = num_reps)
 for(i in 1: num_reps) {
   reps[i] <- paste("rep", as.character(i), sep = ".")
@@ -71,8 +71,8 @@ for(j in 1:length(bin_sizes)) {
 
 # simulation parametes: alpha = 5, g = 1e-5
 ## matrices to store correlations and p-values
-r2.mat.sim1.alpha5_100kb <- as.data.frame(matrix(ncol = 10, nrow = 4))
-rownames(r2.mat.sim1.alpha5_100kb) <- c("50kb.1c", "200kb.1c", "500kb.1c", "1Mb.1c")
+r2.mat.sim1.alpha5_100kb <- as.data.frame(matrix(ncol = 10, nrow = 3))
+rownames(r2.mat.sim1.alpha5_100kb) <- c("50kb.1c", "200kb.1c", "1Mb.1c")
 reps <- character(length = num_reps)
 for(i in 1: num_reps) {
   reps[i] <- paste("rep", as.character(i), sep = ".")
@@ -95,8 +95,8 @@ for(j in 1:length(bin_sizes)) {
 
 # simulation parametes alpha = 5, g = 1e-6
 ## matrices to store correlations and p-values
-r2.mat.sim1.alpha5_1mb <- as.data.frame(matrix(ncol = 10, nrow = 4))
-rownames(r2.mat.sim1.alpha5_1mb) <- c("50kb.1d", "200kb.1d", "500kb.1d", "1Mb.1d")
+r2.mat.sim1.alpha5_1mb <- as.data.frame(matrix(ncol = 10, nrow = 3))
+rownames(r2.mat.sim1.alpha5_1mb) <- c("50kb.1d", "200kb.1d", "1Mb.1d")
 reps <- character(length = num_reps)
 for(i in 1: num_reps) {
   reps[i] <- paste("rep", as.character(i), sep = ".")
@@ -124,7 +124,7 @@ r2.sim1$Parameters <- c(rep("A = 0.5; g = 100 kb", 4),
                          rep("A = 0.5; g = 1 Mb", 4),
                          rep("A = 5; g = 100 kb", 4),
                          rep("A = 5; g = 1 Mb", 4))
-r2.sim1$bin.size <- c(rep(c("50 kb", "200 kb", "500 kb", "1 Mb"), 4))
+r2.sim1$bin.size <- c(rep(c("50 kb", "200 kb", "1 Mb"), 3))
 write.csv(r2.sim1, "inf/flat_demography/flat_rho/modulated_theta/r2.sim1.csv", row.names = F)
 
 
