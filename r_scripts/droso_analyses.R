@@ -29,19 +29,24 @@ theme.blank <- theme_bw() + theme(panel.border = element_blank(), panel.grid.maj
 
 ######################################
 #
-# Drosophila-like neutral simulations T
-# TODO
+# Drosophila-like neutral simulations
 #
 ########################################
 
 # building linear models
 
 nreps <- 10
+cnames <- character(length = nreps)
+for(i in 1:nreps) { cnames[i] <- paste("rep_", i, sep = "") }
 
 # 50 kb
-for(in in 1:nreps)
+r2.sim.tab.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
+row.names(r2.sim.tab.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
+colnames(r2.sim.tab.50kb) <- cnames
+
+for(i in 1:nreps)
 {
-  p <- paste("bedgraph/rs.pair_", i, ".", sep = "")
+  p <- paste("rs_drosophila_bedgraphs/rep_", i, "/rs.pair_", i, ".", sep = "")
   pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
   pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
   tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -55,12 +60,100 @@ for(in in 1:nreps)
   m.diversity <- lm(diversity ~ theta + rho + tmrca, data = inf.lands.50k)
   
   # type 2
-  anova.diversity <- Anova(m.diversity.bc)
+  anova.diversity <- Anova(m.diversity)
   apiss <- anova.diversity$"Sum Sq"
   anova.diversity$VarExp <- apiss / sum(apiss)
   
-  anova.diversity
+  r2.sim.tab.50kb[1, i] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3]) * 100
+  r2.sim.tab.50kb[2, i] <- anova.diversity$VarExp[1] * 100
+  r2.sim.tab.50kb[3, i] <- anova.diversity$VarExp[2] * 100
+  r2.sim.tab.50kb[4, i] <- anova.diversity$VarExp[3] * 100
 }
+
+r2.sim.tab.50kb$average <- rowMeans(r2.sim.tab.50kb)
+r2.sim.tab.50kb <- transform(r2.sim.tab.50kb, sd=apply(r2.sim.tab.50kb, 1, sd, na.rm = TRUE))
+
+
+# 200 kb
+r2.sim.tab.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
+row.names(r2.sim.tab.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
+colnames(r2.sim.tab.200kb) <- cnames
+
+for(i in 1:nreps)
+{
+  p <- paste("rs_drosophila_bedgraphs/rep_", i, "/rs.pair_", i, ".", sep = "")
+  pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
+  pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
+  tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
+  tmrca.200k$avg <- apply(tmrca.200k[4:ncol(tmrca.200k)], 1, mean)
+  rho.200k <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
+  theta.200k <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+  
+  inf.lands.200k <- as.data.frame(cbind(pi.200k$avg, theta.200k$sample_mean, rho.200k$sample_mean, tmrca.200k$avg))
+  names(inf.lands.200k) <- c("diversity", "theta", "rho", "tmrca")
+  
+  m.diversity <- lm(diversity ~ theta + rho + tmrca, data = inf.lands.200k)
+  
+  # type 2
+  anova.diversity <- Anova(m.diversity)
+  apiss <- anova.diversity$"Sum Sq"
+  anova.diversity$VarExp <- apiss / sum(apiss)
+  
+  r2.sim.tab.200kb[1, i] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3]) * 100
+  r2.sim.tab.200kb[2, i] <- anova.diversity$VarExp[1] * 100
+  r2.sim.tab.200kb[3, i] <- anova.diversity$VarExp[2] * 100
+  r2.sim.tab.200kb[4, i] <- anova.diversity$VarExp[3] * 100
+}
+
+r2.sim.tab.200kb$average <- rowMeans(r2.sim.tab.200kb)
+r2.sim.tab.200kb <- transform(r2.sim.tab.200kb, sd=apply(r2.sim.tab.200kb, 1, sd, na.rm = TRUE))
+
+
+# 1 Mb
+r2.sim.tab.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
+row.names(r2.sim.tab.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
+colnames(r2.sim.tab.1Mb) <- cnames
+
+for(i in 1:nreps)
+{
+  p <- paste("rs_drosophila_bedgraphs/rep_", i, "/rs.pair_", i, ".", sep = "")
+  pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
+  pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
+  tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
+  tmrca.1M$avg <- apply(tmrca.1M[4:ncol(tmrca.1M)], 1, mean)
+  rho.1M <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
+  theta.1M <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+  
+  inf.lands.1M <- as.data.frame(cbind(pi.1M$avg, theta.1M$sample_mean, rho.1M$sample_mean, tmrca.1M$avg))
+  names(inf.lands.1M) <- c("diversity", "theta", "rho", "tmrca")
+  
+  m.diversity <- lm(diversity ~ theta + rho + tmrca, data = inf.lands.1M)
+  
+  # type 2
+  anova.diversity <- Anova(m.diversity)
+  apiss <- anova.diversity$"Sum Sq"
+  anova.diversity$VarExp <- apiss / sum(apiss)
+  
+  r2.sim.tab.1Mb[1, i] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3]) * 100
+  r2.sim.tab.1Mb[2, i] <- anova.diversity$VarExp[1] * 100
+  r2.sim.tab.1Mb[3, i] <- anova.diversity$VarExp[2] * 100
+  r2.sim.tab.1Mb[4, i] <- anova.diversity$VarExp[3] * 100
+}
+
+r2.sim.tab.1Mb$average <- rowMeans(r2.sim.tab.1Mb)
+r2.sim.tab.1Mb <- transform(r2.sim.tab.1Mb, sd=apply(r2.sim.tab.1Mb, 1, sd, na.rm = TRUE))
+
+# merges
+r2.sim.tab.avg <- rbind(r2.sim.tab.50kb$average, r2.sim.tab.200kb$average, r2.sim.tab.1Mb$average)
+r2.sim.tab.avg <- as.data.frame(r2.sim.tab.avg)
+names(r2.sim.tab.avg) <- c("Total", "Theta", "Rho", "TMRCA")
+r2.sim.tab.avg$bin.size <- c(50, 200, 1000)
+
+r2.sim.tab.sd <- rbind(r2.sim.tab.50kb$sd, r2.sim.tab.200kb$sd, r2.sim.tab.1Mb$sd)
+r2.sim.tab.sd <- as.data.frame(r2.sim.tab.sd)
+names(r2.sim.tab.sd) <- c("Total", "Theta", "Rho", "TMRCA")
+r2.sim.tab.sd$bin.size <- c(50, 200, 1000)
+
 
 
 ######################################
@@ -597,7 +690,6 @@ summary(g.diversity)
 #
 ########################################
 
-
 pcomb <- plot_grid(p1, p2, p3, nrow = 1, labels = "AUTO", label_size = 18, scale = 0.9)
 cowplot::save_plot("dm.maps.pdf", pcomb, base_height = 6, base_width = 15)
 
@@ -610,17 +702,20 @@ cowplot::save_plot("dm.maps.pdf", pcomb, base_height = 6, base_width = 15)
 r2.tab.2 <- as.data.frame(cbind(apply(r2.tab, 2, as.numeric)))
 names(r2.tab.2)[5] <- "bin.size"
 
-molten.r2 <- melt(r2.tab.2, id.vars = "bin.size")
-r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable))
+r2.tab.comb <- rbind.data.frame(r2.tab.2, r2.sim.tab.avg)
+r2.tab.comb$type <- c(rep("real", 3), rep("sim", 3))
+r2.tab.comb$bin.size <- r2.tab.comb$bin.size
+
+molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
+r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable, fill = type))
 r2.plot <- r2.plot + geom_line(data = molten.r2)
-r2.plot <- r2.plot + geom_point(aes(colour = variable), size = 7, shape = 19)
+r2.plot <- r2.plot + geom_point(aes(shape = type, colour = variable), size = 7)
 r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000)) 
-r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks(), limits = c(0, 100))
+r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks())
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Var. Explained")
-r2.plot <- r2.plot + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+r2.plot <- r2.plot + theme(axis.title.x = element_text(size = 22), axis.title.y = element_text(size = 22))
 
-ggsave("lm.r2.dm.pdf", plot = r2.plot, dpi = 500, width = 7, height = 7)
-
+ggsave("lm.r2.dm.pdf", plot = r2.plot, width = 7, height = 7)
 
 ########################################
 #
