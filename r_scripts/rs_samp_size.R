@@ -2137,8 +2137,7 @@ cor.plot <- cor.plot + geom_line(data = molten.cor)
 cor.plot <- cor.plot + geom_point(aes(shape = type, colour = variable), size = 7)
 cor.plot <- cor.plot + scale_x_continuous(breaks = c(50, 200, 1000))
 cor.plot <- cor.plot + scale_y_continuous(breaks = pretty_breaks())
-cor.plot <- cor.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Var. Explained")
-cor.plot <- cor.plot + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+cor.plot <- cor.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + no.legend
+cor.plot <- cor.plot + theme(axis.title.x = element_text(size = 16), axis.title.y = element_text(size = 16))
 
 ggsave("lm.cor.sim.pdf", cor.plot, width = 7, height = 7)
-
