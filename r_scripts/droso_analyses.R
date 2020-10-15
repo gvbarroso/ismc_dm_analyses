@@ -510,7 +510,7 @@ cor.test(~theta + tmrca, data = dm.lands.50kb, method = "spearman")
 # 0.46 p-value < 2.2e-16
 
 # Linear models
-m.diversity <- lm(diversity ~ (theta + rho + tmrca) * chr, data = dm.lands.50kb)
+m.diversity <- lm(diversity ~ (theta + rho + tmrca) * as.factor(chr), data = dm.lands.50kb)
 plot(m.diversity, which = 2)
 
 bc.diversity <- boxcox(m.diversity, lambda = seq(0.55, 0.95, len = 500))
@@ -521,9 +521,11 @@ plot(m.diversity.bc, which = 2)
 shapiro.test(resid(m.diversity.bc)) #***
 hist(resid(m.diversity.bc), nclass = 30)
 hmctest(m.diversity.bc, nsim = 3000) # ***
-dwtest(m.diversity.bc) # ***
 Box.test(resid(m.diversity.bc)[order(predict(m.diversity.bc))], type = "Ljung-Box") # ***
-     
+
+plot(y=m.diversity.bc$residuals, x=m.diversity.bc$fitted.values)
+plot(diversity ~ tmrca, data = dm.lands.50kb)   
+hist(dm.lands.50kb[dm.lands.50kb$chr == 5,]$diversity, nclass = 30)
 summary(m.diversity.bc)
 # Coefficients:
 #  Estimate Std. Error   t value Pr(>|t|)    
@@ -557,11 +559,16 @@ vif(m.no.interaction)
 
 # Because of auto-correlation we compute p-values for the variables using a GLS
 dm.lands.50kb$idx <- 1:nrow(dm.lands.50kb)
-g.diversity <- gls(diversity ~ theta + rho + tmrca, data = dm.lands.50kb, corr = corAR1(0, ~idx))
+d <- dm.lands.50kb
+d$y <- (d$diversity^l - 1) / l
+g.diversity <- gls(y ~ (theta + rho + tmrca) * as.factor(chr), data = d, corr = corAR1(0, ~bin | chr))
+
+plot(y=resid(g.diversity, type = "pearson"), x=fitted(g.diversity))
 
 summary(g.diversity)
 # Parameter estimate(s):
-# Phi 
+# Phi m.diversity.bc <- update(m.diversity, (diversity^l -1)/l~.)
+
 # 0.1717399 
 
 # Coefficients:
@@ -1323,6 +1330,13 @@ dm.lands.evolrate[order(dm.lands.evolrate$chr),]
 
 write.table(dm.lands.evolrate, "dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
             sep = "\t", quote = F, col.names = T, row.names = F)
+
+# back to chr idx
+dm.lands.evolrate$chr <- as.character(dm.lands.evolrate$chr)
+dm.lands.evolrate$chr[which(dm.lands.evolrate$chr == "2L")] <- 2
+dm.lands.evolrate$chr[which(dm.lands.evolrate$chr == "2R")] <- 3
+dm.lands.evolrate$chr[which(dm.lands.evolrate$chr == "3L")] <- 4
+dm.lands.evolrate$chr[which(dm.lands.evolrate$chr == "3R")] <- 5
 
 # linear model in coding regions
 m.diversity.cds <- lm(diversity ~ (theta + rho + tmrca) * chr, data = dm.lands.evolrate)
