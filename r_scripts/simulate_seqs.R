@@ -14,7 +14,7 @@ setwd(root_dir)
 #
 ##############################################
 
-sequence_length <- 100e+6
+sequence_length <- 30e+6
 N0 <- 30000
 Ne <- N0 # used when simulating fluctuating pop. sizes
 little_r <- 1e-8 # recombination rate per site per generation

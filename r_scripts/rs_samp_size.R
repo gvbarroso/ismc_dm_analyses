@@ -1155,69 +1155,59 @@ lands.plot.50k <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale 
 
 cowplot::save_plot("landscapes.50kb.phased.pdf", lands.plot.50k, base_width = 9, base_height = 15)
 
-
-
-
 # Linear model
 
-m.diversity <- lm(diversity ~ theta + rho + tmrca + theta*tmrca, data = inf.lands)
-plot(m.diversity, which = 2)
+# centering
+inf.lands$thetaC <- inf.lands$theta - mean(inf.lands$theta)
+inf.lands$tmrcaC <- inf.lands$tmrca - mean(inf.lands$tmrca)
+inf.lands$rhoC <- inf.lands$rho - mean(inf.lands$rho)
+
+
+plot(diversity~theta, data = inf.lands)
+plot(diversity~tmrca, data = inf.lands)
+plot(diversity~rho, data = inf.lands)  
+
+plot(theta~tmrca, data = inf.lands)
+plot(tmrca~rho, data = inf.lands)
+plot(theta~rho, data = inf.lands)
+
+m.diversity <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC, data = inf.lands)
 
 plot(y=resid(m.diversity, type = "pearson"), x=fitted(m.diversity))
-plot(diversity~tmrca, data = inf.lands)
-plot(log(diversity)~log(rho), data = inf.lands)
-bc.diversity <- boxcox(m.diversity, lambda = seq(0.2, 1.2, len = 500))
-l <- bc.diversity$x[which.max(bc.diversity$y)]
-m.diversity.bc <- update(m.diversity, (diversity^l -1)/l~.)
-plot(m.diversity.bc, which = 2)
+dwtest(m.diversity)
+hmctest(m.diversity)
+hist(resid(m.diversity))
 
-shapiro.test(resid(m.diversity.bc)) #***
-hist(resid(m.diversity), nclass = 30) # not too bad?
-hmctest(m.diversity, nsim = 3000) # *
-dwtest(m.diversity.bc) # ***
-Box.test(resid(m.diversity)[order(predict(m.diversity))], type = "Ljung-Box") #***
-
-
-summary(m.diversity.bc)
-# Coefficients:
-# Estimate Std. Error t value Pr(>|t|)    
-# (Intercept) -1.9309400  0.0008377 -2305.14  < 2e-16 ***
-# theta       13.9738081  0.1280305   109.14  < 2e-16 ***
-# rho          1.1733146  0.3760272     3.12  0.00189 ** 
-# tmrca        0.0653199  0.0008903    73.37  < 2e-16 ***
-# Multiple R-squared:  0.9762,	Adjusted R-squared:  0.9761
+summary(m.diversity)
+# (Intercept)   3.254e-03  1.050e-05  309.81  < 2e-16 ***
+# thetaC        9.275e-01  6.357e-03  145.90  < 2e-16 ***
+# rhoC          9.024e-02  1.876e-02    4.81 1.91e-06 ***
+# tmrcaC        4.077e-03  4.379e-05   93.09  < 2e-16 ***
+# thetaC:tmrcaC 1.218e+00  2.514e-02   48.46  < 2e-16 ***
 
 # type 2 anova
-anova.diversity <- Anova(m.diversity.bc)
+anova.diversity <- Anova(m.diversity)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
+
 anova.diversity
-# Analysis of Variance Table
-# Df  Sum Sq Mean Sq F value     Pr(>F)  VarExp
-# theta     0.300157   1 11912.4867 0.0000000 0.66546
-# rho       0.000245   1     9.7362 0.0018941 0.00054
-# tmrca     0.135632   1  5382.8809 0.0000000 0.30070
-# Residuals 0.015017 596                      0.03329
 
-cor.tab[1,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
-                 anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 50)
+cor.tab[1,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
+                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 50)
 
-# Because of auto-correlation we compute p-values for the variables using a GLS
-g.diversity <- gls(diversity ~ theta + rho + tmrca, data = inf.lands, corr = corAR1(0, ~bin))
+g.diversity1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC, 
+                    data = inf.lands, weights = varPower(0, ~tmrcaC), corr = corAR1(0, ~bin), method = "ML")
 
-summary(g.diversity)
-# Parameter estimate(s):
-#  Phi 
-# 0.2579507 
+g.diversity2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC, 
+                    data = inf.lands, corr = corAR1(0, ~bin), method = "ML")
 
-# Coefficients:
-#  Value  Std.Error   t-value p-value
-# (Intercept) -0.0037347 0.00049822 -7.496035  0.0000
-# theta        0.9737686 0.03737108 26.056741  0.0000
-# rho         -0.1307381 0.12647873 -1.033676  0.3108
-# tmrca        0.0040447 0.00053973  7.493863  0.0000
+AIC(g.diversity1, g.diversity2)
 
+summary(g.diversity2)
 
+vif(g.diversity2)
+# thetaC          rhoC        tmrcaC thetaC:tmrcaC 
+# 1.107302      1.022703      1.103215      1.040263
 
 ###################################################
 #
@@ -1296,65 +1286,66 @@ theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
 lands.plot.200k <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
-cowplot::save_plot("landscapes.200kb.phased.pdf", lands.plot, base_width = 9, base_height = 15)
+cowplot::save_plot("landscapes.200kb.phased.pdf", lands.plot.200k, base_width = 9, base_height = 15)
 
 
 
 # Linear model 
+inf.lands$thetaC <- inf.lands$theta - mean(inf.lands$theta)
+inf.lands$tmrcaC <- inf.lands$tmrca - mean(inf.lands$tmrca)
+inf.lands$rhoC <- inf.lands$rho - mean(inf.lands$rho)
 
-m.diversity <- lm(diversity ~ theta + rho + tmrca+ theta*tmrca, data = inf.lands)
-plot(m.diversity, which = 2)
+
+plot(diversity~theta, data = inf.lands)
+plot(diversity~tmrca, data = inf.lands)
+plot(diversity~rho, data = inf.lands)  
+
+plot(theta~tmrca, data = inf.lands)
+plot(tmrca~rho, data = inf.lands)
+plot(theta~rho, data = inf.lands)
+
+m.diversity <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC, data = inf.lands)
+
 plot(y=resid(m.diversity, type = "pearson"), x=fitted(m.diversity))
+dwtest(m.diversity)
+hmctest(m.diversity)
+hist(resid(m.diversity))
 
-
-bc.diversity <- boxcox(m.diversity, lambda = seq(0.4, 1.2, len = 500))
-l <- bc.diversity$x[which.max(bc.diversity$y)]
-m.diversity.bc <- update(m.diversity, (diversity^l -1)/l~.)
-plot(m.diversity.bc, which = 2)
-
-shapiro.test(resid(m.diversity.bc)) #**
-hist(resid(m.diversity.bc), nclass = 30) # not too bad?
-hmctest(m.diversity.bc, nsim = 3000) # NS
-dwtest(m.diversity.bc) # **
-Box.test(resid(m.diversity.bc)[order(predict(m.diversity.bc))], type = "Ljung-Box") # NS
-
-summary(m.diversity.bc)
-# Coefficients:
-# Estimate Std. Error t value Pr(>|t|)    
-# (Intercept) -1.785113   0.001346 -1326.384   <2e-16 ***
-# theta       11.181677   0.171113    65.347   <2e-16 ***
-# rho         -0.088707   0.559844    -0.158    0.874    
-# tmrca        0.048154   0.001500    32.102   <2e-16 *
-# Multiple R-squared:  0.9801,	Adjusted R-squared:  0.9797
+summary(m.diversity)
+# (Intercept)   3.310e-03  1.760e-05 188.038   <2e-16 ***
+# thetaC        9.402e-01  1.150e-02  81.739   <2e-16 ***
+# rhoC          6.181e-02  3.848e-02   1.606     0.11    
+# tmrcaC        3.959e-03  9.998e-05  39.596   <2e-16 ***
+# thetaC:tmrcaC 1.151e+00  6.188e-02  18.597   <2e-16 ***
 
 # type 2 anova
-anova.diversity <- Anova(m.diversity.bc)
+anova.diversity <- Anova(m.diversity)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
-anova.diversity
-# theta     0.041214   1 4270.2126 0.00000 0.78399
-# rho       0.000000   1    0.0251 0.87432 0.00000
-# tmrca     0.009946   1 1030.5165 0.00000 0.18920
-# Residuals 0.001409 146                   0.02680
 
-cor.tab[2,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
+anova.diversity
+# thetaC        3.1068e-04   1 7272.7597 0.00000 0.77112
+# rhoC          1.1000e-07   1    2.5807 0.11035 0.00027
+# tmrcaC        7.1136e-05   1 1665.2548 0.00000 0.17656
+# thetaC:tmrcaC 1.4774e-05   1  345.8588 0.00000 0.03667
+# Residuals     6.1940e-06 145                   0.01537
+
+cor.tab[2,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 200)
 
-# Because of auto-correlation we compute p-values for the variables using a GLS
-g.diversity <- gls(diversity ~ theta + rho + tmrca, data = inf.lands, corr = corAR1(0, ~bin))
+g.diversity <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC,
+                   data = inf.lands, weights = varPower(0, ~tmrcaC), corr = corAR1(0, ~bin))
 
 summary(g.diversity)
-# Parameter estimate(s):
-#  Phi 
-# 0.2078107 
+# (Intercept)   0.0032884 0.00002155 152.61775  0.0000
+# thetaC        0.9288933 0.01244186  74.65874  0.0000
+# rhoC          0.0490388 0.03528678   1.38972  0.1667
+# tmrcaC        0.0039943 0.00011366  35.14187  0.0000
+# thetaC:tmrcaC 1.0940166 0.06580156  16.62600  0.0000
 
-# Coefficients:
-#  Value  Std.Error   t-value p-value
-# (Intercept) -0.0037655 0.00016568 -22.72800  0.0000
-# theta        0.9731124 0.02373102  41.00593  0.0000
-# rho         -0.1274976 0.07091808  -1.79782  0.0743
-# tmrca        0.0040808 0.00018333  22.25969  0.0000
-
+vif(g.diversity)
+# thetaC          rhoC        tmrcaC thetaC:tmrcaC
+# 1.098983      1.054555      1.085387      1.049645
 
 ###################################################
 #
@@ -1379,13 +1370,6 @@ joint.theta.1M <- read.table("maps/rep_1.joint.theta.block.1.1Mb.0-29999999.bedg
 inf.lands <- as.data.frame(cbind(joint.diversity.1M$avg, joint.theta.1M$sample_mean, joint.rho.1M$sample_mean, joint.tmrca.1M$avg))
 names(inf.lands) <- c("diversity", "theta", "rho", "tmrca")
 inf.lands$bin <- 1:nrow(inf.lands)
-
-cor.mat <- cor(inf.lands[,1:4], method = "spearman")
-# non-significant correlations
-cor.mat[3, 1] <- 0
-cor.mat[3, 2] <- 0
-cor.mat[4, 3] <- 0
-cor.mat[3, 4] <- 0
 
 # does same analyses using the TRUE, SIMULATED landscapes
 sim.lands <- as.data.frame(cbind(joint.diversity.1M$avg, sim.theta.1M$sim, sim.rho.1M$sim, sim.tmrca.1M$tmrca))
@@ -1441,24 +1425,35 @@ theme_set(theme_cowplot(font_size = 12))
 legend <- get_legend(rho.map + theme(legend.position="bottom"))
 p <- plot_grid(diversity.map, theta.map, rho.map, tmrca.map, nrow = 4, ncol = 1, labels = NULL, label_size = 18, scale = 0.9)
 lands.plot.1M <- plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1), scale = c(1, 0.2))
-cowplot::save_plot("landscapes.1Mb.phased.pdf", lands.plot, base_width = 9, base_height = 15)
+cowplot::save_plot("landscapes.1Mb.phased.pdf", lands.plot.1M, base_width = 9, base_height = 15)
 
 
 
 
 # Linear model 
 
-m.diversity <- lm(diversity ~ theta + rho + tmrca, data = inf.lands)
-plot(m.diversity, which = 2)
+# centering
+inf.lands$thetaC <- inf.lands$theta - mean(inf.lands$theta)
+inf.lands$tmrcaC <- inf.lands$tmrca - mean(inf.lands$tmrca)
+inf.lands$rhoC <- inf.lands$rho - mean(inf.lands$rho)
 
-shapiro.test(resid(m.diversity)) # NS
-hist(resid(m.diversity.bc), nclass = 30) 
-hmctest(m.diversity, nsim = 3000) # NS
-dwtest(m.diversity) # NS
-Box.test(resid(m.diversity.bc)[order(predict(m.diversity))], type = "Ljung-Box") # *
+
+plot(diversity~theta, data = inf.lands)
+plot(diversity~tmrca, data = inf.lands)
+plot(diversity~rho, data = inf.lands)  
+
+plot(theta~tmrca, data = inf.lands)
+plot(tmrca~rho, data = inf.lands)
+plot(theta~rho, data = inf.lands)
+
+m.diversity <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC, data = inf.lands)
+
+plot(y=resid(m.diversity, type = "pearson"), x=fitted(m.diversity))
+dwtest(m.diversity)
+hmctest(m.diversity)
+hist(resid(m.diversity))
 
 summary(m.diversity)
-# Coefficients:
 # Estimate Std. Error t value Pr(>|t|)    
 # (Intercept) -0.0035935  0.0004619  -7.780 2.97e-08 ***
 # theta        0.9616656  0.0385908  24.920  < 2e-16 ***
@@ -1470,16 +1465,30 @@ summary(m.diversity)
 anova.diversity <- Anova(m.diversity)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
+
 anova.diversity
-# theta     2.7676e-05  1 620.9843 0.00000 0.87628
-# rho       7.4900e-08  1   1.6799 0.20633 0.00237
-# tmrca     2.6738e-06  1  59.9936 0.00000 0.08466
-# Residuals 1.1588e-06 26                  0.03669
+# thetaC        2.7676e-05  1 1094.3306 0.00000 0.87809
+# rhoC          9.7000e-09  1    0.3847 0.54073 0.00031
+# tmrcaC        2.6738e-06  1  105.7238 0.00000 0.08483
+# thetaC:tmrcaC 5.2650e-07  1   20.8185 0.00012 0.01670
+# Residuals     6.3230e-07 25                   0.02006
 
-cor.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
-                 anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 1000)
+cor.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
+                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 1000)
 
+g.diversity <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC*tmrcaC,
+                   data = inf.lands, corr = corAR1(0, ~bin))
 
+summary(g.diversity)
+# (Intercept)   0.0033747 0.0000422 79.91382  0.0000
+# thetaC        0.9396730 0.0281665 33.36143  0.0000
+# rhoC          0.1067068 0.1018576  1.04761  0.3048
+# tmrcaC        0.0047202 0.0004235 11.14652  0.0000
+# thetaC:tmrcaC 2.1533778 0.4428766  4.86225  0.0001
+
+vif(g.diversity)
+# thetaC          rhoC        tmrcaC thetaC:tmrcaC 
+# 1.120283      1.303918      1.126846      1.368307
 
 ###################################################
 #
@@ -1487,206 +1496,219 @@ cor.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
 #
 ###################################################
 
+
 # 50kb
-sim.lands <- as.data.frame(cbind(joint.diversity.50k$avg, sim.theta.50k$sim, sim.rho.50k$sim, sim.tmrca.50k$tmrca))
-names(sim.lands) <- c("diversity", "theta", "rho", "tmrca")
+sim.lands.50kb <- as.data.frame(cbind(joint.diversity.50k$avg, sim.theta.50k$sim, sim.rho.50k$sim, sim.tmrca.50k$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
 
-hist(sim.lands$diversity)
-hist(sim.lands$rho)
-hist(sim.lands$theta)
-hist(sim.lands$tmrca)
 
-# can it be due to auto-correlation?
-cor.test(~theta+tmrca, data = sim.lands, method = "spearman") 
-cor.test(~theta+rho, data = sim.lands, method = "spearman") 
-cor.test(~rho+tmrca, data = sim.lands, method = "spearman") 
+hist(sim.lands.50kb$diversity)
+hist(sim.lands.50kb$rho)
+hist(sim.lands.50kb$theta)
+hist(sim.lands.50kb$tmrca)
 
-plot(theta~tmrca, data = sim.lands)
-plot(theta~rho, data = sim.lands)
-plot(tmrca~rho, data = sim.lands)
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands)
-plot(diversity~tmrca, data = sim.lands)
-plot(diversity~rho, data = sim.lands)
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
 
 # centering
-sim.lands$thetaC <- sim.lands$theta - mean(sim.lands$theta)
-sim.lands$tmrcaC <- sim.lands$tmrca - mean(sim.lands$tmrca)
-sim.lands$rhoC <- sim.lands$rho - mean(sim.lands$rho)
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
 
-sim.lands$bin <- 1:nrow(sim.lands)
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
 
-# full models
-g.diversity0 <- gls(diversity ~ 1, data = sim.lands, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
-g.diversity1 <- gls(diversity ~ thetaC, data = sim.lands, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
-g.diversity2 <- gls(diversity ~ tmrcaC, data = sim.lands, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
-g.diversity3 <- gls(diversity ~ rhoC, data = sim.lands, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
-g.diversity4 <- gls(diversity ~ thetaC + tmrcaC, data = sim.lands, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
-g.diversity5 <- gls(diversity ~ thetaC + tmrcaC + thetaC:tmrcaC, data = sim.lands, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
 
-AIC(g.diversity0, g.diversity1, g.diversity2, g.diversity3, g.diversity4, g.diversity5)
-
-hist(resid(g.diversity5,type = "pearson"))
-plot(resid(g.diversity5,type = "pearson")~fitted(g.diversity5))
-
-
-R2.gls.table <- as.data.frame(matrix(ncol = 4, nrow = 7))
-names(R2.gls.table) <- c("Model", "R2.lik", "Test_H0", "Test_p-value")
-
-R2.lik(g.diversity1, g.diversity0)
-anova(g.diversity1, g.diversity0)
-R2.gls.table[1,] <- c("theta", 78.2, "null", 0.0001)
-
-R2.lik(g.diversity2, g.diversity0)
-anova(g.diversity2, g.diversity0)
-R2.gls.table[2,] <- c("tmrca", 38.97, "null", 0.0001)
-
-R2.lik(g.diversity3, g.diversity0)
-anova(g.diversity3, g.diversity0)
-R2.gls.table[3,] <- c("rho", 0, "null", 0.86)
-
-R2.lik(g.diversity4, g.diversity1)
-anova(g.diversity4, g.diversity1)
-R2.gls.table[4,] <- c("theta+tmrca", 53.3, "theta", 0.0001)
-
-R2.lik(g.diversity4, g.diversity2)
-anova(g.diversity4, g.diversity2)
-R2.gls.table[5,] <- c("theta+tmrca", 83.3, "tmrca", 0.0001)
-
-R2.lik(g.diversity5, g.diversity4)
-anova(g.diversity5, g.diversity4)
-R2.gls.table[6,] <- c("theta+tmrca+interaction", 49.83, "theta+tmrca", 0.0001)
-
-R2.lik(g.diversity5, g.diversity0)
-anova(g.diversity5, g.diversity0)
-R2.gls.table[7,] <- c("theta+tmrca+interaction", 94.89, "null", 0.0001)
-
-cor.tab[4,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
-                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 50)
-
-vif(g.diversity5)
-
-summary(g.diversity5)
-# Coefficients:
-# Value  Std.Error   t-value p-value
-# (Intercept)   0.0033429 0.00001656 201.83061       0
-# thetaC        0.9727865 0.00780016 124.71369       0
-# tmrcaC        0.0033390 0.00007149  46.70317       0
-# thetaC:tmrcaC 1.0412542 0.03939338  26.43221       0
-
-
-
-# 200kb
-sim.lands <- as.data.frame(cbind(joint.diversity.200k$avg, sim.theta.200k$sim, sim.rho.200k$sim, sim.tmrca.200k$tmrca))
-names(sim.lands) <- c("diversity", "theta", "rho", "tmrca")
-
-sim.lands$theta <- sim.lands$theta - mean(sim.lands$theta)
-sim.lands$tmrca <- sim.lands$tmrca - mean(sim.lands$tmrca)
-sim.lands$rho <- sim.lands$rho - mean(sim.lands$rho)
-
-hist(sim.lands$diversity)
-hist(sim.lands$rho)
-hist(sim.lands$theta)
-hist(sim.lands$tmrca)
-
-cor.test(~theta+tmrca, data = sim.lands, method = "spearman") 
-cor.test(~theta+rho, data = sim.lands, method = "spearman") 
-cor.test(~rho+tmrca, data = sim.lands, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands)
-plot(theta~rho, data = sim.lands)
-plot(tmrca~rho, data = sim.lands)
-
-plot(diversity~theta, data = sim.lands)
-plot(diversity~tmrca, data = sim.lands)
-plot(diversity~rho, data = sim.lands)
-
-m.diversity <- lm(diversity ~ theta + rho + tmrca + theta:tmrca, data = sim.lands)
-plot(y=resid(m.diversity, type = "pearson"), x=fitted(m.diversity))
-hist(resid(m.diversity))
-plot(m.diversity, which = 2)
-
-summary(m.diversity)
+summary(m.div.50kb)
 # Coefficients:
 # Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)  3.359e-03  2.304e-05 145.778   <2e-16 ***
-# theta        9.791e-01  1.340e-02  73.061   <2e-16 ***
-# rho         -3.627e-04  2.078e-02  -0.017    0.986    
-# tmrca        3.335e-03  1.473e-04  22.644   <2e-16 ***
-# theta:tmrca  1.060e+00  8.700e-02  12.187   <2e-16 ***
-# rho:tmrca    1.576e-01  1.606e-01   0.981    0.328    
+# (Intercept)   3.346e-03  1.557e-05 214.941   <2e-16 ***
+# thetaC        9.656e-01  8.102e-03 119.181   <2e-16 ***
+# tmrcaC        3.329e-03  5.719e-05  58.204   <2e-16 ***
+# rhoC          3.861e-03  1.005e-02   0.384    0.701    
+# thetaC:tmrcaC 1.052e+00  3.489e-02  30.161   <2e-16 ***
 
-# Residual standard error: 0.000274 on 144 degrees of freedom
-# Multiple R-squared:  0.9798,	Adjusted R-squared:  0.9791 
-# F-statistic:  1395 on 5 and 144 DF,  p-value: < 2.2e-16
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.013678      1.013298      1.006753      1.006017
 
-interact_plot(m.diversity, pred = theta, modx = tmrca)
-
-anova.diversity <- Anova(m.diversity)
+anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-anova.diversity
-# Anova Table (Type II tests)
+cor.tab[4,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[4]) * 100,
+                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[2] * 100, 50)
 
-# Response: diversity
-# Sum Sq  Df   F value  Pr(>F)  VarExp
-# theta       0.00040927   1 5451.8527 0.00000 0.83745
-# rho         0.00000001   1    0.1182 0.73154 0.00002
-# tmrca       0.00005740   1  764.5908 0.00000 0.11745
-# theta:tmrca 0.00001115   1  148.5270 0.00000 0.02282
-# rho:tmrca   0.00000007   1    0.9627 0.32817 0.00015
-# Residuals   0.00001081 144                   0.02212
+# 
+g.diversity.50kb <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                         data = sim.lands.50kb, cor = corAR1(0, ~bin), method = "ML")
 
-cor.tab[5,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
-                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 200)
+summary(g.diversity.50kb)
+# Coefficients:
+# Value  Std.Error   t-value p-value
+# (Intercept)   0.0033459 0.00002474 135.24589  0.0000
+# thetaC        0.9497193 0.01092082  86.96412  0.0000
+# tmrcaC        0.0033591 0.00005614  59.83852  0.0000
+# rhoC          0.0023547 0.01154079   0.20403  0.8384
+# thetaC:tmrcaC 1.0541617 0.03239511  32.54076  0.0000
+
+
+# 200kb
+sim.lands.200kb <- as.data.frame(cbind(joint.diversity.200k$avg, sim.theta.200k$sim, sim.rho.200k$sim, sim.tmrca.200k$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+sim.lands.200kb$theta <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrca <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rho <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+hist(sim.lands.200kb$diversity)
+hist(sim.lands.200kb$rho)
+hist(sim.lands.200kb$theta)
+hist(sim.lands.200kb$tmrca)
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.200kb)
+plot(theta~rho, data = sim.lands.200kb)
+plot(tmrca~rho, data = sim.lands.200kb)
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+# Coefficients:
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   3.364e-03  2.258e-05 148.947   <2e-16 ***
+# thetaC        9.774e-01  1.329e-02  73.564   <2e-16 ***
+# tmrcaC        3.256e-03  1.232e-04  26.434   <2e-16 ***
+# rhoC          6.700e-03  1.949e-02   0.344    0.732    
+# thetaC:tmrcaC 1.070e+00  8.639e-02  12.387   <2e-16 ***
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+cor.tab[5,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[4]) * 100,
+                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[2] * 100, 200)
+
+# 
+g.diversity.200kb <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                         data = sim.lands.200kb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.diversity.200kb)
+# Coefficients:
+# Value  Std.Error   t-value p-value
+# (Intercept)   0.0033430 0.00001556 214.82327  0.0000
+# thetaC        0.9788779 0.00918391 106.58617  0.0000
+# tmrcaC        0.0032101 0.00016997  18.88659  0.0000
+# rhoC          0.0116600 0.01312824   0.88816  0.3759
+# thetaC:tmrcaC 1.0729407 0.11090158   9.67471  0.0000
+
+vif(g.diversity.200kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.002986      1.011348      1.016106      1.004828 
 
 
 
 # 1Mb
-sim.lands <- as.data.frame(cbind(joint.diversity.1M$avg, sim.theta.1M$sim, sim.rho.1M$sim, sim.tmrca.1M$tmrca))
-names(sim.lands) <- c("diversity", "theta", "rho", "tmrca")
+sim.lands.1Mb <- as.data.frame(cbind(joint.diversity.1M$avg, sim.theta.1M$sim, sim.rho.1M$sim, sim.tmrca.1M$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
 
-sim.lands$theta <- sim.lands$theta - mean(sim.lands$theta)
-sim.lands$tmrca <- sim.lands$tmrca - mean(sim.lands$tmrca)
-sim.lands$rho <- sim.lands$rho - mean(sim.lands$rho)
+sim.lands.1Mb$theta <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrca <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rho <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
 
-hist(sim.lands$diversity)
-hist(sim.lands$rho)
-hist(sim.lands$theta)
-hist(sim.lands$tmrca)
+hist(sim.lands.1Mb$diversity)
+hist(sim.lands.1Mb$rho)
+hist(sim.lands.1Mb$theta)
+hist(sim.lands.1Mb$tmrca)
 
-cor.test(~theta+tmrca, data = sim.lands, method = "spearman") 
-cor.test(~theta+rho, data = sim.lands, method = "spearman") 
-cor.test(~rho+tmrca, data = sim.lands, method = "spearman") 
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-m.diversity <- lm(diversity ~ theta + rho + tmrca + theta:tmrca + rho:tmrca, data = sim.lands)
-plot(y=resid(m.diversity, type = "pearson"), x=fitted(m.diversity))
-hist(resid(m.diversity))
-plot(m.diversity, which = 2)
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
 
-summary(m.diversity)
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
 # Coefficients:
-# Estimate Std. Error   t value Pr(>|t|)    
-# (Intercept) -1.0390655  0.0005530 -1878.884  < 2e-16 ***
-# theta        1.1869697  0.0453478    26.175  < 2e-16 ***
-# rho          0.0097638  0.0715858     0.136    0.893    
-# tmrca        0.0036510  0.0005649     6.463 7.54e-07 ***
-# Multiple R-squared:  0.9695,	Adjusted R-squared:  0.966 
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   3.402e-03  3.967e-05  85.759  < 2e-16 ***
+# thetaC        9.775e-01  3.938e-02  24.821  < 2e-16 ***
+# tmrcaC        3.006e-03  4.736e-04   6.347 1.21e-06 ***
+# rhoC          5.781e-03  6.109e-02   0.095    0.925    
+# thetaC:tmrcaC 2.755e-02  5.086e-01   0.054    0.957    
 
-anova.diversity <- anova(m.diversity.bc)
+anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-anova.diversity
-# theta      1 5.0617e-05 5.0617e-05 783.321  0.000 0.91932
-# rho        1 6.3000e-08 6.3000e-08   0.969  0.334 0.00114
-# tmrca      1 2.6990e-06 2.6990e-06  41.772  0.000 0.04902
-# Residuals 26 1.6800e-06 6.5000e-08                0.03051
+cor.tab[6,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[4]) * 100,
+                  anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[2] * 100, 1000)
 
+# 
+g.diversity.1Mb <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                       data = sim.lands.1Mb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
 
-cor.tab[6,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[3]) * 100,
-                 anova.diversity$VarExp[1] * 100, 0, anova.diversity$VarExp[3] * 100, 1000)
+summary(g.diversity.1Mb)
+# Coefficients:
+# Value  Std.Error   t-value p-value
+# (Intercept)    0.0034117 0.00001947 175.20689  0.0000
+# thetaC         1.0047440 0.02517057  39.91741  0.0000
+# tmrcaC         0.0030554 0.00022456  13.60658  0.0000
+# rhoC          -0.0549662 0.04303333  -1.27729  0.2132
+# thetaC:tmrcaC -0.0894952 0.24683676  -0.36257  0.7200
+
+vif(g.diversity.1Mb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.306371      1.191145      1.202768      1.189138
 
 ########################################
 #
@@ -1708,3 +1730,4 @@ cor.plot <- cor.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Exp
 cor.plot <- cor.plot + theme(axis.title.x = element_text(size = 16), axis.title.y = element_text(size = 16))
 
 ggsave("lm.cor.sim.pdf", cor.plot, width = 7, height = 7)
+
