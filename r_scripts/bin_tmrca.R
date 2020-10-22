@@ -1,5 +1,5 @@
 
-
+library(ape)
 library(plyr)
 library(tidyverse)
 
@@ -11,7 +11,7 @@ rep_idx <- as.character(args[1])
 
 
 # gets nucleotide spans of each tree
-arg <- readLines(paste("/rep_", rep_idx, "/rep_", rep_idx, ".newick", sep = ""))
+arg <- readLines(paste("rep_", rep_idx, "/rep_", rep_idx, ".newick", sep = ""))
 tree.spans <- list()
 for(i in 1:length(arg)) {
   tree.spans[i] <- data.matrix(strsplit(arg[[i]], "]", fixed = F))
@@ -30,7 +30,7 @@ for(i in 1:length(tree.spans)) {
 nuc.spans <- as.numeric(nuc.spans)
 summary(nuc.spans)
 
-sim.ARG <- read.tree(paste("/rep_", rep_idx, "/rep_", rep_idx, ".newick", sep = ""))
+sim.ARG <- read.tree(paste("rep_", rep_idx, "/rep_", rep_idx, ".newick", sep = ""))
 
 lst <- llply(sim.ARG, cophenetic.phylo, .progress = "text")
 
