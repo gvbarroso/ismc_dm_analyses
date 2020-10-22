@@ -24,27 +24,25 @@ colnames(r2.chr.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Bin_size(kb)")
 theme.blank <- theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                                   panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-reps <- character(length = 10)
-for(i in 1:10) {
+nreps <- 10
+
+reps <- character(length = nreps)
+for(i in 1:nreps) {
   reps[i] <- paste("rep_", i, sep = "")
 }
 
 ##################c####################
 #
-# Drosophila-like neutral simulations of 2L vs Real Data 2l
+# Drosophila-like neutral simulations of 2L vs Real Data 2L
 #
 ########################################
 
 # building linear models
 
-nreps <- 10
-cnames <- character(length = nreps)
-for(i in 1:nreps) { cnames[i] <- paste("rep_", i, sep = "") }
-
 # 50 kb
-r2.sim.tab.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
-row.names(r2.sim.tab.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
-colnames(r2.sim.tab.50kb) <- cnames
+r2.inf.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.inf.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.inf.50kb) <- reps
 
 # sim landscapes
 sim.rho.50k <- read.table("dm.sim.rho.50000.txt")
@@ -107,11 +105,11 @@ anova.diversity <- Anova(m.diversity.rep_1)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
   
-r2.sim.tab.50kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 1] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 1] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 1] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
 
 
 # rep 2
@@ -169,11 +167,11 @@ anova.diversity <- Anova(m.diversity.rep_2)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 2] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 2] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 2] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
   
 
 # rep_3
@@ -231,11 +229,11 @@ anova.diversity <- Anova(m.diversity.rep_3)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 3] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 3] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 3] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_4
@@ -293,11 +291,11 @@ anova.diversity <- Anova(m.diversity.rep_4)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 4] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 4] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 4] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_5
@@ -355,11 +353,11 @@ anova.diversity <- Anova(m.diversity.rep_5)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 5] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 5] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 5] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_6
@@ -417,11 +415,11 @@ anova.diversity <- Anova(m.diversity.rep_6)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 6] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 6] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 6] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -480,11 +478,11 @@ anova.diversity <- Anova(m.diversity.rep_7)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 7] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 7] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 7] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -544,11 +542,11 @@ anova.diversity <- Anova(m.diversity.rep_8)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 8] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 8] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 8] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -607,11 +605,11 @@ anova.diversity <- Anova(m.diversity.rep_9)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 9] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 9] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 9] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
 
 # rep_10
 p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
@@ -668,14 +666,14 @@ anova.diversity <- Anova(m.diversity.rep_10)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.50kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.50kb[2, 10] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.50kb[3, 10] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.50kb[4, 10] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.50kb[5, 10] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 10] <- anova.diversity$VarExp[4] * 100
 
-r2.sim.tab.50kb$average <- rowMeans(r2.sim.tab.50kb)
-r2.sim.tab.50kb <- transform(r2.sim.tab.50kb, sd=apply(r2.sim.tab.50kb, 1, sd, na.rm = TRUE))
+r2.inf.50kb$average <- rowMeans(r2.inf.50kb)
+r2.inf.50kb <- transform(r2.inf.50kb, sd=apply(r2.inf.50kb, 1, sd, na.rm = TRUE))
 
 # plots
 rho.plot <- as.data.frame(cbind(inf.lands.50k.rep1$bin,
@@ -728,9 +726,9 @@ theta.map.50kb <- theta.map.50kb + theme(text = element_text(size = 20), axis.ti
 
 
 # 200 kb
-r2.sim.tab.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
-row.names(r2.sim.tab.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
-colnames(r2.sim.tab.200kb) <- cnames
+r2.inf.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.inf.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.inf.200kb) <- reps
 
 # sim landscapes
 sim.rho.200k <- read.table("dm.sim.rho.2e+05.txt")
@@ -793,11 +791,11 @@ anova.diversity <- Anova(m.diversity.rep_1)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 1] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 1] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 1] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
 
 
 # rep 2
@@ -855,11 +853,11 @@ anova.diversity <- Anova(m.diversity.rep_2)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 2] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 2] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 2] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 2] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 2] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_3
@@ -917,11 +915,11 @@ anova.diversity <- Anova(m.diversity.rep_3)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 3] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 3] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 3] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 3] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 3] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_4
@@ -979,11 +977,11 @@ anova.diversity <- Anova(m.diversity.rep_4)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 4] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 4] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 4] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 4] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 4] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_5
@@ -1041,11 +1039,11 @@ anova.diversity <- Anova(m.diversity.rep_5)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 5] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 5] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 5] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 5] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 5] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_6
@@ -1103,11 +1101,11 @@ anova.diversity <- Anova(m.diversity.rep_6)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 6] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 6] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 6] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 6] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 6] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -1166,11 +1164,11 @@ anova.diversity <- Anova(m.diversity.rep_7)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 7] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 7] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 7] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -1230,11 +1228,11 @@ anova.diversity <- Anova(m.diversity.rep_8)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 8] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 8] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 8] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 8] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 8] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -1293,11 +1291,11 @@ anova.diversity <- Anova(m.diversity.rep_9)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 9] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 9] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 9] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 9] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 9] <- anova.diversity$VarExp[4] * 100
 
 # rep_10
 p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
@@ -1354,14 +1352,14 @@ anova.diversity <- Anova(m.diversity.rep_10)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.200kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.200kb[2, 10] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.200kb[3, 10] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.200kb[4, 10] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.200kb[5, 10] <- anova.diversity$VarExp[4] * 100
+r2.inf.200kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.200kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.inf.200kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.inf.200kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.inf.200kb[5, 10] <- anova.diversity$VarExp[4] * 100
 
-r2.sim.tab.200kb$average <- rowMeans(r2.sim.tab.200kb)
-r2.sim.tab.200kb <- transform(r2.sim.tab.200kb, sd=apply(r2.sim.tab.200kb, 1, sd, na.rm = TRUE))
+r2.inf.200kb$average <- rowMeans(r2.inf.200kb)
+r2.inf.200kb <- transform(r2.inf.200kb, sd=apply(r2.inf.200kb, 1, sd, na.rm = TRUE))
 
 # plots
 rho.plot <- as.data.frame(cbind(inf.lands.200k.rep1$bin,
@@ -1414,9 +1412,9 @@ theta.map.200kb <- theta.map.200kb + theme(text = element_text(size = 20), axis.
 
 
 # 1 Mb
-r2.sim.tab.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
-row.names(r2.sim.tab.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
-colnames(r2.sim.tab.1Mb) <- cnames
+r2.inf.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.inf.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.inf.1Mb) <- reps
 
 # sim landscapes
 sim.rho.1M <- read.table("dm.sim.rho.1e+06.txt")
@@ -1479,11 +1477,11 @@ anova.diversity <- Anova(m.diversity.rep_1)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 1] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 1] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 1] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
 
 
 # rep 2
@@ -1541,11 +1539,11 @@ anova.diversity <- Anova(m.diversity.rep_2)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 2] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 2] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 2] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 2] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 2] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_3
@@ -1603,11 +1601,11 @@ anova.diversity <- Anova(m.diversity.rep_3)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 3] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 3] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 3] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 3] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 3] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_4
@@ -1665,11 +1663,11 @@ anova.diversity <- Anova(m.diversity.rep_4)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 4] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 4] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 4] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 4] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 4] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_5
@@ -1727,11 +1725,11 @@ anova.diversity <- Anova(m.diversity.rep_5)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 5] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 5] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 5] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 5] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 5] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_6
@@ -1789,11 +1787,11 @@ anova.diversity <- Anova(m.diversity.rep_6)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 6] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 6] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 6] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 6] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 6] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -1852,11 +1850,11 @@ anova.diversity <- Anova(m.diversity.rep_7)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 7] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 7] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 7] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -1916,11 +1914,11 @@ anova.diversity <- Anova(m.diversity.rep_8)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 8] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 8] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 8] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 8] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 8] <- anova.diversity$VarExp[4] * 100
 
 
 
@@ -1979,11 +1977,11 @@ anova.diversity <- Anova(m.diversity.rep_9)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 9] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 9] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 9] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
 
 # rep_10
 p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
@@ -2040,14 +2038,14 @@ anova.diversity <- Anova(m.diversity.rep_10)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
-r2.sim.tab.1Mb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.sim.tab.1Mb[2, 10] <- anova.diversity$VarExp[1] * 100
-r2.sim.tab.1Mb[3, 10] <- anova.diversity$VarExp[2] * 100
-r2.sim.tab.1Mb[4, 10] <- anova.diversity$VarExp[3] * 100
-r2.sim.tab.1Mb[5, 10] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 10] <- anova.diversity$VarExp[4] * 100
 
-r2.sim.tab.1Mb$average <- rowMeans(r2.sim.tab.1Mb)
-r2.sim.tab.1Mb <- transform(r2.sim.tab.1Mb, sd=apply(r2.sim.tab.1Mb, 1, sd, na.rm = TRUE))
+r2.inf.1Mb$average <- rowMeans(r2.inf.1Mb)
+r2.inf.1Mb <- transform(r2.inf.1Mb, sd=apply(r2.inf.1Mb, 1, sd, na.rm = TRUE))
 
 # plots
 rho.plot <- as.data.frame(cbind(inf.lands.1M.rep1$bin,
@@ -3132,7 +3130,7 @@ summary(m.diversity.no.tau.bc)
 
 ########################################
 #
-# Divergence --- 50kb maps for ++ resolution
+# Divergence
 #
 ########################################
 
@@ -3220,7 +3218,7 @@ pcor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity,
 
 ########################################
 #
-# Evolutionary (Protein) Rates --- 50 kb maps for ++ resolution
+# Evolutionary (Protein) Rates
 #
 ########################################
 
@@ -3395,84 +3393,528 @@ cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman")
 
 #####################
 #
-# Real landscapes
+# True (simulated) landscapes
 #
 #####################
 
-# TMRCA
+# 50 kb
+sim.rho.50kb <- read.table("Misc/dm.sim.rho.50000.txt", header = T)
+sim.theta.50kb <- read.table("Misc/dm.sim.theta.50000.txt", header = T)
 
 # rep 1
+rep_1.pi.50kb <- read.table("rep_1/rep_1.pi.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb <- read.table("rep_1/sim.tmrca.50k.map", header = T)
 
-# gets nucleotide spans of each tree
-arg <- readLines("../sim_data/rs_drosophila_2/rep_1/rep_1.newick")
-tree.spans <- list()
-for(i in 1:length(arg)) {
-  tree.spans[i] <- data.matrix(strsplit(arg[[i]], "]", fixed = F))
-}
-nuc.spans <- character()
-for(i in 1:length(tree.spans)) {
-  nuc.spans[i] <- tree.spans[[i]][1]
-}
-tree.spans <- character()
-for(i in 1:length(nuc.spans)) {
-  tree.spans[i] <- data.matrix(strsplit(nuc.spans[[i]], "[", fixed = T))
-}
-for(i in 1:length(tree.spans)) {
-  nuc.spans[i] <- tree.spans[[i]][2]
-}
-nuc.spans <- as.numeric(nuc.spans)
-summary(nuc.spans)
+sim.lands.50kb <- as.data.frame(cbind(rep_1.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_1.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
 
-sim.ARG <- read.tree("../sim_data/rs_drosophila_2/rep_1/rep_1.newick")
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-lst <- llply(sim.ARG, cophenetic.phylo, .progress = "text")
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
 
-compute.mean.tmrca <- function(dist.mat) {
-  row.sums <- apply(dist.mat, 1, sum)
-  total.sum <- sum(row.sums)
-  n <- ncol(dist.mat)
-  return(total.sum / (n * n - n))
-}
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
 
-trees.tmrca <- llply(lst, compute.mean.tmrca, .progress = "text")
-trees.tmrca <- as.numeric(trees.tmrca)
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
 
-tree.seq <- as.data.frame(cbind(as.numeric(trees.tmrca), as.numeric(nuc.spans)))
-row.names(tree.seq) <- 1:nrow(tree.seq)
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
 
-# converts to single-nucleotide TMRCA landscape
-tmrca.single.nuc <- list()
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
 
-pb <- txtProgressBar(min = 0, max = nrow(tree.seq), style = 3)
-for(i in 1:nrow(tree.seq)){
-  setTxtProgressBar(pb, i)
-  focal.height <- tree.seq[i, 1]
-  focal.span <- tree.seq[i, 2]
-  tmrca.single.nuc[[i]] <- rep(focal.height, focal.span)
-}
-close(pb)
+summary(m.div.50kb)
+# Coefficients:
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   3.346e-03  1.557e-05 214.941   <2e-16 ***
+# thetaC        9.656e-01  8.102e-03 119.181   <2e-16 ***
+# tmrcaC        3.329e-03  5.719e-05  58.204   <2e-16 ***
+# rhoC          3.861e-03  1.005e-02   0.384    0.701    
+# thetaC:tmrcaC 1.052e+00  3.489e-02  30.161   <2e-16 ***
 
-tmrca.single.nuc <- do.call(c, tmrca.single.nuc)
-tmrca.single.nuc <- as.data.frame(cbind(1:length(tmrca.single.nuc), tmrca.single.nuc))
-names(tmrca.single.nuc) <- c("pos", "tmrca")
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.013678      1.013298      1.006753      1.006017
 
-# 50kb
-tmrca.single.nuc$bin <- ceiling(1:nrow(tmrca.single.nuc) / 50e+3)
-sim.tmrca.50k <- ddply(.data = tmrca.single.nuc[-which(names(tmrca.single.nuc) == "pos")],
-                       .variables = "bin", .fun = colMeans, .progress = "text")
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
 
-write.table(sim.tmrca.50k, "sim.tmrca.50k.map", sep = "\t", col.names = T, row.names = F, quote = F)
+r2.sim.50kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
 
-# 200kb
-tmrca.single.nuc$bin <- ceiling(1:nrow(tmrca.single.nuc) / 200e+3)
-sim.tmrca.200k <- ddply(.data = tmrca.single.nuc[-which(names(tmrca.single.nuc) == "pos")],
-                        .variables = "bin", .fun = colMeans, .progress = "text")
+g.div.50kb.1 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                  data = sim.lands.50kb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
 
-write.table(sim.tmrca.200k, "sim.tmrca.200k.map", sep = "\t", col.names = T, row.names = F, quote = F)
+g.div.50kb.2 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                    data = sim.lands.50kb, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
 
-# 1Mb
-tmrca.single.nuc$bin <- ceiling(1:nrow(tmrca.single.nuc) / 1e+6)
-sim.tmrca.1M <- ddply(.data = tmrca.single.nuc[-which(names(tmrca.single.nuc) == "pos")],
-                      .variables = "bin", .fun = colMeans, .progress = "text")
+g.div.50kb.3 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                    data = sim.lands.50kb, weights = varPower(0, ~theta), method = "ML")
 
-write.table(sim.tmrca.1M, "sim.tmrca.1M.map", sep = "\t", col.names = T, row.names = F, quote = F)
+g.div.50kb.4 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
+                    data = sim.lands.50kb, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+# Value  Std.Error   t-value p-value
+# (Intercept)   0.0206901 0.00001905 1086.3241  0.0000
+# thetaC        1.3155987 0.00236880  555.3850  0.0000
+# tmrcaC        0.0234411 0.00026760   87.5965  0.0000
+# rhoC          0.0087173 0.00554727    1.5715  0.1166
+# thetaC:tmrcaC 1.4652196 0.03311231   44.2500  0.0000
+
+vif(g.div.50kb.3)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.003575      1.323896      1.004633      1.325415 
+
+# rep_2
+rep_2.pi.50kb <- read.table("rep_2/rep_2.pi.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb <- read.table("rep_2/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_2.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_2.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Coefficients:
+# Estimate Std. Error  t value Pr(>|t|)    
+# (Intercept)    2.057e-02  2.047e-05 1005.301   <2e-16 ***
+# thetaC         1.299e+00  2.448e-03  530.815   <2e-16 ***
+# tmrcaC         2.385e-02  2.831e-04   84.273   <2e-16 ***
+# rhoC          -1.009e-02  6.919e-03   -1.459    0.145    
+# thetaC:tmrcaC  1.515e+00  3.222e-02   47.015   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.009894      1.015137      1.005565      1.018886 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+# rep_3
+rep_3.pi.50kb <- read.table("rep_3/rep_3.pi.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb <- read.table("rep_3/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_3.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_3.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   0.0206720  0.0000187 1105.47   <2e-16 ***
+# thetaC        1.3103632  0.0022312  587.29   <2e-16 ***
+# tmrcaC        0.0236099  0.0002297  102.80   <2e-16 ***
+# rhoC          0.0064418  0.0063164    1.02    0.308    
+# thetaC:tmrcaC 1.5012872  0.0254605   58.97   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.005320      1.012606      1.004153      1.011333 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+# rep_4
+rep_4.pi.50kb <- read.table("rep_4/rep_4.pi.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb <- read.table("rep_4/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_4.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_4.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   0.0206720  0.0000187 1105.47   <2e-16 ***
+# thetaC        1.3103632  0.0022312  587.29   <2e-16 ***
+# tmrcaC        0.0236099  0.0002297  102.80   <2e-16 ***
+# rhoC          0.0064418  0.0063164    1.02    0.308    
+# thetaC:tmrcaC 1.5012872  0.0254605   58.97   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.002369      1.001952      1.002792      1.001253 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+# rep_5
+rep_5.pi.50kb <- read.table("rep_5/rep_5.pi.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb <- read.table("rep_5/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_5.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_5.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)   2.062e-02  1.967e-05 1048.31   <2e-16 ***
+# thetaC        1.308e+00  2.348e-03  557.06   <2e-16 ***
+# tmrcaC        2.374e-02  2.674e-04   88.80   <2e-16 ***
+# rhoC          1.528e-03  6.645e-03    0.23    0.818    
+# thetaC:tmrcaC 1.471e+00  3.126e-02   47.05   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.005626      1.003205      1.004046      1.005141 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+# rep_6
+rep_6.pi.50kb <- read.table("rep_6/rep_6.pi.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb <- read.table("rep_6/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_6.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_6.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)    2.058e-02  2.073e-05 993.114   <2e-16 ***
+# thetaC         1.304e+00  2.479e-03 526.030   <2e-16 ***
+# tmrcaC         2.363e-02  2.752e-04  85.861   <2e-16 ***
+# rhoC          -1.179e-02  7.005e-03  -1.683   0.0929 .  
+# thetaC:tmrcaC  1.439e+00  3.174e-02  45.345   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.008799      1.002153      1.004015      1.008954 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+# rep_7
+rep_7.pi.50kb <- read.table("rep_7/rep_7.pi.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb <- read.table("rep_7/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_7.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_7.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error  t value Pr(>|t|)    
+# (Intercept)    2.061e-02  1.945e-05 1059.614   <2e-16 ***
+# thetaC         1.313e+00  2.320e-03  565.892   <2e-16 ***
+# tmrcaC         2.389e-02  2.547e-04   93.801   <2e-16 ***
+# rhoC          -5.753e-03  6.560e-03   -0.877    0.381    
+# thetaC:tmrcaC  1.491e+00  3.019e-02   49.398   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC
+# 1.005903      1.005336      1.002241      1.003949 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_8
+rep_8.pi.50kb <- read.table("rep_8/rep_8.pi.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb <- read.table("rep_8/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_8.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_8.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)    2.057e-02  2.065e-05 996.284   <2e-16 ***
+# thetaC         1.303e+00  2.468e-03 527.803   <2e-16 ***
+# tmrcaC         2.380e-02  2.848e-04  83.583   <2e-16 ***
+# rhoC          -8.730e-04  6.970e-03  -0.125      0.9    
+# thetaC:tmrcaC  1.383e+00  3.162e-02  43.722   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.010112      1.021487      1.003974      1.023819 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+# rep_9
+rep_9.pi.50kb <- read.table("rep_9/rep_9.pi.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb <- read.table("rep_9/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_9.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_9.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.50kb)
+plot(theta~rho, data = sim.lands.50kb)
+plot(tmrca~rho, data = sim.lands.50kb)
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+# Estimate Std. Error  t value Pr(>|t|)    
+# (Intercept)    2.065e-02  1.899e-05 1087.271   <2e-16 ***
+# thetaC         1.308e+00  2.265e-03  577.567   <2e-16 ***
+# tmrcaC         2.404e-02  2.565e-04   93.731   <2e-16 ***
+# rhoC          -7.769e-03  6.412e-03   -1.212    0.226    
+# thetaC:tmrcaC  1.508e+00  2.888e-02   52.235   <2e-16 ***
+
+vif(m.div.50kb)
+# thetaC        tmrcaC          rhoC thetaC:tmrcaC 
+# 1.003519      1.001713      1.002537      1.001897 
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+
+
