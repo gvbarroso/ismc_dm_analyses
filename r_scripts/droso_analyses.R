@@ -5,14 +5,16 @@
 library(ppcor)
 library(MASS)
 library(reshape2)
-library(ggplot2)
+library(tidyverse)
 library(cowplot)
 library(lmtest)
 library(nlme)
 library(car)
 library(plyr)
+library(tidyverse)
 library(GenomicRanges)
 library(RColorBrewer)
+library(scales)
 
 setwd("~")
 setwd("Data/iSMC/theta_paper/real_data/")
@@ -2668,7 +2670,7 @@ dm.lands.50kb.3L <- as.data.frame(cbind(diversity.dm.50kb.3L$chromStart,
 names(dm.lands.50kb.3L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
 dm.lands.50kb.3L$bin <- 1:nrow(dm.lands.50kb.3L)
 
-# filters based on missing data ( > 25% per window)
+# filters based on missing data
 dm.lands.50kb.3L <- dm.lands.50kb.3L[which(intersect.50kb.3L == F),]
 
 dm.lands.50kb.3L$chr <- "3L"
@@ -2857,9 +2859,9 @@ g.div.dm.50kb.5 <- gls(diversity ~ (thetaC + rhoC),
 
 summary(g.div.dm.50kb.5)
 # Value   Std.Error  t-value p-value
-# (Intercept) 0.0086582 0.000023593 366.9880       0
-# thetaC      1.0990974 0.008957997 122.6945       0
-# rhoC        0.0528973 0.002560827  20.6563       0
+# (Intercept) 0.0086097 0.000024678 348.8777       0
+# thetaC      1.1009116 0.008820725 124.8097       0
+# rhoC        0.0538748 0.002446015  22.0255       0
 
 ######################################
 #
@@ -3132,11 +3134,11 @@ dwtest(m.div.dm.200kb)
 hmctest(m.div.dm.200kb, nsim = 10000) 
 
 summary(m.div.dm.200kb)
-# (Intercept)   8.501e-03  8.291e-06 1025.258   <2e-16 ***
-# thetaC        9.767e-01  3.253e-03  300.252   <2e-16 ***
-# rhoC          3.605e-03  1.546e-03    2.331   0.0204 *  
-# tmrcaC        1.113e-02  2.219e-04   50.141   <2e-16 ***
-# thetaC:tmrcaC 8.880e-01  4.677e-02   18.987   <2e-16 ***
+# Estimate Std. Error  t value Pr(>|t|)  
+# thetaC        9.748e-01  3.189e-03  305.676   <2e-16 ***
+# rhoC          1.648e-03  1.455e-03    1.133    0.258    
+# tmrcaC        1.151e-02  2.177e-04   52.875   <2e-16 ***
+# thetaC:tmrcaC 9.481e-01  4.653e-02   20.377   <2e-16 ***
   
 # type 2 ANOVA
 anova.diversity <- Anova(m.div.dm.200kb)
@@ -3167,11 +3169,11 @@ AIC(g.div.dm.200kb.1, g.div.dm.200kb.2, g.div.dm.200kb.3, g.div.dm.200kb.4)
 
 summary(g.div.dm.200kb.1)
 # Value  Std.Error  t-value p-value
-# Intercept)   0.0084988 0.00000935 908.9635  0.0000
-# thetaC        0.9728966 0.00365565 266.1347  0.0000
-# rhoC          0.0036066 0.00165622   2.1776  0.0302
-# tmrcaC        0.0110790 0.00023178  47.8001  0.0000
-# thetaC:tmrcaC 0.8919768 0.05097523  17.4982  0.0000
+# (Intercept)   0.0084663 0.00000850 995.7855  0.0000
+# thetaC        0.9729939 0.00336590 289.0738  0.0000
+# rhoC          0.0018114 0.00150698   1.2020  0.2301
+# tmrcaC        0.0113902 0.00022900  49.7394  0.0000
+# thetaC:tmrcaC 0.9323025 0.05092516  18.3073  0.0000
 
 
 # Linear model without TMRCA --> rho becomes significant
@@ -3180,9 +3182,9 @@ g.div.dm.200kb.5 <- gls(diversity ~ (thetaC + rhoC),
 
 summary(g.div.dm.200kb.5)
 # Value   Std.Error   t-value p-value
-# (Intercept) 0.0086072 0.000036015 238.98914       0
-# thetaC      1.0796433 0.012533437  86.14104       0
-# rhoC        0.0600940 0.004429202  13.56767       0
+# (Intercept) 0.0085865 0.000033641 255.23961       0
+# thetaC      1.0799930 0.012751649  84.69438       0
+# rhoC        0.0564095 0.004062451  13.88559       0
 
 ######################################
 #
@@ -3456,11 +3458,11 @@ hmctest(m.div.dm.1Mb, nsim = 10000)
 
 summary(m.div.dm.1Mb)
 # Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)   8.808e-03  1.551e-05 568.036  < 2e-16 ***
-# thetaC        9.919e-01  6.725e-03 147.497  < 2e-16 ***
-# rhoC          6.510e-03  3.034e-03   2.145   0.0353 *  
-# tmrcaC        9.525e-03  6.035e-04  15.784  < 2e-16 ***
-# thetaC:tmrcaC 4.881e-01  1.131e-01   4.315 4.99e-05 ***
+# (Intercept)   8.834e-03  1.393e-05 634.189  < 2e-16 ***
+# thetaC        9.903e-01  6.281e-03 157.658  < 2e-16 ***
+# rhoC          4.923e-03  2.728e-03   1.805   0.0748 .  
+# tmrcaC        9.833e-03  5.588e-04  17.596  < 2e-16 ***
+# thetaC:tmrcaC 5.321e-01  1.051e-01   5.061 2.56e-06 ***
 
 # type 2 ANOVA
 anova.diversity <- Anova(m.div.dm.1Mb)
@@ -3490,12 +3492,12 @@ g.div.dm.1Mb.4 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
 AIC(g.div.dm.1Mb.1, g.div.dm.1Mb.2, g.div.dm.1Mb.3, g.div.dm.1Mb.4)
 
 summary(g.div.dm.1Mb.1)
-# Value   Std.Error   t-value p-value
-# (Intercept)   0.0087767 0.00001307 671.7413  0.0000
-# thetaC        0.9802560 0.00621327 157.7682  0.0000
-# rhoC          0.0011873 0.00289132   0.4106  0.6826
-# tmrcaC        0.0104410 0.00061019  17.1110  0.0000
-# thetaC:tmrcaC 0.6526937 0.13373906   4.8804  0.0000
+# Value  Std.Error  t-value p-value
+# (Intercept)   0.0088110 0.00001282 687.3035  0.0000
+# thetaC        0.9815653 0.00605989 161.9775  0.0000
+# rhoC          0.0004502 0.00265546   0.1695  0.8658
+# tmrcaC        0.0105798 0.00056242  18.8111  0.0000
+# thetaC:tmrcaC 0.6655998 0.12262688   5.4278  0.0000
 
 
 # Linear model without TMRCA --> rho becomes significant
@@ -3503,10 +3505,10 @@ g.div.dm.1Mb.5 <- gls(diversity ~ (thetaC + rhoC),
                        data = dm.lands.1Mb, weights = varPower(0, ~thetaC), cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.div.dm.1Mb.5)
-# Value   Std.Error  t-value p-value
-# (Intercept) 0.0086582 0.000023593 366.9880       0
-# thetaC      1.0990974 0.008957997 122.6945       0
-# rhoC        0.0528973 0.002560827  20.6563       0
+# Value   Std.Error   t-value p-value
+# (Intercept) 0.0089760 0.000041316 217.25213       0
+# thetaC      1.0844249 0.019237983  56.36895       0
+# rhoC        0.0444271 0.006803601   6.52994       0
 
 ########################################
 #
@@ -3709,17 +3711,12 @@ apiss <- anova.diversity.cds$"Sum Sq"
 anova.diversity.cds$VarExp <- apiss / sum(apiss)
 
 anova.diversity.cds
-# Sum Sq   Df    F value   Pr(>F)  VarExp
-# thetaC            0.0068959    1 2.1893e+05 0.000000 0.92243
-# rhoC              0.0000001    1 3.9590e+00 0.046814 0.00002
-# tmrcaC            0.0004327    1 1.3739e+04 0.000000 0.05789
-# chr               0.0000030    3 3.1741e+01 0.000000 0.00040
-# thetaC:tmrcaC     0.0000970    1 3.0806e+03 0.000000 0.01298
-# thetaC:chr        0.0000002    3 2.3316e+00 0.072540 0.00003
-# rhoC:chr          0.0000002    3 2.3713e+00 0.068825 0.00003
-# tmrcaC:chr        0.0000015    3 1.5454e+01 0.000000 0.00020
-# thetaC:tmrcaC:chr 0.0000007    3 7.7198e+00 0.000041 0.00010
-# Residuals         0.0000444 1409                     0.00594
+# Sum Sq   Df    F value     Pr(>F)  VarExp
+# thetaC        0.0098150    1 280997.245 0.00000000 0.93230
+# rhoC          0.0000005    1     14.389 0.00015402 0.00005
+# tmrcaC        0.0005198    1  14880.323 0.00000000 0.04937
+# thetaC:tmrcaC 0.0001344    1   3847.385 0.00000000 0.01276
+# Residuals     0.0000581 1663                       0.00552
 
 # GLS
 dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
@@ -3728,10 +3725,10 @@ g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC) * chr,
                  data = dm.lands.evolrate, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.dm.cds)
-# Value  Std.Error  t-value p-value
+?# Value  Std.Error  t-value p-value
 # (Intercept)          0.0085814 0.00001683 509.9168  0.0000
 # thetaC               0.9604655 0.00602716 159.3561  0.0000
-# rhoC                 0.0017647 0.00164068   1.0756  0.2823
+# rhoC                 0.0017647 0.00164068   1.0756  0.2873
 # tmrcaC               0.0115725 0.00021044  54.9909  0.0000
 # chr2R               -0.0000826 0.00002063  -4.0039  0.0001
 # chr3L               -0.0001170 0.00001990  -5.8790  0.0000
@@ -3751,20 +3748,19 @@ summary(g.dm.cds)
 # thetaC:tmrcaC:chr3R -0.3127489 0.07676455  -4.0741  0.0000
 
 
-summary(g.dm.cds.pis)
 # correlations
 cor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, method = "spearman") 
-# 0.08, p-value 0.06
+# 0.16, p-value 5.42e-11
 cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman") 
-# 0.28 p-value 1.3e-12
+# 0.39 p-value < 2.2e-16
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
-# 0.65 p-value < 2.2e-16
+# 0.59 p-value < 2.2e-16
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
-# 0.7 p-value 2.1e-90
+# 0.66 p-value 2.1e-90
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
-# -0.01 p-value 0.76
+# -0.05 p-value 0.051
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
-# -0.4 p-value 0.34
+# -0.03 p-value 0.19
 
 # checking about rec rate
 cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
