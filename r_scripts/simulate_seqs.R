@@ -17,7 +17,7 @@ setwd(root_dir)
 sequence_length <- 30e+6
 N0 <- 1e+5
 Ne <- N0 # used when simulating fluctuating pop. sizes
-little_r <- 1e-8 # recombination rate per site per generation
+little_r <- 1e-9 # recombination rate per site per generation
 mean_rho <- 4 * N0 * little_r
 little_mu <- 2e-9 # mutation rate per site per generation
 mean_theta <- 4 * N0 * little_mu
@@ -48,9 +48,9 @@ for(i in 2:number_of_intervals) {
 }
 
 # vector of time points (in coal. units) where demographic changes occur
-time_demo_changes <- c(0.22, 1.1, 2.3)
+time_demo_changes <- c(0.5)
 # by how much the pop. size changes (past-wards at each step) at the above time points 
-fold_changes <- c(1, 25, 3.3, 10)
+fold_changes <- c(1, 10)
 
 # Now, since we have fluctuating pop. sizes, we must ajust N0 to have the (time-average) Ne that we want
 # computes total (maximum) number of generations by assuming max. scaled coal. time is equal to max. time in discretisation
@@ -60,8 +60,10 @@ num_gen_total <- 4 * Ne * max_time
 # number of generations spent in-between each pop. size change
 num_gen_ib <- 4 * Ne * time_demo_changes
 num_gen_vec <- num_gen_ib[1]
-for(i in 2:length(num_gen_ib)) {
-  num_gen_vec[i] <- num_gen_ib[i] - num_gen_ib[i - 1]
+if(length(num_gen_ib) > 1) {
+  for(i in 2:length(num_gen_ib)) {
+    num_gen_vec[i] <- num_gen_ib[i] - num_gen_ib[i - 1]
+  }
 }
 num_gen_vec <- c(num_gen_vec, num_gen_total - num_gen_vec[length(num_gen_vec)])
 
@@ -123,7 +125,7 @@ alpha_rho <- 0.5
 beta_rho <- alpha_rho
 
 # how often we change rho values along the genome (inverse of 'g' parameter described in Barroso et al.)
-rho_transition_prob <- 1e-4
+rho_transition_prob <- 5e-5
 
 # starts simulation        
 number_of_rho_transitions = 0
@@ -337,7 +339,14 @@ for(i in 1:num_reps) {
 pb <- txtProgressBar(min = 0, max = num_reps, style = 3)
 for(i in 1:num_reps) {
   setTxtProgressBar(pb, i)
+  set.seed(i)
+  
+  command_line <- readLines("scrm_commandline.txt")
+  
   full_arg <- scrm(command_line) # runs scrm
+  
+  lapply(full_arg$trees[1], write, paste("rep_", i, "/rep_", i, ".newick", sep = ""), append = T)
+  
   haps <- as.data.frame(t(as.data.frame(full_arg$seg_sites))) # organises haplotypes
   pos <- row.names(haps) 
   pos <- str_replace(pos, "X", "")
