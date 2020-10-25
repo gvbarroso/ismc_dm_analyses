@@ -3826,13 +3826,12 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-# Coefficients:
-# Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)   3.346e-03  1.557e-05 214.941   <2e-16 ***
-# thetaC        9.656e-01  8.102e-03 119.181   <2e-16 ***
-# tmrcaC        3.329e-03  5.719e-05  58.204   <2e-16 ***
-# rhoC          3.861e-03  1.005e-02   0.384    0.701    
-# thetaC:tmrcaC 1.052e+00  3.489e-02  30.161   <2e-16 ***
+# Estimate Std. Error  t value Pr(>|t|)    
+# (Intercept)   2.069e-02  1.908e-05 1084.381   <2e-16 ***
+# thetaC        1.309e+00  2.283e-03  573.279   <2e-16 ***
+# tmrcaC        2.342e-02  2.686e-04   87.195   <2e-16 ***
+# rhoC          1.435e-02  6.455e-03    2.223   0.0266 *  
+# thetaC:tmrcaC 1.483e+00  3.029e-02   48.983   <2e-16 ***
 
 vif(m.div.50kb)
 # thetaC        tmrcaC          rhoC thetaC:tmrcaC 
