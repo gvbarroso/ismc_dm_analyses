@@ -3491,11 +3491,11 @@ AIC(g.div.dm.1Mb.1, g.div.dm.1Mb.2, g.div.dm.1Mb.3, g.div.dm.1Mb.4)
 
 summary(g.div.dm.1Mb.1)
 # Value   Std.Error   t-value p-value
-# (Intercept)   0.0085133 0.000006325 1345.9050  0.0000
-# thetaC        0.9730593 0.002301256  422.8384  0.0000
-# rhoC          0.0014472 0.000798961    1.8114  0.0703
-# tmrcaC        0.0114980 0.000091587  125.5412  0.0000
-# thetaC:tmrcaC 1.0777123 0.019925270   54.0877  0.0000
+# (Intercept)   0.0087767 0.00001307 671.7413  0.0000
+# thetaC        0.9802560 0.00621327 157.7682  0.0000
+# rhoC          0.0011873 0.00289132   0.4106  0.6826
+# tmrcaC        0.0104410 0.00061019  17.1110  0.0000
+# thetaC:tmrcaC 0.6526937 0.13373906   4.8804  0.0000
 
 
 # Linear model without TMRCA --> rho becomes significant

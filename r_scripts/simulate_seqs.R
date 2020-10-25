@@ -15,13 +15,13 @@ setwd(root_dir)
 ##############################################
 
 sequence_length <- 30e+6
-N0 <- 30000
+N0 <- 1e+5
 Ne <- N0 # used when simulating fluctuating pop. sizes
 little_r <- 1e-8 # recombination rate per site per generation
 mean_rho <- 4 * N0 * little_r
-little_mu <- 1.5e-8 # mutation rate per site per generation
+little_mu <- 2e-9 # mutation rate per site per generation
 mean_theta <- 4 * N0 * little_mu
-num_haploids <- 68 # sample size (in haploids)
+num_haploids <- 10 # sample size (in haploids)
 
 
 ##############################################
@@ -123,7 +123,7 @@ alpha_rho <- 0.5
 beta_rho <- alpha_rho
 
 # how often we change rho values along the genome (inverse of 'g' parameter described in Barroso et al.)
-rho_transition_prob <- 1e-5
+rho_transition_prob <- 1e-4
 
 # starts simulation        
 number_of_rho_transitions = 0
@@ -173,145 +173,23 @@ names <- c("mean_theta", "mean_rho", "rho.alpha", "r_ii", "little_r", "N0", "Ne"
 sim_params <- cbind(names, values)
 write.table(sim_params, file = "sim_params.txt", quote = F, row.names = F, col.names = F, sep = "\t")
 
-
 ##############################################
 #
-# Hotspot model of spatial variation in Rho
-#
-##############################################
-
-if(getwd() != root_dir) {
-  cat("Attempted to start simulation outside root directory! Moving back...")
-  setwd(root_dir)
-}
-# appends to root directory
-dir.create("Hotspot")
-setwd("Hotspot")
-
-# using different name because it is not expected to be genome-wide avg. rho in the hotspot case
-background_rho <- mean_rho
-initial_rho <- background_rho * sequence_length # arbitrarily start landscape in background state
-# intensity of the hotspot relative to background
-intensity <- 500 
-# creates dir based on hotspot intensity
-intensity_dir <- paste("intensity_", as.character(intensity), sep = "")
-if(!dir.exists(intensity_dir)){
-  dir.create(intensity_dir, showWarnings = F)
-} else {
-  print(paste("Dir", intensity_dir, "already exists! Over-writing..."))
-  dir.create(intensity_dir, showWarnings = F)
-}
-setwd(intensity_dir)
-
-# distribution of hotspots along the sequence
-back_2_hot <- 1e-5 # probability of switching from background rho to hotspot
-back_2_hot_dir <- paste("avg_bckgnd_span_", as.character((1 / back_2_hot) / 1e+3), "kb", sep = "")
-hot_2_back <- 4e-4  # probability of switching from hotspot rho to background
-hot_2_back_dir <- paste("avg_hot_span_", as.character((1 / hot_2_back) / 1e+3), "kb", sep = "")
-# combines back_2_hot and hot_2_back params in 1 folder name
-comb_dir <- paste(back_2_hot_dir, "_", hot_2_back_dir, sep = "")
-
-if(!dir.exists(comb_dir)){
-  dir.create(comb_dir, showWarnings = F)
-} else {
-  print(paste("Dir", comb_dir, "already exists! Over-writing..."))
-  dir.create(comb_dir, showWarnings = F)
-}
-setwd(comb_dir)
-
-# creates directory to store simulation files
-dir.create("RhoSim")
-
-# starts simulating landscape
-number_of_rho_transitions = 0
-rho_transition_points = c(NULL)
-current_transition_point = 0
-rho_span_vector = c(NULL)
-current_state <- -1 # -1 for background, 1 for hotspot
-
-# gets the points where rho values change
-while(current_transition_point < sequence_length) {
-  number_of_rho_transitions <- number_of_rho_transitions + 1
-  if(current_state == -1) {
-    rho_span <- rgeom(1, back_2_hot)
-    rho_span_vector <- c(rho_span_vector, rho_span)
-  }
-  else if(current_state == 1) {
-    rho_span <- rgeom(1, hot_2_back)
-    rho_span_vector <- c(rho_span_vector, rho_span)
-  }
-  current_transition_point <- current_transition_point + rho_span
-  rho_transition_points[number_of_rho_transitions] <- current_transition_point
-  current_state = current_state * -1 # switches back and forth between background and hotspot
-}
-
-# if the last transition point happens to fall outside the range of our sequence, we delete it
-if(rho_transition_points[number_of_rho_transitions] > sequence_length){
-  rho_transition_points <- rho_transition_points[- number_of_rho_transitions]
-  number_of_rho_transitions <- number_of_rho_transitions - 1
-  rho_span_vector <- rho_span_vector[- number_of_rho_transitions]
-}
-
-# we start this vector with hotspot since it represents TRANSITION values, and the landscape starts with background
-cold_hot <- rep(background_rho, length = length(rho_transition_points))
-for(i in 1:length(cold_hot)){
-  if(i %% 2 == 1) {
-    cold_hot[i] <- background_rho * intensity
-  }
-}
-
-rho_values <- append(cold_hot, background_rho, after = 0)
-rho_values <- append(rho_values, rho_values[length(rho_values)], after = length(rho_values))
-first_rho <- rho_values[1]
-rho_transition_points <- append(rho_transition_points, 0, after = 0)
-rho_transition_points <- append(rho_transition_points, sequence_length, after = length(rho_transition_points))
-rho_landscape <- cbind(as.data.frame(rho_values), as.data.frame(rho_transition_points))
-
-# computes mean rho across the genome (background is not the mean)
-mean_rho <- 0
-for(i in 1:(nrow(rho_landscape) - 1)) {
-  span <- rho_landscape[i + 1, 2] - rho_landscape[i, 2] 
-  mean_rho <- mean_rho + span * rho_landscape[i, 1]
-}
-mean_rho <- mean_rho / sequence_length
-cat("FYI: mean_rho = ", as.character(mean_rho), sep = "")
-
-# writes rho landscape to file
-write.table(rho_landscape, file = "RhoSim/rho_landscape.txt", quote = F, row.names = F, col.names = F)
-
-# writes simulated parameters to file
-values <- c(mean_theta, background_rho, back_2_hot, hot_2_back, intensity, little_r, N0)
-names <- c("mean_theta", "background_rho", "back_2_hot", "hot_2_back", "intensity", "little_r", "N0")
-sim_params <- cbind(names, values)
-write.table(sim_params, file = "RhoSim/sim_params.txt", quote = F, row.names = F, col.names = F, sep = "\t")
-
-pdf("RhoSim/sim_rho_landscape.pdf")
-plot(y = rho_landscape$rho_values, x = as.integer(rho_landscape$rho_transition_points),
-     type = "s", ylab = expression(rho), xlab = "Position (bp)", lwd = 2, main = "Hotspots-simulated recombination landscape")
-abline(h = mean_rho, col = "magenta", lty = 2)
-dev.off()
-
-
-##############################################
-#
-# Heterogeneous Theta landscape 
+# Gamma model of spatial variation in Theta
 #
 ##############################################
 
 # For theta landscape, the directory stays the same
 
 # The shape of the distribution 
-theta_dist <- "gamma" # or "uniform"
+theta_dist <- "gamma" 
 
 # If Gamma distribution of theta values 
-alpha_theta <- 1
+alpha_theta <- 2.5
 beta_theta <- alpha_theta
-# If Uniform distribution of theta values
-min_unif <- 0.1
-max_unif <- 10
 
 # how often we change theta along the sequence (inverse of 'f' parameter described in Barroso et al.)
-theta_transition_prob <- 1e-3
+theta_transition_prob <- 2e-5
 
 number_of_theta_transitions = 0
 theta_transition_points = c(NULL)
@@ -335,14 +213,9 @@ if(theta_transition_points[number_of_theta_transitions] >= sequence_length) {
 }
 
 theta_values <- numeric(length = number_of_theta_transitions + 1)
-# draws from the distribution chosen above
-if(theta_dist == "gamma") {
-  theta_values <- rgamma(n = number_of_theta_transitions + 1, shape = alpha_theta, rate = beta_theta)
-} else if(theta_dist == "uniform") {
-  theta_values <- runif(n = number_of_theta_transitions + 1, min = min_unif, max = max_unif)
-} else {
-  stop("Mis-specified distribution of theta values!")
-}
+
+theta_values <- rgamma(n = number_of_theta_transitions + 1, shape = alpha_theta, rate = beta_theta)
+
 theta_values <- append(theta_values, theta_values[length(theta_values)], after = length(theta_values))
 # transforms to mean 1
 #theta_values <- theta_values / mean(theta_values) 
@@ -364,19 +237,10 @@ dev.off()
 write.table(theta_landscape, file = "theta_landscape.txt", quote = F, row.names = F, col.names = F)
 
 # writes simulated parameters to file
-if(theta_dist == "gamma") {
-  values <- c(alpha_theta, theta_transition_prob, little_mu, N0)
-  names <- c("theta.alpha", "t_ij", "little_mu", "N0")
-  sim_params <- cbind(names, values)
-  write.table(sim_params, file = "sim_params_theta.txt", quote = F, row.names = F, col.names = F, sep = "\t")
-} else if(theta_dist == "uniform") {
-  values <- c(min_unif, max_unif, theta_transition_prob, little_mu, N0)
-  names <- c("theta.unif.min", "theta.unif.max", "t_ij", "little_mu", "N0")
-  sim_params <- cbind(names, values)
-  write.table(sim_params, file = "sim_params_theta.txt", quote = F, row.names = F, col.names = F, sep = "\t")
-} else {
-  stop("Mis-specified distribution of theta values!")
-}
+values <- c(alpha_theta, theta_transition_prob, little_mu, N0)
+names <- c("theta.alpha", "t_ij", "little_mu", "N0")
+sim_params <- cbind(names, values)
+write.table(sim_params, file = "sim_params_theta.txt", quote = F, row.names = F, col.names = F, sep = "\t")
 
 
 ##############################################
