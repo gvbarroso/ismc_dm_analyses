@@ -33,15 +33,12 @@ expand_sim_landscape <- function(sim_landscape, sequence_length) {
 seq_len <- 30e+6
 bin_sizes <- c(50e+3, 200e+3, 1e+6)
 
-setwd("~")
-setwd("Data/iSMC/theta_paper/sim_data/rs_droso_param_estim/Misc/")
-
 sim_land <- read.table("rho_landscape.txt")
 sim_land <- expand_sim_landscape(sim_land, seq_len)
 for(i in 1:length(bin_sizes)) {
   sim_land$bin <- ceiling(1:nrow(sim_land) / bin_sizes[i]) 
   binned_lands <- ddply(.data = sim_land, .variables = "bin", .fun = colMeans, .progress = "text")
-  write.table(binned_lands, paste("dm.sim.rho.", as.character(bin_sizes[i]), ".txt", sep = ""), sep = "\t", quote = F)
+  write.table(binned_lands, paste("sim.rho.", as.character(bin_sizes[i]), ".map", sep = ""), sep = "\t", quote = F)
 }
 
 sim_land <- read.table("theta_landscape.txt")
@@ -49,5 +46,5 @@ sim_land <- expand_sim_landscape(sim_land, seq_len)
 for(i in 1:length(bin_sizes)) {
   sim_land$bin <- ceiling(1:nrow(sim_land) / bin_sizes[i]) 
   binned_lands <- ddply(.data = sim_land, .variables = "bin", .fun = colMeans, .progress = "text")
-  write.table(binned_lands, paste("dm.sim.theta.", as.character(bin_sizes[i]), ".txt", sep = ""), sep = "\t", quote = F)
+  write.table(binned_lands, paste("sim.theta.", as.character(bin_sizes[i]), ".map", sep = ""), sep = "\t", quote = F)
 }
