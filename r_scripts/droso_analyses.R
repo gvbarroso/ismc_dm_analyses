@@ -3037,7 +3037,7 @@ tmrca.dm.200kb.3R$sample_mean <- apply(tmrca.dm.200kb.3R[4:ncol(tmrca.dm.200kb.3
 
 # missing data
 missing.prop.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
-intersect.200kb.3R <- apply(missing.prop.200kb[4:ncol(missing.prop.200kb.3R)], 1, function(x) any(x > 0.1)) 
+intersect.200kb.3R <- apply(missing.prop.200kb.3R[4:ncol(missing.prop.200kb.3R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.200kb.3R <- as.data.frame(cbind(diversity.dm.200kb.3R$chromStart,
                                         diversity.dm.200kb.3R$chromEnd,
@@ -5642,6 +5642,5 @@ r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = ele
 leg <- get_legend(r2.plot + theme(legend.position="bottom"))
 
 fig4 <- plot_grid(r2.plot + no.legend, leg, nrow = 2, labels = NULL, rel_heights = c(1, 0.1), scale = c(1, 0.2))
-
-cowplot::save_plot("../submission/Figure4.pdf", plot = fig4, base_width = 10, base_height = 6, device = "pdf")
+fig4
 

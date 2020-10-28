@@ -564,7 +564,7 @@ summary(m.diversity.rep_10)
 interact_plot(m.diversity.rep_10, pred = thetaC, modx= tmrcaC)
 
 g.rep_10 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
-               data = inf.lands.50k.rep1, cor = corAR1(0, ~bin), method = "ML")
+               data = inf.lands.50k.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_10)
 
@@ -593,7 +593,7 @@ scale.3d <- function(x) sprintf("%.3f", x)
 r2.inf.50kb$average <- rowMeans(r2.inf.50kb)
 r2.inf.50kb <- transform(r2.inf.50kb, sd=apply(r2.inf.50kb, 1, sd, na.rm = TRUE))
 
-rho.plot <- as.data.frame(cbind(inf.lands.50k.rep1$bin,
+rho.plot <- as.data.frame(cbind(inf.lands.50k.rep_1$bin,
                                 sim.rho.50k$sim, 
                                 inf.lands.50k.rep_1$rho,
                                 inf.lands.50k.rep_2$rho,
@@ -610,14 +610,14 @@ rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)]
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map.50kb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme.blank
+rho.map.50kb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 rho.map.50kb <- rho.map.50kb + geom_line(data = molten.rho, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 rho.map.50kb <- rho.map.50kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.50kb <- rho.map.50kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map.50kb <- rho.map.50kb + labs(title = NULL, x = NULL, y = expression(rho))
 rho.map.50kb <- rho.map.50kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
 
-theta.plot <- as.data.frame(cbind(inf.lands.50k.rep1$bin,
+theta.plot <- as.data.frame(cbind(inf.lands.50k.rep_1$bin,
                                 sim.theta.50k$sim, 
                                 inf.lands.50k.rep_1$theta,
                                 inf.lands.50k.rep_2$theta,
@@ -632,7 +632,7 @@ theta.plot <- as.data.frame(cbind(inf.lands.50k.rep1$bin,
 
 names(theta.plot) <- c("bin", "sim", reps)
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map.50kb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme.blank
+theta.map.50kb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 theta.map.50kb <- theta.map.50kb + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.50kb <- theta.map.50kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.50kb <- theta.map.50kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1167,7 +1167,7 @@ summary(m.diversity.rep_10)
 interact_plot(m.diversity.rep_10, pred = thetaC, modx= tmrcaC)
 
 g.rep_10 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
-               data = inf.lands.200k.rep1, cor = corAR1(0, ~bin), method = "ML")
+               data = inf.lands.200k.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_10)
 
@@ -1196,7 +1196,7 @@ scale.3d <- function(x) sprintf("%.3f", x)
 r2.inf.200kb$average <- rowMeans(r2.inf.200kb)
 r2.inf.200kb <- transform(r2.inf.200kb, sd=apply(r2.inf.200kb, 1, sd, na.rm = TRUE))
 
-rho.plot <- as.data.frame(cbind(inf.lands.200k.rep1$bin,
+rho.plot <- as.data.frame(cbind(inf.lands.200k.rep_1$bin,
                                 sim.rho.200k$sim, 
                                 inf.lands.200k.rep_1$rho,
                                 inf.lands.200k.rep_2$rho,
@@ -1213,14 +1213,14 @@ rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)]
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map.200kb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme.blank
+rho.map.200kb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 rho.map.200kb <- rho.map.200kb + geom_line(data = molten.rho, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 rho.map.200kb <- rho.map.200kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.200kb <- rho.map.200kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map.200kb <- rho.map.200kb + labs(title = NULL, x = NULL, y = expression(rho))
 rho.map.200kb <- rho.map.200kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
 
-theta.plot <- as.data.frame(cbind(inf.lands.200k.rep1$bin,
+theta.plot <- as.data.frame(cbind(inf.lands.200k.rep_1$bin,
                                 sim.theta.200k$sim, 
                                 inf.lands.200k.rep_1$theta,
                                 inf.lands.200k.rep_2$theta,
@@ -1235,7 +1235,7 @@ theta.plot <- as.data.frame(cbind(inf.lands.200k.rep1$bin,
 
 names(theta.plot) <- c("bin", "sim", reps)
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map.200kb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme.blank
+theta.map.200kb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 theta.map.200kb <- theta.map.200kb + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.200kb <- theta.map.200kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.200kb <- theta.map.200kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1769,7 +1769,7 @@ summary(m.diversity.rep_10)
 interact_plot(m.diversity.rep_10, pred = thetaC, modx= tmrcaC)
 
 g.rep_10 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
-               data = inf.lands.1M.rep1, cor = corAR1(0, ~bin), method = "ML")
+               data = inf.lands.1M.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_10)
 
@@ -1798,7 +1798,7 @@ scale.3d <- function(x) sprintf("%.3f", x)
 r2.inf.1Mb$average <- rowMeans(r2.inf.1Mb)
 r2.inf.1Mb <- transform(r2.inf.1Mb, sd=apply(r2.inf.1Mb, 1, sd, na.rm = TRUE))
 
-rho.plot <- as.data.frame(cbind(inf.lands.1M.rep1$bin,
+rho.plot <- as.data.frame(cbind(inf.lands.1M.rep_1$bin,
                                 sim.rho.1M$sim, 
                                 inf.lands.1M.rep_1$rho,
                                 inf.lands.1M.rep_2$rho,
@@ -1815,14 +1815,14 @@ rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)]
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map.1Mb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme.blank
+rho.map.1Mb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 rho.map.1Mb <- rho.map.1Mb + geom_line(data = molten.rho, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 rho.map.1Mb <- rho.map.1Mb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.1Mb <- rho.map.1Mb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map.1Mb <- rho.map.1Mb + labs(title = NULL, x = NULL, y = expression(rho))
 rho.map.1Mb <- rho.map.1Mb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
 
-theta.plot <- as.data.frame(cbind(inf.lands.1M.rep1$bin,
+theta.plot <- as.data.frame(cbind(inf.lands.1M.rep_1$bin,
                                 sim.theta.1M$sim, 
                                 inf.lands.1M.rep_1$theta,
                                 inf.lands.1M.rep_2$theta,
@@ -1837,7 +1837,7 @@ theta.plot <- as.data.frame(cbind(inf.lands.1M.rep1$bin,
 
 names(theta.plot) <- c("bin", "sim", reps)
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map.1Mb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme.blank
+theta.map.1Mb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 theta.map.1Mb <- theta.map.1Mb + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.1Mb <- theta.map.1Mb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.1Mb <- theta.map.1Mb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1848,8 +1848,9 @@ plot_grid(rho.map.1Mb, theta.map.1Mb, nrow = 2, ncol = 1)
 ```
 
 
-# Real data 2L
+Real data chr 2L for comparing R^2 with simulations
 
+```{r}
 r2.dm.tab <- as.data.frame(matrix(ncol = 6, nrow = 3))
 colnames(r2.dm.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA", "Bin_size(kb)")
 
@@ -1879,6 +1880,7 @@ dm.lands.50kb <- as.data.frame(cbind(diversity.dm.50kb$avg,
 
 names(dm.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
 dm.lands.50kb$bin <- 1:nrow(dm.lands.50kb)
+
 # filters based on missing data
 dm.lands.50kb <- dm.lands.50kb[which(intersect.50kb == F),]
 
@@ -1891,20 +1893,16 @@ dm.lands.50kb$rhoC <- dm.lands.50kb$rho - mean(dm.lands.50kb$rho)
 
 m.diversity <- lm(diversity ~ thetaC + rhoC + tmrcaC + tmrcaC*thetaC, data = dm.lands.50kb)
 
-summary(m.diversity)
-
-plot(resid(m.diversity)~fitted(m.diversity))
-dwtest(m.diversity)
-hmctest(m.diversity)
-hist(resid(m.diversity))
-
 # type 2 ANOVA
 anova.diversity <- Anova(m.diversity)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
 r2.dm.tab[1,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
-                    anova.diversity$VarExp[1] * 100, 0.0, anova.diversity$VarExp[3] * 100, anova.diversity$VarExp[4] * 100, 50)
+                    anova.diversity$VarExp[1] * 100,
+                    anova.diversity$VarExp[2] * 100,
+                    anova.diversity$VarExp[3] * 100, 
+                    anova.diversity$VarExp[4] * 100, 50)
 
 # 200kb
 # recombination landscapes
@@ -1943,15 +1941,16 @@ dm.lands.200kb$rhoC <- dm.lands.200kb$rho - mean(dm.lands.200kb$rho)
 
 m.diversity <- lm(diversity ~ thetaC + rhoC + tmrcaC + tmrcaC*thetaC, data = dm.lands.200kb)
 
-summary(m.diversity)
-
 # type 2 ANOVA
 anova.diversity <- Anova(m.diversity)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
 r2.dm.tab[2,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
-                   anova.diversity$VarExp[1] * 100, 0.0, anova.diversity$VarExp[3] * 100, anova.diversity$VarExp[4] * 100, 200)
+                   anova.diversity$VarExp[1] * 100,
+                   anova.diversity$VarExp[2] * 100, 
+                   anova.diversity$VarExp[3] * 100, 
+                   anova.diversity$VarExp[4] * 100, 200)
 
 # 1Mb
 # recombination landscapes
@@ -1989,16 +1988,1053 @@ dm.lands.1Mb$rhoC <- dm.lands.1Mb$rho - mean(dm.lands.1Mb$rho)
 
 m.diversity <- lm(diversity ~ thetaC + rhoC + tmrcaC + tmrcaC*thetaC, data = dm.lands.1Mb)
 
-
 # type 2 ANOVA
 anova.diversity <- Anova(m.diversity)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
 
 
+r2.dm.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] +
+                    anova.diversity$VarExp[4]) * 100,
+                    anova.diversity$VarExp[1] * 100,
+                    anova.diversity$VarExp[2] * 100,
+                    anova.diversity$VarExp[3] * 100,
+                    anova.diversity$VarExp[4] * 100, 1000)
+
+```
+
+Real data 50 kb windows
+
+```{r}
+# Chr 2L
+
+# recombination landscapes
+rho.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.50kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.2L$avg <- apply(diversity.dm.50kb.2L[4:ncol(diversity.dm.50kb.2L)], 1, mean)
+
+# mutation landscapes
+theta.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.50kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.2L$sample_mean <- apply(tmrca.dm.50kb.2L[4:ncol(tmrca.dm.50kb.2L)], 1, mean)
+
+# missing data
+missing.prop.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+intersect.50kb.2L <- apply(missing.prop.50kb.2L[4:ncol(missing.prop.50kb.2L)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.50kb.2L <- as.data.frame(cbind(diversity.dm.50kb.2L$chromStart,
+                                        diversity.dm.50kb.2L$chromEnd,
+                                        diversity.dm.50kb.2L$avg,
+                                        theta.dm.50kb.2L$sample_mean,
+                                        rho.dm.50kb.2L$sample_mean,
+                                        tmrca.dm.50kb.2L$sample_mean))
+names(dm.lands.50kb.2L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.50kb.2L$bin <- 1:nrow(dm.lands.50kb.2L)
+
+# filters based on missing data 
+dm.lands.50kb.2L <- dm.lands.50kb.2L[which(intersect.50kb.2L == F),]
+
+dm.lands.50kb.2L$chr <- "2L"
+
+dm.lands.50kb.2L$thetaC <- dm.lands.50kb.2L$theta - mean(dm.lands.50kb.2L$theta)
+dm.lands.50kb.2L$tmrcaC <- dm.lands.50kb.2L$tmrca - mean(dm.lands.50kb.2L$tmrca)
+dm.lands.50kb.2L$rhoC <- dm.lands.50kb.2L$rho - mean(dm.lands.50kb.2L$rho)
+
+g.div.dm.50kb.2L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.50kb.2L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.50kb.2L)
+
+# Chr 2R
+
+# recombination landscapes
+rho.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.rho.50kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.2R$avg <- apply(diversity.dm.50kb.2R[4:ncol(diversity.dm.50kb.2R)], 1, mean)
+
+# mutation landscapes
+theta.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.theta.50kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.2R$sample_mean <- apply(tmrca.dm.50kb.2R[4:ncol(tmrca.dm.50kb.2R)], 1, mean)
+
+# missing data
+missing.prop.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+intersect.50kb.2R <- apply(missing.prop.50kb.2R[4:ncol(missing.prop.50kb.2R)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.50kb.2R <- as.data.frame(cbind(diversity.dm.50kb.2R$chromStart,
+                                        diversity.dm.50kb.2R$chromEnd,
+                                        diversity.dm.50kb.2R$avg,
+                                        theta.dm.50kb.2R$sample_mean,
+                                        rho.dm.50kb.2R$sample_mean,
+                                        tmrca.dm.50kb.2R$sample_mean))
+names(dm.lands.50kb.2R) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.50kb.2R$bin <- 1:nrow(dm.lands.50kb.2R)
+
+# filters based on missing data 
+dm.lands.50kb.2R <- dm.lands.50kb.2R[which(intersect.50kb.2R == F),]
+
+dm.lands.50kb.2R$chr <- "2R"
+
+dm.lands.50kb.2R$thetaC <- dm.lands.50kb.2R$theta- mean(dm.lands.50kb.2R$theta)
+dm.lands.50kb.2R$tmrcaC <- dm.lands.50kb.2R$tmrca - mean(dm.lands.50kb.2R$tmrca)
+dm.lands.50kb.2R$rhoC <- dm.lands.50kb.2R$rho - mean(dm.lands.50kb.2R$rho)
+
+g.div.dm.50kb.2R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.50kb.2R, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.50kb.2R)
+
+# recombination landscapes
+rho.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.rho.50kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.3L$avg <- apply(diversity.dm.50kb.3L[4:ncol(diversity.dm.50kb.3L)], 1, mean)
+
+# mutation landscapes
+theta.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.theta.50kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.3L$sample_mean <- apply(tmrca.dm.50kb.3L[4:ncol(tmrca.dm.50kb.3L)], 1, mean)
+
+# missing data
+missing.prop.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+intersect.50kb.3L <- apply(missing.prop.50kb.3L[4:ncol(missing.prop.50kb.3L)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.50kb.3L <- as.data.frame(cbind(diversity.dm.50kb.3L$chromStart,
+                                        diversity.dm.50kb.3L$chromEnd,
+                                        diversity.dm.50kb.3L$avg,
+                                        theta.dm.50kb.3L$sample_mean,
+                                        rho.dm.50kb.3L$sample_mean,
+                                        tmrca.dm.50kb.3L$sample_mean))
+names(dm.lands.50kb.3L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.50kb.3L$bin <- 1:nrow(dm.lands.50kb.3L)
+
+# filters based on missing data
+dm.lands.50kb.3L <- dm.lands.50kb.3L[which(intersect.50kb.3L == F),]
+
+dm.lands.50kb.3L$chr <- "3L"
+
+dm.lands.50kb.3L$thetaC <- dm.lands.50kb.3L$theta- mean(dm.lands.50kb.3L$theta)
+dm.lands.50kb.3L$tmrcaC <- dm.lands.50kb.3L$tmrca - mean(dm.lands.50kb.3L$tmrca)
+dm.lands.50kb.3L$rhoC <- dm.lands.50kb.3L$rho - mean(dm.lands.50kb.3L$rho)
+
+g.div.dm.50kb.3L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.50kb.3L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.50kb.3L)
+
+# Chr 3R
+
+# recombination landscapes
+rho.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.50kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.3R$avg <- apply(diversity.dm.50kb.3R[4:ncol(diversity.dm.50kb.3R)], 1, mean)
+
+# mutation landscapes
+theta.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.theta.50kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.3R$sample_mean <- apply(tmrca.dm.50kb.3R[4:ncol(tmrca.dm.50kb.3R)], 1, mean)
+
+# missing data
+missing.prop.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+intersect.50kb.3R <- apply(missing.prop.50kb.3R[4:ncol(missing.prop.50kb.3R)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.50kb.3R <- as.data.frame(cbind(diversity.dm.50kb.3R$chromStart,
+                                        diversity.dm.50kb.3R$chromEnd,
+                                        diversity.dm.50kb.3R$avg,
+                                        theta.dm.50kb.3R$sample_mean,
+                                        rho.dm.50kb.3R$sample_mean,
+                                        tmrca.dm.50kb.3R$sample_mean))
+names(dm.lands.50kb.3R) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.50kb.3R$bin <- 1:nrow(dm.lands.50kb.3R)
+
+# filters based on missing data
+dm.lands.50kb.3R <- dm.lands.50kb.3R[which(intersect.50kb.3R == F),]
+
+dm.lands.50kb.3R$chr <- "3R"
+
+dm.lands.50kb.3R$thetaC <- dm.lands.50kb.3R$theta- mean(dm.lands.50kb.3R$theta)
+dm.lands.50kb.3R$tmrcaC <- dm.lands.50kb.3R$tmrca - mean(dm.lands.50kb.3R$tmrca)
+dm.lands.50kb.3R$rhoC <- dm.lands.50kb.3R$rho - mean(dm.lands.50kb.3R$rho)
+
+g.div.dm.50kb.3R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.50kb.3R, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.50kb.3R)
+
+# all together now
+dm.lands.50kb <- rbind.data.frame(dm.lands.50kb.2L, dm.lands.50kb.2R, dm.lands.50kb.3L, dm.lands.50kb.3R)
+
+write.table(dm.lands.50kb, "dm.maps.50kb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
+
+
+# Plots
+scale.3d <- function(x) sprintf("%.3f", x) # digits shown in y axis
+
+setTimeLimit(cpu = Inf, elapsed = Inf, transient = F)
+
+molten.diversity <- melt(dm.lands.50kb[c(3,7,8)], id.vars = c("bin", "chr"))
+diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F8766D")
+diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D")
+diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
+diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+diversity.map
+
+molten.rho <- melt(dm.lands.50kb[c(5,7,8)], id.vars = c("bin", "chr"))
+rho.map <- ggplot(data = molten.rho, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00")
+rho.map <- rho.map + geom_smooth(method = "loess", se = F, colour = "#7CAE00")
+rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
+rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+rho.map
+
+molten.theta <- melt(dm.lands.50kb[c(4,7,8)], id.vars = c("bin", "chr"))
+theta.map <- ggplot(data = molten.theta, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4")
+theta.map <- theta.map + geom_smooth(method = "loess", se = F, colour = "#00BFC4")
+theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta)) 
+theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+theta.map
+
+molten.tmrca <- melt(dm.lands.50kb[c(6,7,8)], id.vars = c("bin", "chr"))
+tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d")
+tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d")
+tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
+tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+tmrca.map
+
+# genome-wide correlations
+cor.test(~rho + diversity, data = dm.lands.50kb, method = "spearman")
+cor.test(~rho + tmrca, data = dm.lands.50kb, method = "spearman")
+cor.test(~theta + tmrca, data = dm.lands.50kb, method = "spearman")
+
+# Linear models
+# centering
+dm.lands.50kb$thetaC <- dm.lands.50kb$theta - mean(dm.lands.50kb$theta)
+dm.lands.50kb$tmrcaC <- dm.lands.50kb$tmrca - mean(dm.lands.50kb$tmrca)
+dm.lands.50kb$rhoC <- dm.lands.50kb$rho - mean(dm.lands.50kb$rho)
+
+dm.lands.50kb$bin <- 1:nrow(dm.lands.50kb)
+
+m.div.dm.50kb <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC), data = dm.lands.50kb)
+
+plot(resid(m.div.dm.50kb)~fitted(m.div.dm.50kb))
+hist(resid(m.div.dm.50kb), nclass = 30)
+dwtest(m.div.dm.50kb)
+hmctest(m.div.dm.50kb, nsim = 10000) 
+
+summary(m.div.dm.50kb)
+
+# type 2 ANOVA
+anova.diversity <- Anova(m.div.dm.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.dm.tab[1,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
+                    anova.diversity$VarExp[1] * 100,
+                    anova.diversity$VarExp[2] * 100,
+                    anova.diversity$VarExp[3] * 100,
+                    anova.diversity$VarExp[4] * 100,
+                    50)
+
+# GLS
+g.div.dm.50kb.1 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.50kb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.dm.50kb.2 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.50kb, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.dm.50kb.3 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.50kb, weights = varPower(0, ~theta), method = "ML")
+
+g.div.dm.50kb.4 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.50kb, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.dm.50kb.1, g.div.dm.50kb.2, g.div.dm.50kb.3, g.div.dm.50kb.4)
+
+summary(g.div.dm.50kb.1)
+
+vif(g.div.dm.50kb.1)
+
+# Linear model without TMRCA --> rho becomes significant
+g.div.dm.50kb.5 <- gls(diversity ~ (thetaC + rhoC),
+                       data = dm.lands.50kb, weights = varPower(0, ~thetaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.50kb.5)
+```
+
+Real data 200 kb windows
+
+```{r}
+# Chr 2L
+
+# recombination landscapes
+rho.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.200kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.2L$avg <- apply(diversity.dm.200kb.2L[4:ncol(diversity.dm.200kb.2L)], 1, mean)
+
+# mutation landscapes
+theta.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.200kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.2L$sample_mean <- apply(tmrca.dm.200kb.2L[4:ncol(tmrca.dm.200kb.2L)], 1, mean)
+
+# missing data
+missing.prop.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+intersect.200kb.2L <- apply(missing.prop.200kb.2L[4:ncol(missing.prop.200kb.2L)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.200kb.2L <- as.data.frame(cbind(diversity.dm.200kb.2L$chromStart,
+                                        diversity.dm.200kb.2L$chromEnd,
+                                        diversity.dm.200kb.2L$avg,
+                                        theta.dm.200kb.2L$sample_mean,
+                                        rho.dm.200kb.2L$sample_mean,
+                                        tmrca.dm.200kb.2L$sample_mean))
+names(dm.lands.200kb.2L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.200kb.2L$bin <- 1:nrow(dm.lands.200kb.2L)
+
+# filters based on missing data 
+dm.lands.200kb.2L <- dm.lands.200kb.2L[which(intersect.200kb.2L == F),]
+
+dm.lands.200kb.2L$chr <- "2L"
+
+dm.lands.200kb.2L$thetaC <- dm.lands.200kb.2L$theta - mean(dm.lands.200kb.2L$theta)
+dm.lands.200kb.2L$tmrcaC <- dm.lands.200kb.2L$tmrca - mean(dm.lands.200kb.2L$tmrca)
+dm.lands.200kb.2L$rhoC <- dm.lands.200kb.2L$rho - mean(dm.lands.200kb.2L$rho)
+
+g.div.dm.200kb.2L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.200kb.2L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.200kb.2L)
+
+# Chr 2R
+
+# recombination landscapes
+rho.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.rho.200kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.2R$avg <- apply(diversity.dm.200kb.2R[4:ncol(diversity.dm.200kb.2R)], 1, mean)
+
+# mutation landscapes
+theta.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.theta.200kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.2R$sample_mean <- apply(tmrca.dm.200kb.2R[4:ncol(tmrca.dm.200kb.2R)], 1, mean)
+
+# missing data
+missing.prop.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+intersect.200kb.2R <- apply(missing.prop.200kb.2R[4:ncol(missing.prop.200kb.2R)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.200kb.2R <- as.data.frame(cbind(diversity.dm.200kb.2R$chromStart,
+                                        diversity.dm.200kb.2R$chromEnd,
+                                        diversity.dm.200kb.2R$avg,
+                                        theta.dm.200kb.2R$sample_mean,
+                                        rho.dm.200kb.2R$sample_mean,
+                                        tmrca.dm.200kb.2R$sample_mean))
+names(dm.lands.200kb.2R) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.200kb.2R$bin <- 1:nrow(dm.lands.200kb.2R)
+
+# filters based on missing data 
+dm.lands.200kb.2R <- dm.lands.200kb.2R[which(intersect.200kb.2R == F),]
+
+dm.lands.200kb.2R$chr <- "2R"
+
+dm.lands.200kb.2R$thetaC <- dm.lands.200kb.2R$theta- mean(dm.lands.200kb.2R$theta)
+dm.lands.200kb.2R$tmrcaC <- dm.lands.200kb.2R$tmrca - mean(dm.lands.200kb.2R$tmrca)
+dm.lands.200kb.2R$rhoC <- dm.lands.200kb.2R$rho - mean(dm.lands.200kb.2R$rho)
+
+g.div.dm.200kb.2R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.200kb.2R, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.200kb.2R)
+
+# recombination landscapes
+rho.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.rho.200kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.3L$avg <- apply(diversity.dm.200kb.3L[4:ncol(diversity.dm.200kb.3L)], 1, mean)
+
+# mutation landscapes
+theta.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.theta.200kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.3L$sample_mean <- apply(tmrca.dm.200kb.3L[4:ncol(tmrca.dm.200kb.3L)], 1, mean)
+
+# missing data
+missing.prop.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+intersect.200kb.3L <- apply(missing.prop.200kb.3L[4:ncol(missing.prop.200kb.3L)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.200kb.3L <- as.data.frame(cbind(diversity.dm.200kb.3L$chromStart,
+                                        diversity.dm.200kb.3L$chromEnd,
+                                        diversity.dm.200kb.3L$avg,
+                                        theta.dm.200kb.3L$sample_mean,
+                                        rho.dm.200kb.3L$sample_mean,
+                                        tmrca.dm.200kb.3L$sample_mean))
+names(dm.lands.200kb.3L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.200kb.3L$bin <- 1:nrow(dm.lands.200kb.3L)
+
+# filters based on missing data
+dm.lands.200kb.3L <- dm.lands.200kb.3L[which(intersect.200kb.3L == F),]
+
+dm.lands.200kb.3L$chr <- "3L"
+
+dm.lands.200kb.3L$thetaC <- dm.lands.200kb.3L$theta- mean(dm.lands.200kb.3L$theta)
+dm.lands.200kb.3L$tmrcaC <- dm.lands.200kb.3L$tmrca - mean(dm.lands.200kb.3L$tmrca)
+dm.lands.200kb.3L$rhoC <- dm.lands.200kb.3L$rho - mean(dm.lands.200kb.3L$rho)
+
+g.div.dm.200kb.3L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.200kb.3L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.200kb.3L)
+
+# Chr 3R
+
+# recombination landscapes
+rho.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.200kb.bedgraph", header = T)
+
+# diversity
+diversity.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+
+diversity.dm.200kb.3R$avg <- apply(diversity.dm.200kb.3R[4:ncol(diversity.dm.200kb.3R)], 1, mean)
+
+# mutation landscapes
+theta.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.theta.200kb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.3R$sample_mean <- apply(tmrca.dm.200kb.3R[4:ncol(tmrca.dm.200kb.3R)], 1, mean)
+
+# missing data
+missing.prop.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+intersect.200kb.3R <- apply(missing.prop.200kb.3R[4:ncol(missing.prop.200kb.3R)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.200kb.3R <- as.data.frame(cbind(diversity.dm.200kb.3R$chromStart,
+                                        diversity.dm.200kb.3R$chromEnd,
+                                        diversity.dm.200kb.3R$avg,
+                                        theta.dm.200kb.3R$sample_mean,
+                                        rho.dm.200kb.3R$sample_mean,
+                                        tmrca.dm.200kb.3R$sample_mean))
+names(dm.lands.200kb.3R) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.200kb.3R$bin <- 1:nrow(dm.lands.200kb.3R)
+
+# filters based on missing data
+dm.lands.200kb.3R <- dm.lands.200kb.3R[which(intersect.200kb.3R == F),]
+
+dm.lands.200kb.3R$chr <- "3R"
+
+dm.lands.200kb.3R$thetaC <- dm.lands.200kb.3R$theta- mean(dm.lands.200kb.3R$theta)
+dm.lands.200kb.3R$tmrcaC <- dm.lands.200kb.3R$tmrca - mean(dm.lands.200kb.3R$tmrca)
+dm.lands.200kb.3R$rhoC <- dm.lands.200kb.3R$rho - mean(dm.lands.200kb.3R$rho)
+
+g.div.dm.200kb.3R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.200kb.3R, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.200kb.3R)
+
+# all together now
+dm.lands.200kb <- rbind.data.frame(dm.lands.200kb.2L, dm.lands.200kb.2R, dm.lands.200kb.3L, dm.lands.200kb.3R)
+
+write.table(dm.lands.200kb, "dm.maps.200kb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
+
+
+# Plots
+scale.3d <- function(x) sprintf("%.3f", x) # digits shown in y axis
+
+setTimeLimit(cpu = Inf, elapsed = Inf, transient = F)
+
+molten.diversity <- melt(dm.lands.200kb[c(3,7,8)], id.vars = c("bin", "chr"))
+diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F8766D")
+diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D")
+diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
+diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+diversity.map
+
+molten.rho <- melt(dm.lands.200kb[c(5,7,8)], id.vars = c("bin", "chr"))
+rho.map <- ggplot(data = molten.rho, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00")
+rho.map <- rho.map + geom_smooth(method = "loess", se = F, colour = "#7CAE00")
+rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
+rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+rho.map
+
+molten.theta <- melt(dm.lands.200kb[c(4,7,8)], id.vars = c("bin", "chr"))
+theta.map <- ggplot(data = molten.theta, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4")
+theta.map <- theta.map + geom_smooth(method = "loess", se = F, colour = "#00BFC4")
+theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta)) 
+theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+theta.map
+
+molten.tmrca <- melt(dm.lands.200kb[c(6,7,8)], id.vars = c("bin", "chr"))
+tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d")
+tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d")
+tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
+tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+tmrca.map
+
+# genome-wide correlations
+cor.test(~rho + diversity, data = dm.lands.200kb, method = "spearman")
+cor.test(~rho + tmrca, data = dm.lands.200kb, method = "spearman")
+cor.test(~theta + tmrca, data = dm.lands.200kb, method = "spearman")
+
+# Linear models
+# centering
+dm.lands.200kb$thetaC <- dm.lands.200kb$theta - mean(dm.lands.200kb$theta)
+dm.lands.200kb$tmrcaC <- dm.lands.200kb$tmrca - mean(dm.lands.200kb$tmrca)
+dm.lands.200kb$rhoC <- dm.lands.200kb$rho - mean(dm.lands.200kb$rho)
+
+dm.lands.200kb$bin <- 1:nrow(dm.lands.200kb)
+
+m.div.dm.200kb <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC), data = dm.lands.200kb)
+
+plot(resid(m.div.dm.200kb)~fitted(m.div.dm.200kb))
+hist(resid(m.div.dm.200kb), nclass = 30)
+dwtest(m.div.dm.200kb)
+hmctest(m.div.dm.200kb, nsim = 10000) 
+
+summary(m.div.dm.200kb)
+  
+# type 2 ANOVA
+anova.diversity <- Anova(m.div.dm.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.dm.tab[2,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
+                   anova.diversity$VarExp[1] * 100,
+                   anova.diversity$VarExp[2] * 100,
+                   anova.diversity$VarExp[3] * 100,
+                   anova.diversity$VarExp[4] * 100,
+                   200)
+
+# GLS
+g.div.dm.200kb.1 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.200kb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.dm.200kb.2 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.200kb, weights = varPower(0, ~thetaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.dm.200kb.3 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.200kb, weights = varPower(0, ~thetaC), method = "ML")
+
+g.div.dm.200kb.4 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.200kb, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.dm.200kb.1, g.div.dm.200kb.2, g.div.dm.200kb.3, g.div.dm.200kb.4)
+
+summary(g.div.dm.200kb.1)
+vif(g.div.dm.200kb.1)
+
+# Linear model without TMRCA --> rho becomes significant
+g.div.dm.200kb.5 <- gls(diversity ~ (thetaC + rhoC),
+                       data = dm.lands.200kb, weights = varPower(0, ~thetaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.200kb.5)
+```
+
+Real data 1 Mb windows
+
+```{r}
+# Chr 2L
+
+# recombination landscapes
+rho.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+
+# diversity
+diversity.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.2L$avg <- apply(diversity.dm.1Mb.2L[4:ncol(diversity.dm.1Mb.2L)], 1, mean)
+
+# mutation landscapes
+theta.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.2L$sample_mean <- apply(tmrca.dm.1Mb.2L[4:ncol(tmrca.dm.1Mb.2L)], 1, mean)
+
+# missing data
+missing.prop.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+intersect.1Mb.2L <- apply(missing.prop.1Mb.2L[4:ncol(missing.prop.1Mb.2L)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.1Mb.2L <- as.data.frame(cbind(diversity.dm.1Mb.2L$chromStart,
+                                        diversity.dm.1Mb.2L$chromEnd,
+                                        diversity.dm.1Mb.2L$avg,
+                                        theta.dm.1Mb.2L$sample_mean,
+                                        rho.dm.1Mb.2L$sample_mean,
+                                        tmrca.dm.1Mb.2L$sample_mean))
+names(dm.lands.1Mb.2L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.1Mb.2L$bin <- 1:nrow(dm.lands.1Mb.2L)
+
+# filters based on missing data 
+dm.lands.1Mb.2L <- dm.lands.1Mb.2L[which(intersect.1Mb.2L == F),]
+
+dm.lands.1Mb.2L$chr <- "2L"
+
+dm.lands.1Mb.2L$thetaC <- dm.lands.1Mb.2L$theta - mean(dm.lands.1Mb.2L$theta)
+dm.lands.1Mb.2L$tmrcaC <- dm.lands.1Mb.2L$tmrca - mean(dm.lands.1Mb.2L$tmrca)
+dm.lands.1Mb.2L$rhoC <- dm.lands.1Mb.2L$rho - mean(dm.lands.1Mb.2L$rho)
+
+g.div.dm.1Mb.2L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.1Mb.2L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.1Mb.2L)
+
+# Chr 2R
+
+# recombination landscapes
+rho.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+
+# diversity
+diversity.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.2R$avg <- apply(diversity.dm.1Mb.2R[4:ncol(diversity.dm.1Mb.2R)], 1, mean)
+
+# mutation landscapes
+theta.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.2R$sample_mean <- apply(tmrca.dm.1Mb.2R[4:ncol(tmrca.dm.1Mb.2R)], 1, mean)
+
+# missing data
+missing.prop.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+intersect.1Mb.2R <- apply(missing.prop.1Mb.2R[4:ncol(missing.prop.1Mb.2R)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.1Mb.2R <- as.data.frame(cbind(diversity.dm.1Mb.2R$chromStart,
+                                        diversity.dm.1Mb.2R$chromEnd,
+                                        diversity.dm.1Mb.2R$avg,
+                                        theta.dm.1Mb.2R$sample_mean,
+                                        rho.dm.1Mb.2R$sample_mean,
+                                        tmrca.dm.1Mb.2R$sample_mean))
+names(dm.lands.1Mb.2R) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.1Mb.2R$bin <- 1:nrow(dm.lands.1Mb.2R)
+
+# filters based on missing data 
+dm.lands.1Mb.2R <- dm.lands.1Mb.2R[which(intersect.1Mb.2R == F),]
+
+dm.lands.1Mb.2R$chr <- "2R"
+
+dm.lands.1Mb.2R$thetaC <- dm.lands.1Mb.2R$theta- mean(dm.lands.1Mb.2R$theta)
+dm.lands.1Mb.2R$tmrcaC <- dm.lands.1Mb.2R$tmrca - mean(dm.lands.1Mb.2R$tmrca)
+dm.lands.1Mb.2R$rhoC <- dm.lands.1Mb.2R$rho - mean(dm.lands.1Mb.2R$rho)
+
+g.div.dm.1Mb.2R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.1Mb.2R, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.1Mb.2R)
+
+# recombination landscapes
+rho.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+
+# diversity
+diversity.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.3L$avg <- apply(diversity.dm.1Mb.3L[4:ncol(diversity.dm.1Mb.3L)], 1, mean)
+
+# mutation landscapes
+theta.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.3L$sample_mean <- apply(tmrca.dm.1Mb.3L[4:ncol(tmrca.dm.1Mb.3L)], 1, mean)
+
+# missing data
+missing.prop.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+intersect.1Mb.3L <- apply(missing.prop.1Mb.3L[4:ncol(missing.prop.1Mb.3L)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.1Mb.3L <- as.data.frame(cbind(diversity.dm.1Mb.3L$chromStart,
+                                        diversity.dm.1Mb.3L$chromEnd,
+                                        diversity.dm.1Mb.3L$avg,
+                                        theta.dm.1Mb.3L$sample_mean,
+                                        rho.dm.1Mb.3L$sample_mean,
+                                        tmrca.dm.1Mb.3L$sample_mean))
+names(dm.lands.1Mb.3L) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.1Mb.3L$bin <- 1:nrow(dm.lands.1Mb.3L)
+
+# filters based on missing data
+dm.lands.1Mb.3L <- dm.lands.1Mb.3L[which(intersect.1Mb.3L == F),]
+
+dm.lands.1Mb.3L$chr <- "3L"
+
+dm.lands.1Mb.3L$thetaC <- dm.lands.1Mb.3L$theta- mean(dm.lands.1Mb.3L$theta)
+dm.lands.1Mb.3L$tmrcaC <- dm.lands.1Mb.3L$tmrca - mean(dm.lands.1Mb.3L$tmrca)
+dm.lands.1Mb.3L$rhoC <- dm.lands.1Mb.3L$rho - mean(dm.lands.1Mb.3L$rho)
+
+
+g.div.dm.1Mb.3L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.1Mb.3L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.1Mb.3L)
+
+# Chr 3R
+
+# recombination landscapes
+rho.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+
+# diversity
+diversity.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.3R$avg <- apply(diversity.dm.1Mb.3R[4:ncol(diversity.dm.1Mb.3R)], 1, mean)
+
+# mutation landscapes
+theta.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+
+# TMRCA landscapes
+tmrca.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.3R$sample_mean <- apply(tmrca.dm.1Mb.3R[4:ncol(tmrca.dm.1Mb.3R)], 1, mean)
+
+# missing data
+missing.prop.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+intersect.1Mb.3R <- apply(missing.prop.1Mb[4:ncol(missing.prop.1Mb.3R)], 1, function(x) any(x > 0.1)) 
+
+dm.lands.1Mb.3R <- as.data.frame(cbind(diversity.dm.1Mb.3R$chromStart,
+                                        diversity.dm.1Mb.3R$chromEnd,
+                                        diversity.dm.1Mb.3R$avg,
+                                        theta.dm.1Mb.3R$sample_mean,
+                                        rho.dm.1Mb.3R$sample_mean,
+                                        tmrca.dm.1Mb.3R$sample_mean))
+names(dm.lands.1Mb.3R) <- c("start", "end", "diversity", "theta", "rho", "tmrca")
+dm.lands.1Mb.3R$bin <- 1:nrow(dm.lands.1Mb.3R)
+
+# filters based on missing data
+dm.lands.1Mb.3R <- dm.lands.1Mb.3R[which(intersect.1Mb.3R == F),]
+
+dm.lands.1Mb.3R$chr <- "3R"
+
+dm.lands.1Mb.3R$thetaC <- dm.lands.1Mb.3R$theta- mean(dm.lands.1Mb.3R$theta)
+dm.lands.1Mb.3R$tmrcaC <- dm.lands.1Mb.3R$tmrca - mean(dm.lands.1Mb.3R$tmrca)
+dm.lands.1Mb.3R$rhoC <- dm.lands.1Mb.3R$rho - mean(dm.lands.1Mb.3R$rho)
+
+g.div.dm.1Mb.3R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                        data = dm.lands.1Mb.3R, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.1Mb.3R)
+
+# all together now
+dm.lands.1Mb <- rbind.data.frame(dm.lands.1Mb.2L, dm.lands.1Mb.2R, dm.lands.1Mb.3L, dm.lands.1Mb.3R)
+
+write.table(dm.lands.1Mb, "dm.maps.1Mb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
+
+
+# Plots
+scale.3d <- function(x) sprintf("%.3f", x) # digits shown in y axis
+
+setTimeLimit(cpu = Inf, elapsed = Inf, transient = F)
+
+molten.diversity <- melt(dm.lands.1Mb[c(3,7,8)], id.vars = c("bin", "chr"))
+diversity.map <- ggplot(data = molten.diversity, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+diversity.map <- diversity.map + geom_line(data = molten.diversity, colour = "#F8766D")
+diversity.map <- diversity.map + geom_smooth(method = "loess", se = F, colour = "#F8766D")
+diversity.map <- diversity.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+diversity.map <- diversity.map + labs(title = NULL, x = NULL, y = expression(pi))
+diversity.map <- diversity.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+diversity.map
+
+molten.rho <- melt(dm.lands.1Mb[c(5,7,8)], id.vars = c("bin", "chr"))
+rho.map <- ggplot(data = molten.rho, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+rho.map <- rho.map + geom_line(data = molten.rho, colour = "#7CAE00")
+rho.map <- rho.map + geom_smooth(method = "loess", se = F, colour = "#7CAE00")
+rho.map <- rho.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map <- rho.map + labs(title = NULL, x = NULL, y = expression(rho))
+rho.map <- rho.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+rho.map
+
+molten.theta <- melt(dm.lands.1Mb[c(4,7,8)], id.vars = c("bin", "chr"))
+theta.map <- ggplot(data = molten.theta, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+theta.map <- theta.map + geom_line(data = molten.theta, colour = "#00BFC4")
+theta.map <- theta.map + geom_smooth(method = "loess", se = F, colour = "#00BFC4")
+theta.map <- theta.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map <- theta.map + labs(title = NULL, x = NULL, y = expression(theta)) 
+theta.map <- theta.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+theta.map
+
+molten.tmrca <- melt(dm.lands.1Mb[c(6,7,8)], id.vars = c("bin", "chr"))
+tmrca.map <- ggplot(data = molten.tmrca, aes(x = bin * 50, y = value)) + facet_wrap(~chr)
+tmrca.map <- tmrca.map + geom_line(data = molten.tmrca, colour = "#88419d")
+tmrca.map <- tmrca.map + geom_smooth(method = "loess", se = F, colour = "#88419d")
+tmrca.map <- tmrca.map + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(tau))
+tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
+tmrca.map
+
+# genome-wide correlations
+cor.test(~rho + diversity, data = dm.lands.1Mb, method = "spearman")
+cor.test(~rho + tmrca, data = dm.lands.1Mb, method = "spearman")
+cor.test(~theta + tmrca, data = dm.lands.1Mb, method = "spearman")
+
+# Linear models
+# centering
+dm.lands.1Mb$thetaC <- dm.lands.1Mb$theta - mean(dm.lands.1Mb$theta)
+dm.lands.1Mb$tmrcaC <- dm.lands.1Mb$tmrca - mean(dm.lands.1Mb$tmrca)
+dm.lands.1Mb$rhoC <- dm.lands.1Mb$rho - mean(dm.lands.1Mb$rho)
+
+dm.lands.1Mb$bin <- 1:nrow(dm.lands.1Mb)
+
+m.div.dm.1Mb <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC), data = dm.lands.1Mb)
+
+plot(resid(m.div.dm.1Mb)~fitted(m.div.dm.1Mb))
+hist(resid(m.div.dm.1Mb), nclass = 30)
+dwtest(m.div.dm.1Mb)
+hmctest(m.div.dm.1Mb, nsim = 10000) 
+
+summary(m.div.dm.1Mb)
+
+# type 2 ANOVA
+anova.diversity <- Anova(m.div.dm.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
 r2.dm.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
-                   anova.diversity$VarExp[1] * 100, 0.0, anova.diversity$VarExp[3] * 100, anova.diversity$VarExp[4] * 100, 1000)
+                   anova.diversity$VarExp[1] * 100,
+                   anova.diversity$VarExp[2] * 100,
+                   anova.diversity$VarExp[3] * 100,
+                   anova.diversity$VarExp[4] * 100,
+                   1000)
 
-summary(m.diversity)
+# GLS
+g.div.dm.1Mb.1 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.1Mb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
 
-######################################
+g.div.dm.1Mb.2 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.1Mb, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.dm.1Mb.3 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.1Mb, weights = varPower(0, ~theta), method = "ML")
+
+g.div.dm.1Mb.4 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                       data = dm.lands.1Mb, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.dm.1Mb.1, g.div.dm.1Mb.2, g.div.dm.1Mb.3, g.div.dm.1Mb.4)
+
+summary(g.div.dm.1Mb.1)
+
+vif(g.div.dm.1Mb.1)
+
+# Linear model without TMRCA --> rho becomes significant
+g.div.dm.1Mb.5 <- gls(diversity ~ (thetaC + rhoC),
+                       data = dm.lands.1Mb, weights = varPower(0, ~thetaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.div.dm.1Mb.5)
+```
+
+Divergence with Drosophila yakuba
+
+```{r}
+# divergence data from D. melanogaster and D. yakuba
+divergence.2L.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso2L_divergence.statistics5kb.csv", header = T)
+divergence.2R.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso2R_divergence.statistics5kb.csv", header = T)
+divergence.3L.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso3L_divergence.statistics5kb.csv", header = T)
+divergence.3R.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso3R_divergence.statistics5kb.csv", header = T)
+
+divergence <- rbind.data.frame(divergence.2L.5kb, divergence.2R.5kb, divergence.3L.5kb, divergence.3R.5kb)
+divergence <- divergence[,c(1:3, 6)] 
+divergence$Chr <- as.character(divergence$Chr)
+  
+# reorder maps to use GR
+dm.maps.50kb <- dm.lands.50kb[,c(8,1:6)]
+
+# converts objects to GenomicRanges
+dm.gr <- makeGRangesFromDataFrame(dm.maps.50kb)
+values(dm.gr) <- dm.maps.50kb[,(4:7)]
+divergence.gr <- makeGRangesFromDataFrame(divergence)
+values(divergence.gr) <- DataFrame(score = divergence$MLModelFit.BrLen0)
+
+hits <- findOverlaps(query = divergence.gr, subject = dm.gr, type = "within")
+ranges(divergence.gr)[queryHits(hits)] = ranges(dm.gr)[subjectHits(hits)]
+
+lands.gr.df <- as.data.frame(dm.gr)
+divergence.gr.df <- as.data.frame(divergence.gr)
+# deletes non-matching windows
+divergence.gr.df <- divergence.gr.df[-which(((divergence.gr.df$width - 1) %% 50000) != 0),]
+
+# compute mean divergence within 50kb windows
+dummy.tbl <- divergence.gr.df[, -c(4, 5)]
+dummy.tbl$seqnames <- as.character(dummy.tbl$seqnames)
+dummy.tbl$seqnames[which(dummy.tbl$seqnames == "2L")] <- 2
+dummy.tbl$seqnames[which(dummy.tbl$seqnames == "2R")] <- 3
+dummy.tbl$seqnames[which(dummy.tbl$seqnames == "3L")] <- 4
+dummy.tbl$seqnames[which(dummy.tbl$seqnames == "3R")] <- 5
+dummy.tbl$seqnames <- as.numeric(dummy.tbl$seqnames)
+
+tmp <- ddply(.data = dummy.tbl, .variables = c("seqnames", "start"), .fun = colMeans)
+
+divergence.gr.df.2L <- divergence.gr.df[divergence.gr.df$seqnames == "2L",] 
+divergence.gr.df.2L <- divergence.gr.df.2L[!duplicated(divergence.gr.df.2L$start),]
+divergence.gr.df.2R <- divergence.gr.df[divergence.gr.df$seqnames == "2R",] 
+divergence.gr.df.2R <- divergence.gr.df.2R[!duplicated(divergence.gr.df.2R$start),]
+divergence.gr.df.3L <- divergence.gr.df[divergence.gr.df$seqnames == "3L",] 
+divergence.gr.df.3L <- divergence.gr.df.3L[!duplicated(divergence.gr.df.3L$start),]
+divergence.gr.df.3R <- divergence.gr.df[divergence.gr.df$seqnames == "3R",] 
+divergence.gr.df.3R <- divergence.gr.df.3R[!duplicated(divergence.gr.df.3R$start),]
+
+divergence.gr.df.chr <- rbind.data.frame(divergence.gr.df.2L, divergence.gr.df.2R, divergence.gr.df.3L, divergence.gr.df.3R)
+divergence.gr.df.chr$score <- tmp$score
+
+lands.gr.df.2L <- lands.gr.df[which(lands.gr.df$seqnames == "2L"),]
+lands.gr.df.2L <- lands.gr.df.2L[which(lands.gr.df.2L$start %in% divergence.gr.df.2L$start),]
+lands.gr.df.2R <- lands.gr.df[which(lands.gr.df$seqnames == "2R"),]
+lands.gr.df.2R <- lands.gr.df.2R[which(lands.gr.df.2R$start %in% divergence.gr.df.2R$start),]
+lands.gr.df.3L <- lands.gr.df[which(lands.gr.df$seqnames == "3L"),]
+lands.gr.df.3L <- lands.gr.df.3L[which(lands.gr.df.3L$start %in% divergence.gr.df.3L$start),]
+lands.gr.df.3R <- lands.gr.df[which(lands.gr.df$seqnames == "3R"),]
+lands.gr.df.3R <- lands.gr.df.3R[which(lands.gr.df.3R$start %in% divergence.gr.df.3R$start),]
+
+lands.gr.df.chr <- rbind.data.frame(lands.gr.df.2L, lands.gr.df.2R, lands.gr.df.3L, lands.gr.df.3R)
+
+lands.divergence.dm <- cbind.data.frame(lands.gr.df.chr[,-(which(names(lands.gr.df.chr) == "strand"))], divergence.gr.df.chr$score)
+names(lands.divergence.dm)[ncol(lands.divergence.dm)] <- "divergence"
+
+write.table(lands.divergence.dm, "dm_maps_50kb_divergence.tsv",
+            quote = F, sep = "\t", col.names = T, row.names = F)
+
+cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity, method = "spearman")
+cor.test(lands.divergence.dm$divergence, lands.divergence.dm$theta, method = "spearman")
+cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$rho, method = "spearman")
+pcor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity,
+          z = lands.divergence.dm$theta, method = "spearman")
+```
+
+Evolutionary (Protein) Rates
+
+```{r}
+# loads 
+dm.raw <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
+dm.tbl <- na.omit(dm.raw)
+
+# gets ratios 
+dm.tbl$PiS <- dm.tbl$PiS / dm.tbl$MeanNumberSynPos
+dm.tbl$PiN <- dm.tbl$PiN / (3 - dm.tbl$MeanNumberSynPos)
+dm.tbl$dS <- as.numeric(dm.tbl$dS) / dm.tbl$MeanNumberSynPosDiv
+dm.tbl$dN <- dm.tbl$dN / (3 - dm.tbl$MeanNumberSynPosDiv)
+# cleans
+dm.tbl.popgen <- as.data.frame(cbind(dm.tbl$PiN, dm.tbl$PiS, dm.tbl$dN, dm.tbl$dS, dm.tbl$GeneID))
+dm.tbl.popgen <- na.omit(dm.tbl.popgen)
+names(dm.tbl.popgen) <- c("PiN", "PiS", "dN", "dS", "geneID")
+
+# for each gene, sums ratios of each codon
+dm.tbl.genes <- ddply(.data = dm.tbl.popgen, .variables = "geneID", .fun = colSums, na.rm = T)
+# substitutes gene id and computes ratios
+dm.tbl.genes$geneID <- unique(dm.tbl$GeneID)
+dm.tbl.genes$dNdS <- dm.tbl.genes$dN / dm.tbl.genes$dS
+dm.tbl.genes$PiNPiS <- dm.tbl.genes$PiN / dm.tbl.genes$PiS
+dm.tbl.popstats <- cbind.data.frame(as.character(dm.tbl.genes$geneID), dm.tbl.genes$PiN, dm.tbl.genes$PiS, dm.tbl.genes$PiNPiS,
+                                    dm.tbl.genes$dN, dm.tbl.genes$dS, dm.tbl.genes$dNdS)
+names(dm.tbl.popstats) <- c("geneID", "PiN", "PiS", "PiNPiS", "dN", "dS", "dNdS")
+dm.tbl.popstats$PiS <- as.numeric(dm.tbl.popstats$PiS)
+dm.tbl.popstats$dS <- as.numeric(dm.tbl.popstats$dS)
+dm.tbl.popstats$PiN <- as.numeric(dm.tbl.popstats$PiN)
+dm.tbl.popstats$dN <- as.numeric(dm.tbl.popstats$dN)
+dm.tbl.popstats$PiNPiS <- as.numeric(dm.tbl.popstats$PiNPiS)
+dm.tbl.popstats$dNdS <- as.numeric(dm.tbl.popstats$dNdS)
+
+dm.tbl.popstats.clean <- dm.tbl.popstats[which(dm.tbl.popstats$PiNPiS > 0),]
+dm.tbl.popstats.clean <- dm.tbl.popstats.clean[which(dm.tbl.popstats.clean$dNdS > 0),]
+
+dm.genes.coord <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F)
+names(dm.genes.coord) <- c("chr", "start", "end", "x", "geneID", "length")
+dm.genes.coord <- dm.genes.coord[,-4]
+
+dm.evol <- merge(dm.genes.coord, dm.tbl.popstats.clean, by = "geneID")
+dm.evol <- dm.evol[order(dm.evol$chr),]
+
+# reorder maps to use GR
+dm.maps.50kb <- dm.lands.50kb[,c(8,1:6)]
+
+# grouping per gene coordinate
+dm.lands.gr <- makeGRangesFromDataFrame(dm.maps.50kb)
+values(dm.lands.gr) <- dm.maps.50kb[,(4:7)]
+evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
+values(evolrate.gr) <- dm.evol[,(5:11)]
+
+hits <- findOverlaps(query = evolrate.gr, subject = dm.lands.gr, type = "within") 
+
+evolrate.gr.df <- as.data.frame(evolrate.gr[queryHits(hits)], row.names = NULL)
+dm.lands.gr.df <- as.data.frame(dm.lands.gr[subjectHits(hits)], row.names = NULL)
+
+dm.lands.evolrate <- cbind.data.frame(dm.lands.gr.df[,c(1:3,6:9)], evolrate.gr.df[,c(2,3,6:12)])
+dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$PiNPiS < 1),]
+names(dm.lands.evolrate)[1] <- "chr"
+names(dm.lands.evolrate)[2] <- "start.window"
+names(dm.lands.evolrate)[3] <- "end.window"
+names(dm.lands.evolrate)[8] <- "start.gene"
+names(dm.lands.evolrate)[9] <- "end.gene"
+
+# NOTE: must sort rows of dm.lands.evolrate by chr and start coords
+
+write.table(dm.lands.evolrate, "dm_maps_50kb_protein_rates.tsv",
+            sep = "\t", quote = F, col.names = T, row.names = F)
+
+# linear model in coding regions
+
+# centering
+dm.lands.evolrate$thetaC <- dm.lands.evolrate$theta - mean(dm.lands.evolrate$theta)
+dm.lands.evolrate$tmrcaC <- dm.lands.evolrate$tmrca - mean(dm.lands.evolrate$tmrca)
+dm.lands.evolrate$rhoC <- dm.lands.evolrate$rho - mean(dm.lands.evolrate$rho)
+
+dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
+
+m.dm.cds <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC) * chr, data = dm.lands.evolrate)
+
+plot(resid(m.dm.cds)~fitted(m.dm.cds))
+hist(resid(m.dm.cds), nclass = 30)
+dwtest(m.dm.cds)
+hmctest(m.dm.cds, nsim = 10000) 
+
+summary(m.dm.cds)
+
+# type 2 anova
+anova.diversity.cds <- Anova(m.dm.cds)
+apiss <- anova.diversity.cds$"Sum Sq"
+anova.diversity.cds$VarExp <- apiss / sum(apiss)
+
+anova.diversity.cds
+
+# GLS
+dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
+
+g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC) * chr,
+                 data = dm.lands.evolrate, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+summary(g.dm.cds)
+
+# correlations
+cor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, method = "spearman") 
+cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman") 
+cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
+pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
+cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
+pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+
+# checking about rec rate
+cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
+pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, dm.lands.evolrate$tmrca, method = "spearman") 
+cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
+```
+
