@@ -2852,6 +2852,9 @@ summary(g.div.dm.50kb.1)
 # tmrcaC        0.0114980 0.000091587  125.5412  0.0000
 # thetaC:tmrcaC 1.0777123 0.019925270   54.0877  0.0000
 
+vif(g.div.dm.50kb.1)
+# thetaC          rhoC        tmrcaC thetaC:tmrcaC 
+# 1.202764      1.573546      1.949445      1.191259
 
 # Linear model without TMRCA --> rho becomes significant
 g.div.dm.50kb.5 <- gls(diversity ~ (thetaC + rhoC),
@@ -3022,6 +3025,7 @@ rho.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.200kb.bedgraph", hea
 
 # diversity
 diversity.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+
 diversity.dm.200kb.3R$avg <- apply(diversity.dm.200kb.3R[4:ncol(diversity.dm.200kb.3R)], 1, mean)
 
 # mutation landscapes
@@ -3175,6 +3179,9 @@ summary(g.div.dm.200kb.1)
 # tmrcaC        0.0113902 0.00022900  49.7394  0.0000
 # thetaC:tmrcaC 0.9323025 0.05092516  18.3073  0.0000
 
+vif(g.div.dm.200kb.1)
+# thetaC          rhoC        tmrcaC thetaC:tmrcaC 
+# 1.359800      1.490466      3.435475      2.271943 
 
 # Linear model without TMRCA --> rho becomes significant
 g.div.dm.200kb.5 <- gls(diversity ~ (thetaC + rhoC),
@@ -3325,6 +3332,7 @@ dm.lands.1Mb.3L$chr <- "3L"
 dm.lands.1Mb.3L$thetaC <- dm.lands.1Mb.3L$theta- mean(dm.lands.1Mb.3L$theta)
 dm.lands.1Mb.3L$tmrcaC <- dm.lands.1Mb.3L$tmrca - mean(dm.lands.1Mb.3L$tmrca)
 dm.lands.1Mb.3L$rhoC <- dm.lands.1Mb.3L$rho - mean(dm.lands.1Mb.3L$rho)
+
 
 g.div.dm.1Mb.3L <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
                         data = dm.lands.1Mb.3L, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
@@ -3499,6 +3507,9 @@ summary(g.div.dm.1Mb.1)
 # tmrcaC        0.0105798 0.00056242  18.8111  0.0000
 # thetaC:tmrcaC 0.6655998 0.12262688   5.4278  0.0000
 
+vif(g.div.dm.1Mb.1)
+# thetaC          rhoC        tmrcaC thetaC:tmrcaC 
+# 1.500655      1.548638      3.257200      1.973372
 
 # Linear model without TMRCA --> rho becomes significant
 g.div.dm.1Mb.5 <- gls(diversity ~ (thetaC + rhoC),
@@ -3588,10 +3599,10 @@ cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity, 
 cor.test(lands.divergence.dm$divergence, lands.divergence.dm$theta, method = "spearman")
 # 0.20 p-value = 3e-09
 cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$rho, method = "spearman")
-# -0.003 p-value = 0.94
+# -0.03 p-value = 0.34
 pcor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity,
           z = lands.divergence.dm$theta, method = "spearman")
-# 0.05 p-value = 0.17
+# 0.025 p-value = 0.42
 
 
 ########################################
@@ -3725,7 +3736,7 @@ g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC) * chr,
                  data = dm.lands.evolrate, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.dm.cds)
-?# Value  Std.Error  t-value p-value
+# Value  Std.Error  t-value p-value
 # (Intercept)          0.0085814 0.00001683 509.9168  0.0000
 # thetaC               0.9604655 0.00602716 159.3561  0.0000
 # rhoC                 0.0017647 0.00164068   1.0756  0.2873
