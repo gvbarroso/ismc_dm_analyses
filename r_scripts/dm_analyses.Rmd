@@ -1,8 +1,10 @@
 ---
-title: "analyses.R"
-author: "Gustavo V. Barroso"
-date: "10/28/2020"
-output: html_document
+title: "Determinants of the genome-wide diversity in Drosophila"
+author: "Gustavo V. Barroso and Julien Y. Dutheil"
+date: "November 1st 2020"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, message=FALSE, warning=FALSE}
@@ -25,10 +27,6 @@ library(scales)
 library(interactions)
 
 knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/dm_data/")
-
-# R_2 table for plotting at the end (real Drosophila data)
-r2.dm.tab <- as.data.frame(matrix(ncol = 6, nrow = 3))
-colnames(r2.dm.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA", "bin.size")
 
 nreps <- 10
 reps <- character(length = nreps)
@@ -524,11 +522,11 @@ anova.diversity <- Anova(m.diversity.rep_9)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
   
-r2.inf.50kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.inf.50kb[2, 1] <- anova.diversity$VarExp[1] * 100
-r2.inf.50kb[3, 1] <- anova.diversity$VarExp[2] * 100
-r2.inf.50kb[4, 1] <- anova.diversity$VarExp[3] * 100
-r2.inf.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
+r2.inf.50kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.50kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.inf.50kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.inf.50kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.inf.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
 ```
 
 rep_10
@@ -582,6 +580,10 @@ r2.inf.50kb[2, 10] <- anova.diversity$VarExp[1] * 100
 r2.inf.50kb[3, 10] <- anova.diversity$VarExp[2] * 100
 r2.inf.50kb[4, 10] <- anova.diversity$VarExp[3] * 100
 r2.inf.50kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+
+r2.inf.50kb$average <- rowMeans(r2.inf.50kb)
+r2.inf.50kb <- transform(r2.inf.50kb, sd=apply(r2.inf.50kb, 1, sd, na.rm = TRUE))
 ```
 
 plots
@@ -589,9 +591,6 @@ plots
 ```{r}
 
 scale.3d <- function(x) sprintf("%.3f", x)
-
-r2.inf.50kb$average <- rowMeans(r2.inf.50kb)
-r2.inf.50kb <- transform(r2.inf.50kb, sd=apply(r2.inf.50kb, 1, sd, na.rm = TRUE))
 
 rho.plot <- as.data.frame(cbind(inf.lands.50k.rep_1$bin,
                                 sim.rho.50k$sim, 
@@ -606,7 +605,7 @@ rho.plot <- as.data.frame(cbind(inf.lands.50k.rep_1$bin,
                                 inf.lands.50k.rep_9$rho,
                                 inf.lands.50k.rep_10$rho))
 
-rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)]
+rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)] # scaling because of SCRM N0 vs Ne
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
@@ -1185,6 +1184,9 @@ r2.inf.200kb[2, 10] <- anova.diversity$VarExp[1] * 100
 r2.inf.200kb[3, 10] <- anova.diversity$VarExp[2] * 100
 r2.inf.200kb[4, 10] <- anova.diversity$VarExp[3] * 100
 r2.inf.200kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+r2.inf.200kb$average <- rowMeans(r2.inf.200kb)
+r2.inf.200kb <- transform(r2.inf.200kb, sd=apply(r2.inf.200kb, 1, sd, na.rm = TRUE))
 ```
 
 plots
@@ -1192,9 +1194,6 @@ plots
 ```{r}
 
 scale.3d <- function(x) sprintf("%.3f", x)
-
-r2.inf.200kb$average <- rowMeans(r2.inf.200kb)
-r2.inf.200kb <- transform(r2.inf.200kb, sd=apply(r2.inf.200kb, 1, sd, na.rm = TRUE))
 
 rho.plot <- as.data.frame(cbind(inf.lands.200k.rep_1$bin,
                                 sim.rho.200k$sim, 
@@ -1209,7 +1208,7 @@ rho.plot <- as.data.frame(cbind(inf.lands.200k.rep_1$bin,
                                 inf.lands.200k.rep_9$rho,
                                 inf.lands.200k.rep_10$rho))
 
-rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)]
+rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)] # scaling because of SCRM N0 vs Ne
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
@@ -1247,6 +1246,7 @@ plot_grid(rho.map.200kb, theta.map.200kb, nrow = 2, ncol = 1)
 
 
 1 Mb scale 
+
 ```{r}
 r2.inf.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.inf.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
@@ -1729,11 +1729,11 @@ anova.diversity <- Anova(m.diversity.rep_9)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
   
-r2.inf.1Mb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
-r2.inf.1Mb[2, 1] <- anova.diversity$VarExp[1] * 100
-r2.inf.1Mb[3, 1] <- anova.diversity$VarExp[2] * 100
-r2.inf.1Mb[4, 1] <- anova.diversity$VarExp[3] * 100
-r2.inf.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
+r2.inf.1Mb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.inf.1Mb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.inf.1Mb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.inf.1Mb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.inf.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
 ```
 
 rep_10
@@ -1787,16 +1787,16 @@ r2.inf.1Mb[2, 10] <- anova.diversity$VarExp[1] * 100
 r2.inf.1Mb[3, 10] <- anova.diversity$VarExp[2] * 100
 r2.inf.1Mb[4, 10] <- anova.diversity$VarExp[3] * 100
 r2.inf.1Mb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+r2.inf.1Mb$average <- rowMeans(r2.inf.1Mb)
+r2.inf.1Mb <- transform(r2.inf.1Mb, sd=apply(r2.inf.1Mb, 1, sd, na.rm = TRUE))
 ```
 
-plots
+Plots
 
 ```{r}
 
 scale.3d <- function(x) sprintf("%.3f", x)
-
-r2.inf.1Mb$average <- rowMeans(r2.inf.1Mb)
-r2.inf.1Mb <- transform(r2.inf.1Mb, sd=apply(r2.inf.1Mb, 1, sd, na.rm = TRUE))
 
 rho.plot <- as.data.frame(cbind(inf.lands.1M.rep_1$bin,
                                 sim.rho.1M$sim, 
@@ -1811,7 +1811,7 @@ rho.plot <- as.data.frame(cbind(inf.lands.1M.rep_1$bin,
                                 inf.lands.1M.rep_9$rho,
                                 inf.lands.1M.rep_10$rho))
 
-rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)]
+rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)] # scaling because of SCRM N0 vs Ne
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
@@ -1852,7 +1852,7 @@ Real data chr 2L for comparing R^2 with simulations
 
 ```{r}
 r2.dm.tab <- as.data.frame(matrix(ncol = 6, nrow = 3))
-colnames(r2.dm.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA", "Bin_size(kb)")
+colnames(r2.dm.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA", "bin.size")
 
 # 50kb
 # recombination landscapes
@@ -2249,13 +2249,7 @@ summary(m.div.dm.50kb)
 anova.diversity <- Anova(m.div.dm.50kb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
-
-r2.dm.tab[1,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
-                    anova.diversity$VarExp[1] * 100,
-                    anova.diversity$VarExp[2] * 100,
-                    anova.diversity$VarExp[3] * 100,
-                    anova.diversity$VarExp[4] * 100,
-                    50)
+anova.diversity
 
 # GLS
 g.div.dm.50kb.1 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
@@ -2530,13 +2524,7 @@ summary(m.div.dm.200kb)
 anova.diversity <- Anova(m.div.dm.200kb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
-
-r2.dm.tab[2,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
-                   anova.diversity$VarExp[1] * 100,
-                   anova.diversity$VarExp[2] * 100,
-                   anova.diversity$VarExp[3] * 100,
-                   anova.diversity$VarExp[4] * 100,
-                   200)
+anova.diversity
 
 # GLS
 g.div.dm.200kb.1 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
@@ -2810,13 +2798,7 @@ summary(m.div.dm.1Mb)
 anova.diversity <- Anova(m.div.dm.1Mb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
-
-r2.dm.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100,
-                   anova.diversity$VarExp[1] * 100,
-                   anova.diversity$VarExp[2] * 100,
-                   anova.diversity$VarExp[3] * 100,
-                   anova.diversity$VarExp[4] * 100,
-                   1000)
+anova.diversity
 
 # GLS
 g.div.dm.1Mb.1 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
@@ -3038,3 +3020,1447 @@ pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, dm.lands.evolrate$tmrca,
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
 ```
 
+
+Drosophila-like neutral simulations of 2L (True landscapes for plotting)
+
+50 kb scale
+```{r}
+r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.sim.50kb) <- reps
+
+sim.rho.50kb <- read.table("rs_drosophila_2/Misc/dm.sim.rho.50000.txt", header = T)
+sim.theta.50kb <- read.table("rs_drosophila_2/Misc/dm.sim.theta.50000.txt", header = T)
+
+# rep 1
+rep_1.pi.50kb <- read.table("rs_drosophila_2/rep_1/rep_1.pi.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb <- read.table("rs_drosophila_2/rep_1/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_1.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_1.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+
+# rep_2
+rep_2.pi.50kb <- read.table("rs_drosophila_2/rep_2/rep_2.pi.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb <- read.table("rs_drosophila_2/rep_2/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_2.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_2.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+# rep_3
+rep_3.pi.50kb <- read.table("rs_drosophila_2/rep_3/rep_3.pi.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb <- read.table("rs_drosophila_2/rep_3/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_3.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_3.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+# rep_4
+rep_4.pi.50kb <- read.table("rs_drosophila_2/rep_4/rep_4.pi.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb <- read.table("rs_drosophila_2/rep_4/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_4.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_4.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+# rep_5
+rep_5.pi.50kb <- read.table("rs_drosophila_2/rep_5/rep_5.pi.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb <- read.table("rs_drosophila_2/rep_5/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_5.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_5.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+# rep_6
+rep_6.pi.50kb <- read.table("rs_drosophila_2/rep_6/rep_6.pi.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb <- read.table("rs_drosophila_2/rep_6/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_6.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_6.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+# rep_7
+rep_7.pi.50kb <- read.table("rs_drosophila_2/rep_7/rep_7.pi.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb <- read.table("rs_drosophila_2/rep_7/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_7.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_7.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_8
+rep_8.pi.50kb <- read.table("rs_drosophila_2/rep_8/rep_8.pi.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb <- read.table("rs_drosophila_2/rep_8/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_8.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_8.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+# rep_9
+rep_9.pi.50kb <- read.table("rs_drosophila_2/rep_9/rep_9.pi.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb <- read.table("rs_drosophila_2/rep_9/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_9.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_9.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_10
+rep_10.pi.50kb <- read.table("rs_drosophila_2/rep_10/rep_10.pi.50kb.bedgraph", header = T)
+rep_10.tmrca.50kb <- read.table("rs_drosophila_2/rep_10/sim.tmrca.50k.map", header = T)
+
+sim.lands.50kb <- as.data.frame(cbind(rep_10.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_10.tmrca.50kb$tmrca))
+names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.50kb)
+plot(diversity~tmrca, data = sim.lands.50kb)
+plot(diversity~rho, data = sim.lands.50kb)
+
+# centering
+sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
+sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
+sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
+
+sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+vif(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.50kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.50kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.sim.50kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.sim.50kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.sim.50kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+r2.sim.50kb$average <- rowMeans(r2.sim.50kb)
+r2.sim.50kb <- transform(r2.sim.50kb, sd=apply(r2.sim.50kb, 1, sd, na.rm = TRUE))
+```
+
+200 kb scale
+```{r}
+r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.sim.200kb) <- reps
+
+sim.rho.200kb <- read.table("rs_drosophila_2/Misc/dm.sim.rho.2e+05.txt", header = T)
+sim.theta.200kb <- read.table("rs_drosophila_2/Misc/dm.sim.theta.2e+05.txt", header = T)
+
+# rep 1
+rep_1.pi.200kb <- read.table("rs_drosophila_2/rep_1/rep_1.pi.200kb.bedgraph", header = T)
+rep_1.tmrca.200kb <- read.table("rs_drosophila_2/rep_1/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_1.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_1.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_2
+rep_2.pi.200kb <- read.table("rs_drosophila_2/rep_2/rep_2.pi.200kb.bedgraph", header = T)
+rep_2.tmrca.200kb <- read.table("rs_drosophila_2/rep_2/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_2.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_2.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+# rep_3
+rep_3.pi.200kb <- read.table("rs_drosophila_2/rep_3/rep_3.pi.200kb.bedgraph", header = T)
+rep_3.tmrca.200kb <- read.table("rs_drosophila_2/rep_3/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_3.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_3.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+  
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+# rep_4
+rep_4.pi.200kb <- read.table("rs_drosophila_2/rep_4/rep_4.pi.200kb.bedgraph", header = T)
+rep_4.tmrca.200kb <- read.table("rs_drosophila_2/rep_4/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_4.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_4.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+# rep_5
+rep_5.pi.200kb <- read.table("rs_drosophila_2/rep_5/rep_5.pi.200kb.bedgraph", header = T)
+rep_5.tmrca.200kb <- read.table("rs_drosophila_2/rep_5/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_5.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_5.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+# rep_6
+rep_6.pi.200kb <- read.table("rs_drosophila_2/rep_6/rep_6.pi.200kb.bedgraph", header = T)
+rep_6.tmrca.200kb <- read.table("rs_drosophila_2/rep_6/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_6.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_6.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+# rep_7
+rep_7.pi.200kb <- read.table("rs_drosophila_2/rep_7/rep_7.pi.200kb.bedgraph", header = T)
+rep_7.tmrca.200kb <- read.table("rs_drosophila_2/rep_7/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_7.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_7.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_8
+rep_8.pi.200kb <- read.table("rs_drosophila_2/rep_8/rep_8.pi.200kb.bedgraph", header = T)
+rep_8.tmrca.200kb <- read.table("rs_drosophila_2/rep_8/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_8.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_8.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+# rep_9
+rep_9.pi.200kb <- read.table("rs_drosophila_2/rep_9/rep_9.pi.200kb.bedgraph", header = T)
+rep_9.tmrca.200kb <- read.table("rs_drosophila_2/rep_9/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_9.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_9.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+  
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 9] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_10
+rep_10.pi.200kb <- read.table("rs_drosophila_2/rep_10/rep_10.pi.200kb.bedgraph", header = T)
+rep_10.tmrca.200kb <- read.table("rs_drosophila_2/rep_10/sim.tmrca.200k.map", header = T)
+
+sim.lands.200kb <- as.data.frame(cbind(rep_10.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_10.tmrca.200kb$tmrca))
+names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.200kb)
+plot(diversity~tmrca, data = sim.lands.200kb)
+plot(diversity~rho, data = sim.lands.200kb)
+
+# centering
+sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
+sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
+sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
+
+sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+vif(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.200kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.200kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.sim.200kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.sim.200kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.sim.200kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+
+r2.sim.200kb$average <- rowMeans(r2.sim.200kb)
+r2.sim.200kb <- transform(r2.sim.200kb, sd=apply(r2.sim.200kb, 1, sd, na.rm = TRUE))
+```
+
+1 Mb scale
+```{r}
+r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.sim.1Mb) <- reps
+
+sim.rho.1Mb <- read.table("rs_drosophila_2/Misc/dm.sim.rho.1e+06.txt", header = T)
+sim.theta.1Mb <- read.table("rs_drosophila_2/Misc/dm.sim.theta.1e+06.txt", header = T)
+
+# rep 1
+rep_1.pi.1Mb <- read.table("rs_drosophila_2/rep_1/rep_1.pi.1Mb.bedgraph", header = T)
+rep_1.tmrca.1Mb <- read.table("rs_drosophila_2/rep_1/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_1.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_1.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_2
+rep_2.pi.1Mb <- read.table("rs_drosophila_2/rep_2/rep_2.pi.1Mb.bedgraph", header = T)
+rep_2.tmrca.1Mb <- read.table("rs_drosophila_2/rep_2/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_2.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_2.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+# rep_3
+rep_3.pi.1Mb <- read.table("rs_drosophila_2/rep_3/rep_3.pi.1Mb.bedgraph", header = T)
+rep_3.tmrca.1Mb <- read.table("rs_drosophila_2/rep_3/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_3.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_3.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+# rep_4
+rep_4.pi.1Mb <- read.table("rs_drosophila_2/rep_4/rep_4.pi.1Mb.bedgraph", header = T)
+rep_4.tmrca.1Mb <- read.table("rs_drosophila_2/rep_4/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_4.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_4.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+# rep_5
+rep_5.pi.1Mb <- read.table("rs_drosophila_2/rep_5/rep_5.pi.1Mb.bedgraph", header = T)
+rep_5.tmrca.1Mb <- read.table("rs_drosophila_2/rep_5/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_5.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_5.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+# rep_6
+rep_6.pi.1Mb <- read.table("rs_drosophila_2/rep_6/rep_6.pi.1Mb.bedgraph", header = T)
+rep_6.tmrca.1Mb <- read.table("rs_drosophila_2/rep_6/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_6.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_6.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+# rep_7
+rep_7.pi.1Mb <- read.table("rs_drosophila_2/rep_7/rep_7.pi.1Mb.bedgraph", header = T)
+rep_7.tmrca.1Mb <- read.table("rs_drosophila_2/rep_7/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_7.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_7.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+
+# rep_8
+rep_8.pi.1Mb <- read.table("rs_drosophila_2/rep_8/rep_8.pi.1Mb.bedgraph", header = T)
+rep_8.tmrca.1Mb <- read.table("rs_drosophila_2/rep_8/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_8.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_8.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+# rep_9
+rep_9.pi.1Mb <- read.table("rs_drosophila_2/rep_9/rep_9.pi.1Mb.bedgraph", header = T)
+rep_9.tmrca.1Mb <- read.table("rs_drosophila_2/rep_9/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_9.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_9.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
+
+# rep_10
+rep_10.pi.1Mb <- read.table("rs_drosophila_2/rep_10/rep_10.pi.1Mb.bedgraph", header = T)
+rep_10.tmrca.1Mb <- read.table("rs_drosophila_2/rep_10/sim.tmrca.1M.map", header = T)
+
+sim.lands.1Mb <- as.data.frame(cbind(rep_10.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_10.tmrca.1Mb$tmrca))
+names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
+
+cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
+cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
+
+plot(theta~tmrca, data = sim.lands.1Mb)
+plot(theta~rho, data = sim.lands.1Mb)
+plot(tmrca~rho, data = sim.lands.1Mb)
+
+plot(diversity~theta, data = sim.lands.1Mb)
+plot(diversity~tmrca, data = sim.lands.1Mb)
+plot(diversity~rho, data = sim.lands.1Mb)
+
+# centering
+sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
+sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
+sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
+
+sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+vif(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.sim.1Mb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.sim.1Mb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.sim.1Mb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.sim.1Mb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.sim.1Mb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+
+r2.sim.1Mb$average <- rowMeans(r2.sim.1Mb)
+r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
+```
+
+
+R^2 plot
+
+```{r}
+# true landscapes
+r2.sim.avg <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
+colnames(r2.sim.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+r2.sim.avg$bin.size <- c(50, 200, 1000)
+
+# inferred landscapes
+r2.inf.avg <- rbind.data.frame(r2.inf.50kb$average, r2.inf.200kb$average, r2.inf.1Mb$average, make.row.names = F)
+colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+r2.inf.avg$bin.size <- c(50, 200, 1000)
+  
+r2.dm.tab.2 <- as.data.frame(cbind(apply(r2.dm.tab, 2, as.numeric)))
+
+r2.tab.comb <- rbind.data.frame(r2.dm.tab.2, r2.sim.avg, r2.inf.avg)
+r2.tab.comb$type <- c(rep("real", 3), rep("sim", 3), rep("inf", 3))
+
+molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
+r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable, fill = type))
+r2.plot <- r2.plot + geom_line(data = molten.r2)
+r2.plot <- r2.plot + geom_point(aes(shape = type, colour = variable), size = 4)
+r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000)) 
+r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks())
+r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
+r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
+
+leg <- get_legend(r2.plot + theme(legend.position="bottom"))
+
+fig4 <- plot_grid(r2.plot + theme(legend.position = "none", legend.title = NULL),
+                  leg, nrow = 2, labels = NULL, rel_heights = c(1, 0.1), scale = c(1, 0.2))
+fig4
+```

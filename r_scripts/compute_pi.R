@@ -1,12 +1,17 @@
 
+library(plyr)
+library(dplyr)
+
+n <- 10 # number of replicates
+
 avg_pairwise <- function(x) {
   
   pi <- 0
   
   if(any(x) == 1) {
-    for(i in 1:10) {
-      if(i < 10) {
-        for(j in (i+1):10) {
+    for(i in 1:n) {
+      if(i < n) {
+        for(j in (i+1):n) {
           if(x[i] != x[j]) {
             pi <- pi + 1
           }
@@ -14,11 +19,11 @@ avg_pairwise <- function(x) {
       }
     }
   }
-  return(pi / 45)
+  return(pi / choose(n, 2))
 }
 
-pb <- txtProgressBar(min = 0, max = 10, style = 3)
-for(r in 1:10) {
+pb <- txtProgressBar(min = 0, max = n, style = 3)
+for(r in 1:n) {
   
   setTxtProgressBar(pb, r)
   
