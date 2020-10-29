@@ -1,7 +1,7 @@
 # Created: 17/06/2019
 # Last modified: 17/06/2019
 # Author: Gustavo Barroso 
-# This script bins simulated landscapes from the "rigourous simulations" dataset
+# This script bins simulated theta and rho landscapes 
 
 library(plyr)
 

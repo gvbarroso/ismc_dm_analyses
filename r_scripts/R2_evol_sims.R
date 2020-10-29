@@ -1,3 +1,7 @@
+# Created: 25/10/2020
+# Last modified: 29/10/2020
+# Author: Gustavo Barroso 
+# This script produces the R^2 plots from different simulated scenarios
 
 library(reshape2)
 library(tidyverse)
@@ -5,28 +9,32 @@ library(car)
 library(scales)
 library(cowplot)
 
+
+
+nreps <- 10
+reps <- character(length = nreps)
+for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+
+
+
 ################################################
 #
 # bottleneck_r_1e-8_flat_mu
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/bottleneck_r_1e-8_flat_mu/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/bottleneck_r_1e-8_flat_mu/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.50kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "/sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "/rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "/rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
 
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "rho", "tmrca")
@@ -59,11 +67,11 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.200kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "/sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "/rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "/rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "rho", "tmrca")
@@ -96,11 +104,11 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.1Mb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "/sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "rho", "tmrca")
@@ -143,23 +151,19 @@ r2.sim.avg_1$mu_block <- "flat"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/bottleneck_r_1e-8_mu_change_50kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/bottleneck_r_1e-8_mu_change_50kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "/sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "/sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -194,12 +198,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "/sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d, "/sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "/rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "/rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -234,12 +238,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -283,23 +287,19 @@ r2.sim.avg_2$mu_block <- "50 kb"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/bottleneck_r_1e-8_mu_change_500kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/bottleneck_r_1e-8_mu_change_500kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -334,12 +334,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -374,12 +374,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -423,22 +423,18 @@ r2.sim.avg_3$mu_block <- "500 kb"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/bottleneck_r_1e-9_flat_mu/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/bottleneck_r_1e-9_flat_mu/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.50kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "rho", "tmrca")
@@ -471,11 +467,11 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.200kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "rho", "tmrca")
@@ -508,11 +504,11 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.1Mb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "rho", "tmrca")
@@ -556,23 +552,19 @@ r2.sim.avg_4$mu_block <- "flat"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/bottleneck_r_1e-9_mu_change_50kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/bottleneck_r_1e-9_mu_change_50kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -607,12 +599,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -647,12 +639,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -697,23 +689,19 @@ r2.sim.avg_5$mu_block <- "50 kb"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/bottleneck_r_1e-9_mu_change_500kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/bottleneck_r_1e-9_mu_change_500kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -748,12 +736,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -788,12 +776,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -848,7 +836,7 @@ r2.plot_bottleneck <- r2.plot_bottleneck + scale_x_continuous(breaks = c(50, 200
 r2.plot_bottleneck <- r2.plot_bottleneck + scale_y_continuous(breaks = pretty_breaks())
 r2.plot_bottleneck <- r2.plot_bottleneck + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot_bottleneck <- r2.plot_bottleneck + theme(axis.title = element_text(size = 16), axis.text = element_text(size = 12))
-ggsave("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/r2.bottleneck.pdf", r2.plot_bottleneck, device = "pdf")
+ggsave("other_scenarios/r2.bottleneck.pdf", r2.plot_bottleneck, device = "pdf")
 
 ################################################
 #
@@ -856,22 +844,18 @@ ggsave("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/r2.bottleneck.pdf", r2
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/flat_Ne_r_1e-8_flat_mu/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/flat_Ne_r_1e-8_flat_mu/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.50kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "rho", "tmrca")
@@ -904,11 +888,11 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.200kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "rho", "tmrca")
@@ -941,11 +925,11 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.1Mb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "rho", "tmrca")
@@ -988,23 +972,19 @@ r2.sim.avg_1$mu_block <- "flat"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/flat_Ne_r_1e-8_mu_change_50kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/flat_Ne_r_1e-8_mu_change_50kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1039,12 +1019,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1079,12 +1059,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1128,23 +1108,19 @@ r2.sim.avg_2$mu_block <- "50 kb"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/flat_Ne_r_1e-8_mu_change_500kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/flat_Ne_r_1e-8_mu_change_500kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1179,12 +1155,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1219,12 +1195,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1268,22 +1244,18 @@ r2.sim.avg_3$mu_block <- "500 kb"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/flat_Ne_r_1e-9_flat_mu/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/flat_Ne_r_1e-9_flat_mu/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.50kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "rho", "tmrca")
@@ -1316,11 +1288,11 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.200kb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "rho", "tmrca")
@@ -1353,11 +1325,11 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 3))
 row.names(r2.sim.1Mb) <- c("Total", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.50000.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "rho", "tmrca")
@@ -1401,23 +1373,19 @@ r2.sim.avg_4$mu_block <- "flat"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/flat_Ne_r_1e-9_mu_change_50kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/flat_Ne_r_1e-9_mu_change_50kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1452,12 +1420,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1492,12 +1460,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1542,23 +1510,19 @@ r2.sim.avg_5$mu_block <- "50 kb"
 #
 ################################################
 
-setwd("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/flat_Ne_r_1e-9_mu_change_500kb/")
-
-nreps <- 10
-reps <- character(length = nreps)
-for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
+d <- "other_scenarios/flat_Ne_r_1e-9_mu_change_500kb/"
 
 # 50kb
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("sim.rho.50000.map", header = T)
-sim.theta.50kb <- read.table("sim.theta.50000.map", header = T)
+sim.rho.50kb <- read.table(paste(d, "sim.rho.50000.map", sep = ""), header = T)
+sim.theta.50kb <- read.table(paste(d, "sim.theta.50000.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.50kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.50kb <- read.table(paste("rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
+  rep_pi.50kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.50kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.50kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.50k.map", sep = ""), header = T)
   
   sim.lands.50kb <- as.data.frame(cbind(rep_pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_tmrca.50kb$tmrca))
   names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1593,12 +1557,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("sim.rho.2e+05.map", header = T)
-sim.theta.200kb <- read.table("sim.theta.2e+05.map", header = T)
+sim.rho.200kb <- read.table(paste(d, "sim.rho.2e+05.map", sep = ""), header = T)
+sim.theta.200kb <- read.table(paste(d,"sim.theta.2e+05.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.200kb <- read.table(paste("rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
-  rep_tmrca.200kb <- read.table(paste("rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
+  rep_pi.200kb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.200kb.bedgraph", sep = ""), header = T)
+  rep_tmrca.200kb <- read.table(paste(d, "rep_", i, "/sim.tmrca.200k.map", sep = ""), header = T)
   
   sim.lands.200kb <- as.data.frame(cbind(rep_pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_tmrca.200kb$tmrca))
   names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1633,12 +1597,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 4))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("sim.rho.1e+06.map", header = T)
-sim.theta.1Mb <- read.table("sim.theta.1e+06.map", header = T)
+sim.rho.1Mb <- read.table(paste(d, "sim.rho.1e+06.map", sep = ""), header = T)
+sim.theta.1Mb <- read.table(paste(d,"sim.theta.1e+06.map", sep = ""), header = T)
 
 for(i in 1:nreps) {
-  rep_pi.1Mb <- read.table(paste("rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
-  rep_tmrca.1Mb <- read.table(paste("rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
+  rep_pi.1Mb <- read.table(paste(d, "rep_", i, "/rep_", i, ".pi.1Mb.bedgraph", sep = ""), header = T)
+  rep_tmrca.1Mb <- read.table(paste(d, "rep_", i, "/sim.tmrca.1M.map", sep = ""), header = T)
   
   sim.lands.1Mb <- as.data.frame(cbind(rep_pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_tmrca.1Mb$tmrca))
   names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -1693,4 +1657,4 @@ r2.plot_flat_Ne <- r2.plot_flat_Ne + scale_x_continuous(breaks = c(50, 200, 1000
 r2.plot_flat_Ne <- r2.plot_flat_Ne + scale_y_continuous(breaks = pretty_breaks())
 r2.plot_flat_Ne <- r2.plot_flat_Ne + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot_flat_Ne <- r2.plot_flat_Ne + theme(axis.title = element_text(size = 16), axis.text = element_text(size = 12))
-ggsave("~/../../data2/gvbarroso/Data/iSMC/other_scenarios/r2.flat_Ne.pdf", r2.plot_flat_Ne, device = "pdf")
+ggsave("other_scenarios/r2.flat_Ne.pdf", r2.plot_flat_Ne, device = "pdf")

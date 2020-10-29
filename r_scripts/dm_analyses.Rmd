@@ -38,6 +38,9 @@ for(i in 1:nreps) {
 
 Drosophila-like neutral simulations of chr 2L (Inferred landscapes)
 
+First batch of 10 replicate simulations using parameters as inferred from real
+Drosophila data.
+
 50 kb scale
 
 ```{r}
@@ -53,7 +56,6 @@ names(sim.lands.50k) <- c("theta", "rho")
 ```
 
 rep_1
-
 
 ```{r}
 p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
@@ -89,6 +91,8 @@ g.rep_1 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.50k.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_1)
+
+vif(g.rep_1)
 
 g.rep_1.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_1, cor = corAR1(0, ~bin), method = "ML")
@@ -143,6 +147,8 @@ g.rep_2 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_2)
 
+vif(g.rep_2)
+
 g.rep_2.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_2, cor = corAR1(0, ~bin), method = "ML")
 
@@ -195,6 +201,8 @@ g.rep_3 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.50k.rep_3, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_3)
+
+vif(g.rep_3)
 
 g.rep_3.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_3, cor = corAR1(0, ~bin), method = "ML")
@@ -249,6 +257,8 @@ g.rep_4 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_4)
 
+vif(g.rep_4)
+
 g.rep_4.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_4, cor = corAR1(0, ~bin), method = "ML")
 
@@ -301,6 +311,8 @@ g.rep_5 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.50k.rep_5, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_5)
+
+vif(g.rep_5)
 
 g.rep_5.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_5, cor = corAR1(0, ~bin), method = "ML")
@@ -355,6 +367,8 @@ g.rep_6 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_6)
 
+vif(g.rep_6)
+
 g.rep_6.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_6, cor = corAR1(0, ~bin), method = "ML")
 
@@ -407,6 +421,8 @@ g.rep_7 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.50k.rep_7, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_7)
+
+vif(g.rep_7)
 
 g.rep_7.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_7, cor = corAR1(0, ~bin), method = "ML")
@@ -461,6 +477,8 @@ g.rep_8 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_8)
 
+vif(g.rep_8)
+
 g.rep_8.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_8, cor = corAR1(0, ~bin), method = "ML")
 
@@ -514,6 +532,8 @@ g.rep_9 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_9)
 
+vif(g.rep_9)
+
 g.rep_9.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_9, cor = corAR1(0, ~bin), method = "ML")
 
@@ -566,6 +586,8 @@ g.rep_10 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.50k.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_10)
+
+vif(g.rep_10)
 
 g.rep_10.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.50k.rep_10, cor = corAR1(0, ~bin), method = "ML")
@@ -694,6 +716,8 @@ g.rep_1 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_1)
 
+vif(g.rep_1)
+
 g.rep_1.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
@@ -746,6 +770,8 @@ g.rep_2 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.200k.rep_2, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_2)
+
+vif(g.rep_2)
 
 g.rep_2.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_2, cor = corAR1(0, ~bin), method = "ML")
@@ -800,6 +826,8 @@ g.rep_3 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_3)
 
+vif(g.rep_3)
+
 g.rep_3.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_3, cor = corAR1(0, ~bin), method = "ML")
 
@@ -852,6 +880,8 @@ g.rep_4 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.200k.rep_4, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_4)
+
+vif(g.rep_4)
 
 g.rep_4.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_4, cor = corAR1(0, ~bin), method = "ML")
@@ -906,6 +936,8 @@ g.rep_5 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_5)
 
+vif(g.rep_5)
+
 g.rep_5.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_5, cor = corAR1(0, ~bin), method = "ML")
 
@@ -958,6 +990,8 @@ g.rep_6 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.200k.rep_6, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_6)
+
+vif(g.rep_6)
 
 g.rep_6.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_6, cor = corAR1(0, ~bin), method = "ML")
@@ -1012,6 +1046,8 @@ g.rep_7 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_7)
 
+vif(g.rep_7)
+
 g.rep_7.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_7, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1064,6 +1100,8 @@ g.rep_8 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.200k.rep_8, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_8)
+
+vif(g.rep_8)
 
 g.rep_8.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_8, cor = corAR1(0, ~bin), method = "ML")
@@ -1118,6 +1156,8 @@ g.rep_9 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_9)
 
+vif(g.rep_9)
+
 g.rep_9.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_9, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1170,6 +1210,8 @@ g.rep_10 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.200k.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_10)
+
+vif(g.rep_10)
 
 g.rep_10.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.200k.rep_10, cor = corAR1(0, ~bin), method = "ML")
@@ -1297,6 +1339,8 @@ g.rep_1 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_1)
 
+vif(g.rep_1)
+
 g.rep_1.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1349,6 +1393,8 @@ g.rep_2 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.1M.rep_2, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_2)
+
+vif(g.rep_2)
 
 g.rep_2.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_2, cor = corAR1(0, ~bin), method = "ML")
@@ -1403,6 +1449,8 @@ g.rep_3 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_3)
 
+vif(g.rep_3)
+
 g.rep_3.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_3, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1455,6 +1503,8 @@ g.rep_4 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.1M.rep_4, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_4)
+
+vif(g.rep_4)
 
 g.rep_4.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_4, cor = corAR1(0, ~bin), method = "ML")
@@ -1509,6 +1559,8 @@ g.rep_5 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_5)
 
+vif(g.rep_5)
+
 g.rep_5.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_5, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1561,6 +1613,8 @@ g.rep_6 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.1M.rep_6, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_6)
+
+vif(g.rep_6)
 
 g.rep_6.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_6, cor = corAR1(0, ~bin), method = "ML")
@@ -1615,6 +1669,8 @@ g.rep_7 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_7)
 
+vif(g.rep_7)
+
 g.rep_7.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_7, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1667,6 +1723,8 @@ g.rep_8 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.1M.rep_8, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_8)
+
+vif(g.rep_8)
 
 g.rep_8.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_8, cor = corAR1(0, ~bin), method = "ML")
@@ -1721,6 +1779,8 @@ g.rep_9 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
 
 summary(g.rep_9)
 
+vif(g.rep_9)
+
 g.rep_9.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_9, cor = corAR1(0, ~bin), method = "ML")
 
@@ -1773,6 +1833,8 @@ g.rep_10 <- gls(diversity ~ thetaC + tmrcaC + rhoC + thetaC:tmrcaC,
                data = inf.lands.1M.rep_1, cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.rep_10)
+
+vif(g.rep_10)
 
 g.rep_10.no.tmrca <- gls(diversity ~ thetaC + rhoC,
                         data = inf.lands.1M.rep_10, cor = corAR1(0, ~bin), method = "ML")
@@ -1849,7 +1911,8 @@ plot_grid(rho.map.1Mb, theta.map.1Mb, nrow = 2, ncol = 1)
 ```
 
 
-Real data chr 2L for comparing R^2 with simulations
+Real Drosophila data.
+We focus on chr 2L for comparing R^2 with simulations
 
 ```{r}
 r2.dm.tab <- as.data.frame(matrix(ncol = 6, nrow = 3))
@@ -2004,7 +2067,9 @@ r2.dm.tab[3,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anov
 
 ```
 
-Real data 50 kb windows
+Real Drosophila data -- whole-genome analyses
+
+50 kb windows
 
 ```{r}
 # Chr 2L
@@ -3041,6 +3106,7 @@ cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman")
 Drosophila-like neutral simulations of 2L (True landscapes for plotting)
 
 50 kb scale
+
 ```{r}
 r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
@@ -3059,10 +3125,6 @@ names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
 cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman") 
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
-
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
 
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
@@ -3083,8 +3145,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3125,10 +3185,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3148,8 +3204,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3172,10 +3226,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3190,8 +3240,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3214,10 +3262,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3232,8 +3276,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3256,10 +3298,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3275,7 +3313,6 @@ hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
 
-vif(m.div.50kb)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
@@ -3297,10 +3334,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3315,8 +3348,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3339,10 +3370,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3357,8 +3384,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3382,10 +3407,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3400,8 +3421,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3424,10 +3443,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3442,8 +3457,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3467,10 +3480,6 @@ cor.test(~theta+tmrca, data = sim.lands.50kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.50kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.50kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.50kb)
-plot(diversity~tmrca, data = sim.lands.50kb)
-plot(diversity~rho, data = sim.lands.50kb)
-
 # centering
 sim.lands.50kb$thetaC <- sim.lands.50kb$theta - mean(sim.lands.50kb$theta)
 sim.lands.50kb$tmrcaC <- sim.lands.50kb$tmrca - mean(sim.lands.50kb$tmrca)
@@ -3485,8 +3494,6 @@ hmctest(m.div.50kb)
 hist(resid(m.div.50kb))
 
 summary(m.div.50kb)
-
-vif(m.div.50kb)
 
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3522,10 +3529,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3540,8 +3543,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3565,10 +3566,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3583,8 +3580,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3607,10 +3602,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3626,8 +3617,6 @@ hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
   
-vif(m.div.200kb)
-
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
@@ -3649,10 +3638,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3667,8 +3652,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3691,10 +3674,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3709,8 +3688,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3733,10 +3710,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3751,8 +3724,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3775,10 +3746,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3793,8 +3760,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3818,10 +3783,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3836,8 +3797,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3860,10 +3819,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3879,8 +3834,6 @@ hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
   
-vif(m.div.200kb)
-
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
@@ -3902,10 +3855,6 @@ cor.test(~theta+tmrca, data = sim.lands.200kb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.200kb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.200kb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.200kb)
-plot(diversity~tmrca, data = sim.lands.200kb)
-plot(diversity~rho, data = sim.lands.200kb)
-
 # centering
 sim.lands.200kb$thetaC <- sim.lands.200kb$theta - mean(sim.lands.200kb$theta)
 sim.lands.200kb$tmrcaC <- sim.lands.200kb$tmrca - mean(sim.lands.200kb$tmrca)
@@ -3920,8 +3869,6 @@ hmctest(m.div.200kb)
 hist(resid(m.div.200kb))
 
 summary(m.div.200kb)
-
-vif(m.div.200kb)
 
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -3958,10 +3905,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -3976,8 +3919,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4005,14 +3946,6 @@ cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman")
 cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
 cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
 
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4027,8 +3960,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4055,14 +3986,6 @@ cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman")
 cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
 cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
 
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4077,8 +4000,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4105,14 +4026,6 @@ cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman")
 cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
 cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
 
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4127,8 +4040,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4151,18 +4062,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4177,8 +4076,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4201,18 +4098,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4227,8 +4112,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4251,18 +4134,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4278,8 +4149,6 @@ hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
 
-vif(m.div.1Mb)
-
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
 anova.diversity$VarExp <- apiss / sum(apiss)
@@ -4289,7 +4158,6 @@ r2.sim.1Mb[2, 7] <- anova.diversity$VarExp[1] * 100
 r2.sim.1Mb[3, 7] <- anova.diversity$VarExp[2] * 100
 r2.sim.1Mb[4, 7] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
-
 
 # rep_8
 rep_8.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/rep_8.pi.1Mb.bedgraph", header = T)
@@ -4302,18 +4170,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4328,8 +4184,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4352,18 +4206,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4378,8 +4220,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -4402,18 +4242,6 @@ cor.test(~theta+tmrca, data = sim.lands.1Mb, method = "spearman")
 cor.test(~theta+rho, data = sim.lands.1Mb, method = "spearman") 
 cor.test(~rho+tmrca, data = sim.lands.1Mb, method = "spearman") 
 
-cor.test(~diversity+theta, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+tmrca, data = sim.lands.200kb, method = "spearman") 
-cor.test(~diversity+rho, data = sim.lands.200kb, method = "spearman") 
-
-plot(theta~tmrca, data = sim.lands.1Mb)
-plot(theta~rho, data = sim.lands.1Mb)
-plot(tmrca~rho, data = sim.lands.1Mb)
-
-plot(diversity~theta, data = sim.lands.1Mb)
-plot(diversity~tmrca, data = sim.lands.1Mb)
-plot(diversity~rho, data = sim.lands.1Mb)
-
 # centering
 sim.lands.1Mb$thetaC <- sim.lands.1Mb$theta - mean(sim.lands.1Mb$theta)
 sim.lands.1Mb$tmrcaC <- sim.lands.1Mb$tmrca - mean(sim.lands.1Mb$tmrca)
@@ -4428,8 +4256,6 @@ hmctest(m.div.1Mb)
 hist(resid(m.div.1Mb))
 
 summary(m.div.1Mb)
-
-vif(m.div.1Mb)
 
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
