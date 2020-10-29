@@ -26,7 +26,7 @@ library(RColorBrewer)
 library(scales)
 library(interactions)
 
-knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/dm_data/")
+knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/root")
 
 nreps <- 10
 reps <- character(length = nreps)
@@ -46,16 +46,17 @@ row.names(r2.inf.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.inf.50kb) <- reps
 
 # sim landscapes
-sim.rho.50k <- read.table("dm.sim.rho.50000.txt")
-sim.theta.50k <- read.table("dm.sim.theta.50000.txt")
+sim.rho.50k <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims/dm.sim.rho.50000.txt")
+sim.theta.50k <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims/dm.sim.theta.50000.txt")
 sim.lands.50k <- as.data.frame(cbind(sim.theta.50k$sim, sim.rho.50k$sim))
 names(sim.lands.50k) <- c("theta", "rho")
 ```
 
 rep_1
 
+
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -108,7 +109,7 @@ r2.inf.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
 rep_2
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_2/rs.pair_2.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_2/rs.pair_2.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -161,7 +162,7 @@ r2.inf.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
 rep_3
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_3/rs.pair_3.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_3/rs.pair_3.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -214,7 +215,7 @@ r2.inf.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
 rep_4
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_4/rs.pair_4.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_4/rs.pair_4.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -267,7 +268,7 @@ r2.inf.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
 rep_5
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_5/rs.pair_5.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_5/rs.pair_5.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -320,7 +321,7 @@ r2.inf.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
 rep_6
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_6/rs.pair_6.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_6/rs.pair_6.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -373,7 +374,7 @@ r2.inf.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
 rep_7
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_7/rs.pair_7.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_7/rs.pair_7.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -426,7 +427,7 @@ r2.inf.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
 rep_8
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_8/rs.pair_8.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_8/rs.pair_8.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -479,7 +480,7 @@ r2.inf.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
 rep_9
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_9/rs.pair_9.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_9/rs.pair_9.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -532,7 +533,7 @@ r2.inf.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
 rep_10
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
 pi.50k <- read.table(paste(p, "diversity.50kb.bedgraph", sep = ""), header = T)
 pi.50k$avg <- apply(pi.50k[4:ncol(pi.50k)], 1, mean)
 tmrca.50k <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
@@ -614,7 +615,7 @@ rho.map.50kb <- rho.map.50kb + geom_line(data = molten.rho, aes(size = variable)
 rho.map.50kb <- rho.map.50kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.50kb <- rho.map.50kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map.50kb <- rho.map.50kb + labs(title = NULL, x = NULL, y = expression(rho))
-rho.map.50kb <- rho.map.50kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+rho.map.50kb <- rho.map.50kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 theta.plot <- as.data.frame(cbind(inf.lands.50k.rep_1$bin,
                                 sim.theta.50k$sim, 
@@ -636,7 +637,7 @@ theta.map.50kb <- theta.map.50kb + geom_line(data = molten.theta, aes(size = var
 theta.map.50kb <- theta.map.50kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.50kb <- theta.map.50kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map.50kb <- theta.map.50kb + labs(title = NULL, x = NULL, y = expression(theta))
-theta.map.50kb <- theta.map.50kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+theta.map.50kb <- theta.map.50kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 plot_grid(rho.map.50kb, theta.map.50kb, nrow = 2, ncol = 1)
 ```
@@ -650,8 +651,8 @@ row.names(r2.inf.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.inf.200kb) <- reps
 
 # sim landscapes
-sim.rho.200k <- read.table("dm.sim.rho.2e+05.txt")
-sim.theta.200k <- read.table("dm.sim.theta.2e+05.txt")
+sim.rho.200k <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims/dm.sim.rho.2e+05.txt")
+sim.theta.200k <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims/dm.sim.theta.2e+05.txt")
 sim.lands.200k <- as.data.frame(cbind(sim.theta.200k$sim, sim.rho.200k$sim))
 names(sim.lands.200k) <- c("theta", "rho")
 ```
@@ -659,7 +660,7 @@ names(sim.lands.200k) <- c("theta", "rho")
 rep_1
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -712,7 +713,7 @@ r2.inf.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
 rep_2
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_2/rs.pair_2.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_2/rs.pair_2.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -765,7 +766,7 @@ r2.inf.200kb[5, 2] <- anova.diversity$VarExp[4] * 100
 rep_3
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_3/rs.pair_3.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_3/rs.pair_3.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -818,7 +819,7 @@ r2.inf.200kb[5, 3] <- anova.diversity$VarExp[4] * 100
 rep_4
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_4/rs.pair_4.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_4/rs.pair_4.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -871,7 +872,7 @@ r2.inf.200kb[5, 4] <- anova.diversity$VarExp[4] * 100
 rep_5
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_5/rs.pair_5.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_5/rs.pair_5.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -924,7 +925,7 @@ r2.inf.200kb[5, 5] <- anova.diversity$VarExp[4] * 100
 rep_6
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_6/rs.pair_6.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_6/rs.pair_6.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -977,7 +978,7 @@ r2.inf.200kb[5, 6] <- anova.diversity$VarExp[4] * 100
 rep_7
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_7/rs.pair_7.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_7/rs.pair_7.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -1030,7 +1031,7 @@ r2.inf.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
 rep_8
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_8/rs.pair_8.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_8/rs.pair_8.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -1083,7 +1084,7 @@ r2.inf.200kb[5, 8] <- anova.diversity$VarExp[4] * 100
 rep_9
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_9/rs.pair_9.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_9/rs.pair_9.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -1136,7 +1137,7 @@ r2.inf.200kb[5, 9] <- anova.diversity$VarExp[4] * 100
 rep_10
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
 pi.200k <- read.table(paste(p, "diversity.200kb.bedgraph", sep = ""), header = T)
 pi.200k$avg <- apply(pi.200k[4:ncol(pi.200k)], 1, mean)
 tmrca.200k <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T)
@@ -1217,7 +1218,7 @@ rho.map.200kb <- rho.map.200kb + geom_line(data = molten.rho, aes(size = variabl
 rho.map.200kb <- rho.map.200kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.200kb <- rho.map.200kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map.200kb <- rho.map.200kb + labs(title = NULL, x = NULL, y = expression(rho))
-rho.map.200kb <- rho.map.200kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+rho.map.200kb <- rho.map.200kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 theta.plot <- as.data.frame(cbind(inf.lands.200k.rep_1$bin,
                                 sim.theta.200k$sim, 
@@ -1239,7 +1240,7 @@ theta.map.200kb <- theta.map.200kb + geom_line(data = molten.theta, aes(size = v
 theta.map.200kb <- theta.map.200kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.200kb <- theta.map.200kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map.200kb <- theta.map.200kb + labs(title = NULL, x = NULL, y = expression(theta))
-theta.map.200kb <- theta.map.200kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+theta.map.200kb <- theta.map.200kb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 plot_grid(rho.map.200kb, theta.map.200kb, nrow = 2, ncol = 1)
 ```
@@ -1253,8 +1254,8 @@ row.names(r2.inf.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.inf.1Mb) <- reps
 
 # sim landscapes
-sim.rho.1M <- read.table("dm.sim.rho.1e+06.txt")
-sim.theta.1M <- read.table("dm.sim.theta.1e+06.txt")
+sim.rho.1M <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims/dm.sim.rho.1e+06.txt")
+sim.theta.1M <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims/dm.sim.theta.1e+06.txt")
 sim.lands.1M <- as.data.frame(cbind(sim.theta.1M$sim, sim.rho.1M$sim))
 names(sim.lands.1M) <- c("theta", "rho")
 ```
@@ -1262,7 +1263,7 @@ names(sim.lands.1M) <- c("theta", "rho")
 rep_1
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_1/rs.pair_1.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1315,7 +1316,7 @@ r2.inf.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
 rep_2
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_2/rs.pair_2.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_2/rs.pair_2.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1368,7 +1369,7 @@ r2.inf.1Mb[5, 2] <- anova.diversity$VarExp[4] * 100
 rep_3
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_3/rs.pair_3.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_3/rs.pair_3.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1421,7 +1422,7 @@ r2.inf.1Mb[5, 3] <- anova.diversity$VarExp[4] * 100
 rep_4
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_4/rs.pair_4.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_4/rs.pair_4.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1474,7 +1475,7 @@ r2.inf.1Mb[5, 4] <- anova.diversity$VarExp[4] * 100
 rep_5
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_5/rs.pair_5.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_5/rs.pair_5.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1527,7 +1528,7 @@ r2.inf.1Mb[5, 5] <- anova.diversity$VarExp[4] * 100
 rep_6
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_6/rs.pair_6.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_6/rs.pair_6.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1580,7 +1581,7 @@ r2.inf.1Mb[5, 6] <- anova.diversity$VarExp[4] * 100
 rep_7
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_7/rs.pair_7.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_7/rs.pair_7.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1633,7 +1634,7 @@ r2.inf.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
 rep_8
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_8/rs.pair_8.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_8/rs.pair_8.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1686,7 +1687,7 @@ r2.inf.1Mb[5, 8] <- anova.diversity$VarExp[4] * 100
 rep_9
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_9/rs.pair_9.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_9/rs.pair_9.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1739,7 +1740,7 @@ r2.inf.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
 rep_10
 
 ```{r}
-p <- paste("dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
+p <- paste("dm_data/dm_chr_maps/2L/dm_coal_sims/rep_10/rs.pair_10.", sep = "")
 pi.1M <- read.table(paste(p, "diversity.1Mb.bedgraph", sep = ""), header = T)
 pi.1M$avg <- apply(pi.1M[4:ncol(pi.1M)], 1, mean)
 tmrca.1M <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
@@ -1820,7 +1821,7 @@ rho.map.1Mb <- rho.map.1Mb + geom_line(data = molten.rho, aes(size = variable)) 
 rho.map.1Mb <- rho.map.1Mb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.1Mb <- rho.map.1Mb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 rho.map.1Mb <- rho.map.1Mb + labs(title = NULL, x = NULL, y = expression(rho))
-rho.map.1Mb <- rho.map.1Mb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+rho.map.1Mb <- rho.map.1Mb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 theta.plot <- as.data.frame(cbind(inf.lands.1M.rep_1$bin,
                                 sim.theta.1M$sim, 
@@ -1842,7 +1843,7 @@ theta.map.1Mb <- theta.map.1Mb + geom_line(data = molten.theta, aes(size = varia
 theta.map.1Mb <- theta.map.1Mb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.1Mb <- theta.map.1Mb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map.1Mb <- theta.map.1Mb + labs(title = NULL, x = NULL, y = expression(theta))
-theta.map.1Mb <- theta.map.1Mb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
+theta.map.1Mb <- theta.map.1Mb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 plot_grid(rho.map.1Mb, theta.map.1Mb, nrow = 2, ncol = 1)
 ```
@@ -1856,21 +1857,21 @@ colnames(r2.dm.tab) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA", "bin.s
 
 # 50kb
 # recombination landscapes
-rho.dm.50kb <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.50kb.bedgraph", header = T)
+rho.dm.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.rho.50kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.50kb <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
 diversity.dm.50kb$avg <- apply(diversity.dm.50kb[4:ncol(diversity.dm.50kb)], 1, mean)
 
 # mutation landscapes
-theta.dm.50kb <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.50kb.bedgraph", header = T)
+theta.dm.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.theta.50kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.50kb <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
 tmrca.dm.50kb$sample_mean <- apply(tmrca.dm.50kb[4:ncol(tmrca.dm.50kb)], 1, mean)
 
 # missing data
-missing.prop.50kb <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+missing.prop.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
 intersect.50kb <- apply(missing.prop.50kb[4:ncol(missing.prop.50kb)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.50kb <- as.data.frame(cbind(diversity.dm.50kb$avg,
@@ -1906,21 +1907,21 @@ r2.dm.tab[1,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anov
 
 # 200kb
 # recombination landscapes
-rho.dm.200kb <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.200kb.bedgraph", header = T)
+rho.dm.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.rho.200kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.200kb <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
 diversity.dm.200kb$avg <- apply(diversity.dm.200kb[4:ncol(diversity.dm.200kb)], 1, mean)
 
 # mutation landscapes
-theta.dm.200kb <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.200kb.bedgraph", header = T)
+theta.dm.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.theta.200kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.200kb <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
 tmrca.dm.200kb$sample_mean <- apply(tmrca.dm.200kb[4:ncol(tmrca.dm.200kb)], 1, mean)
 
 # missing data
-missing.prop.200kb <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+missing.prop.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
 intersect.200kb <- apply(missing.prop.200kb[4:ncol(missing.prop.200kb)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.200kb <- as.data.frame(cbind(diversity.dm.200kb$avg,
@@ -1954,21 +1955,21 @@ r2.dm.tab[2,] <- c((anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anov
 
 # 1Mb
 # recombination landscapes
-rho.dm.1Mb <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+rho.dm.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
 
 # diversity
-diversity.dm.1Mb <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
 diversity.dm.1Mb$avg <- apply(diversity.dm.1Mb[4:ncol(diversity.dm.1Mb)], 1, mean)
 
 # mutation landscapes
-theta.dm.1Mb <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+theta.dm.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.1Mb <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
 tmrca.dm.1Mb$sample_mean <- apply(tmrca.dm.1Mb[4:ncol(tmrca.dm.1Mb)], 1, mean)
 
 # missing data
-missing.prop.1Mb <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+missing.prop.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
 intersect.1Mb <- apply(missing.prop.1Mb[4:ncol(missing.prop.1Mb)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.1Mb <- as.data.frame(cbind(diversity.dm.1Mb$avg,
@@ -2009,21 +2010,21 @@ Real data 50 kb windows
 # Chr 2L
 
 # recombination landscapes
-rho.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.50kb.bedgraph", header = T)
+rho.dm.50kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.rho.50kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
 diversity.dm.50kb.2L$avg <- apply(diversity.dm.50kb.2L[4:ncol(diversity.dm.50kb.2L)], 1, mean)
 
 # mutation landscapes
-theta.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.50kb.bedgraph", header = T)
+theta.dm.50kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.theta.50kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
 tmrca.dm.50kb.2L$sample_mean <- apply(tmrca.dm.50kb.2L[4:ncol(tmrca.dm.50kb.2L)], 1, mean)
 
 # missing data
-missing.prop.50kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+missing.prop.50kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
 intersect.50kb.2L <- apply(missing.prop.50kb.2L[4:ncol(missing.prop.50kb.2L)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.50kb.2L <- as.data.frame(cbind(diversity.dm.50kb.2L$chromStart,
@@ -2052,21 +2053,21 @@ summary(g.div.dm.50kb.2L)
 # Chr 2R
 
 # recombination landscapes
-rho.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.rho.50kb.bedgraph", header = T)
+rho.dm.50kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.rho.50kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.diversity.50kb.bedgraph", header = T)
 diversity.dm.50kb.2R$avg <- apply(diversity.dm.50kb.2R[4:ncol(diversity.dm.50kb.2R)], 1, mean)
 
 # mutation landscapes
-theta.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.theta.50kb.bedgraph", header = T)
+theta.dm.50kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.theta.50kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
 tmrca.dm.50kb.2R$sample_mean <- apply(tmrca.dm.50kb.2R[4:ncol(tmrca.dm.50kb.2R)], 1, mean)
 
 # missing data
-missing.prop.50kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+missing.prop.50kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
 intersect.50kb.2R <- apply(missing.prop.50kb.2R[4:ncol(missing.prop.50kb.2R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.50kb.2R <- as.data.frame(cbind(diversity.dm.50kb.2R$chromStart,
@@ -2093,21 +2094,21 @@ g.div.dm.50kb.2R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
 summary(g.div.dm.50kb.2R)
 
 # recombination landscapes
-rho.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.rho.50kb.bedgraph", header = T)
+rho.dm.50kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.rho.50kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.diversity.50kb.bedgraph", header = T)
 diversity.dm.50kb.3L$avg <- apply(diversity.dm.50kb.3L[4:ncol(diversity.dm.50kb.3L)], 1, mean)
 
 # mutation landscapes
-theta.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.theta.50kb.bedgraph", header = T)
+theta.dm.50kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.theta.50kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
 tmrca.dm.50kb.3L$sample_mean <- apply(tmrca.dm.50kb.3L[4:ncol(tmrca.dm.50kb.3L)], 1, mean)
 
 # missing data
-missing.prop.50kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+missing.prop.50kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
 intersect.50kb.3L <- apply(missing.prop.50kb.3L[4:ncol(missing.prop.50kb.3L)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.50kb.3L <- as.data.frame(cbind(diversity.dm.50kb.3L$chromStart,
@@ -2136,21 +2137,21 @@ summary(g.div.dm.50kb.3L)
 # Chr 3R
 
 # recombination landscapes
-rho.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.50kb.bedgraph", header = T)
+rho.dm.50kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.rho.50kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.50kb.bedgraph", header = T)
+diversity.dm.50kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.diversity.50kb.bedgraph", header = T)
 diversity.dm.50kb.3R$avg <- apply(diversity.dm.50kb.3R[4:ncol(diversity.dm.50kb.3R)], 1, mean)
 
 # mutation landscapes
-theta.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.theta.50kb.bedgraph", header = T)
+theta.dm.50kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.theta.50kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
+tmrca.dm.50kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.TMRCA.50kb.bedgraph", header = T)
 tmrca.dm.50kb.3R$sample_mean <- apply(tmrca.dm.50kb.3R[4:ncol(tmrca.dm.50kb.3R)], 1, mean)
 
 # missing data
-missing.prop.50kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
+missing.prop.50kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.missing.prop.50kb.bedgraph", header = T)
 intersect.50kb.3R <- apply(missing.prop.50kb.3R[4:ncol(missing.prop.50kb.3R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.50kb.3R <- as.data.frame(cbind(diversity.dm.50kb.3R$chromStart,
@@ -2179,7 +2180,7 @@ summary(g.div.dm.50kb.3R)
 # all together now
 dm.lands.50kb <- rbind.data.frame(dm.lands.50kb.2L, dm.lands.50kb.2R, dm.lands.50kb.3L, dm.lands.50kb.3R)
 
-write.table(dm.lands.50kb, "dm.maps.50kb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
+write.table(dm.lands.50kb, "dm_data/dm_chr_maps/dm.maps.50kb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
 
 
 # Plots
@@ -2283,21 +2284,21 @@ Real data 200 kb windows
 # Chr 2L
 
 # recombination landscapes
-rho.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.200kb.bedgraph", header = T)
+rho.dm.200kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.rho.200kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
 diversity.dm.200kb.2L$avg <- apply(diversity.dm.200kb.2L[4:ncol(diversity.dm.200kb.2L)], 1, mean)
 
 # mutation landscapes
-theta.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.200kb.bedgraph", header = T)
+theta.dm.200kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.theta.200kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
 tmrca.dm.200kb.2L$sample_mean <- apply(tmrca.dm.200kb.2L[4:ncol(tmrca.dm.200kb.2L)], 1, mean)
 
 # missing data
-missing.prop.200kb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+missing.prop.200kb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
 intersect.200kb.2L <- apply(missing.prop.200kb.2L[4:ncol(missing.prop.200kb.2L)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.200kb.2L <- as.data.frame(cbind(diversity.dm.200kb.2L$chromStart,
@@ -2326,21 +2327,21 @@ summary(g.div.dm.200kb.2L)
 # Chr 2R
 
 # recombination landscapes
-rho.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.rho.200kb.bedgraph", header = T)
+rho.dm.200kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.rho.200kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
 diversity.dm.200kb.2R$avg <- apply(diversity.dm.200kb.2R[4:ncol(diversity.dm.200kb.2R)], 1, mean)
 
 # mutation landscapes
-theta.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.theta.200kb.bedgraph", header = T)
+theta.dm.200kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.theta.200kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
 tmrca.dm.200kb.2R$sample_mean <- apply(tmrca.dm.200kb.2R[4:ncol(tmrca.dm.200kb.2R)], 1, mean)
 
 # missing data
-missing.prop.200kb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+missing.prop.200kb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
 intersect.200kb.2R <- apply(missing.prop.200kb.2R[4:ncol(missing.prop.200kb.2R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.200kb.2R <- as.data.frame(cbind(diversity.dm.200kb.2R$chromStart,
@@ -2367,21 +2368,21 @@ g.div.dm.200kb.2R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
 summary(g.div.dm.200kb.2R)
 
 # recombination landscapes
-rho.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.rho.200kb.bedgraph", header = T)
+rho.dm.200kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.rho.200kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.diversity.200kb.bedgraph", header = T)
 diversity.dm.200kb.3L$avg <- apply(diversity.dm.200kb.3L[4:ncol(diversity.dm.200kb.3L)], 1, mean)
 
 # mutation landscapes
-theta.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.theta.200kb.bedgraph", header = T)
+theta.dm.200kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.theta.200kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
 tmrca.dm.200kb.3L$sample_mean <- apply(tmrca.dm.200kb.3L[4:ncol(tmrca.dm.200kb.3L)], 1, mean)
 
 # missing data
-missing.prop.200kb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+missing.prop.200kb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
 intersect.200kb.3L <- apply(missing.prop.200kb.3L[4:ncol(missing.prop.200kb.3L)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.200kb.3L <- as.data.frame(cbind(diversity.dm.200kb.3L$chromStart,
@@ -2410,22 +2411,22 @@ summary(g.div.dm.200kb.3L)
 # Chr 3R
 
 # recombination landscapes
-rho.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.200kb.bedgraph", header = T)
+rho.dm.200kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.rho.200kb.bedgraph", header = T)
 
 # diversity
-diversity.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
+diversity.dm.200kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.diversity.200kb.bedgraph", header = T)
 
 diversity.dm.200kb.3R$avg <- apply(diversity.dm.200kb.3R[4:ncol(diversity.dm.200kb.3R)], 1, mean)
 
 # mutation landscapes
-theta.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.theta.200kb.bedgraph", header = T)
+theta.dm.200kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.theta.200kb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
+tmrca.dm.200kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.TMRCA.200kb.bedgraph", header = T)
 tmrca.dm.200kb.3R$sample_mean <- apply(tmrca.dm.200kb.3R[4:ncol(tmrca.dm.200kb.3R)], 1, mean)
 
 # missing data
-missing.prop.200kb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
+missing.prop.200kb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.missing.prop.200kb.bedgraph", header = T)
 intersect.200kb.3R <- apply(missing.prop.200kb.3R[4:ncol(missing.prop.200kb.3R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.200kb.3R <- as.data.frame(cbind(diversity.dm.200kb.3R$chromStart,
@@ -2454,7 +2455,7 @@ summary(g.div.dm.200kb.3R)
 # all together now
 dm.lands.200kb <- rbind.data.frame(dm.lands.200kb.2L, dm.lands.200kb.2R, dm.lands.200kb.3L, dm.lands.200kb.3R)
 
-write.table(dm.lands.200kb, "dm.maps.200kb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
+write.table(dm.lands.200kb, "dm_data/dm_chr_maps/dm.maps.200kb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
 
 
 # Plots
@@ -2557,21 +2558,21 @@ Real data 1 Mb windows
 # Chr 2L
 
 # recombination landscapes
-rho.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+rho.dm.1Mb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
 
 # diversity
-diversity.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
 diversity.dm.1Mb.2L$avg <- apply(diversity.dm.1Mb.2L[4:ncol(diversity.dm.1Mb.2L)], 1, mean)
 
 # mutation landscapes
-theta.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+theta.dm.1Mb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
 tmrca.dm.1Mb.2L$sample_mean <- apply(tmrca.dm.1Mb.2L[4:ncol(tmrca.dm.1Mb.2L)], 1, mean)
 
 # missing data
-missing.prop.1Mb.2L <- read.table("dm_chr_maps/2L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+missing.prop.1Mb.2L <- read.table("dm_data/dm_chr_maps/2L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
 intersect.1Mb.2L <- apply(missing.prop.1Mb.2L[4:ncol(missing.prop.1Mb.2L)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.1Mb.2L <- as.data.frame(cbind(diversity.dm.1Mb.2L$chromStart,
@@ -2600,21 +2601,21 @@ summary(g.div.dm.1Mb.2L)
 # Chr 2R
 
 # recombination landscapes
-rho.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+rho.dm.1Mb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.rho.1Mb.bedgraph", header = T)
 
 # diversity
-diversity.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
 diversity.dm.1Mb.2R$avg <- apply(diversity.dm.1Mb.2R[4:ncol(diversity.dm.1Mb.2R)], 1, mean)
 
 # mutation landscapes
-theta.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+theta.dm.1Mb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.theta.1Mb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
 tmrca.dm.1Mb.2R$sample_mean <- apply(tmrca.dm.1Mb.2R[4:ncol(tmrca.dm.1Mb.2R)], 1, mean)
 
 # missing data
-missing.prop.1Mb.2R <- read.table("dm_chr_maps/2R/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+missing.prop.1Mb.2R <- read.table("dm_data/dm_chr_maps/2R/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
 intersect.1Mb.2R <- apply(missing.prop.1Mb.2R[4:ncol(missing.prop.1Mb.2R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.1Mb.2R <- as.data.frame(cbind(diversity.dm.1Mb.2R$chromStart,
@@ -2641,21 +2642,21 @@ g.div.dm.1Mb.2R <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
 summary(g.div.dm.1Mb.2R)
 
 # recombination landscapes
-rho.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+rho.dm.1Mb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.rho.1Mb.bedgraph", header = T)
 
 # diversity
-diversity.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
 diversity.dm.1Mb.3L$avg <- apply(diversity.dm.1Mb.3L[4:ncol(diversity.dm.1Mb.3L)], 1, mean)
 
 # mutation landscapes
-theta.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+theta.dm.1Mb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.theta.1Mb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
 tmrca.dm.1Mb.3L$sample_mean <- apply(tmrca.dm.1Mb.3L[4:ncol(tmrca.dm.1Mb.3L)], 1, mean)
 
 # missing data
-missing.prop.1Mb.3L <- read.table("dm_chr_maps/3L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+missing.prop.1Mb.3L <- read.table("dm_data/dm_chr_maps/3L/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
 intersect.1Mb.3L <- apply(missing.prop.1Mb.3L[4:ncol(missing.prop.1Mb.3L)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.1Mb.3L <- as.data.frame(cbind(diversity.dm.1Mb.3L$chromStart,
@@ -2685,21 +2686,21 @@ summary(g.div.dm.1Mb.3L)
 # Chr 3R
 
 # recombination landscapes
-rho.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.rho.1Mb.bedgraph", header = T)
+rho.dm.1Mb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.rho.1Mb.bedgraph", header = T)
 
 # diversity
-diversity.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
+diversity.dm.1Mb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.diversity.1Mb.bedgraph", header = T)
 diversity.dm.1Mb.3R$avg <- apply(diversity.dm.1Mb.3R[4:ncol(diversity.dm.1Mb.3R)], 1, mean)
 
 # mutation landscapes
-theta.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.theta.1Mb.bedgraph", header = T)
+theta.dm.1Mb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.theta.1Mb.bedgraph", header = T)
 
 # TMRCA landscapes
-tmrca.dm.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
+tmrca.dm.1Mb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.TMRCA.1Mb.bedgraph", header = T)
 tmrca.dm.1Mb.3R$sample_mean <- apply(tmrca.dm.1Mb.3R[4:ncol(tmrca.dm.1Mb.3R)], 1, mean)
 
 # missing data
-missing.prop.1Mb.3R <- read.table("dm_chr_maps/3R/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
+missing.prop.1Mb.3R <- read.table("dm_data/dm_chr_maps/3R/dm_30x5x5.missing.prop.1Mb.bedgraph", header = T)
 intersect.1Mb.3R <- apply(missing.prop.1Mb[4:ncol(missing.prop.1Mb.3R)], 1, function(x) any(x > 0.1)) 
 
 dm.lands.1Mb.3R <- as.data.frame(cbind(diversity.dm.1Mb.3R$chromStart,
@@ -2728,7 +2729,7 @@ summary(g.div.dm.1Mb.3R)
 # all together now
 dm.lands.1Mb <- rbind.data.frame(dm.lands.1Mb.2L, dm.lands.1Mb.2R, dm.lands.1Mb.3L, dm.lands.1Mb.3R)
 
-write.table(dm.lands.1Mb, "dm.maps.1Mb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
+write.table(dm.lands.1Mb, "dm_data/dm_chr_maps/dm.maps.1Mb.tsv", quote = F, sep = "\t", row.names = F, col.names = T)
 
 
 # Plots
@@ -2828,12 +2829,14 @@ summary(g.div.dm.1Mb.5)
 
 Divergence with Drosophila yakuba
 
+This is how we generated the table from raw data:
+
 ```{r}
 # divergence data from D. melanogaster and D. yakuba
-divergence.2L.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso2L_divergence.statistics5kb.csv", header = T)
-divergence.2R.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso2R_divergence.statistics5kb.csv", header = T)
-divergence.3L.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso3L_divergence.statistics5kb.csv", header = T)
-divergence.3R.5kb <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Droso3R_divergence.statistics5kb.csv", header = T)
+divergence.2L.5kb <- read.table("dm_data/dm_misc/Droso2L_divergence.statistics5kb.csv", header = T)
+divergence.2R.5kb <- read.table("dm_data/dm_misc/Droso2R_divergence.statistics5kb.csv", header = T)
+divergence.3L.5kb <- read.table("dm_data/dm_misc/Droso3L_divergence.statistics5kb.csv", header = T)
+divergence.3R.5kb <- read.table("dm_data/dm_misc/Droso3R_divergence.statistics5kb.csv", header = T)
 
 divergence <- rbind.data.frame(divergence.2L.5kb, divergence.2R.5kb, divergence.3L.5kb, divergence.3R.5kb)
 divergence <- divergence[,c(1:3, 6)] 
@@ -2893,9 +2896,15 @@ lands.gr.df.chr <- rbind.data.frame(lands.gr.df.2L, lands.gr.df.2R, lands.gr.df.
 lands.divergence.dm <- cbind.data.frame(lands.gr.df.chr[,-(which(names(lands.gr.df.chr) == "strand"))], divergence.gr.df.chr$score)
 names(lands.divergence.dm)[ncol(lands.divergence.dm)] <- "divergence"
 
-write.table(lands.divergence.dm, "dm_maps_50kb_divergence.tsv",
+write.table(lands.divergence.dm, "dm_data/dm_chr_maps/dm_maps_50kb_divergence.tsv",
             quote = F, sep = "\t", col.names = T, row.names = F)
+```
 
+We can read the table provided:
+
+```{r}
+lands.divergence.dm <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_divergence.tsv", header = T, sep = "\t")
+  
 cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity, method = "spearman")
 cor.test(lands.divergence.dm$divergence, lands.divergence.dm$theta, method = "spearman")
 cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$rho, method = "spearman")
@@ -2905,9 +2914,11 @@ pcor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity,
 
 Evolutionary (Protein) Rates
 
+This is how we generated the table from raw data:
+
 ```{r}
 # loads 
-dm.raw <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
+dm.raw <- read.table("dm_data/dm_misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
 dm.tbl <- na.omit(dm.raw)
 
 # gets ratios 
@@ -2939,7 +2950,7 @@ dm.tbl.popstats$dNdS <- as.numeric(dm.tbl.popstats$dNdS)
 dm.tbl.popstats.clean <- dm.tbl.popstats[which(dm.tbl.popstats$PiNPiS > 0),]
 dm.tbl.popstats.clean <- dm.tbl.popstats.clean[which(dm.tbl.popstats.clean$dNdS > 0),]
 
-dm.genes.coord <- read.table("~/Data/iSMC/theta_paper/dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F)
+dm.genes.coord <- read.table("dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F)
 names(dm.genes.coord) <- c("chr", "start", "end", "x", "geneID", "length")
 dm.genes.coord <- dm.genes.coord[,-4]
 
@@ -2970,8 +2981,14 @@ names(dm.lands.evolrate)[9] <- "end.gene"
 
 # NOTE: must sort rows of dm.lands.evolrate by chr and start coords
 
-write.table(dm.lands.evolrate, "dm_maps_50kb_protein_rates.tsv",
+write.table(dm.lands.evolrate, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
             sep = "\t", quote = F, col.names = T, row.names = F)
+```
+
+We can read the table provided:
+
+```{r}
+dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
 
 # linear model in coding regions
 
@@ -3029,12 +3046,12 @@ r2.sim.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.sim.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.sim.50kb) <- reps
 
-sim.rho.50kb <- read.table("rs_drosophila_2/Misc/dm.sim.rho.50000.txt", header = T)
-sim.theta.50kb <- read.table("rs_drosophila_2/Misc/dm.sim.theta.50000.txt", header = T)
+sim.rho.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/dm.sim.rho.50000.txt", header = T)
+sim.theta.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/dm.sim.theta.50000.txt", header = T)
 
 # rep 1
-rep_1.pi.50kb <- read.table("rs_drosophila_2/rep_1/rep_1.pi.50kb.bedgraph", header = T)
-rep_1.tmrca.50kb <- read.table("rs_drosophila_2/rep_1/sim.tmrca.50k.map", header = T)
+rep_1.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_1/rep_1.pi.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_1/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_1.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_1.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3098,8 +3115,8 @@ summary(g.div.50kb.3)
 vif(g.div.50kb.3)
 
 # rep_2
-rep_2.pi.50kb <- read.table("rs_drosophila_2/rep_2/rep_2.pi.50kb.bedgraph", header = T)
-rep_2.tmrca.50kb <- read.table("rs_drosophila_2/rep_2/sim.tmrca.50k.map", header = T)
+rep_2.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/rep_2.pi.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_2.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_2.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3145,8 +3162,8 @@ r2.sim.50kb[4, 2] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
 
 # rep_3
-rep_3.pi.50kb <- read.table("rs_drosophila_2/rep_3/rep_3.pi.50kb.bedgraph", header = T)
-rep_3.tmrca.50kb <- read.table("rs_drosophila_2/rep_3/sim.tmrca.50k.map", header = T)
+rep_3.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_3/rep_3.pi.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_3/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_3.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_3.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3187,8 +3204,8 @@ r2.sim.50kb[4, 3] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
 
 # rep_4
-rep_4.pi.50kb <- read.table("rs_drosophila_2/rep_4/rep_4.pi.50kb.bedgraph", header = T)
-rep_4.tmrca.50kb <- read.table("rs_drosophila_2/rep_4/sim.tmrca.50k.map", header = T)
+rep_4.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_4/rep_4.pi.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_4/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_4.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_4.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3229,8 +3246,8 @@ r2.sim.50kb[4, 4] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
 
 # rep_5
-rep_5.pi.50kb <- read.table("rs_drosophila_2/rep_5/rep_5.pi.50kb.bedgraph", header = T)
-rep_5.tmrca.50kb <- read.table("rs_drosophila_2/rep_5/sim.tmrca.50k.map", header = T)
+rep_5.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_5/rep_5.pi.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_5/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_5.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_5.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3270,8 +3287,8 @@ r2.sim.50kb[4, 5] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
 
 # rep_6
-rep_6.pi.50kb <- read.table("rs_drosophila_2/rep_6/rep_6.pi.50kb.bedgraph", header = T)
-rep_6.tmrca.50kb <- read.table("rs_drosophila_2/rep_6/sim.tmrca.50k.map", header = T)
+rep_6.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_6/rep_6.pi.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_6/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_6.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_6.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3312,8 +3329,8 @@ r2.sim.50kb[4, 6] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
 
 # rep_7
-rep_7.pi.50kb <- read.table("rs_drosophila_2/rep_7/rep_7.pi.50kb.bedgraph", header = T)
-rep_7.tmrca.50kb <- read.table("rs_drosophila_2/rep_7/sim.tmrca.50k.map", header = T)
+rep_7.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_7/rep_7.pi.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_7/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_7.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_7.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3355,8 +3372,8 @@ r2.sim.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_8
-rep_8.pi.50kb <- read.table("rs_drosophila_2/rep_8/rep_8.pi.50kb.bedgraph", header = T)
-rep_8.tmrca.50kb <- read.table("rs_drosophila_2/rep_8/sim.tmrca.50k.map", header = T)
+rep_8.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/rep_8.pi.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_8.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_8.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3397,8 +3414,8 @@ r2.sim.50kb[4, 8] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
 
 # rep_9
-rep_9.pi.50kb <- read.table("rs_drosophila_2/rep_9/rep_9.pi.50kb.bedgraph", header = T)
-rep_9.tmrca.50kb <- read.table("rs_drosophila_2/rep_9/sim.tmrca.50k.map", header = T)
+rep_9.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_9/rep_9.pi.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_9/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_9.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_9.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3440,8 +3457,8 @@ r2.sim.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_10
-rep_10.pi.50kb <- read.table("rs_drosophila_2/rep_10/rep_10.pi.50kb.bedgraph", header = T)
-rep_10.tmrca.50kb <- read.table("rs_drosophila_2/rep_10/sim.tmrca.50k.map", header = T)
+rep_10.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/rep_10.pi.50kb.bedgraph", header = T)
+rep_10.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/sim.tmrca.50k.map", header = T)
 
 sim.lands.50kb <- as.data.frame(cbind(rep_10.pi.50kb$pi, sim.theta.50kb$sim, sim.rho.50kb$sim, rep_10.tmrca.50kb$tmrca))
 names(sim.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3491,12 +3508,12 @@ r2.sim.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.sim.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.sim.200kb) <- reps
 
-sim.rho.200kb <- read.table("rs_drosophila_2/Misc/dm.sim.rho.2e+05.txt", header = T)
-sim.theta.200kb <- read.table("rs_drosophila_2/Misc/dm.sim.theta.2e+05.txt", header = T)
+sim.rho.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/dm.sim.rho.2e+05.txt", header = T)
+sim.theta.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/dm.sim.theta.2e+05.txt", header = T)
 
 # rep 1
-rep_1.pi.200kb <- read.table("rs_drosophila_2/rep_1/rep_1.pi.200kb.bedgraph", header = T)
-rep_1.tmrca.200kb <- read.table("rs_drosophila_2/rep_1/sim.tmrca.200k.map", header = T)
+rep_1.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_1/rep_1.pi.200kb.bedgraph", header = T)
+rep_1.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_1/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_1.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_1.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3538,8 +3555,8 @@ r2.sim.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_2
-rep_2.pi.200kb <- read.table("rs_drosophila_2/rep_2/rep_2.pi.200kb.bedgraph", header = T)
-rep_2.tmrca.200kb <- read.table("rs_drosophila_2/rep_2/sim.tmrca.200k.map", header = T)
+rep_2.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/rep_2.pi.200kb.bedgraph", header = T)
+rep_2.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_2.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_2.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3580,8 +3597,8 @@ r2.sim.200kb[4, 2] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 2] <- anova.diversity$VarExp[4] * 100
 
 # rep_3
-rep_3.pi.200kb <- read.table("rs_drosophila_2/rep_3/rep_3.pi.200kb.bedgraph", header = T)
-rep_3.tmrca.200kb <- read.table("rs_drosophila_2/rep_3/sim.tmrca.200k.map", header = T)
+rep_3.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_3/rep_3.pi.200kb.bedgraph", header = T)
+rep_3.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_3/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_3.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_3.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3622,8 +3639,8 @@ r2.sim.200kb[4, 3] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 3] <- anova.diversity$VarExp[4] * 100
 
 # rep_4
-rep_4.pi.200kb <- read.table("rs_drosophila_2/rep_4/rep_4.pi.200kb.bedgraph", header = T)
-rep_4.tmrca.200kb <- read.table("rs_drosophila_2/rep_4/sim.tmrca.200k.map", header = T)
+rep_4.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_4/rep_4.pi.200kb.bedgraph", header = T)
+rep_4.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_4/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_4.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_4.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3664,8 +3681,8 @@ r2.sim.200kb[4, 4] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 4] <- anova.diversity$VarExp[4] * 100
 
 # rep_5
-rep_5.pi.200kb <- read.table("rs_drosophila_2/rep_5/rep_5.pi.200kb.bedgraph", header = T)
-rep_5.tmrca.200kb <- read.table("rs_drosophila_2/rep_5/sim.tmrca.200k.map", header = T)
+rep_5.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_5/rep_5.pi.200kb.bedgraph", header = T)
+rep_5.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_5/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_5.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_5.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3706,8 +3723,8 @@ r2.sim.200kb[4, 5] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 5] <- anova.diversity$VarExp[4] * 100
 
 # rep_6
-rep_6.pi.200kb <- read.table("rs_drosophila_2/rep_6/rep_6.pi.200kb.bedgraph", header = T)
-rep_6.tmrca.200kb <- read.table("rs_drosophila_2/rep_6/sim.tmrca.200k.map", header = T)
+rep_6.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_6/rep_6.pi.200kb.bedgraph", header = T)
+rep_6.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_6/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_6.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_6.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3748,8 +3765,8 @@ r2.sim.200kb[4, 6] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 6] <- anova.diversity$VarExp[4] * 100
 
 # rep_7
-rep_7.pi.200kb <- read.table("rs_drosophila_2/rep_7/rep_7.pi.200kb.bedgraph", header = T)
-rep_7.tmrca.200kb <- read.table("rs_drosophila_2/rep_7/sim.tmrca.200k.map", header = T)
+rep_7.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_7/rep_7.pi.200kb.bedgraph", header = T)
+rep_7.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_7/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_7.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_7.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3791,8 +3808,8 @@ r2.sim.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_8
-rep_8.pi.200kb <- read.table("rs_drosophila_2/rep_8/rep_8.pi.200kb.bedgraph", header = T)
-rep_8.tmrca.200kb <- read.table("rs_drosophila_2/rep_8/sim.tmrca.200k.map", header = T)
+rep_8.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/rep_8.pi.200kb.bedgraph", header = T)
+rep_8.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_8.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_8.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3833,8 +3850,8 @@ r2.sim.200kb[4, 8] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 8] <- anova.diversity$VarExp[4] * 100
 
 # rep_9
-rep_9.pi.200kb <- read.table("rs_drosophila_2/rep_9/rep_9.pi.200kb.bedgraph", header = T)
-rep_9.tmrca.200kb <- read.table("rs_drosophila_2/rep_9/sim.tmrca.200k.map", header = T)
+rep_9.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_9/rep_9.pi.200kb.bedgraph", header = T)
+rep_9.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_9/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_9.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_9.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3874,10 +3891,9 @@ r2.sim.200kb[3, 9] <- anova.diversity$VarExp[2] * 100
 r2.sim.200kb[4, 9] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 9] <- anova.diversity$VarExp[4] * 100
 
-
 # rep_10
-rep_10.pi.200kb <- read.table("rs_drosophila_2/rep_10/rep_10.pi.200kb.bedgraph", header = T)
-rep_10.tmrca.200kb <- read.table("rs_drosophila_2/rep_10/sim.tmrca.200k.map", header = T)
+rep_10.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/rep_10.pi.200kb.bedgraph", header = T)
+rep_10.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/sim.tmrca.200k.map", header = T)
 
 sim.lands.200kb <- as.data.frame(cbind(rep_10.pi.200kb$pi, sim.theta.200kb$sim, sim.rho.200kb$sim, rep_10.tmrca.200kb$tmrca))
 names(sim.lands.200kb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3928,12 +3944,12 @@ r2.sim.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.sim.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.sim.1Mb) <- reps
 
-sim.rho.1Mb <- read.table("rs_drosophila_2/Misc/dm.sim.rho.1e+06.txt", header = T)
-sim.theta.1Mb <- read.table("rs_drosophila_2/Misc/dm.sim.theta.1e+06.txt", header = T)
+sim.rho.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/dm.sim.rho.1e+06.txt", header = T)
+sim.theta.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/dm.sim.theta.1e+06.txt", header = T)
 
 # rep 1
-rep_1.pi.1Mb <- read.table("rs_drosophila_2/rep_1/rep_1.pi.1Mb.bedgraph", header = T)
-rep_1.tmrca.1Mb <- read.table("rs_drosophila_2/rep_1/sim.tmrca.1M.map", header = T)
+rep_1.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_1/rep_1.pi.1Mb.bedgraph", header = T)
+rep_1.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_1/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_1.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_1.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -3975,8 +3991,8 @@ r2.sim.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_2
-rep_2.pi.1Mb <- read.table("rs_drosophila_2/rep_2/rep_2.pi.1Mb.bedgraph", header = T)
-rep_2.tmrca.1Mb <- read.table("rs_drosophila_2/rep_2/sim.tmrca.1M.map", header = T)
+rep_2.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/rep_2.pi.1Mb.bedgraph", header = T)
+rep_2.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_2.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_2.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4025,8 +4041,8 @@ r2.sim.1Mb[4, 2] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 2] <- anova.diversity$VarExp[4] * 100
 
 # rep_3
-rep_3.pi.1Mb <- read.table("rs_drosophila_2/rep_3/rep_3.pi.1Mb.bedgraph", header = T)
-rep_3.tmrca.1Mb <- read.table("rs_drosophila_2/rep_3/sim.tmrca.1M.map", header = T)
+rep_3.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_3/rep_3.pi.1Mb.bedgraph", header = T)
+rep_3.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_3/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_3.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_3.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4075,8 +4091,8 @@ r2.sim.1Mb[4, 3] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 3] <- anova.diversity$VarExp[4] * 100
 
 # rep_4
-rep_4.pi.1Mb <- read.table("rs_drosophila_2/rep_4/rep_4.pi.1Mb.bedgraph", header = T)
-rep_4.tmrca.1Mb <- read.table("rs_drosophila_2/rep_4/sim.tmrca.1M.map", header = T)
+rep_4.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_4/rep_4.pi.1Mb.bedgraph", header = T)
+rep_4.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_4/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_4.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_4.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4125,8 +4141,8 @@ r2.sim.1Mb[4, 4] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 4] <- anova.diversity$VarExp[4] * 100
 
 # rep_5
-rep_5.pi.1Mb <- read.table("rs_drosophila_2/rep_5/rep_5.pi.1Mb.bedgraph", header = T)
-rep_5.tmrca.1Mb <- read.table("rs_drosophila_2/rep_5/sim.tmrca.1M.map", header = T)
+rep_5.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_5/rep_5.pi.1Mb.bedgraph", header = T)
+rep_5.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_5/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_5.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_5.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4175,8 +4191,8 @@ r2.sim.1Mb[4, 5] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 5] <- anova.diversity$VarExp[4] * 100
 
 # rep_6
-rep_6.pi.1Mb <- read.table("rs_drosophila_2/rep_6/rep_6.pi.1Mb.bedgraph", header = T)
-rep_6.tmrca.1Mb <- read.table("rs_drosophila_2/rep_6/sim.tmrca.1M.map", header = T)
+rep_6.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_6/rep_6.pi.1Mb.bedgraph", header = T)
+rep_6.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_6/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_6.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_6.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4225,8 +4241,8 @@ r2.sim.1Mb[4, 6] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 6] <- anova.diversity$VarExp[4] * 100
 
 # rep_7
-rep_7.pi.1Mb <- read.table("rs_drosophila_2/rep_7/rep_7.pi.1Mb.bedgraph", header = T)
-rep_7.tmrca.1Mb <- read.table("rs_drosophila_2/rep_7/sim.tmrca.1M.map", header = T)
+rep_7.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_7/rep_7.pi.1Mb.bedgraph", header = T)
+rep_7.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_7/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_7.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_7.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4276,8 +4292,8 @@ r2.sim.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
 
 
 # rep_8
-rep_8.pi.1Mb <- read.table("rs_drosophila_2/rep_8/rep_8.pi.1Mb.bedgraph", header = T)
-rep_8.tmrca.1Mb <- read.table("rs_drosophila_2/rep_8/sim.tmrca.1M.map", header = T)
+rep_8.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/rep_8.pi.1Mb.bedgraph", header = T)
+rep_8.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_8.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_8.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4326,8 +4342,8 @@ r2.sim.1Mb[4, 8] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 8] <- anova.diversity$VarExp[4] * 100
 
 # rep_9
-rep_9.pi.1Mb <- read.table("rs_drosophila_2/rep_9/rep_9.pi.1Mb.bedgraph", header = T)
-rep_9.tmrca.1Mb <- read.table("rs_drosophila_2/rep_9/sim.tmrca.1M.map", header = T)
+rep_9.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_9/rep_9.pi.1Mb.bedgraph", header = T)
+rep_9.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_9/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_9.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_9.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
@@ -4376,8 +4392,8 @@ r2.sim.1Mb[4, 9] <- anova.diversity$VarExp[3] * 100
 r2.sim.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
 
 # rep_10
-rep_10.pi.1Mb <- read.table("rs_drosophila_2/rep_10/rep_10.pi.1Mb.bedgraph", header = T)
-rep_10.tmrca.1Mb <- read.table("rs_drosophila_2/rep_10/sim.tmrca.1M.map", header = T)
+rep_10.pi.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/rep_10.pi.1Mb.bedgraph", header = T)
+rep_10.tmrca.1Mb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/sim.tmrca.1M.map", header = T)
 
 sim.lands.1Mb <- as.data.frame(cbind(rep_10.pi.1Mb$pi, sim.theta.1Mb$sim, sim.rho.1Mb$sim, rep_10.tmrca.1Mb$tmrca))
 names(sim.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
