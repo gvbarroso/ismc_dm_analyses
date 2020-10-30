@@ -9,13 +9,9 @@ library(car)
 library(scales)
 library(cowplot)
 
-
-
 nreps <- 10
 reps <- character(length = nreps)
 for(i in 1:nreps) { reps[i] <- paste("rep_", i, sep = "") }
-
-
 
 ################################################
 #
@@ -142,8 +138,8 @@ colnames(r2.sim.avg_1) <- c("Total", "Rho", "TMRCA")
 r2.sim.avg_1$Theta <- NA
 r2.sim.avg_1 <- r2.sim.avg_1[,c(1,4,2,3)]
 r2.sim.avg_1$bin.size <- c(50, 200, 1000)
-r2.sim.avg_1$rho <- 1e-8
-r2.sim.avg_1$mu_block <- "flat"
+r2.sim.avg_1$rho <- "r = 1e-8"
+r2.sim.avg_1$mu_block <- "mu = flat"
 
 ################################################
 #
@@ -277,8 +273,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_2 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_2) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_2$bin.size <- c(50, 200, 1000)
-r2.sim.avg_2$rho <- 1e-8
-r2.sim.avg_2$mu_block <- "50 kb"
+r2.sim.avg_2$rho <- "r = 1e-8"
+r2.sim.avg_2$mu_block <- "mu block ~50 kb"
 
 
 ################################################
@@ -413,8 +409,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_3 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_3) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_3$bin.size <- c(50, 200, 1000)
-r2.sim.avg_3$rho <- 1e-8
-r2.sim.avg_3$mu_block <- "500 kb"
+r2.sim.avg_3$rho <- "r = 1e-8"
+r2.sim.avg_3$mu_block <- "mu block ~500 kb"
 
 
 ################################################
@@ -542,8 +538,8 @@ colnames(r2.sim.avg_4) <- c("Total", "Rho", "TMRCA")
 r2.sim.avg_4$Theta <- NA
 r2.sim.avg_4 <- r2.sim.avg_4[,c(1,4,2,3)]
 r2.sim.avg_4$bin.size <- c(50, 200, 1000)
-r2.sim.avg_4$rho <- 1e-9
-r2.sim.avg_4$mu_block <- "flat"
+r2.sim.avg_4$rho <- "r = 1e-9"
+r2.sim.avg_4$mu_block <- "mu = flat"
 
 
 ################################################
@@ -678,10 +674,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_5 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_5) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_5$bin.size <- c(50, 200, 1000)
-r2.sim.avg_5$rho <- 1e-9
-r2.sim.avg_5$mu_block <- "50 kb"
-
-
+r2.sim.avg_5$rho <- "r = 1e-9"
+r2.sim.avg_5$mu_block <- "mu block ~50 kb"
 
 ################################################
 #
@@ -815,8 +809,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_6 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_6) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_6$bin.size <- c(50, 200, 1000)
-r2.sim.avg_6$rho <- 1e-9
-r2.sim.avg_6$mu_block <- "500 kb"
+r2.sim.avg_6$rho <- "r = 1e-9"
+r2.sim.avg_6$mu_block <- "mu block ~500 kb"
 
 ################################################
 #
@@ -825,6 +819,7 @@ r2.sim.avg_6$mu_block <- "500 kb"
 ################################################
 
 r2.sim.bottleneck <- rbind.data.frame(r2.sim.avg_1, r2.sim.avg_2, r2.sim.avg_3, r2.sim.avg_4, r2.sim.avg_5, r2.sim.avg_6, make.row.names = F)
+r2.sim.bottleneck$mu_block = factor(r2.sim.bottleneck$mu_block, levels=c('mu = flat','mu block ~500 kb','mu block ~50 kb'))
 
 molten.r2 <- melt(r2.sim.bottleneck, id.vars = c("bin.size", "rho", "mu_block"))
 
@@ -836,7 +831,7 @@ r2.plot_bottleneck <- r2.plot_bottleneck + scale_x_continuous(breaks = c(50, 200
 r2.plot_bottleneck <- r2.plot_bottleneck + scale_y_continuous(breaks = pretty_breaks())
 r2.plot_bottleneck <- r2.plot_bottleneck + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot_bottleneck <- r2.plot_bottleneck + theme(axis.title = element_text(size = 16), axis.text = element_text(size = 12))
-ggsave("other_scenarios/r2.bottleneck.pdf", r2.plot_bottleneck, device = "pdf")
+ggsave("other_scenarios/r2.bottleneck.pdf", r2.plot_bottleneck, device = "pdf", width = 7, height = 7)
 
 ################################################
 #
@@ -963,8 +958,8 @@ colnames(r2.sim.avg_1) <- c("Total", "Rho", "TMRCA")
 r2.sim.avg_1$Theta <- NA
 r2.sim.avg_1 <- r2.sim.avg_1[,c(1,4,2,3)]
 r2.sim.avg_1$bin.size <- c(50, 200, 1000)
-r2.sim.avg_1$rho <- 1e-8
-r2.sim.avg_1$mu_block <- "flat"
+r2.sim.avg_1$rho <- "r = 1e-8"
+r2.sim.avg_1$mu_block <- "mu = flat"
 
 ################################################
 #
@@ -1098,8 +1093,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_2 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_2) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_2$bin.size <- c(50, 200, 1000)
-r2.sim.avg_2$rho <- 1e-8
-r2.sim.avg_2$mu_block <- "50 kb"
+r2.sim.avg_2$rho <- "r = 1e-8"
+r2.sim.avg_2$mu_block <- "mu block ~50 kb"
 
 
 ################################################
@@ -1234,8 +1229,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_3 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_3) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_3$bin.size <- c(50, 200, 1000)
-r2.sim.avg_3$rho <- 1e-8
-r2.sim.avg_3$mu_block <- "500 kb"
+r2.sim.avg_3$rho <- "r = 1e-8"
+r2.sim.avg_3$mu_block <- "mu block ~500 kb"
 
 
 ################################################
@@ -1363,9 +1358,8 @@ colnames(r2.sim.avg_4) <- c("Total", "Rho", "TMRCA")
 r2.sim.avg_4$Theta <- NA
 r2.sim.avg_4 <- r2.sim.avg_4[,c(1,4,2,3)]
 r2.sim.avg_4$bin.size <- c(50, 200, 1000)
-r2.sim.avg_4$rho <- 1e-9
-r2.sim.avg_4$mu_block <- "flat"
-
+r2.sim.avg_4$rho <- "r = 1e-9"
+r2.sim.avg_4$mu_block <- "mu = flat"
 
 ################################################
 #
@@ -1499,10 +1493,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_5 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_5) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_5$bin.size <- c(50, 200, 1000)
-r2.sim.avg_5$rho <- 1e-9
-r2.sim.avg_5$mu_block <- "50 kb"
-
-
+r2.sim.avg_5$rho <- "r = 1e-9"
+r2.sim.avg_5$mu_block <- "mu block ~50 kb"
 
 ################################################
 #
@@ -1636,8 +1628,8 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 r2.sim.avg_6 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_6) <- c("Total", "Theta", "Rho", "TMRCA")
 r2.sim.avg_6$bin.size <- c(50, 200, 1000)
-r2.sim.avg_6$rho <- 1e-9
-r2.sim.avg_6$mu_block <- "500 kb"
+r2.sim.avg_6$rho <- "r = 1e-9"
+r2.sim.avg_6$mu_block <- "mu block ~500 kb"
 
 ################################################
 #
@@ -1646,6 +1638,7 @@ r2.sim.avg_6$mu_block <- "500 kb"
 ################################################
 
 r2.sim.flat_Ne <- rbind.data.frame(r2.sim.avg_1, r2.sim.avg_2, r2.sim.avg_3, r2.sim.avg_4, r2.sim.avg_5, r2.sim.avg_6, make.row.names = F)
+r2.sim.flat_Ne$mu_block = factor(r2.sim.flat_Ne$mu_block, levels=c('mu = flat','mu block ~500 kb','mu block ~50 kb'))
 
 molten.r2 <- melt(r2.sim.flat_Ne, id.vars = c("bin.size", "rho", "mu_block"))
 
@@ -1657,4 +1650,4 @@ r2.plot_flat_Ne <- r2.plot_flat_Ne + scale_x_continuous(breaks = c(50, 200, 1000
 r2.plot_flat_Ne <- r2.plot_flat_Ne + scale_y_continuous(breaks = pretty_breaks())
 r2.plot_flat_Ne <- r2.plot_flat_Ne + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot_flat_Ne <- r2.plot_flat_Ne + theme(axis.title = element_text(size = 16), axis.text = element_text(size = 12))
-ggsave("other_scenarios/r2.flat_Ne.pdf", r2.plot_flat_Ne, device = "pdf")
+ggsave("other_scenarios/r2.flat_Ne.pdf", r2.plot_flat_Ne, device = "pdf", width = 7, height = 7)
