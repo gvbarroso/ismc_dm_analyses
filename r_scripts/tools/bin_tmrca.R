@@ -1,14 +1,15 @@
+# Created: 25/10/2020
+# Last modified: 30/10/2020
+# Author: Gustavo Barroso
+# This script computes the average TMRCA in windows, taking newick trees as input
 
 library(ape)
 library(plyr)
 library(tidyverse)
 
-
 args = commandArgs(trailingOnly = TRUE)
 
 rep_idx <- as.character(args[1])
-
-
 
 # gets nucleotide spans of each tree
 arg <- readLines(paste("rep_", rep_idx, "/rep_", rep_idx, ".newick", sep = ""))
