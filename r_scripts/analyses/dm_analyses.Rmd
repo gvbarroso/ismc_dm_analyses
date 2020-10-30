@@ -1255,7 +1255,7 @@ rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)] # scaling beca
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map.200kb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
+rho.map.200kb <- ggplot(data = molten.rho, aes(x = bin * 200, y = value, colour = variable)) + theme_bw()
 rho.map.200kb <- rho.map.200kb + geom_line(data = molten.rho, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 rho.map.200kb <- rho.map.200kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.200kb <- rho.map.200kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1277,7 +1277,7 @@ theta.plot <- as.data.frame(cbind(inf.lands.200k.rep_1$bin,
 
 names(theta.plot) <- c("bin", "sim", reps)
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map.200kb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
+theta.map.200kb <- ggplot(data = molten.theta, aes(x = bin * 200, y = value, colour = variable)) + theme_bw()
 theta.map.200kb <- theta.map.200kb + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.200kb <- theta.map.200kb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.200kb <- theta.map.200kb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1878,7 +1878,7 @@ rho.plot[,3:ncol(rho.plot)] <- 1.53 * rho.plot[,3:ncol(rho.plot)] # scaling beca
 
 names(rho.plot) <- c("bin", "sim", reps)
 molten.rho <- melt(rho.plot, id.vars = "bin")
-rho.map.1Mb <- ggplot(data = molten.rho, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
+rho.map.1Mb <- ggplot(data = molten.rho, aes(x = bin * 1000, y = value, colour = variable)) + theme_bw()
 rho.map.1Mb <- rho.map.1Mb + geom_line(data = molten.rho, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 rho.map.1Mb <- rho.map.1Mb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Blues"), "cyan"))
 rho.map.1Mb <- rho.map.1Mb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1900,7 +1900,7 @@ theta.plot <- as.data.frame(cbind(inf.lands.1M.rep_1$bin,
 
 names(theta.plot) <- c("bin", "sim", reps)
 molten.theta <- melt(theta.plot, id.vars = "bin")
-theta.map.1Mb <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
+theta.map.1Mb <- ggplot(data = molten.theta, aes(x = bin * 1000, y = value, colour = variable)) + theme_bw()
 theta.map.1Mb <- theta.map.1Mb + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.1Mb <- theta.map.1Mb + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
 theta.map.1Mb <- theta.map.1Mb + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -1908,6 +1908,9 @@ theta.map.1Mb <- theta.map.1Mb + labs(title = NULL, x = NULL, y = expression(the
 theta.map.1Mb <- theta.map.1Mb + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 
 plot_grid(rho.map.1Mb, theta.map.1Mb, nrow = 2, ncol = 1)
+
+fig2 <- plot_grid(theta.map.50kb, theta.map.200kb, theta.map.1Mb, nrow = 3, ncol = 1)
+save_plot("fig2.pdf", fig2, base_height = 16, base_width = 12)
 ```
 
 
@@ -3395,7 +3398,6 @@ r2.sim.50kb[3, 7] <- anova.diversity$VarExp[2] * 100
 r2.sim.50kb[4, 7] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
 
-
 # rep_8
 rep_8.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/rep_8.pi.50kb.bedgraph", header = T)
 rep_8.tmrca.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/sim.tmrca.50k.map", header = T)
@@ -3467,7 +3469,6 @@ r2.sim.50kb[2, 9] <- anova.diversity$VarExp[1] * 100
 r2.sim.50kb[3, 9] <- anova.diversity$VarExp[2] * 100
 r2.sim.50kb[4, 9] <- anova.diversity$VarExp[3] * 100
 r2.sim.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
-
 
 # rep_10
 rep_10.pi.50kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_10/rep_10.pi.50kb.bedgraph", header = T)
@@ -3553,7 +3554,6 @@ r2.sim.200kb[2, 1] <- anova.diversity$VarExp[1] * 100
 r2.sim.200kb[3, 1] <- anova.diversity$VarExp[2] * 100
 r2.sim.200kb[4, 1] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
-
 
 # rep_2
 rep_2.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_2/rep_2.pi.200kb.bedgraph", header = T)
@@ -3771,7 +3771,6 @@ r2.sim.200kb[3, 7] <- anova.diversity$VarExp[2] * 100
 r2.sim.200kb[4, 7] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
 
-
 # rep_8
 rep_8.pi.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/rep_8.pi.200kb.bedgraph", header = T)
 rep_8.tmrca.200kb <- read.table("dm_data/dm_chr_maps/2L/dm_coal_sims_2/rep_8/sim.tmrca.200k.map", header = T)
@@ -3879,7 +3878,6 @@ r2.sim.200kb[2, 10] <- anova.diversity$VarExp[1] * 100
 r2.sim.200kb[3, 10] <- anova.diversity$VarExp[2] * 100
 r2.sim.200kb[4, 10] <- anova.diversity$VarExp[3] * 100
 r2.sim.200kb[5, 10] <- anova.diversity$VarExp[4] * 100
-
 
 r2.sim.200kb$average <- rowMeans(r2.sim.200kb)
 r2.sim.200kb <- transform(r2.sim.200kb, sd=apply(r2.sim.200kb, 1, sd, na.rm = TRUE))
@@ -4272,8 +4270,7 @@ r2.sim.1Mb$average <- rowMeans(r2.sim.1Mb)
 r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 ```
 
-
-R^2 plot
+R^2 plot with real, simulated (true) and simulated (inferred) data.
 
 ```{r}
 # true landscapes
@@ -4286,23 +4283,18 @@ r2.inf.avg <- rbind.data.frame(r2.inf.50kb$average, r2.inf.200kb$average, r2.inf
 colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 r2.inf.avg$bin.size <- c(50, 200, 1000)
   
-r2.dm.tab.2 <- as.data.frame(cbind(apply(r2.dm.tab, 2, as.numeric)))
-
-r2.tab.comb <- rbind.data.frame(r2.dm.tab.2, r2.sim.avg, r2.inf.avg)
+r2.tab.comb <- rbind.data.frame(r2.dm.tab, r2.sim.avg, r2.inf.avg)
 r2.tab.comb$type <- c(rep("real", 3), rep("sim", 3), rep("inf", 3))
 
 molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
 r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable, fill = type))
 r2.plot <- r2.plot + geom_line(data = molten.r2)
 r2.plot <- r2.plot + geom_point(aes(shape = type, colour = variable), size = 4)
-r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000)) 
+r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
 r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks())
+r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
-
-leg <- get_legend(r2.plot + theme(legend.position="bottom"))
-
-fig4 <- plot_grid(r2.plot + theme(legend.position = "none", legend.title = NULL),
-                  leg, nrow = 2, labels = NULL, rel_heights = c(1, 0.1), scale = c(1, 0.2))
-fig4
+r2.plot
+ggsave("Fig4.pdf", r2.plot, device = "pdf", )
 ```
