@@ -132,7 +132,6 @@ r2.sim.1Mb$average <- rowMeans(r2.sim.1Mb)
 r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 
 
-# true landscapes
 r2.sim.avg_1 <- rbind.data.frame(r2.sim.50kb$average, r2.sim.200kb$average, r2.sim.1Mb$average, make.row.names = F)
 colnames(r2.sim.avg_1) <- c("Total", "Rho", "TMRCA")
 r2.sim.avg_1$Theta <- NA

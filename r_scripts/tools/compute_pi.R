@@ -1,3 +1,7 @@
+# Created: 25/10/2020
+# Last modified: 30/10/2020
+# Author: Gustavo Barroso
+# This script computes the average Pi in windows
 
 library(plyr)
 library(dplyr)
@@ -41,19 +45,19 @@ for(r in 1:n) {
   pi50k$start <- seq(from = 0, length.out = nrow(pi50k), by = 5e+4)
   pi50k$end <- pi50k$start + 5e+4
   pi50k <- pi50k[,c(2:4, 1)]
-  write.table(pi50k, paste("rep_", r, ".pi.50kb.bedgraph", sep = ""), sep = "\t", col.names = T, row.names = F, quote = F)
+  write.table(pi50k, paste("rep_", r, "/rep_", r, ".pi.50kb.bedgraph", sep = ""), sep = "\t", col.names = T, row.names = F, quote = F)
 
   pi200k <- ddply(.data = pi_dat[,c(1, 4)], .variables = "bin.200kb", .fun = colMeans)
   pi200k$start <- seq(from = 0, length.out = nrow(pi200k), by = 2e+5)
   pi200k$end <- pi200k$start + 2e+5
   pi200k <- pi200k[,c(2:4, 1)]
-  write.table(pi200k, paste("rep_", r, ".pi.200kb.bedgraph", sep = ""), sep = "\t", col.names = T, row.names = F, quote = F)
+  write.table(pi200k, paste("rep_", r, "/rep_", r, ".pi.200kb.bedgraph", sep = ""), sep = "\t", col.names = T, row.names = F, quote = F)
 
   pi1M <- ddply(.data = pi_dat[,c(1, 5)], .variables = "bin.1Mb", .fun = colMeans)
   pi1M$start <- seq(from = 0, length.out = nrow(pi1M), by = 1e+6)
   pi1M$end <- pi1M$start + 1e+6
   pi1M <- pi1M[,c(2:4, 1)]
-  write.table(pi1M, paste("rep_", r, ".pi.1Mb.bedgraph", sep = ""), sep = "\t", col.names = T, row.names = F, quote = F)
+  write.table(pi1M, paste("rep_", r, "/rep_", r, ".pi.1Mb.bedgraph", sep = ""), sep = "\t", col.names = T, row.names = F, quote = F)
 }
 close(pb)
 

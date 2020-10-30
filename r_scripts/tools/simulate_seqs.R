@@ -1,10 +1,7 @@
 # Created: 07/08/2017
 # Last modified: 07/08/2018
 # Author: Gustavo Barroso
-# This script performs simulations of recombination landscape under diver scenarios
-
-setwd("~")
-setwd(root_dir)
+# This script performs simulations of recombination and mutation landscapes under diverse scenarios
 
 ##############################################
 #
@@ -17,7 +14,7 @@ N0 <- 1e+5
 Ne <- N0 # used when simulating fluctuating pop. sizes
 little_r <- 1e-9 # recombination rate per site per generation
 mean_rho <- 4 * N0 * little_r
-little_mu <- 2e-9 # mutation rate per site per generation
+little_mu <- 2e-8 # mutation rate per site per generation
 mean_theta <- 4 * N0 * little_mu
 num_haploids <- 10 # sample size (in haploids)
 
@@ -105,10 +102,9 @@ dev.off()
 alpha_rho <- 0.5
 beta_rho <- alpha_rho
 
-# how often we change rho values along the genome (inverse of 'g' parameter described in Barroso et al.)
+# frequency of change in rho values along the genome 
 rho_transition_prob <- 5e-5
 
-# starts simulation        
 number_of_rho_transitions = 0
 rho_transition_points = c(NULL)
 current_transition_point = 0
@@ -162,16 +158,11 @@ write.table(sim_params, file = "sim_params.txt", quote = F, row.names = F, col.n
 #
 ##############################################
 
-# For theta landscape, the directory stays the same
-
-# The shape of the distribution 
-theta_dist <- "gamma" 
-
-# If Gamma distribution of theta values 
+# Gamma distribution of theta values 
 alpha_theta <- 2.5
 beta_theta <- alpha_theta
 
-# how often we change theta along the sequence (inverse of 'f' parameter described in Barroso et al.)
+# frequency of change in theta along the sequence
 theta_transition_prob <- 2e-5
 
 number_of_theta_transitions = 0
@@ -201,7 +192,6 @@ theta_values <- rgamma(n = number_of_theta_transitions + 1, shape = alpha_theta,
 
 theta_values <- append(theta_values, theta_values[length(theta_values)], after = length(theta_values))
 # transforms to mean 1
-#theta_values <- theta_values / mean(theta_values) 
 theta_values <- theta_values * mean_theta
 first_theta <- theta_values[1]
 
@@ -288,7 +278,6 @@ if(exists("admix_proportion")) {
 cat("-T") 
 cat("\n")
 sink()
-
 
 ##############################################
 #
