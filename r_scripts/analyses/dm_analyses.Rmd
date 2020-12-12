@@ -24,13 +24,14 @@ library(nlme)
 library(car)
 library(plyr)
 library(tidyverse)
-library(GenomicRanges)
+library(GenomicRanges) #From BioConductor
 library(RColorBrewer)
 library(scales)
 library(interactions)
 
-# here change to the 'root' directory extracted from FigShare
-knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/root")
+# Update according to where the data from FigShare was extracted, if needed:
+knitr::opts_knit$set(root.dir = "../../root")
+setwd("../../root")
 
 nreps <- 10
 reps <- character(length = nreps)
