@@ -1,5 +1,5 @@
 # Quantifying the determinants of genome-wide distribution of diversity in the fruit fly
-R scripts for reproducing results from Barroso & Dutheil 2020
+R scripts for reproducing results from Barroso & Dutheil 2021
 
 ## Tool scripts
 simulate_seqs.R => simulates rho and theta landscapes and performs coalescent simulations with SCRM
