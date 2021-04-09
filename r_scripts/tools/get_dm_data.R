@@ -1,4 +1,4 @@
-# Date created: 02/12/2019
+# Date created: 02/02/2021
 # Author: Gustavo V. Barroso
 # Retrieves and organizes data from droso Genome, to set up SLiM simulations
 
@@ -7,7 +7,6 @@ library("GenomicRanges")
 library("tidyverse")
 library("plyr")
 library("magrittr")
-library("BRGenomics")
 
 setwd("~/Data/iSMC/theta_paper/slim_sims/")
 
@@ -19,7 +18,7 @@ setwd("~/Data/iSMC/theta_paper/slim_sims/")
 
 chr_labels <- c("2L", "2R", "3L", "3R")
 
-# gets exome data from drosophila genome (accessed on January 25 2021 to perform simulations)
+# gets exome data from drosophila genome 
 ensembl <- useMart("ensembl", dataset = "dmelanogaster_gene_ensembl") 
 
 droso_exome_ensembl <- getBM(mart = ensembl, filters = "chromosome_name", values = chr_labels,
@@ -126,7 +125,7 @@ dm_genome_df <- dm_genome_df %>% add_row(seqnames = 2, start = chr_ends[2] + 1, 
 dm_genome_df <- dm_genome_df %>% add_row(seqnames = 3, start = chr_ends[3] + 1, end = chr_ends[3] + 2, rec_rate = 0.5,
                                          .before = which(dm_genome_df$seqnames != dplyr::lag(dm_genome_df$seqnames))[3])
 
-write.table(dm_genome_df, "~/Data/iSMC/theta_paper/slim_sims/dm_tbl.txt", col.names = T, row.names = F, quote = F, sep = "\t")
+write.table(dm_genome_df, "dm_tbl.txt", col.names = T, row.names = F, quote = F, sep = "\t")
 
 # creates a table that will be used to format the chr column of SLiM-output VCF files 
 chr_labels
@@ -134,5 +133,5 @@ chr_labels
 chr_ends <- c(dm_genome_df[which(dm_genome_df$seqnames != dplyr::lag(dm_genome_df$seqnames)) - 1, 3], max(dm_genome_df$end))
 
 chr_limits <- cbind.data.frame(chr_labels, ends_list) # will be used by format_vcf.R || filter_vcfs.sh
-write.table(chr_limits, "~/Data/iSMC/theta_paper/slim_sims/chr_limits.txt", row.names = F, col.names = T, quote = F, sep = "\t")
+write.table(chr_limits, "chr_limits.txt", row.names = F, col.names = T, quote = F, sep = "\t")
 

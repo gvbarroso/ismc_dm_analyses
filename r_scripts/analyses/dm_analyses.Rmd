@@ -4716,3 +4716,12 @@ r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = ele
 r2.plot
 ggsave("Fig4.pdf", r2.plot, device = "pdf", )
 ```
+
+
+
+```{r, message=FALSE, warning=FALSE}
+# Simulations with BGS
+
+```
+
+
