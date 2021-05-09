@@ -4,7 +4,7 @@
 # table generated with get_dm_data.R
 genome <- read.table("dm_tbl.txt", header = T)
 genome <- genome[genome$seqnames == 1,]
-  
+
 # starts writing SLiM script
 sink(paste("dm2L_script_1.slim", sep = ""))
 
@@ -15,7 +15,7 @@ cat(paste("setSeed(1);\n", sep = ""))
 cat("defineConstant(\"N\", 20000);\n")
 cat("initializeTreeSeq(simplificationRatio=100);\n")
 cat("initializeMutationType(\"m1\", 0.0, \"g\", -0.01, 0.2);\n\n") # NS	mutations
-cat("initializeGenomicElementType(\"g1\", m1, 1.0;\n") # exon
+cat("initializeGenomicElementType(\"g1\", m1, 1.0);\n") # exon
 
 # comeron 2012 recombination map
 cat("ratesRec = c(")

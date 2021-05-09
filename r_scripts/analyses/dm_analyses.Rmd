@@ -2,7 +2,7 @@
 title: "What shapes genome-wide diversity?"
 subtitle: "A case study in Drosophila melanogaster"
 author: "Gustavo V. Barroso and Julien Y. Dutheil"
-date: "November 1st 2020"
+date: "June 1st 2021"
 output:
   pdf_document:
     toc: true
@@ -29,8 +29,7 @@ library(scales)
 library(interactions)
 
 # Update according to where the data from FigShare was extracted, if needed:
-knitr::opts_knit$set(root.dir = "../../root")
-setwd("../../root")
+knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/root/")
 
 nreps <- 10
 reps <- character(length = nreps)
@@ -4588,8 +4587,13 @@ dm.tbl.genes <- ddply(.data = dm.tbl.popgen, .variables = "geneID", .fun = colSu
 dm.tbl.genes$geneID <- unique(dm.tbl$GeneID)
 dm.tbl.genes$dNdS <- dm.tbl.genes$dN / dm.tbl.genes$dS
 dm.tbl.genes$PiNPiS <- dm.tbl.genes$PiN / dm.tbl.genes$PiS
-dm.tbl.popstats <- cbind.data.frame(as.character(dm.tbl.genes$geneID), dm.tbl.genes$PiN, dm.tbl.genes$PiS, dm.tbl.genes$PiNPiS,
-                                    dm.tbl.genes$dN, dm.tbl.genes$dS, dm.tbl.genes$dNdS)
+dm.tbl.popstats <- cbind.data.frame(as.character(dm.tbl.genes$geneID),
+                                    dm.tbl.genes$PiN,
+                                    dm.tbl.genes$PiS,
+                                    dm.tbl.genes$PiNPiS,
+                                    dm.tbl.genes$dN,
+                                    dm.tbl.genes$dS,
+                                    dm.tbl.genes$dNdS)
 names(dm.tbl.popstats) <- c("geneID", "PiN", "PiS", "PiNPiS", "dN", "dS", "dNdS")
 dm.tbl.popstats$PiS <- as.numeric(dm.tbl.popstats$PiS)
 dm.tbl.popstats$dS <- as.numeric(dm.tbl.popstats$dS)
@@ -4681,6 +4685,25 @@ cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+
+# bootstrapping PiN and PiS correlations
+library(boot)
+boot.tbl <- dm.lands.evolrate %>% select(PiN, theta, PiS)
+boot.PiN.theta <- boot(boot.tbl, 
+  statistic = function(boot.tbl, i) {
+    cor.test(boot.tbl[i, "PiN"], boot.tbl[i, "theta"], method='spearman')$estimate
+  },
+  R = 10000
+)
+boot.ci(boot.PiN.theta, type = "basic")
+
+boot.PiS.theta <- boot(boot.tbl, 
+  statistic = function(boot.tbl, i) {
+    cor.test(boot.tbl[i, "PiS"], boot.tbl[i, "theta"], method='spearman')$estimate
+  },
+  R = 10000
+)
+boot.ci(boot.PiS.theta, type = "basic")
 
 # checking about rec rate
 cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
