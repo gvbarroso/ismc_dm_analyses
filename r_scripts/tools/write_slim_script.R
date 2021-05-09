@@ -6,7 +6,7 @@ genome <- read.table("dm_tbl.txt", header = T)
 genome <- genome[genome$seqnames == 1,]
 
 # starts writing SLiM script
-sink(paste("dm2L_script_1.slim", sep = ""))
+sink(paste("TEST_dm2L_script_1.slim", sep = ""))
 
 cat("initialize() {\n") 
 
@@ -18,23 +18,24 @@ cat("initializeMutationType(\"m1\", 0.0, \"g\", -0.01, 0.2);\n\n") # NS	mutation
 cat("initializeGenomicElementType(\"g1\", m1, 1.0);\n") # exon
 
 # comeron 2012 recombination map
-cat("ratesRec = c(")
-for(i in 1:nrow(genome))
-{
-  cat(paste("asFloat(", as.character(genome$rec_rate[i]), ")", sep = ""))
-  if(i < nrow(genome)) { cat(",\n") }
-}
-cat(");\n\n")
+#cat("ratesRec = c(")
+#for(i in 1:nrow(genome))
+#{
+#  cat(paste("asFloat(", as.character(genome$rec_rate[i]), ")", sep = ""))
+#  if(i < nrow(genome)) { cat(",\n") }
+#}
+#cat(");\n\n")
 
-cat("endsRec = c(")
-for(i in 1:nrow(genome))
-{
-  cat(paste("asInteger(", as.character(genome$end[i]), ")", sep = ""))
-  if(i < nrow(genome)) { cat(",\n") }
-}
-cat(");\n\n")
+#cat("endsRec = c(")
+#for(i in 1:nrow(genome))
+#{
+#  cat(paste("asInteger(", as.character(genome$end[i]), ")", sep = ""))
+#  if(i < nrow(genome)) { cat(",\n") }
+#}
+#cat(");\n\n")
 
-cat("initializeRecombinationRate(ratesRec, endsRec);\n\n")
+#cat("initializeRecombinationRate(ratesRec, endsRec);\n\n")
+cat("initializeRecombinationRate(1e-8);\n\n")
 
 # "fake" mutation map, just with zero in the intergenic regions to make it faster with tree-seq recording 
 cat("ratesMut = c(")
