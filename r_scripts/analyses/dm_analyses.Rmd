@@ -20,6 +20,7 @@ library(reshape2)
 library(cowplot)
 library(lmtest)
 library(nlme)
+library(boot)
 library(car)
 library(plyr)
 library(tidyverse)
@@ -4567,18 +4568,15 @@ pcor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity,
 This is how we generated the table from raw data:
 
 ```{r, message=FALSE, warning=FALSE}
-# loads 
-dm.raw <- read.table("dm_data/dm_misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T)
-dm.tbl <- na.omit(dm.raw)
+# loads data
+dm.raw <- read.table("dm_data/dm_misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T) %>% na.omit()
 
 # gets ratios 
 dm.tbl$PiS <- dm.tbl$PiS / dm.tbl$MeanNumberSynPos
 dm.tbl$PiN <- dm.tbl$PiN / (3 - dm.tbl$MeanNumberSynPos)
 dm.tbl$dS <- as.numeric(dm.tbl$dS) / dm.tbl$MeanNumberSynPosDiv
 dm.tbl$dN <- dm.tbl$dN / (3 - dm.tbl$MeanNumberSynPosDiv)
-# cleans
-dm.tbl.popgen <- as.data.frame(cbind(dm.tbl$PiN, dm.tbl$PiS, dm.tbl$dN, dm.tbl$dS, dm.tbl$GeneID))
-dm.tbl.popgen <- na.omit(dm.tbl.popgen)
+dm.tbl.popgen <- as.data.frame(cbind(dm.tbl$PiN, dm.tbl$PiS, dm.tbl$dN, dm.tbl$dS, dm.tbl$GeneID)) %>% na.omit()
 names(dm.tbl.popgen) <- c("PiN", "PiS", "dN", "dS", "geneID")
 
 # for each gene, sums ratios of each codon
@@ -4634,13 +4632,13 @@ names(dm.lands.evolrate)[3] <- "end.window"
 names(dm.lands.evolrate)[8] <- "start.gene"
 names(dm.lands.evolrate)[9] <- "end.gene"
 
-# NOTE: must sort rows of dm.lands.evolrate by chr and start coords
+dm.lands.evolrate <- arrange(dm.lands.evolrate, chr, start.window)
 
 write.table(dm.lands.evolrate, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
             sep = "\t", quote = F, col.names = T, row.names = F)
 ```
 
-We can read the table provided and move on with the analyses:
+We can read the table generated and move on with the analyses:
 
 ```{r, message=FALSE, warning=FALSE}
 dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
@@ -4678,16 +4676,17 @@ g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
 
 summary(g.dm.cds)
 
-# correlations
+# simple correlations
 cor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, method = "spearman") 
 cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman") 
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
+cor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, method = "spearman")
 pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+pcor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
 
 # bootstrapping PiN and PiS correlations
-library(boot)
 boot.tbl <- dm.lands.evolrate %>% select(PiN, theta, PiS)
 boot.PiN.theta <- boot(boot.tbl, 
   statistic = function(boot.tbl, i) {
@@ -4705,7 +4704,7 @@ boot.PiS.theta <- boot(boot.tbl,
 )
 boot.ci(boot.PiS.theta, type = "basic")
 
-# checking about rec rate
+# rec rate results make sense
 cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
 pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, dm.lands.evolrate$tmrca, method = "spearman") 
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
