@@ -28,6 +28,7 @@ library(GenomicRanges) #From BioConductor
 library(RColorBrewer)
 library(scales)
 library(interactions)
+library(magrittr)
 
 # Update according to where the data from FigShare was extracted, if needed:
 knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/root/")
@@ -3875,7 +3876,7 @@ tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(
 tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
 tmrca.map
 
-# genome-wide correlations
+# genome-wide correlations between maps
 cor.test(~rho + diversity, data = dm.lands.50kb, method = "spearman")
 cor.test(~rho + tmrca, data = dm.lands.50kb, method = "spearman")
 cor.test(~theta + tmrca, data = dm.lands.50kb, method = "spearman")
@@ -4478,7 +4479,7 @@ g.div.dm.1Mb.5 <- gls(diversity ~ (thetaC + rhoC),
 summary(g.div.dm.1Mb.5)
 ```
 
-## Divergence with Drosophila yakuba
+## Divergence 
 
 This is how we generated the table from raw data:
 
@@ -4569,70 +4570,59 @@ This is how we generated the table from raw data:
 
 ```{r, message=FALSE, warning=FALSE}
 # loads data
-dm.raw <- read.table("dm_data/dm_misc/dpgp3_Dyak_bpp.all.csv", header = T, fill = T, stringsAsFactors = T) %>% na.omit()
+dm.raw <- read.table("dm_data/dm_misc/dpgp2_Dsimulans_bpp.all.csv", header = TRUE, sep = "\t") %>%
+          select(GeneID, MeanNumberSynPos, PiN, PiS, MeanNumberSynPosDiv, dS, dN) %>% na.omit()
 
-# gets ratios 
-dm.tbl$PiS <- dm.tbl$PiS / dm.tbl$MeanNumberSynPos
-dm.tbl$PiN <- dm.tbl$PiN / (3 - dm.tbl$MeanNumberSynPos)
-dm.tbl$dS <- as.numeric(dm.tbl$dS) / dm.tbl$MeanNumberSynPosDiv
-dm.tbl$dN <- dm.tbl$dN / (3 - dm.tbl$MeanNumberSynPosDiv)
-dm.tbl.popgen <- as.data.frame(cbind(dm.tbl$PiN, dm.tbl$PiS, dm.tbl$dN, dm.tbl$dS, dm.tbl$GeneID)) %>% na.omit()
-names(dm.tbl.popgen) <- c("PiN", "PiS", "dN", "dS", "geneID")
+dm.tbl <- ddply(dm.raw, .variables = "GeneID", .fun = plyr::summarize,
+                MeanNumberNonSynPos = sum(3 - MeanNumberSynPos),
+                MeanNumberSynPos = sum(MeanNumberSynPos),
+                PiN = sum(PiN),
+                PiS = sum(PiS),
+                MeanNumberNonSynPosDiv = sum(3 - MeanNumberSynPosDiv),
+                MeanNumberSynPosDiv = sum(MeanNumberSynPosDiv),
+                dN = sum(dN),
+                dS = sum(dS))
 
-# for each gene, sums ratios of each codon
-dm.tbl.genes <- ddply(.data = dm.tbl.popgen, .variables = "geneID", .fun = colSums, na.rm = T)
-# substitutes gene id and computes ratios
-dm.tbl.genes$geneID <- unique(dm.tbl$GeneID)
-dm.tbl.genes$dNdS <- dm.tbl.genes$dN / dm.tbl.genes$dS
-dm.tbl.genes$PiNPiS <- dm.tbl.genes$PiN / dm.tbl.genes$PiS
-dm.tbl.popstats <- cbind.data.frame(as.character(dm.tbl.genes$geneID),
-                                    dm.tbl.genes$PiN,
-                                    dm.tbl.genes$PiS,
-                                    dm.tbl.genes$PiNPiS,
-                                    dm.tbl.genes$dN,
-                                    dm.tbl.genes$dS,
-                                    dm.tbl.genes$dNdS)
-names(dm.tbl.popstats) <- c("geneID", "PiN", "PiS", "PiNPiS", "dN", "dS", "dNdS")
-dm.tbl.popstats$PiS <- as.numeric(dm.tbl.popstats$PiS)
-dm.tbl.popstats$dS <- as.numeric(dm.tbl.popstats$dS)
-dm.tbl.popstats$PiN <- as.numeric(dm.tbl.popstats$PiN)
-dm.tbl.popstats$dN <- as.numeric(dm.tbl.popstats$dN)
-dm.tbl.popstats$PiNPiS <- as.numeric(dm.tbl.popstats$PiNPiS)
-dm.tbl.popstats$dNdS <- as.numeric(dm.tbl.popstats$dNdS)
+# computes ratios
+dm.tbl$PiN_PiS <- with(dm.tbl, (PiN / MeanNumberNonSynPos) / (PiS / MeanNumberSynPos))
+dm.tbl$dN_dS <- with(dm.tbl, (dN / MeanNumberNonSynPosDiv) / (dS / MeanNumberSynPosDiv))
 
-dm.tbl.popstats.clean <- dm.tbl.popstats[which(dm.tbl.popstats$PiNPiS > 0),]
-dm.tbl.popstats.clean <- dm.tbl.popstats.clean[which(dm.tbl.popstats.clean$dNdS > 0),]
+# for PiN/PiS, we ignore genes with ratio is above 1 
+dm.tbl$PiN_PiS[dm.tbl$PiN_PiS > 1] <- NA
 
 dm.genes.coord <- read.table("dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F)
-names(dm.genes.coord) <- c("chr", "start", "end", "x", "geneID", "length")
+names(dm.genes.coord) <- c("chr", "start", "end", "x", "GeneID", "length")
 dm.genes.coord <- dm.genes.coord[,-4]
 
-dm.evol <- merge(dm.genes.coord, dm.tbl.popstats.clean, by = "geneID")
-dm.evol <- dm.evol[order(dm.evol$chr),]
+dm.evol <- merge(dm.genes.coord, dm.tbl, by = "GeneID")
+dm.evol <- arrange(dm.evol, chr, start)
 
 # reorder maps to use GR
 dm.maps.50kb <- dm.lands.50kb[,c(8,1:6)]
 
-# grouping per gene coordinate
+# mapping genes to 50kb windows in ismc maps
 dm.lands.gr <- makeGRangesFromDataFrame(dm.maps.50kb)
-values(dm.lands.gr) <- dm.maps.50kb[,(4:7)]
+values(dm.lands.gr) <- select(dm.maps.50kb, diversity, theta, rho, tmrca)
 evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
-values(evolrate.gr) <- dm.evol[,(5:11)]
+values(evolrate.gr) <- select(dm.evol, PiN, PiS, dN, dS)
 
 hits <- findOverlaps(query = evolrate.gr, subject = dm.lands.gr, type = "within") 
+
+#hits <- findOverlaps(query = dm.lands.gr, subject = evolrate.gr, type = "any") 
 
 evolrate.gr.df <- as.data.frame(evolrate.gr[queryHits(hits)], row.names = NULL)
 dm.lands.gr.df <- as.data.frame(dm.lands.gr[subjectHits(hits)], row.names = NULL)
 
-dm.lands.evolrate <- cbind.data.frame(dm.lands.gr.df[,c(1:3,6:9)], evolrate.gr.df[,c(2,3,6:12)])
-dm.lands.evolrate <- dm.lands.evolrate[which(dm.lands.evolrate$PiNPiS < 1),]
+dm.lands.evolrate <- cbind.data.frame(dm.lands.gr.df[,c(1:3,6:9)], evolrate.gr.df[,c(2:4,6:9)])
+
 names(dm.lands.evolrate)[1] <- "chr"
 names(dm.lands.evolrate)[2] <- "start.window"
 names(dm.lands.evolrate)[3] <- "end.window"
 names(dm.lands.evolrate)[8] <- "start.gene"
 names(dm.lands.evolrate)[9] <- "end.gene"
+names(dm.lands.evolrate)[10] <- "length.gene"
 
-dm.lands.evolrate <- arrange(dm.lands.evolrate, chr, start.window)
+dm.lands.evolrate <- arrange(dm.lands.evolrate, chr, start.window, start.gene)
 
 write.table(dm.lands.evolrate, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
             sep = "\t", quote = F, col.names = T, row.names = F)
@@ -4641,7 +4631,8 @@ write.table(dm.lands.evolrate, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.t
 We can read the table generated and move on with the analyses:
 
 ```{r, message=FALSE, warning=FALSE}
-dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
+dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
+                                header = T, sep = "\t")
 
 # linear model in coding regions
 
@@ -4672,7 +4663,7 @@ anova.diversity.cds
 dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
 
 g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
-                 data = dm.lands.evolrate, weights = varPower(0, ~tmrcaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
+                data = dm.lands.evolrate, weights = varPower(0, ~tmrcaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
 
 summary(g.dm.cds)
 
@@ -4708,6 +4699,12 @@ boot.ci(boot.PiS.theta, type = "basic")
 cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
 pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, dm.lands.evolrate$tmrca, method = "spearman") 
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
+
+dm.lands.evolrate$chr <- as.numeric(dm.lands.evolrate$chr)
+dm.tbl.windows <- ddply(.data = dm.lands.evolrate, .variables = c("chr", "start.window"), .fun = colMeans, na.rm = T)
+
+cor.test(dm.tbl.windows$theta, dm.tbl.windows$length.gene, method = "spearman")
+
 ```
 
 # R^2 plot with real, simulated (true) and simulated (inferred) data.
