@@ -4573,6 +4573,7 @@ This is how we generated the table from raw data:
 dm.raw <- read.table("dm_data/dm_misc/dpgp2_Dsimulans_bpp.all.csv", header = TRUE, sep = "\t") %>%
           select(GeneID, MeanNumberSynPos, PiN, PiS, MeanNumberSynPosDiv, dS, dN) %>% na.omit()
 
+# summarises
 dm.tbl <- ddply(dm.raw, .variables = "GeneID", .fun = plyr::summarize,
                 MeanNumberNonSynPos = sum(3 - MeanNumberSynPos),
                 MeanNumberSynPos = sum(MeanNumberSynPos),
@@ -4587,7 +4588,6 @@ dm.tbl$PiN <- (dm.tbl$PiN / dm.tbl$MeanNumberNonSynPos)
 dm.tbl$PiS <- (dm.tbl$PiS / dm.tbl$MeanNumberNonSynPos)
 dm.tbl$dN <- (dm.tbl$dN / dm.tbl$MeanNumberSynPosDiv)
 dm.tbl$dS <- (dm.tbl$dS / dm.tbl$MeanNumberSynPosDiv)
-
 
 # computes ratios
 dm.tbl$PiN_PiS <- with(dm.tbl, PiN / PiS)
@@ -4611,10 +4611,10 @@ values(dm.lands.gr) <- select(dm.maps.50kb, diversity, theta, rho, tmrca)
 evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
 values(evolrate.gr) <- select(dm.evol, PiN, PiS, dN, dS)
 
-hits <- findOverlaps(query = evolrate.gr, subject = dm.lands.gr, type = "within") 
+hits_1 <- findOverlaps(query = evolrate.gr, subject = dm.lands.gr, type = "within") 
 
-evolrate.gr.df <- as.data.frame(evolrate.gr[queryHits(hits)], row.names = NULL)
-dm.lands.gr.df <- as.data.frame(dm.lands.gr[subjectHits(hits)], row.names = NULL)
+evolrate.gr.df <- as.data.frame(evolrate.gr[queryHits(hits_1)], row.names = NULL)
+dm.lands.gr.df <- as.data.frame(dm.lands.gr[subjectHits(hits_1)], row.names = NULL)
 
 dm.lands.evolrate <- cbind.data.frame(dm.lands.gr.df[,c(1:3,6:9)], evolrate.gr.df[,c(2:4,6:9)])
 
@@ -4627,63 +4627,83 @@ names(dm.lands.evolrate)[10] <- "length.gene"
 
 dm.lands.evolrate <- arrange(dm.lands.evolrate, chr, start.window, start.gene)
 
-write.table(dm.lands.evolrate, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
+dm.lands.evolrate.bins <- ddply(dm.lands.evolrate, .variables = c("chr", "start.window"), .fun = plyr::summarize,
+                               diversity = mean(diversity),
+                               theta = mean(theta),
+                               rho = mean(rho),
+                               tmrca = mean(tmrca),
+                               exonic.sites = sum(length.gene),
+                               PiN.window = sum(PiN*length.gene) / 5e+4,
+                               PiS.window = sum(PiS*length.gene) / 5e+4,
+                               dN.window = sum(dN*length.gene) / 5e+4,
+                               dS.window = sum(dS*length.gene) / 5e+4)
+
+
+write.table(dm.lands.evolrate.bins, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
             sep = "\t", quote = F, col.names = T, row.names = F)
 ```
 
 We can read the table generated and move on with the analyses:
 
 ```{r, message=FALSE, warning=FALSE}
-dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
+dm.lands.evolrate.bins <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
 
 # linear model in coding regions
 
 # centering
-dm.lands.evolrate$thetaC <- dm.lands.evolrate$theta - mean(dm.lands.evolrate$theta)
-dm.lands.evolrate$tmrcaC <- dm.lands.evolrate$tmrca - mean(dm.lands.evolrate$tmrca)
-dm.lands.evolrate$rhoC <- dm.lands.evolrate$rho - mean(dm.lands.evolrate$rho)
+dm.lands.evolrate.bins$thetaC <- dm.lands.evolrate.bins$theta - mean(dm.lands.evolrate.bins$theta)
+dm.lands.evolrate.bins$tmrcaC <- dm.lands.evolrate.bins$tmrca - mean(dm.lands.evolrate.bins$tmrca)
+dm.lands.evolrate.bins$rhoC <- dm.lands.evolrate.bins$rho - mean(dm.lands.evolrate.bins$rho)
 
-dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
+dm.lands.evolrate.bins$bin <- 1:nrow(dm.lands.evolrate.bins)
 
-m.dm.cds <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC), data = dm.lands.evolrate)
+m.dm.cds.1 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC), data = dm.lands.evolrate.bins)
+m.dm.cds.2 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC + rhoC*tmrcaC), data = dm.lands.evolrate.bins)
+m.dm.cds.3 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
+                  data = dm.lands.evolrate.bins, cor = corAR1(0, ~bin), method = "ML")
+m.dm.cds.4 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC*tmrcaC),
+                  data = dm.lands.evolrate.bins, cor = corAR1(0, ~bin), method = "ML")
 
-plot(resid(m.dm.cds)~fitted(m.dm.cds))
-hist(resid(m.dm.cds), nclass = 30)
-dwtest(m.dm.cds)
-hmctest(m.dm.cds, nsim = 10000) 
+AIC(m.dm.cds.1, m.dm.cds.2, m.dm.cds.3, m.dm.cds.4)
 
-summary(m.dm.cds)
+# picking best OLS for ANOVA
+plot(resid(m.dm.cds.2)~fitted(m.dm.cds.2))
+hist(resid(m.dm.cds.2), nclass = 30)
+dwtest(m.dm.cds.2)
+hmctest(m.dm.cds.2, nsim = 10000) 
+
+summary(m.dm.cds.2)
 
 # type 2 anova
-anova.diversity.cds <- Anova(m.dm.cds)
+anova.diversity.cds <- Anova(m.dm.cds.2)
 apiss <- anova.diversity.cds$"Sum Sq"
 anova.diversity.cds$VarExp <- apiss / sum(apiss)
 
 anova.diversity.cds
 
 # GLS
-dm.lands.evolrate$bin <- 1:nrow(dm.lands.evolrate)
+dm.lands.evolrate.bins$bin <- 1:nrow(dm.lands.evolrate.bins)
 
 g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
-                data = dm.lands.evolrate, weights = varPower(0, ~tmrcaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
+                data = dm.lands.evolrate.bins, weights = varPower(0, ~tmrcaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
 
 summary(g.dm.cds)
 
 # simple correlations
-cor.test(dm.lands.evolrate$PiN, dm.lands.evolrate$theta, method = "spearman") 
-cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman") 
-cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, method = "spearman")
-pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$PiS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, method = "spearman")
-cor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, method = "spearman")
-pcor.test(dm.lands.evolrate$dS, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
-pcor.test(dm.lands.evolrate$dN, dm.lands.evolrate$theta, dm.lands.evolrate$tmrca, method = "spearman")
+cor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, method = "spearman") 
+cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman") 
+cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, method = "spearman")
+pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman")
+cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, method = "spearman")
+cor.test(dm.lands.evolrate.bins$dN, dm.lands.evolrate.bins$theta, method = "spearman")
+pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman")
+pcor.test(dm.lands.evolrate.bins$dN, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman")
 
 # bootstrapping PiN and PiS correlations
-boot.tbl <- dm.lands.evolrate %>% select(PiN, theta, PiS)
+boot.tbl <- dm.lands.evolrate.bins %>% select(PiN.window, theta, PiS.window)
 boot.PiN.theta <- boot(boot.tbl, 
   statistic = function(boot.tbl, i) {
-    cor.test(boot.tbl[i, "PiN"], boot.tbl[i, "theta"], method='spearman')$estimate
+    cor.test(boot.tbl[i, "PiN.window"], boot.tbl[i, "theta"], method='spearman')$estimate
   },
   R = 10000
 )
@@ -4691,21 +4711,18 @@ boot.ci(boot.PiN.theta, type = "basic")
 
 boot.PiS.theta <- boot(boot.tbl, 
   statistic = function(boot.tbl, i) {
-    cor.test(boot.tbl[i, "PiS"], boot.tbl[i, "theta"], method='spearman')$estimate
+    cor.test(boot.tbl[i, "PiS.window"], boot.tbl[i, "theta"], method='spearman')$estimate
   },
   R = 10000
 )
 boot.ci(boot.PiS.theta, type = "basic")
 
 # rec rate results make sense
-cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman") 
-pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, dm.lands.evolrate$tmrca, method = "spearman") 
-cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
+cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$rho, method = "spearman") 
+pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$rho, dm.lands.evolrate.bins$tmrca, method = "spearman") 
+cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$rho, method = "spearman") 
 
-dm.lands.evolrate$chr <- as.numeric(as.factor(dm.lands.evolrate$chr))
-dm.tbl.windows <- ddply(.data = dm.lands.evolrate, .variables = c("chr", "start.window"), .fun = colMeans, na.rm = T)
-
-cor.test(dm.tbl.windows$theta, dm.tbl.windows$length.gene, method = "spearman")
+cor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, method = "spearman")
 
 ```
 
