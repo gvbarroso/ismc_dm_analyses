@@ -4583,16 +4583,21 @@ dm.tbl <- ddply(dm.raw, .variables = "GeneID", .fun = plyr::summarize,
                 dN = sum(dN),
                 dS = sum(dS))
 
+dm.tbl$PiN <- (dm.tbl$PiN / dm.tbl$MeanNumberNonSynPos)
+dm.tbl$PiS <- (dm.tbl$PiS / dm.tbl$MeanNumberNonSynPos)
+dm.tbl$dN <- (dm.tbl$dN / dm.tbl$MeanNumberSynPosDiv)
+dm.tbl$dS <- (dm.tbl$dS / dm.tbl$MeanNumberSynPosDiv)
+
+
 # computes ratios
-dm.tbl$PiN_PiS <- with(dm.tbl, (PiN / MeanNumberNonSynPos) / (PiS / MeanNumberSynPos))
-dm.tbl$dN_dS <- with(dm.tbl, (dN / MeanNumberNonSynPosDiv) / (dS / MeanNumberSynPosDiv))
+dm.tbl$PiN_PiS <- with(dm.tbl, PiN / PiS)
+dm.tbl$dN_dS <- with(dm.tbl, dN / dS)
 
 # for PiN/PiS, we ignore genes with ratio is above 1 
 dm.tbl$PiN_PiS[dm.tbl$PiN_PiS > 1] <- NA
 
-dm.genes.coord <- read.table("dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F)
-names(dm.genes.coord) <- c("chr", "start", "end", "x", "GeneID", "length")
-dm.genes.coord <- dm.genes.coord[,-4]
+dm.genes.coord <- read.table("dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F) %>% select(V1, V2, V3, V5)
+names(dm.genes.coord) <- c("chr", "start", "end", "GeneID")
 
 dm.evol <- merge(dm.genes.coord, dm.tbl, by = "GeneID")
 dm.evol <- arrange(dm.evol, chr, start)
@@ -4607,8 +4612,6 @@ evolrate.gr <- makeGRangesFromDataFrame(dm.evol)
 values(evolrate.gr) <- select(dm.evol, PiN, PiS, dN, dS)
 
 hits <- findOverlaps(query = evolrate.gr, subject = dm.lands.gr, type = "within") 
-
-#hits <- findOverlaps(query = dm.lands.gr, subject = evolrate.gr, type = "any") 
 
 evolrate.gr.df <- as.data.frame(evolrate.gr[queryHits(hits)], row.names = NULL)
 dm.lands.gr.df <- as.data.frame(dm.lands.gr[subjectHits(hits)], row.names = NULL)
@@ -4631,8 +4634,7 @@ write.table(dm.lands.evolrate, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.t
 We can read the table generated and move on with the analyses:
 
 ```{r, message=FALSE, warning=FALSE}
-dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
-                                header = T, sep = "\t")
+dm.lands.evolrate <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
 
 # linear model in coding regions
 
@@ -4700,7 +4702,7 @@ cor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, method = "spearman")
 pcor.test(dm.lands.evolrate$PiS, dm.lands.evolrate$rho, dm.lands.evolrate$tmrca, method = "spearman") 
 cor.test(dm.lands.evolrate$dS, dm.lands.evolrate$rho, method = "spearman") 
 
-dm.lands.evolrate$chr <- as.numeric(dm.lands.evolrate$chr)
+dm.lands.evolrate$chr <- as.numeric(as.factor(dm.lands.evolrate$chr))
 dm.tbl.windows <- ddply(.data = dm.lands.evolrate, .variables = c("chr", "start.window"), .fun = colMeans, na.rm = T)
 
 cor.test(dm.tbl.windows$theta, dm.tbl.windows$length.gene, method = "spearman")
