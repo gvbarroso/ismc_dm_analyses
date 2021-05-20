@@ -4690,6 +4690,8 @@ g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
 summary(g.dm.cds)
 
 # simple correlations
+cor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, method = "spearman")
+
 cor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, method = "spearman") 
 cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman") 
 cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, method = "spearman")
@@ -4716,14 +4718,6 @@ boot.PiS.theta <- boot(boot.tbl,
   R = 10000
 )
 boot.ci(boot.PiS.theta, type = "basic")
-
-# rec rate results make sense
-cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$rho, method = "spearman") 
-pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$rho, dm.lands.evolrate.bins$tmrca, method = "spearman") 
-cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$rho, method = "spearman") 
-
-cor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, method = "spearman")
-
 ```
 
 # R^2 plot with real, simulated (true) and simulated (inferred) data.
