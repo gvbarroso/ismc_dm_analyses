@@ -4593,8 +4593,10 @@ dm.tbl$dS <- (dm.tbl$dS / dm.tbl$MeanNumberSynPosDiv)
 dm.tbl$PiN_PiS <- with(dm.tbl, PiN / PiS)
 dm.tbl$dN_dS <- with(dm.tbl, dN / dS)
 
-# for PiN/PiS, we ignore genes with ratio is above 1 
-dm.tbl$PiN_PiS[dm.tbl$PiN_PiS > 1] <- NA
+# we ignore genes with ratios above 1 
+dm.tbl <- dm.tbl[dm.tbl$PiN_PiS < 1,]
+dm.tbl <- dm.tbl[dm.tbl$dN_dS < 1,]
+dm.tbl <- na.omit(dm.tbl)
 
 dm.genes.coord <- read.table("dm_data/dm_misc/Dmel_trans_nooverlaps-final.txt", header = F) %>% select(V1, V2, V3, V5)
 names(dm.genes.coord) <- c("chr", "start", "end", "GeneID")
@@ -4633,11 +4635,13 @@ dm.lands.evolrate.bins <- ddply(dm.lands.evolrate, .variables = c("chr", "start.
                                rho = mean(rho),
                                tmrca = mean(tmrca),
                                exonic.sites = sum(length.gene),
-                               PiN.window = sum(PiN*length.gene) / 5e+4,
-                               PiS.window = sum(PiS*length.gene) / 5e+4,
-                               dN.window = sum(dN*length.gene) / 5e+4,
-                               dS.window = sum(dS*length.gene) / 5e+4)
+                               PiN.window = sum(PiN*length.gene) / sum(length.gene),
+                               PiS.window = sum(PiS*length.gene) / sum(length.gene),
+                               dN.window = sum(dN*length.gene) / sum(length.gene),
+                               dS.window = sum(dS*length.gene) / sum(length.gene))
 
+
+dm.lands.evolrate.bins$bin <- 1:nrow(dm.lands.evolrate.bins)
 
 write.table(dm.lands.evolrate.bins, "dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv",
             sep = "\t", quote = F, col.names = T, row.names = F)
@@ -4648,23 +4652,20 @@ We can read the table generated and move on with the analyses:
 ```{r, message=FALSE, warning=FALSE}
 dm.lands.evolrate.bins <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_protein_rates.tsv", header = T, sep = "\t")
 
-# linear model in coding regions
+# linear model in windows with more than 20kb exonic sites
+dm.lands.genes <- filter(dm.lands.evolrate.bins, exonic.sites > 2e+4)
 
 # centering
-dm.lands.evolrate.bins$thetaC <- dm.lands.evolrate.bins$theta - mean(dm.lands.evolrate.bins$theta)
-dm.lands.evolrate.bins$tmrcaC <- dm.lands.evolrate.bins$tmrca - mean(dm.lands.evolrate.bins$tmrca)
-dm.lands.evolrate.bins$rhoC <- dm.lands.evolrate.bins$rho - mean(dm.lands.evolrate.bins$rho)
+dm.lands.genes$thetaC <- dm.lands.genes$theta - mean(dm.lands.genes$theta)
+dm.lands.genes$tmrcaC <- dm.lands.genes$tmrca - mean(dm.lands.genes$tmrca)
+dm.lands.genes$rhoC <- dm.lands.genes$rho - mean(dm.lands.genes$rho)
 
-dm.lands.evolrate.bins$bin <- 1:nrow(dm.lands.evolrate.bins)
+m.dm.cds.1 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC), data = dm.lands.genes)
+m.dm.cds.2 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC + rhoC*tmrcaC), data = dm.lands.genes)
 
-m.dm.cds.1 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC), data = dm.lands.evolrate.bins)
-m.dm.cds.2 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC + rhoC*tmrcaC), data = dm.lands.evolrate.bins)
-m.dm.cds.3 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
-                  data = dm.lands.evolrate.bins, cor = corAR1(0, ~bin), method = "ML")
-m.dm.cds.4 <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC*tmrcaC),
-                  data = dm.lands.evolrate.bins, cor = corAR1(0, ~bin), method = "ML")
+AIC(m.dm.cds.1, m.dm.cds.2)
 
-AIC(m.dm.cds.1, m.dm.cds.2, m.dm.cds.3, m.dm.cds.4)
+summary(m.dm.cds.4)
 
 # picking best OLS for ANOVA
 plot(resid(m.dm.cds.2)~fitted(m.dm.cds.2))
@@ -4680,14 +4681,6 @@ apiss <- anova.diversity.cds$"Sum Sq"
 anova.diversity.cds$VarExp <- apiss / sum(apiss)
 
 anova.diversity.cds
-
-# GLS
-dm.lands.evolrate.bins$bin <- 1:nrow(dm.lands.evolrate.bins)
-
-g.dm.cds <- gls(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC),
-                data = dm.lands.evolrate.bins, weights = varPower(0, ~tmrcaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
-
-summary(g.dm.cds)
 
 # simple correlations
 cor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, method = "spearman")
@@ -4718,6 +4711,31 @@ boot.PiS.theta <- boot(boot.tbl,
   R = 10000
 )
 boot.ci(boot.PiS.theta, type = "basic")
+
+plot.tbl <- select(.data=dm.lands.evolrate.bins, chr, bin, diversity, theta, exonic.sites, PiN.window, PiS.window, dN.window, dS.window)
+plot.tbl[,3:ncol(plot.tbl)] <- apply(plot.tbl[,3:ncol(plot.tbl)], 2, function(x) x / sum(x))
+plot.tbl <- plot.tbl[-which(plot.tbl$PiS.window > 0.01),]
+
+plot.tbl.S <- select(plot.tbl, chr, bin, diversity, theta, exonic.sites, PiS.window, dS.window)
+plot.tbl.S <- pivot_longer(plot.tbl.S, cols = c(diversity, PiS.window, dS.window), names_to = "variable")
+
+plot.tbl.N <- select(plot.tbl, chr, bin, diversity, theta, exonic.sites, PiN.window, dN.window)
+plot.tbl.N <- pivot_longer(plot.tbl.N, cols = c(diversity, PiN.window, dN.window), names_to = "variable")
+
+plot.S <- ggplot(plot.tbl.S)
+plot.S <- plot.S + geom_line(size = 0.5, aes(x = bin, y = value, color = variable)) + theme_bw()
+plot.S <- plot.S + geom_point(size = 0.6, aes(x = bin, y = theta))
+plot.S <- plot.S + scale_color_manual(values = c("#a6611a", "#018571", "#dfc27d", "#000000"))
+plot.S <- plot.S + labs(title = NULL, x = "window", y = "normalized value")
+
+plot.N <- ggplot(plot.tbl.N)
+plot.N <- plot.N + geom_line(size = 0.5, aes(x = bin, y = value, color = variable)) + theme_bw()
+plot.N <- plot.N + geom_point(size = 0.6, aes(x = bin, y = theta))
+plot.N <- plot.N + scale_color_manual(values = c("#a6611a", "#018571", "#dfc27d", "#000000"))
+plot.N <- plot.N + labs(title = NULL, x = "window", y = "normalized value")
+
+p <- plot_grid(plot.S, plot.N, ncol = 1)
+save_plot("~/Desktop/p.pdf", p, device = "pdf", base_width = 12, base_height = 8)
 ```
 
 # R^2 plot with real, simulated (true) and simulated (inferred) data.
