@@ -13,6 +13,951 @@ library(scales)
 
 setSessionTimeLimit(cpu = Inf, elapsed = Inf) # some of the plots in the script can take a few seconds to generate
 
+########################
+#
+# var mu & true landscapes
+#
+########################
+
+setwd("~/Data/iSMC/theta_paper/BGS_sims/var_mu/")
+
+# 50 kb
+
+R2.tab.50kb <- as.data.frame(matrix(nrow = 10, ncol = 5))
+names(R2.tab.50kb) <- c("tmrca", "theta", "rho", "tmrca:theta", "total")
+
+bgs.varmut.theta <- read.table("sim.theta.50000.map", header = T, sep = "\t")
+bgs.varmut.rho <- read.table("sim.rho.50000.map", header = T, sep = "\t")
+
+## rep 1
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_1_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_1.50kb.windowed.pi", header = T, sep = "\t")
+
+rep1.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.50kb.maps$thetaC <- rep1.50kb.maps$theta - mean(rep1.50kb.maps$theta)
+rep1.50kb.maps$tmrcaC <- rep1.50kb.maps$tmrca - mean(rep1.50kb.maps$tmrca)
+rep1.50kb.maps$rhoC <- rep1.50kb.maps$rho - mean(rep1.50kb.maps$rho)
+
+rep1.50kb.maps$bin <- 1:nrow(rep1.50kb.maps)
+
+m.rep1.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.50kb.maps)
+
+anova.diversity <- Anova(m.rep1.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[1,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 2
+bgs.varmut.tmrca.rep2 <- read.table("TMRCA/dm2L_bgs_rep_2_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep2 <- read.table("Diversity/rep_2.50kb.windowed.pi", header = T, sep = "\t")
+
+rep2.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep2$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep2$AverageTmrca)
+
+names(rep2.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep2.50kb.maps$thetaC <- rep2.50kb.maps$theta - mean(rep2.50kb.maps$theta)
+rep2.50kb.maps$tmrcaC <- rep2.50kb.maps$tmrca - mean(rep2.50kb.maps$tmrca)
+rep2.50kb.maps$rhoC <- rep2.50kb.maps$rho - mean(rep2.50kb.maps$rho)
+
+rep2.50kb.maps$bin <- 1:nrow(rep2.50kb.maps)
+
+m.rep2.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep2.50kb.maps)
+
+anova.diversity <- Anova(m.rep2.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[2,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 3
+bgs.varmut.tmrca.rep3 <- read.table("TMRCA/dm2L_bgs_rep_3_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep3 <- read.table("Diversity/rep_3.50kb.windowed.pi", header = T, sep = "\t")
+
+rep3.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep3$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep3$AverageTmrca)
+
+names(rep3.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep3.50kb.maps$thetaC <- rep3.50kb.maps$theta - mean(rep3.50kb.maps$theta)
+rep3.50kb.maps$tmrcaC <- rep3.50kb.maps$tmrca - mean(rep3.50kb.maps$tmrca)
+rep3.50kb.maps$rhoC <- rep3.50kb.maps$rho - mean(rep3.50kb.maps$rho)
+
+rep3.50kb.maps$bin <- 1:nrow(rep3.50kb.maps)
+
+m.rep3.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep3.50kb.maps)
+
+anova.diversity <- Anova(m.rep3.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[3,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 4
+bgs.varmut.tmrca.rep4 <- read.table("TMRCA/dm2L_bgs_rep_4_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep4 <- read.table("Diversity/rep_4.50kb.windowed.pi", header = T, sep = "\t")
+
+rep4.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep4$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep4$AverageTmrca)
+
+names(rep4.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep4.50kb.maps$thetaC <- rep4.50kb.maps$theta - mean(rep4.50kb.maps$theta)
+rep4.50kb.maps$tmrcaC <- rep4.50kb.maps$tmrca - mean(rep4.50kb.maps$tmrca)
+rep4.50kb.maps$rhoC <- rep4.50kb.maps$rho - mean(rep4.50kb.maps$rho)
+
+rep4.50kb.maps$bin <- 1:nrow(rep4.50kb.maps)
+
+m.rep4.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep4.50kb.maps)
+
+anova.diversity <- Anova(m.rep4.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[4,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 5
+bgs.varmut.tmrca.rep5 <- read.table("TMRCA/dm2L_bgs_rep_5_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep5 <- read.table("Diversity/rep_5.50kb.windowed.pi", header = T, sep = "\t")
+
+rep5.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep5$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep5$AverageTmrca)
+
+names(rep5.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep5.50kb.maps$thetaC <- rep5.50kb.maps$theta - mean(rep5.50kb.maps$theta)
+rep5.50kb.maps$tmrcaC <- rep5.50kb.maps$tmrca - mean(rep5.50kb.maps$tmrca)
+rep5.50kb.maps$rhoC <- rep5.50kb.maps$rho - mean(rep5.50kb.maps$rho)
+
+rep5.50kb.maps$bin <- 1:nrow(rep5.50kb.maps)
+
+m.rep5.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep5.50kb.maps)
+
+anova.diversity <- Anova(m.rep5.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[5,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 6
+bgs.varmut.tmrca.rep6 <- read.table("TMRCA/dm2L_bgs_rep_6_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep6 <- read.table("Diversity/rep_6.50kb.windowed.pi", header = T, sep = "\t")
+
+rep6.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep6$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep6$AverageTmrca)
+
+names(rep6.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep6.50kb.maps$thetaC <- rep6.50kb.maps$theta - mean(rep6.50kb.maps$theta)
+rep6.50kb.maps$tmrcaC <- rep6.50kb.maps$tmrca - mean(rep6.50kb.maps$tmrca)
+rep6.50kb.maps$rhoC <- rep6.50kb.maps$rho - mean(rep6.50kb.maps$rho)
+
+rep6.50kb.maps$bin <- 1:nrow(rep6.50kb.maps)
+
+m.rep6.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep6.50kb.maps)
+
+anova.diversity <- Anova(m.rep6.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[6,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 7
+bgs.varmut.tmrca.rep7 <- read.table("TMRCA/dm2L_bgs_rep_7_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep7 <- read.table("Diversity/rep_7.50kb.windowed.pi", header = T, sep = "\t")
+
+rep7.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep7$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep7$AverageTmrca)
+
+names(rep7.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep7.50kb.maps$thetaC <- rep7.50kb.maps$theta - mean(rep7.50kb.maps$theta)
+rep7.50kb.maps$tmrcaC <- rep7.50kb.maps$tmrca - mean(rep7.50kb.maps$tmrca)
+rep7.50kb.maps$rhoC <- rep7.50kb.maps$rho - mean(rep7.50kb.maps$rho)
+
+rep7.50kb.maps$bin <- 1:nrow(rep7.50kb.maps)
+
+m.rep7.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep7.50kb.maps)
+
+anova.diversity <- Anova(m.rep7.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[7,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 8
+bgs.varmut.tmrca.rep8 <- read.table("TMRCA/dm2L_bgs_rep_8_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep8 <- read.table("Diversity/rep_8.50kb.windowed.pi", header = T, sep = "\t")
+
+rep8.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep8$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep8$AverageTmrca)
+
+names(rep8.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep8.50kb.maps$thetaC <- rep8.50kb.maps$theta - mean(rep8.50kb.maps$theta)
+rep8.50kb.maps$tmrcaC <- rep8.50kb.maps$tmrca - mean(rep8.50kb.maps$tmrca)
+rep8.50kb.maps$rhoC <- rep8.50kb.maps$rho - mean(rep8.50kb.maps$rho)
+
+rep8.50kb.maps$bin <- 1:nrow(rep8.50kb.maps)
+
+m.rep8.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep8.50kb.maps)
+
+anova.diversity <- Anova(m.rep8.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[8,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 9
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_9_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_9.50kb.windowed.pi", header = T, sep = "\t")
+
+rep1.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.50kb.maps$thetaC <- rep1.50kb.maps$theta - mean(rep1.50kb.maps$theta)
+rep1.50kb.maps$tmrcaC <- rep1.50kb.maps$tmrca - mean(rep1.50kb.maps$tmrca)
+rep1.50kb.maps$rhoC <- rep1.50kb.maps$rho - mean(rep1.50kb.maps$rho)
+
+rep1.50kb.maps$bin <- 1:nrow(rep1.50kb.maps)
+
+m.rep1.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.50kb.maps)
+
+anova.diversity <- Anova(m.rep1.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[9,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+
+## rep 10
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_10_tmrca_50kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_10.50kb.windowed.pi", header = T, sep = "\t")
+
+rep1.50kb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.50kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.50kb.maps$thetaC <- rep1.50kb.maps$theta - mean(rep1.50kb.maps$theta)
+rep1.50kb.maps$tmrcaC <- rep1.50kb.maps$tmrca - mean(rep1.50kb.maps$tmrca)
+rep1.50kb.maps$rhoC <- rep1.50kb.maps$rho - mean(rep1.50kb.maps$rho)
+
+rep1.50kb.maps$bin <- 1:nrow(rep1.50kb.maps)
+
+m.rep1.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.50kb.maps)
+
+anova.diversity <- Anova(m.rep1.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.50kb[10,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+
+# 200 kb
+
+R2.tab.200kb <- as.data.frame(matrix(nrow = 10, ncol = 5))
+names(R2.tab.200kb) <- c("tmrca", "theta", "rho", "tmrca:theta", "total")
+
+bgs.varmut.theta <- read.table("sim.theta.2e+05.map", header = T, sep = "\t")
+bgs.varmut.rho <- read.table("sim.rho.2e+05.map", header = T, sep = "\t")
+
+## rep 1
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_1_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_1.200kb.windowed.pi", header = T, sep = "\t")
+
+rep1.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.200kb.maps$thetaC <- rep1.200kb.maps$theta - mean(rep1.200kb.maps$theta)
+rep1.200kb.maps$tmrcaC <- rep1.200kb.maps$tmrca - mean(rep1.200kb.maps$tmrca)
+rep1.200kb.maps$rhoC <- rep1.200kb.maps$rho - mean(rep1.200kb.maps$rho)
+
+rep1.200kb.maps$bin <- 1:nrow(rep1.200kb.maps)
+
+m.rep1.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.200kb.maps)
+
+anova.diversity <- Anova(m.rep1.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[1,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 2
+bgs.varmut.tmrca.rep2 <- read.table("TMRCA/dm2L_bgs_rep_2_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep2 <- read.table("Diversity/rep_2.200kb.windowed.pi", header = T, sep = "\t")
+
+rep2.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep2$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep2$AverageTmrca)
+
+names(rep2.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep2.200kb.maps$thetaC <- rep2.200kb.maps$theta - mean(rep2.200kb.maps$theta)
+rep2.200kb.maps$tmrcaC <- rep2.200kb.maps$tmrca - mean(rep2.200kb.maps$tmrca)
+rep2.200kb.maps$rhoC <- rep2.200kb.maps$rho - mean(rep2.200kb.maps$rho)
+
+rep2.200kb.maps$bin <- 1:nrow(rep2.200kb.maps)
+
+m.rep2.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep2.200kb.maps)
+
+anova.diversity <- Anova(m.rep2.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[2,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 3
+bgs.varmut.tmrca.rep3 <- read.table("TMRCA/dm2L_bgs_rep_3_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep3 <- read.table("Diversity/rep_3.200kb.windowed.pi", header = T, sep = "\t")
+
+rep3.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep3$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep3$AverageTmrca)
+
+names(rep3.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep3.200kb.maps$thetaC <- rep3.200kb.maps$theta - mean(rep3.200kb.maps$theta)
+rep3.200kb.maps$tmrcaC <- rep3.200kb.maps$tmrca - mean(rep3.200kb.maps$tmrca)
+rep3.200kb.maps$rhoC <- rep3.200kb.maps$rho - mean(rep3.200kb.maps$rho)
+
+rep3.200kb.maps$bin <- 1:nrow(rep3.200kb.maps)
+
+m.rep3.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep3.200kb.maps)
+
+anova.diversity <- Anova(m.rep3.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[3,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 4
+bgs.varmut.tmrca.rep4 <- read.table("TMRCA/dm2L_bgs_rep_4_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep4 <- read.table("Diversity/rep_4.200kb.windowed.pi", header = T, sep = "\t")
+
+rep4.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep4$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep4$AverageTmrca)
+
+names(rep4.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep4.200kb.maps$thetaC <- rep4.200kb.maps$theta - mean(rep4.200kb.maps$theta)
+rep4.200kb.maps$tmrcaC <- rep4.200kb.maps$tmrca - mean(rep4.200kb.maps$tmrca)
+rep4.200kb.maps$rhoC <- rep4.200kb.maps$rho - mean(rep4.200kb.maps$rho)
+
+rep4.200kb.maps$bin <- 1:nrow(rep4.200kb.maps)
+
+m.rep4.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep4.200kb.maps)
+
+anova.diversity <- Anova(m.rep4.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[4,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 5
+bgs.varmut.tmrca.rep5 <- read.table("TMRCA/dm2L_bgs_rep_5_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep5 <- read.table("Diversity/rep_5.200kb.windowed.pi", header = T, sep = "\t")
+
+rep5.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep5$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep5$AverageTmrca)
+
+names(rep5.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep5.200kb.maps$thetaC <- rep5.200kb.maps$theta - mean(rep5.200kb.maps$theta)
+rep5.200kb.maps$tmrcaC <- rep5.200kb.maps$tmrca - mean(rep5.200kb.maps$tmrca)
+rep5.200kb.maps$rhoC <- rep5.200kb.maps$rho - mean(rep5.200kb.maps$rho)
+
+rep5.200kb.maps$bin <- 1:nrow(rep5.200kb.maps)
+
+m.rep5.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep5.200kb.maps)
+
+anova.diversity <- Anova(m.rep5.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[5,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 6
+bgs.varmut.tmrca.rep6 <- read.table("TMRCA/dm2L_bgs_rep_6_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep6 <- read.table("Diversity/rep_6.200kb.windowed.pi", header = T, sep = "\t")
+
+rep6.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep6$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep6$AverageTmrca)
+
+names(rep6.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep6.200kb.maps$thetaC <- rep6.200kb.maps$theta - mean(rep6.200kb.maps$theta)
+rep6.200kb.maps$tmrcaC <- rep6.200kb.maps$tmrca - mean(rep6.200kb.maps$tmrca)
+rep6.200kb.maps$rhoC <- rep6.200kb.maps$rho - mean(rep6.200kb.maps$rho)
+
+rep6.200kb.maps$bin <- 1:nrow(rep6.200kb.maps)
+
+m.rep6.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep6.200kb.maps)
+
+anova.diversity <- Anova(m.rep6.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[6,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 7
+bgs.varmut.tmrca.rep7 <- read.table("TMRCA/dm2L_bgs_rep_7_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep7 <- read.table("Diversity/rep_7.200kb.windowed.pi", header = T, sep = "\t")
+
+rep7.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep7$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep7$AverageTmrca)
+
+names(rep7.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep7.200kb.maps$thetaC <- rep7.200kb.maps$theta - mean(rep7.200kb.maps$theta)
+rep7.200kb.maps$tmrcaC <- rep7.200kb.maps$tmrca - mean(rep7.200kb.maps$tmrca)
+rep7.200kb.maps$rhoC <- rep7.200kb.maps$rho - mean(rep7.200kb.maps$rho)
+
+rep7.200kb.maps$bin <- 1:nrow(rep7.200kb.maps)
+
+m.rep7.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep7.200kb.maps)
+
+anova.diversity <- Anova(m.rep7.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[7,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 8
+bgs.varmut.tmrca.rep8 <- read.table("TMRCA/dm2L_bgs_rep_8_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep8 <- read.table("Diversity/rep_8.200kb.windowed.pi", header = T, sep = "\t")
+
+rep8.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep8$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep8$AverageTmrca)
+
+names(rep8.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep8.200kb.maps$thetaC <- rep8.200kb.maps$theta - mean(rep8.200kb.maps$theta)
+rep8.200kb.maps$tmrcaC <- rep8.200kb.maps$tmrca - mean(rep8.200kb.maps$tmrca)
+rep8.200kb.maps$rhoC <- rep8.200kb.maps$rho - mean(rep8.200kb.maps$rho)
+
+rep8.200kb.maps$bin <- 1:nrow(rep8.200kb.maps)
+
+m.rep8.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep8.200kb.maps)
+
+anova.diversity <- Anova(m.rep8.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[8,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+## rep 9
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_9_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_9.200kb.windowed.pi", header = T, sep = "\t")
+
+rep1.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.200kb.maps$thetaC <- rep1.200kb.maps$theta - mean(rep1.200kb.maps$theta)
+rep1.200kb.maps$tmrcaC <- rep1.200kb.maps$tmrca - mean(rep1.200kb.maps$tmrca)
+rep1.200kb.maps$rhoC <- rep1.200kb.maps$rho - mean(rep1.200kb.maps$rho)
+
+rep1.200kb.maps$bin <- 1:nrow(rep1.200kb.maps)
+
+m.rep1.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.200kb.maps)
+
+anova.diversity <- Anova(m.rep1.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[9,] <- c(anova.diversity$VarExp[3] * 100, 
+                     anova.diversity$VarExp[1] * 100,
+                     anova.diversity$VarExp[2] * 100,
+                     anova.diversity$VarExp[4] * 100,
+                     100 - anova.diversity$VarExp[5] * 100)
+
+
+## rep 10
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_10_tmrca_200kb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_10.200kb.windowed.pi", header = T, sep = "\t")
+
+rep1.200kb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                   bgs.varmut.theta$sim,
+                                   bgs.varmut.rho$sim,
+                                   bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.200kb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.200kb.maps$thetaC <- rep1.200kb.maps$theta - mean(rep1.200kb.maps$theta)
+rep1.200kb.maps$tmrcaC <- rep1.200kb.maps$tmrca - mean(rep1.200kb.maps$tmrca)
+rep1.200kb.maps$rhoC <- rep1.200kb.maps$rho - mean(rep1.200kb.maps$rho)
+
+rep1.200kb.maps$bin <- 1:nrow(rep1.200kb.maps)
+
+m.rep1.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.200kb.maps)
+
+anova.diversity <- Anova(m.rep1.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.200kb[10,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+# 1 Mb
+
+R2.tab.1Mb <- as.data.frame(matrix(nrow = 10, ncol = 5))
+names(R2.tab.1Mb) <- c("tmrca", "theta", "rho", "tmrca:theta", "total")
+
+bgs.varmut.theta <- read.table("sim.theta.1e+06.map", header = T, sep = "\t")
+bgs.varmut.rho <- read.table("sim.rho.1e+06.map", header = T, sep = "\t")
+
+## rep 1
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_1_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_1.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep1.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.1Mb.maps$thetaC <- rep1.1Mb.maps$theta - mean(rep1.1Mb.maps$theta)
+rep1.1Mb.maps$tmrcaC <- rep1.1Mb.maps$tmrca - mean(rep1.1Mb.maps$tmrca)
+rep1.1Mb.maps$rhoC <- rep1.1Mb.maps$rho - mean(rep1.1Mb.maps$rho)
+
+rep1.1Mb.maps$bin <- 1:nrow(rep1.1Mb.maps)
+
+m.rep1.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.1Mb.maps)
+
+anova.diversity <- Anova(m.rep1.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[1,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 2
+bgs.varmut.tmrca.rep2 <- read.table("TMRCA/dm2L_bgs_rep_2_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep2 <- read.table("Diversity/rep_2.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep2.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep2$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep2$AverageTmrca)
+
+names(rep2.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep2.1Mb.maps$thetaC <- rep2.1Mb.maps$theta - mean(rep2.1Mb.maps$theta)
+rep2.1Mb.maps$tmrcaC <- rep2.1Mb.maps$tmrca - mean(rep2.1Mb.maps$tmrca)
+rep2.1Mb.maps$rhoC <- rep2.1Mb.maps$rho - mean(rep2.1Mb.maps$rho)
+
+rep2.1Mb.maps$bin <- 1:nrow(rep2.1Mb.maps)
+
+m.rep2.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep2.1Mb.maps)
+
+anova.diversity <- Anova(m.rep2.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[2,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 3
+bgs.varmut.tmrca.rep3 <- read.table("TMRCA/dm2L_bgs_rep_3_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep3 <- read.table("Diversity/rep_3.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep3.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep3$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep3$AverageTmrca)
+
+names(rep3.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep3.1Mb.maps$thetaC <- rep3.1Mb.maps$theta - mean(rep3.1Mb.maps$theta)
+rep3.1Mb.maps$tmrcaC <- rep3.1Mb.maps$tmrca - mean(rep3.1Mb.maps$tmrca)
+rep3.1Mb.maps$rhoC <- rep3.1Mb.maps$rho - mean(rep3.1Mb.maps$rho)
+
+rep3.1Mb.maps$bin <- 1:nrow(rep3.1Mb.maps)
+
+m.rep3.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep3.1Mb.maps)
+
+anova.diversity <- Anova(m.rep3.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[3,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 4
+bgs.varmut.tmrca.rep4 <- read.table("TMRCA/dm2L_bgs_rep_4_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep4 <- read.table("Diversity/rep_4.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep4.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep4$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep4$AverageTmrca)
+
+names(rep4.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep4.1Mb.maps$thetaC <- rep4.1Mb.maps$theta - mean(rep4.1Mb.maps$theta)
+rep4.1Mb.maps$tmrcaC <- rep4.1Mb.maps$tmrca - mean(rep4.1Mb.maps$tmrca)
+rep4.1Mb.maps$rhoC <- rep4.1Mb.maps$rho - mean(rep4.1Mb.maps$rho)
+
+rep4.1Mb.maps$bin <- 1:nrow(rep4.1Mb.maps)
+
+m.rep4.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep4.1Mb.maps)
+
+anova.diversity <- Anova(m.rep4.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[4,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 5
+bgs.varmut.tmrca.rep5 <- read.table("TMRCA/dm2L_bgs_rep_5_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep5 <- read.table("Diversity/rep_5.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep5.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep5$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep5$AverageTmrca)
+
+names(rep5.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep5.1Mb.maps$thetaC <- rep5.1Mb.maps$theta - mean(rep5.1Mb.maps$theta)
+rep5.1Mb.maps$tmrcaC <- rep5.1Mb.maps$tmrca - mean(rep5.1Mb.maps$tmrca)
+rep5.1Mb.maps$rhoC <- rep5.1Mb.maps$rho - mean(rep5.1Mb.maps$rho)
+
+rep5.1Mb.maps$bin <- 1:nrow(rep5.1Mb.maps)
+
+m.rep5.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep5.1Mb.maps)
+
+anova.diversity <- Anova(m.rep5.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[5,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 6
+bgs.varmut.tmrca.rep6 <- read.table("TMRCA/dm2L_bgs_rep_6_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep6 <- read.table("Diversity/rep_6.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep6.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep6$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep6$AverageTmrca)
+
+names(rep6.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep6.1Mb.maps$thetaC <- rep6.1Mb.maps$theta - mean(rep6.1Mb.maps$theta)
+rep6.1Mb.maps$tmrcaC <- rep6.1Mb.maps$tmrca - mean(rep6.1Mb.maps$tmrca)
+rep6.1Mb.maps$rhoC <- rep6.1Mb.maps$rho - mean(rep6.1Mb.maps$rho)
+
+rep6.1Mb.maps$bin <- 1:nrow(rep6.1Mb.maps)
+
+m.rep6.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep6.1Mb.maps)
+
+anova.diversity <- Anova(m.rep6.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[6,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 7
+bgs.varmut.tmrca.rep7 <- read.table("TMRCA/dm2L_bgs_rep_7_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep7 <- read.table("Diversity/rep_7.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep7.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep7$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep7$AverageTmrca)
+
+names(rep7.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep7.1Mb.maps$thetaC <- rep7.1Mb.maps$theta - mean(rep7.1Mb.maps$theta)
+rep7.1Mb.maps$tmrcaC <- rep7.1Mb.maps$tmrca - mean(rep7.1Mb.maps$tmrca)
+rep7.1Mb.maps$rhoC <- rep7.1Mb.maps$rho - mean(rep7.1Mb.maps$rho)
+
+rep7.1Mb.maps$bin <- 1:nrow(rep7.1Mb.maps)
+
+m.rep7.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep7.1Mb.maps)
+
+anova.diversity <- Anova(m.rep7.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[7,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 8
+bgs.varmut.tmrca.rep8 <- read.table("TMRCA/dm2L_bgs_rep_8_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep8 <- read.table("Diversity/rep_8.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep8.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep8$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep8$AverageTmrca)
+
+names(rep8.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep8.1Mb.maps$thetaC <- rep8.1Mb.maps$theta - mean(rep8.1Mb.maps$theta)
+rep8.1Mb.maps$tmrcaC <- rep8.1Mb.maps$tmrca - mean(rep8.1Mb.maps$tmrca)
+rep8.1Mb.maps$rhoC <- rep8.1Mb.maps$rho - mean(rep8.1Mb.maps$rho)
+
+rep8.1Mb.maps$bin <- 1:nrow(rep8.1Mb.maps)
+
+m.rep8.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep8.1Mb.maps)
+
+anova.diversity <- Anova(m.rep8.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[8,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+## rep 9
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_9_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_9.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep1.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.1Mb.maps$thetaC <- rep1.1Mb.maps$theta - mean(rep1.1Mb.maps$theta)
+rep1.1Mb.maps$tmrcaC <- rep1.1Mb.maps$tmrca - mean(rep1.1Mb.maps$tmrca)
+rep1.1Mb.maps$rhoC <- rep1.1Mb.maps$rho - mean(rep1.1Mb.maps$rho)
+
+rep1.1Mb.maps$bin <- 1:nrow(rep1.1Mb.maps)
+
+m.rep1.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.1Mb.maps)
+
+anova.diversity <- Anova(m.rep1.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[9,] <- c(anova.diversity$VarExp[3] * 100, 
+                      anova.diversity$VarExp[1] * 100,
+                      anova.diversity$VarExp[2] * 100,
+                      anova.diversity$VarExp[4] * 100,
+                      100 - anova.diversity$VarExp[5] * 100)
+
+
+## rep 10
+bgs.varmut.tmrca.rep1 <- read.table("TMRCA/dm2L_bgs_rep_10_tmrca_1Mb.csv", header = T, sep = ",")
+bgs.varmut.pi.rep1 <- read.table("Diversity/rep_10.1Mb.windowed.pi", header = T, sep = "\t")
+
+rep1.1Mb.maps <- cbind.data.frame(bgs.varmut.pi.rep1$PI,
+                                    bgs.varmut.theta$sim,
+                                    bgs.varmut.rho$sim,
+                                    bgs.varmut.tmrca.rep1$AverageTmrca)
+
+names(rep1.1Mb.maps) <- c("diversity", "theta", "rho", "tmrca")
+
+# centering
+rep1.1Mb.maps$thetaC <- rep1.1Mb.maps$theta - mean(rep1.1Mb.maps$theta)
+rep1.1Mb.maps$tmrcaC <- rep1.1Mb.maps$tmrca - mean(rep1.1Mb.maps$tmrca)
+rep1.1Mb.maps$rhoC <- rep1.1Mb.maps$rho - mean(rep1.1Mb.maps$rho)
+
+rep1.1Mb.maps$bin <- 1:nrow(rep1.1Mb.maps)
+
+m.rep1.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep1.1Mb.maps)
+
+anova.diversity <- Anova(m.rep1.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+R2.tab.1Mb[10,] <- c(anova.diversity$VarExp[3] * 100, 
+                       anova.diversity$VarExp[1] * 100,
+                       anova.diversity$VarExp[2] * 100,
+                       anova.diversity$VarExp[4] * 100,
+                       100 - anova.diversity$VarExp[5] * 100)
+
+R2.tab <- rbind.data.frame(R2.tab.50kb, R2.tab.200kb, R2.tab.1Mb)
+R2.tab$bin.size <- c(rep(5e+4, 10), rep(2e+5, 10), rep(1e+6, 10))
+
+#########################
+#
+# flat mu & inferred landscapes
+#
+#########################
+
 setwd("~/Data/iSMC/theta_paper/BGS_iSMC/30x5x5/")
 
 # for plotting exons later on:

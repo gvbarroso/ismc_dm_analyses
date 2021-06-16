@@ -4585,8 +4585,8 @@ dm.tbl <- ddply(dm.raw, .variables = "GeneID", .fun = plyr::summarize,
                 dS = sum(dS))
 
 dm.tbl$PiN <- (dm.tbl$PiN / dm.tbl$MeanNumberNonSynPos)
-dm.tbl$PiS <- (dm.tbl$PiS / dm.tbl$MeanNumberNonSynPos)
-dm.tbl$dN <- (dm.tbl$dN / dm.tbl$MeanNumberSynPosDiv)
+dm.tbl$PiS <- (dm.tbl$PiS / dm.tbl$MeanNumberSynPos)
+dm.tbl$dN <- (dm.tbl$dN / dm.tbl$MeanNumberNonSynPosDiv)
 dm.tbl$dS <- (dm.tbl$dS / dm.tbl$MeanNumberSynPosDiv)
 
 # computes ratios
@@ -4665,7 +4665,7 @@ m.dm.cds.2 <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC*tmrcaC + rhoC*tmrc
 
 AIC(m.dm.cds.1, m.dm.cds.2)
 
-summary(m.dm.cds.4)
+summary(m.dm.cds.2)
 
 # picking best OLS for ANOVA
 plot(resid(m.dm.cds.2)~fitted(m.dm.cds.2))
@@ -4687,9 +4687,11 @@ cor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, meth
 
 cor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, method = "spearman") 
 cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman") 
+pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$dS, method = "spearman")
 cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, method = "spearman")
 pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman")
 cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, method = "spearman")
+pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$PiS, method = "spearman")
 cor.test(dm.lands.evolrate.bins$dN, dm.lands.evolrate.bins$theta, method = "spearman")
 pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman")
 pcor.test(dm.lands.evolrate.bins$dN, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman")
@@ -4736,6 +4738,9 @@ plot.N <- plot.N + labs(title = NULL, x = "window", y = "normalized value")
 
 p <- plot_grid(plot.S, plot.N, ncol = 1)
 save_plot("~/Desktop/p.pdf", p, device = "pdf", base_width = 12, base_height = 8)
+
+
+gt <- gls(theta ~ rho, data = dm.lands.50kb, cor = corAR1(0, ~bin|chr), method = "ML")
 ```
 
 # R^2 plot with real, simulated (true) and simulated (inferred) data.
