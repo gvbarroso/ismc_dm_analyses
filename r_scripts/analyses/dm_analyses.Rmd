@@ -2,7 +2,7 @@
 title: "What shapes genome-wide diversity?"
 subtitle: "A case study in Drosophila melanogaster"
 author: "Gustavo V. Barroso and Julien Y. Dutheil"
-date: "June 1st 2021"
+date: "September 1st 2021"
 output:
   pdf_document:
     toc: true
@@ -1509,6 +1509,8 @@ theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
 inf.lands.50kb.rep_1 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_1) <- c("diversity", "theta", "rho", "tmrca")
 
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
+
 # centering
 inf.lands.50kb.rep_1$thetaC <- inf.lands.50kb.rep_1$theta - mean(inf.lands.50kb.rep_1$theta)
 inf.lands.50kb.rep_1$tmrcaC <- inf.lands.50kb.rep_1$tmrca - mean(inf.lands.50kb.rep_1$tmrca)
@@ -1563,6 +1565,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_2 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_2) <- c("diversity", "theta", "rho", "tmrca")
@@ -1621,6 +1625,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_3 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_3) <- c("diversity", "theta", "rho", "tmrca")
@@ -1679,6 +1685,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_4 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_4) <- c("diversity", "theta", "rho", "tmrca")
@@ -1737,6 +1745,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_5 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_5) <- c("diversity", "theta", "rho", "tmrca")
@@ -1795,6 +1805,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_6 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_6) <- c("diversity", "theta", "rho", "tmrca")
@@ -1853,6 +1865,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_7 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_7) <- c("diversity", "theta", "rho", "tmrca")
@@ -1911,6 +1925,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_8 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_8) <- c("diversity", "theta", "rho", "tmrca")
@@ -1969,6 +1985,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_9 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_9) <- c("diversity", "theta", "rho", "tmrca")
@@ -2027,6 +2045,8 @@ tmrca.50kb <- read.table(paste(p, "TMRCA.50kb.bedgraph", sep = ""), header = T)
 tmrca.50kb$avg <- apply(tmrca.50kb[4:ncol(tmrca.50kb)], 1, mean)
 rho.50kb <- read.table(paste(p, "rho.50kb.bedgraph", sep = ""), header = T)
 theta.50kb <- read.table(paste(p, "theta.50kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.50kb$sim, theta.50kb$sample_mean, method = "spearman")
   
 inf.lands.50kb.rep_10 <- as.data.frame(cbind(pi.50kb$avg, theta.50kb$sample_mean, rho.50kb$sample_mean, tmrca.50kb$avg))
 names(inf.lands.50kb.rep_10) <- c("diversity", "theta", "rho", "tmrca")
@@ -2178,6 +2198,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_1 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_1) <- c("diversity", "theta", "rho", "tmrca")
@@ -2236,6 +2258,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_2 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_2) <- c("diversity", "theta", "rho", "tmrca")
@@ -2294,6 +2318,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_3 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_3) <- c("diversity", "theta", "rho", "tmrca")
@@ -2352,6 +2378,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_4 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_4) <- c("diversity", "theta", "rho", "tmrca")
@@ -2410,6 +2438,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_5 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_5) <- c("diversity", "theta", "rho", "tmrca")
@@ -2468,6 +2498,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_6 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_6) <- c("diversity", "theta", "rho", "tmrca")
@@ -2526,6 +2558,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_7 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_7) <- c("diversity", "theta", "rho", "tmrca")
@@ -2584,6 +2618,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_8 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_8) <- c("diversity", "theta", "rho", "tmrca")
@@ -2642,6 +2678,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_9 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_9) <- c("diversity", "theta", "rho", "tmrca")
@@ -2700,6 +2738,8 @@ tmrca.200kb <- read.table(paste(p, "TMRCA.200kb.bedgraph", sep = ""), header = T
 tmrca.200kb$avg <- apply(tmrca.200kb[4:ncol(tmrca.200kb)], 1, mean)
 rho.200kb <- read.table(paste(p, "rho.200kb.bedgraph", sep = ""), header = T)
 theta.200kb <- read.table(paste(p, "theta.200kb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.200kb$sim, theta.200kb$sample_mean, method = "spearman")
   
 inf.lands.200kb.rep_10 <- as.data.frame(cbind(pi.200kb$avg, theta.200kb$sample_mean, rho.200kb$sample_mean, tmrca.200kb$avg))
 names(inf.lands.200kb.rep_10) <- c("diversity", "theta", "rho", "tmrca")
@@ -2848,6 +2888,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_1 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_1) <- c("diversity", "theta", "rho", "tmrca")
@@ -2906,6 +2948,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_2 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_2) <- c("diversity", "theta", "rho", "tmrca")
@@ -2964,6 +3008,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_3 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_3) <- c("diversity", "theta", "rho", "tmrca")
@@ -3022,6 +3068,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_4 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_4) <- c("diversity", "theta", "rho", "tmrca")
@@ -3080,6 +3128,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_5 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_5) <- c("diversity", "theta", "rho", "tmrca")
@@ -3138,6 +3188,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_6 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_6) <- c("diversity", "theta", "rho", "tmrca")
@@ -3196,6 +3248,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_7 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_7) <- c("diversity", "theta", "rho", "tmrca")
@@ -3254,6 +3308,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_8 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_8) <- c("diversity", "theta", "rho", "tmrca")
@@ -3312,6 +3368,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_9 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_9) <- c("diversity", "theta", "rho", "tmrca")
@@ -3370,6 +3428,8 @@ tmrca.1Mb <- read.table(paste(p, "TMRCA.1Mb.bedgraph", sep = ""), header = T)
 tmrca.1Mb$avg <- apply(tmrca.1Mb[4:ncol(tmrca.1Mb)], 1, mean)
 rho.1Mb <- read.table(paste(p, "rho.1Mb.bedgraph", sep = ""), header = T)
 theta.1Mb <- read.table(paste(p, "theta.1Mb.bedgraph", sep = ""), header = T)
+
+cor.test(sim.theta.1Mb$sim, theta.1Mb$sample_mean, method = "spearman")
   
 inf.lands.1Mb.rep_10 <- as.data.frame(cbind(pi.1Mb$avg, theta.1Mb$sample_mean, rho.1Mb$sample_mean, tmrca.1Mb$avg))
 names(inf.lands.1Mb.rep_10) <- c("diversity", "theta", "rho", "tmrca")
@@ -4477,91 +4537,6 @@ g.div.dm.1Mb.5 <- gls(diversity ~ (thetaC + rhoC),
                        data = dm.lands.1Mb, weights = varPower(0, ~thetaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
 
 summary(g.div.dm.1Mb.5)
-```
-
-## Divergence 
-
-This is how we generated the table from raw data:
-
-```{r, message=FALSE, warning=FALSE}
-# divergence data from D. melanogaster and D. yakuba
-divergence.2L.5kb <- read.table("dm_data/dm_misc/Droso2L_divergence.statistics5kb.csv", header = T)
-divergence.2R.5kb <- read.table("dm_data/dm_misc/Droso2R_divergence.statistics5kb.csv", header = T)
-divergence.3L.5kb <- read.table("dm_data/dm_misc/Droso3L_divergence.statistics5kb.csv", header = T)
-divergence.3R.5kb <- read.table("dm_data/dm_misc/Droso3R_divergence.statistics5kb.csv", header = T)
-
-divergence <- rbind.data.frame(divergence.2L.5kb, divergence.2R.5kb, divergence.3L.5kb, divergence.3R.5kb)
-divergence <- divergence[,c(1:3, 6)] 
-divergence$Chr <- as.character(divergence$Chr)
-  
-# reorder maps to use GR
-dm.maps.50kb <- dm.lands.50kb[,c(8,1:6)]
-
-# converts objects to GenomicRanges
-dm.gr <- makeGRangesFromDataFrame(dm.maps.50kb)
-values(dm.gr) <- dm.maps.50kb[,(4:7)]
-divergence.gr <- makeGRangesFromDataFrame(divergence)
-values(divergence.gr) <- DataFrame(score = divergence$MLModelFit.BrLen0)
-
-hits <- findOverlaps(query = divergence.gr, subject = dm.gr, type = "within")
-ranges(divergence.gr)[queryHits(hits)] = ranges(dm.gr)[subjectHits(hits)]
-
-lands.gr.df <- as.data.frame(dm.gr)
-divergence.gr.df <- as.data.frame(divergence.gr)
-# deletes non-matching windows
-divergence.gr.df <- divergence.gr.df[-which(((divergence.gr.df$width - 1) %% 50000) != 0),]
-
-# compute mean divergence within 50kb windows
-dummy.tbl <- divergence.gr.df[, -c(4, 5)]
-dummy.tbl$seqnames <- as.character(dummy.tbl$seqnames)
-dummy.tbl$seqnames[which(dummy.tbl$seqnames == "2L")] <- 2
-dummy.tbl$seqnames[which(dummy.tbl$seqnames == "2R")] <- 3
-dummy.tbl$seqnames[which(dummy.tbl$seqnames == "3L")] <- 4
-dummy.tbl$seqnames[which(dummy.tbl$seqnames == "3R")] <- 5
-dummy.tbl$seqnames <- as.numeric(dummy.tbl$seqnames)
-
-tmp <- ddply(.data = dummy.tbl, .variables = c("seqnames", "start"), .fun = colMeans)
-
-divergence.gr.df.2L <- divergence.gr.df[divergence.gr.df$seqnames == "2L",] 
-divergence.gr.df.2L <- divergence.gr.df.2L[!duplicated(divergence.gr.df.2L$start),]
-divergence.gr.df.2R <- divergence.gr.df[divergence.gr.df$seqnames == "2R",] 
-divergence.gr.df.2R <- divergence.gr.df.2R[!duplicated(divergence.gr.df.2R$start),]
-divergence.gr.df.3L <- divergence.gr.df[divergence.gr.df$seqnames == "3L",] 
-divergence.gr.df.3L <- divergence.gr.df.3L[!duplicated(divergence.gr.df.3L$start),]
-divergence.gr.df.3R <- divergence.gr.df[divergence.gr.df$seqnames == "3R",] 
-divergence.gr.df.3R <- divergence.gr.df.3R[!duplicated(divergence.gr.df.3R$start),]
-
-divergence.gr.df.chr <- rbind.data.frame(divergence.gr.df.2L, divergence.gr.df.2R, divergence.gr.df.3L, divergence.gr.df.3R)
-divergence.gr.df.chr$score <- tmp$score
-
-lands.gr.df.2L <- lands.gr.df[which(lands.gr.df$seqnames == "2L"),]
-lands.gr.df.2L <- lands.gr.df.2L[which(lands.gr.df.2L$start %in% divergence.gr.df.2L$start),]
-lands.gr.df.2R <- lands.gr.df[which(lands.gr.df$seqnames == "2R"),]
-lands.gr.df.2R <- lands.gr.df.2R[which(lands.gr.df.2R$start %in% divergence.gr.df.2R$start),]
-lands.gr.df.3L <- lands.gr.df[which(lands.gr.df$seqnames == "3L"),]
-lands.gr.df.3L <- lands.gr.df.3L[which(lands.gr.df.3L$start %in% divergence.gr.df.3L$start),]
-lands.gr.df.3R <- lands.gr.df[which(lands.gr.df$seqnames == "3R"),]
-lands.gr.df.3R <- lands.gr.df.3R[which(lands.gr.df.3R$start %in% divergence.gr.df.3R$start),]
-
-lands.gr.df.chr <- rbind.data.frame(lands.gr.df.2L, lands.gr.df.2R, lands.gr.df.3L, lands.gr.df.3R)
-
-lands.divergence.dm <- cbind.data.frame(lands.gr.df.chr[,-(which(names(lands.gr.df.chr) == "strand"))], divergence.gr.df.chr$score)
-names(lands.divergence.dm)[ncol(lands.divergence.dm)] <- "divergence"
-
-write.table(lands.divergence.dm, "dm_data/dm_chr_maps/dm_maps_50kb_divergence.tsv",
-            quote = F, sep = "\t", col.names = T, row.names = F)
-```
-
-We can read the table provided and move on with the analyses:
-
-```{r, message=FALSE, warning=FALSE}
-lands.divergence.dm <- read.table("dm_data/dm_chr_maps/dm_maps_50kb_divergence.tsv", header = T, sep = "\t")
-  
-cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity, method = "spearman")
-cor.test(lands.divergence.dm$divergence, lands.divergence.dm$theta, method = "spearman")
-cor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$rho, method = "spearman")
-pcor.test(x = lands.divergence.dm$divergence, y = lands.divergence.dm$diversity,
-          z = lands.divergence.dm$theta, method = "spearman")
 ```
 
 ## Evolutionary (Protein) Rates

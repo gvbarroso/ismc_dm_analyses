@@ -958,7 +958,7 @@ R2.tab$bin.size <- c(rep(5e+4, 10), rep(2e+5, 10), rep(1e+6, 10))
 #
 #########################
 
-setwd("~/Data/iSMC/theta_paper/BGS_iSMC/30x5x5/")
+setwd("~/Data/iSMC/theta_paper/BGS_sims/flat_mu/")
 
 # for plotting exons later on:
 dm_2L_exome <- read.table("~/Data/iSMC/theta_paper/slim_sims/dm_tbl.txt", header = T) %>% 
@@ -968,96 +968,351 @@ dm_2L_exome <- read.table("~/Data/iSMC/theta_paper/slim_sims/dm_tbl.txt", header
 
 names(dm_2L_exome) <- c("exon_start", "exon_end")
 
-bgs.TMRCA.50kb <- read.table("dm_2L_bgs_rep_1.TMRCA.50kb.bedgraph", header = T)
-bgs.TMRCA.200kb <- read.table("dm_2L_bgs_rep_1.TMRCA.200kb.bedgraph", header = T)
-bgs.TMRCA.1Mb <- read.table("dm_2L_bgs_rep_1.TMRCA.1Mb.bedgraph", header = T)
-
-bgs.TMRCA.50kb$mean <- apply(bgs.TMRCA.50kb[,(4:ncol(bgs.TMRCA.50kb))], 1, mean)
-bgs.TMRCA.200kb$mean <- apply(bgs.TMRCA.200kb[,(4:ncol(bgs.TMRCA.200kb))], 1, mean)
-bgs.TMRCA.1Mb$mean <- apply(bgs.TMRCA.1Mb[,(4:ncol(bgs.TMRCA.1Mb))], 1, mean)
-
-bgs.rho.50kb <- read.table("dm_2L_bgs_rep_1.rho.50kb.bedgraph", header = T)
-bgs.rho.200kb <- read.table("dm_2L_bgs_rep_1.rho.200kb.bedgraph", header = T)
-bgs.rho.1Mb <- read.table("dm_2L_bgs_rep_1.rho.1Mb.bedgraph", header = T)
-
-bgs.theta.50kb <- read.table("dm_2L_bgs_rep_1.theta.50kb.bedgraph", header = T)
-bgs.theta.200kb <- read.table("dm_2L_bgs_rep_1.theta.200kb.bedgraph", header = T)
-bgs.theta.1Mb <- read.table("dm_2L_bgs_rep_1.theta.1Mb.bedgraph", header = T)
-
-bgs.pi.50kb <- read.table("dm_2L_bgs_rep_1.diversity.50kb.bedgraph", header = T)
-bgs.pi.200kb <- read.table("dm_2L_bgs_rep_1.diversity.200kb.bedgraph", header = T)
-bgs.pi.1Mb <- read.table("dm_2L_bgs_rep_1.diversity.1Mb.bedgraph", header = T)
-
-bgs.pi.50kb$mean <- apply(bgs.pi.50kb[,(4:ncol(bgs.pi.50kb))], 1, mean)
-bgs.pi.200kb$mean <- apply(bgs.pi.200kb[,(4:ncol(bgs.pi.200kb))], 1, mean)
-bgs.pi.1Mb$mean <- apply(bgs.pi.1Mb[,(4:ncol(bgs.pi.1Mb))], 1, mean)
-
 # 50kb
-bgs.lands.50kb <- as.data.frame(cbind(bgs.pi.50kb$mean, bgs.theta.50kb$sample_mean, bgs.rho.50kb$sample_mean, bgs.TMRCA.50kb$mean))
-names(bgs.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
+
+## rep_1
+
+rep_1.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.diversity.50kb.bedgraph", header = T)
+rep_1.pi.50kb$sample_mean <- apply(rep_1.pi.50kb[,(4:ncol(rep_1.pi.50kb))], 1, mean)
+
+rep_1.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.TMRCA.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb$sample_mean <- apply(rep_1.tmrca.50kb[4:ncol(rep_1.tmrca.50kb)], 1, mean)
+
+rep_1.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.theta.50kb.bedgraph", header = T)
+rep_1.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.rho.50kb.bedgraph", header = T)
+
+rep_1.maps.50kb <- as.data.frame(cbind(rep_1.pi.50kb$sample_mean,
+                                       rep_1.tmrca.50kb$sample_mean,
+                                       rep_1.theta.50kb$sample_mean,
+                                       rep_1.rho.50kb$sample_mean))
+
+names(rep_1.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
 
 # centering
-bgs.lands.50kb$thetaC <- bgs.lands.50kb$theta - mean(bgs.lands.50kb$theta)
-bgs.lands.50kb$tmrcaC <- bgs.lands.50kb$tmrca - mean(bgs.lands.50kb$tmrca)
-bgs.lands.50kb$rhoC <- bgs.lands.50kb$rho - mean(bgs.lands.50kb$rho)
+rep_1.maps.50kb$thetaC <- rep_1.maps.50kb$theta - mean(rep_1.maps.50kb$theta)
+rep_1.maps.50kb$tmrcaC <- rep_1.maps.50kb$tmrca - mean(rep_1.maps.50kb$tmrca)
+rep_1.maps.50kb$rhoC <- rep_1.maps.50kb$rho - mean(rep_1.maps.50kb$rho)
 
-bgs.lands.50kb$bin <- 1:nrow(bgs.lands.50kb)
+rep_1.maps.50kb$bin <- 1:nrow(rep_1.maps.50kb)
 
-m.bgs.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = bgs.lands.50kb)
-m.bgs.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = bgs.lands.50kb)
-m.bgs.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = bgs.lands.50kb)
+m.rep_1.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_1.maps.50kb)
 
-AIC(m.bgs.50kb, m.bgs.50kb.2, m.bgs.50kb.3)
+rep_1.anova <- Anova(m.rep_1.50kb)
+apiss <- rep_1.anova$"Sum Sq"
+rep_1.anova$VarExp <- apiss / sum(apiss)
 
-plot(resid(m.bgs.50kb.3)~fitted(m.bgs.50kb.3))
-dwtest(m.bgs.50kb.3)
-hmctest(m.bgs.50kb.3)
-hist(resid(m.bgs.50kb.3))
 
-summary(m.bgs.50kb.3)
 
-anova.diversity <- Anova(m.bgs.50kb.3)
-apiss <- anova.diversity$"Sum Sq"
-anova.diversity$VarExp <- apiss / sum(apiss)
+## rep_2
 
-#Anova Table (Type II tests)
+rep_2.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_2.diversity.50kb.bedgraph", header = T)
+rep_2.pi.50kb$sample_mean <- apply(rep_2.pi.50kb[,(4:ncol(rep_2.pi.50kb))], 1, mean)
 
-#Response: diversity
-#Sum Sq  Df    F value  Pr(>F)  VarExp
-#thetaC        2.6580e-07   1  1017.4294 0.00000 0.04959
-#rhoC          4.0000e-10   1     1.6387 0.20114 0.00008
-#tmrcaC        4.8618e-06   1 18611.2157 0.00000 0.90711
-#thetaC:rhoC   2.0000e-10   1     0.6039 0.43747 0.00003
-#thetaC:tmrcaC 1.1060e-07   1   423.5635 0.00000 0.02064
-#rhoC:tmrcaC   2.0000e-10   1     0.6500 0.42054 0.00003
-#Residuals     1.2070e-07 462                    0.02252
+rep_2.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_2.TMRCA.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb$sample_mean <- apply(rep_2.tmrca.50kb[4:ncol(rep_2.tmrca.50kb)], 1, mean)
 
-g.bgs.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
-                    data = bgs.lands.50kb, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+rep_2.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_2.theta.50kb.bedgraph", header = T)
+rep_2.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_2.rho.50kb.bedgraph", header = T)
 
-g.bgs.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
-                    data = bgs.lands.50kb, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+rep_2.maps.50kb <- as.data.frame(cbind(rep_2.pi.50kb$sample_mean,
+                                       rep_2.tmrca.50kb$sample_mean,
+                                       rep_2.theta.50kb$sample_mean,
+                                       rep_2.rho.50kb$sample_mean))
 
-g.bgs.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
-                    data = bgs.lands.50kb, weights = varPower(0, ~theta), method = "ML")
+names(rep_2.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
 
-g.bgs.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
-                    data = bgs.lands.50kb, weights = varPower(0, ~tmrcaC), method = "ML")
+# centering
+rep_2.maps.50kb$thetaC <- rep_2.maps.50kb$theta - mean(rep_2.maps.50kb$theta)
+rep_2.maps.50kb$tmrcaC <- rep_2.maps.50kb$tmrca - mean(rep_2.maps.50kb$tmrca)
+rep_2.maps.50kb$rhoC <- rep_2.maps.50kb$rho - mean(rep_2.maps.50kb$rho)
 
-AIC(g.bgs.50kb.1, g.bgs.50kb.2, g.bgs.50kb.3, g.bgs.50kb.4)
+rep_2.maps.50kb$bin <- 1:nrow(rep_2.maps.50kb)
 
-summary(g.bgs.50kb.1)
-#Coefficients:
-#  Value  Std.Error   t-value p-value
-#(Intercept)    0.000117 0.00000070 167.74820  0.0000
-#thetaC         5.174353 0.20967174  24.67835  0.0000
-#rhoC          -0.014365 0.01626844  -0.88300  0.3777
-#tmrcaC         0.000145 0.00000117 124.15330  0.0000
-#thetaC:tmrcaC  4.080465 0.21313134  19.14531  0.0000
+m.rep_2.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_2.maps.50kb)
 
-vif(g.bgs.50kb.3)
-#thetaC          rhoC        tmrcaC thetaC:tmrcaC 
-#1.072982      1.072728      1.354150      1.374055 
+rep_2.anova <- Anova(m.rep_2.50kb)
+apiss <- rep_2.anova$"Sum Sq"
+rep_2.anova$VarExp <- apiss / sum(apiss)
+
+
+## rep_3
+
+rep_3.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_3.diversity.50kb.bedgraph", header = T)
+rep_3.pi.50kb$sample_mean <- apply(rep_3.pi.50kb[,(4:ncol(rep_3.pi.50kb))], 1, mean)
+
+rep_3.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_3.TMRCA.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb$sample_mean <- apply(rep_3.tmrca.50kb[4:ncol(rep_3.tmrca.50kb)], 1, mean)
+
+rep_3.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_3.theta.50kb.bedgraph", header = T)
+rep_3.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_3.rho.50kb.bedgraph", header = T)
+
+rep_3.maps.50kb <- as.data.frame(cbind(rep_3.pi.50kb$sample_mean,
+                                       rep_3.tmrca.50kb$sample_mean,
+                                       rep_3.theta.50kb$sample_mean,
+                                       rep_3.rho.50kb$sample_mean))
+
+names(rep_3.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_3.maps.50kb$thetaC <- rep_3.maps.50kb$theta - mean(rep_3.maps.50kb$theta)
+rep_3.maps.50kb$tmrcaC <- rep_3.maps.50kb$tmrca - mean(rep_3.maps.50kb$tmrca)
+rep_3.maps.50kb$rhoC <- rep_3.maps.50kb$rho - mean(rep_3.maps.50kb$rho)
+
+rep_3.maps.50kb$bin <- 1:nrow(rep_3.maps.50kb)
+
+m.rep_3.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_3.maps.50kb)
+
+rep_3.anova <- Anova(m.rep_3.50kb)
+apiss <- rep_3.anova$"Sum Sq"
+rep_3.anova$VarExp <- apiss / sum(apiss)
+
+
+
+## rep_4
+
+rep_4.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_4.diversity.50kb.bedgraph", header = T)
+rep_4.pi.50kb$sample_mean <- apply(rep_4.pi.50kb[,(4:ncol(rep_4.pi.50kb))], 1, mean)
+
+rep_4.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_4.TMRCA.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb$sample_mean <- apply(rep_4.tmrca.50kb[4:ncol(rep_4.tmrca.50kb)], 1, mean)
+
+rep_4.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_4.theta.50kb.bedgraph", header = T)
+rep_4.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_4.rho.50kb.bedgraph", header = T)
+
+rep_4.maps.50kb <- as.data.frame(cbind(rep_4.pi.50kb$sample_mean,
+                                       rep_4.tmrca.50kb$sample_mean,
+                                       rep_4.theta.50kb$sample_mean,
+                                       rep_4.rho.50kb$sample_mean))
+
+names(rep_4.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_4.maps.50kb$thetaC <- rep_4.maps.50kb$theta - mean(rep_4.maps.50kb$theta)
+rep_4.maps.50kb$tmrcaC <- rep_4.maps.50kb$tmrca - mean(rep_4.maps.50kb$tmrca)
+rep_4.maps.50kb$rhoC <- rep_4.maps.50kb$rho - mean(rep_4.maps.50kb$rho)
+
+rep_4.maps.50kb$bin <- 1:nrow(rep_4.maps.50kb)
+
+m.rep_4.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_4.maps.50kb)
+
+rep_4.anova <- Anova(m.rep_4.50kb)
+apiss <- rep_4.anova$"Sum Sq"
+rep_4.anova$VarExp <- apiss / sum(apiss)
+
+
+
+## rep_5
+
+rep_5.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_5.diversity.50kb.bedgraph", header = T)
+rep_5.pi.50kb$sample_mean <- apply(rep_5.pi.50kb[,(4:ncol(rep_5.pi.50kb))], 1, mean)
+
+rep_5.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_5.TMRCA.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb$sample_mean <- apply(rep_5.tmrca.50kb[4:ncol(rep_5.tmrca.50kb)], 1, mean)
+
+rep_5.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_5.theta.50kb.bedgraph", header = T)
+rep_5.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_5.rho.50kb.bedgraph", header = T)
+
+rep_5.maps.50kb <- as.data.frame(cbind(rep_5.pi.50kb$sample_mean,
+                                       rep_5.tmrca.50kb$sample_mean,
+                                       rep_5.theta.50kb$sample_mean,
+                                       rep_5.rho.50kb$sample_mean))
+
+names(rep_5.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_5.maps.50kb$thetaC <- rep_5.maps.50kb$theta - mean(rep_5.maps.50kb$theta)
+rep_5.maps.50kb$tmrcaC <- rep_5.maps.50kb$tmrca - mean(rep_5.maps.50kb$tmrca)
+rep_5.maps.50kb$rhoC <- rep_5.maps.50kb$rho - mean(rep_5.maps.50kb$rho)
+
+rep_5.maps.50kb$bin <- 1:nrow(rep_5.maps.50kb)
+
+m.rep_5.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_5.maps.50kb)
+
+rep_5.anova <- Anova(m.rep_5.50kb)
+apiss <- rep_5.anova$"Sum Sq"
+rep_5.anova$VarExp <- apiss / sum(apiss)
+
+
+
+## rep_6
+
+rep_6.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_6.diversity.50kb.bedgraph", header = T)
+rep_6.pi.50kb$sample_mean <- apply(rep_6.pi.50kb[,(4:ncol(rep_6.pi.50kb))], 1, mean)
+
+rep_6.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_6.TMRCA.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb$sample_mean <- apply(rep_6.tmrca.50kb[4:ncol(rep_6.tmrca.50kb)], 1, mean)
+
+rep_6.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_6.theta.50kb.bedgraph", header = T)
+rep_6.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_6.rho.50kb.bedgraph", header = T)
+
+rep_6.maps.50kb <- as.data.frame(cbind(rep_6.pi.50kb$sample_mean,
+                                       rep_6.tmrca.50kb$sample_mean,
+                                       rep_6.theta.50kb$sample_mean,
+                                       rep_6.rho.50kb$sample_mean))
+
+names(rep_6.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_6.maps.50kb$thetaC <- rep_6.maps.50kb$theta - mean(rep_6.maps.50kb$theta)
+rep_6.maps.50kb$tmrcaC <- rep_6.maps.50kb$tmrca - mean(rep_6.maps.50kb$tmrca)
+rep_6.maps.50kb$rhoC <- rep_6.maps.50kb$rho - mean(rep_6.maps.50kb$rho)
+
+rep_6.maps.50kb$bin <- 1:nrow(rep_6.maps.50kb)
+
+m.rep_6.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_6.maps.50kb)
+
+rep_6.anova <- Anova(m.rep_6.50kb)
+apiss <- rep_6.anova$"Sum Sq"
+rep_6.anova$VarExp <- apiss / sum(apiss)
+
+
+
+
+## rep_7
+
+rep_7.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_7.diversity.50kb.bedgraph", header = T)
+rep_7.pi.50kb$sample_mean <- apply(rep_7.pi.50kb[,(4:ncol(rep_7.pi.50kb))], 1, mean)
+
+rep_7.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_7.TMRCA.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb$sample_mean <- apply(rep_7.tmrca.50kb[4:ncol(rep_7.tmrca.50kb)], 1, mean)
+
+rep_7.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_7.theta.50kb.bedgraph", header = T)
+rep_7.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_7.rho.50kb.bedgraph", header = T)
+
+rep_7.maps.50kb <- as.data.frame(cbind(rep_7.pi.50kb$sample_mean,
+                                       rep_7.tmrca.50kb$sample_mean,
+                                       rep_7.theta.50kb$sample_mean,
+                                       rep_7.rho.50kb$sample_mean))
+
+names(rep_7.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_7.maps.50kb$thetaC <- rep_7.maps.50kb$theta - mean(rep_7.maps.50kb$theta)
+rep_7.maps.50kb$tmrcaC <- rep_7.maps.50kb$tmrca - mean(rep_7.maps.50kb$tmrca)
+rep_7.maps.50kb$rhoC <- rep_7.maps.50kb$rho - mean(rep_7.maps.50kb$rho)
+
+rep_7.maps.50kb$bin <- 1:nrow(rep_7.maps.50kb)
+
+m.rep_7.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_7.maps.50kb)
+
+rep_7.anova <- Anova(m.rep_7.50kb)
+apiss <- rep_7.anova$"Sum Sq"
+rep_7.anova$VarExp <- apiss / sum(apiss)
+
+
+
+
+## rep_8
+
+rep_8.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_8.diversity.50kb.bedgraph", header = T)
+rep_8.pi.50kb$sample_mean <- apply(rep_8.pi.50kb[,(4:ncol(rep_8.pi.50kb))], 1, mean)
+
+rep_8.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_8.TMRCA.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb$sample_mean <- apply(rep_8.tmrca.50kb[4:ncol(rep_8.tmrca.50kb)], 1, mean)
+
+rep_8.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_8.theta.50kb.bedgraph", header = T)
+rep_8.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_8.rho.50kb.bedgraph", header = T)
+
+rep_8.maps.50kb <- as.data.frame(cbind(rep_8.pi.50kb$sample_mean,
+                                       rep_8.tmrca.50kb$sample_mean,
+                                       rep_8.theta.50kb$sample_mean,
+                                       rep_8.rho.50kb$sample_mean))
+
+names(rep_8.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_8.maps.50kb$thetaC <- rep_8.maps.50kb$theta - mean(rep_8.maps.50kb$theta)
+rep_8.maps.50kb$tmrcaC <- rep_8.maps.50kb$tmrca - mean(rep_8.maps.50kb$tmrca)
+rep_8.maps.50kb$rhoC <- rep_8.maps.50kb$rho - mean(rep_8.maps.50kb$rho)
+
+rep_8.maps.50kb$bin <- 1:nrow(rep_8.maps.50kb)
+
+m.rep_8.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_8.maps.50kb)
+
+rep_8.anova <- Anova(m.rep_8.50kb)
+apiss <- rep_8.anova$"Sum Sq"
+rep_8.anova$VarExp <- apiss / sum(apiss)
+
+
+
+## rep_9
+
+rep_9.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_9.diversity.50kb.bedgraph", header = T)
+rep_9.pi.50kb$sample_mean <- apply(rep_9.pi.50kb[,(4:ncol(rep_9.pi.50kb))], 1, mean)
+
+rep_9.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_9.TMRCA.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb$sample_mean <- apply(rep_9.tmrca.50kb[4:ncol(rep_9.tmrca.50kb)], 1, mean)
+
+rep_9.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_9.theta.50kb.bedgraph", header = T)
+rep_9.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_9.rho.50kb.bedgraph", header = T)
+
+rep_9.maps.50kb <- as.data.frame(cbind(rep_9.pi.50kb$sample_mean,
+                                       rep_9.tmrca.50kb$sample_mean,
+                                       rep_9.theta.50kb$sample_mean,
+                                       rep_9.rho.50kb$sample_mean))
+
+names(rep_9.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_9.maps.50kb$thetaC <- rep_9.maps.50kb$theta - mean(rep_9.maps.50kb$theta)
+rep_9.maps.50kb$tmrcaC <- rep_9.maps.50kb$tmrca - mean(rep_9.maps.50kb$tmrca)
+rep_9.maps.50kb$rhoC <- rep_9.maps.50kb$rho - mean(rep_9.maps.50kb$rho)
+
+rep_9.maps.50kb$bin <- 1:nrow(rep_9.maps.50kb)
+
+m.rep_9.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_9.maps.50kb)
+
+rep_9.anova <- Anova(m.rep_9.50kb)
+apiss <- rep_9.anova$"Sum Sq"
+rep_9.anova$VarExp <- apiss / sum(apiss)
+
+
+rep_4.anova
+
+
+## rep_1
+
+rep_1.pi.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.diversity.50kb.bedgraph", header = T)
+rep_1.pi.50kb$sample_mean <- apply(rep_1.pi.50kb[,(4:ncol(rep_1.pi.50kb))], 1, mean)
+
+rep_1.tmrca.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.TMRCA.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb$sample_mean <- apply(rep_1.tmrca.50kb[4:ncol(rep_1.tmrca.50kb)], 1, mean)
+
+rep_1.theta.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.theta.50kb.bedgraph", header = T)
+rep_1.rho.50kb <- read.table("flat_mu_inf_maps/dm_2L_bgs_rep_1.rho.50kb.bedgraph", header = T)
+
+rep_1.maps.50kb <- as.data.frame(cbind(rep_1.pi.50kb$sample_mean,
+                                       rep_1.tmrca.50kb$sample_mean,
+                                       rep_1.theta.50kb$sample_mean,
+                                       rep_1.rho.50kb$sample_mean))
+
+names(rep_1.maps.50kb) <- c("diversity", "tmrca", "theta", "rho")
+
+# centering
+rep_1.maps.50kb$thetaC <- rep_1.maps.50kb$theta - mean(rep_1.maps.50kb$theta)
+rep_1.maps.50kb$tmrcaC <- rep_1.maps.50kb$tmrca - mean(rep_1.maps.50kb$tmrca)
+rep_1.maps.50kb$rhoC <- rep_1.maps.50kb$rho - mean(rep_1.maps.50kb$rho)
+
+rep_1.maps.50kb$bin <- 1:nrow(rep_1.maps.50kb)
+
+m.rep_1.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = rep_1.maps.50kb)
+
+rep_1.anova <- Anova(m.rep_1.50kb)
+apiss <- rep_1.anova$"Sum Sq"
+rep_1.anova$VarExp <- apiss / sum(apiss)
+
+
+
+rep_1.anova
+
+
+
+
+
+
+
+
+
 
 # Plots
 scale.5d <- function(x) sprintf("%.5f", x) # digits shown in y axis
