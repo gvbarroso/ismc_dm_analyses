@@ -4665,7 +4665,9 @@ pcor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, dm.
 
 cor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, method = "spearman") 
 cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman") 
-pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$dS, method = "spearman")
+
+pcor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman") 
+pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman") 
 
 # bootstrapping PiN and PiS correlations
 boot.tbl <- dm.lands.evolrate.bins %>% select(PiN.window, theta, PiS.window)
