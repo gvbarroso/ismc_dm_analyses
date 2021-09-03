@@ -4659,17 +4659,13 @@ anova.diversity.cds
 
 # simple correlations
 cor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, method = "spearman")
+cor.test(dm.lands.evolrate.bins$tmrca, dm.lands.evolrate.bins$exonic.sites, method = "spearman")
+pcor.test(dm.lands.evolrate.bins$tmrca, dm.lands.evolrate.bins$exonic.sites, dm.lands.evolrate.bins$theta, method = "spearman")
+pcor.test(dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$exonic.sites, dm.lands.evolrate.bins$tmrca, method = "spearman")
 
 cor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, method = "spearman") 
 cor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman") 
 pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$dS, method = "spearman")
-cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, method = "spearman")
-pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, method = "spearman")
-cor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, method = "spearman")
-pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$PiS, method = "spearman")
-cor.test(dm.lands.evolrate.bins$dN, dm.lands.evolrate.bins$theta, method = "spearman")
-pcor.test(dm.lands.evolrate.bins$dS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman")
-pcor.test(dm.lands.evolrate.bins$dN, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman")
 
 # bootstrapping PiN and PiS correlations
 boot.tbl <- dm.lands.evolrate.bins %>% select(PiN.window, theta, PiS.window)
@@ -4688,34 +4684,6 @@ boot.PiS.theta <- boot(boot.tbl,
   R = 10000
 )
 boot.ci(boot.PiS.theta, type = "basic")
-
-plot.tbl <- select(.data=dm.lands.evolrate.bins, chr, bin, diversity, theta, exonic.sites, PiN.window, PiS.window, dN.window, dS.window)
-plot.tbl[,3:ncol(plot.tbl)] <- apply(plot.tbl[,3:ncol(plot.tbl)], 2, function(x) x / sum(x))
-plot.tbl <- plot.tbl[-which(plot.tbl$PiS.window > 0.01),]
-
-plot.tbl.S <- select(plot.tbl, chr, bin, diversity, theta, exonic.sites, PiS.window, dS.window)
-plot.tbl.S <- pivot_longer(plot.tbl.S, cols = c(diversity, PiS.window, dS.window), names_to = "variable")
-
-plot.tbl.N <- select(plot.tbl, chr, bin, diversity, theta, exonic.sites, PiN.window, dN.window)
-plot.tbl.N <- pivot_longer(plot.tbl.N, cols = c(diversity, PiN.window, dN.window), names_to = "variable")
-
-plot.S <- ggplot(plot.tbl.S)
-plot.S <- plot.S + geom_line(size = 0.5, aes(x = bin, y = value, color = variable)) + theme_bw()
-plot.S <- plot.S + geom_point(size = 0.6, aes(x = bin, y = theta))
-plot.S <- plot.S + scale_color_manual(values = c("#a6611a", "#018571", "#dfc27d", "#000000"))
-plot.S <- plot.S + labs(title = NULL, x = "window", y = "normalized value")
-
-plot.N <- ggplot(plot.tbl.N)
-plot.N <- plot.N + geom_line(size = 0.5, aes(x = bin, y = value, color = variable)) + theme_bw()
-plot.N <- plot.N + geom_point(size = 0.6, aes(x = bin, y = theta))
-plot.N <- plot.N + scale_color_manual(values = c("#a6611a", "#018571", "#dfc27d", "#000000"))
-plot.N <- plot.N + labs(title = NULL, x = "window", y = "normalized value")
-
-p <- plot_grid(plot.S, plot.N, ncol = 1)
-save_plot("~/Desktop/p.pdf", p, device = "pdf", base_width = 12, base_height = 8)
-
-
-gt <- gls(theta ~ rho, data = dm.lands.50kb, cor = corAR1(0, ~bin|chr), method = "ML")
 ```
 
 # R^2 plot with real, simulated (true) and simulated (inferred) data.
