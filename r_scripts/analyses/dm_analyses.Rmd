@@ -4670,10 +4670,10 @@ pcor.test(dm.lands.evolrate.bins$PiN, dm.lands.evolrate.bins$theta, dm.lands.evo
 pcor.test(dm.lands.evolrate.bins$PiS, dm.lands.evolrate.bins$theta, dm.lands.evolrate.bins$tmrca, method = "spearman") 
 
 # bootstrapping PiN and PiS correlations
-boot.tbl <- dm.lands.evolrate.bins %>% select(PiN.window, theta, PiS.window)
+boot.tbl <- dm.lands.evolrate.bins %>% dplyr::select(PiN.window, theta, PiS.window, tmrca)
 boot.PiN.theta <- boot(boot.tbl, 
   statistic = function(boot.tbl, i) {
-    cor.test(boot.tbl[i, "PiN.window"], boot.tbl[i, "theta"], method='spearman')$estimate
+    pcor.test(boot.tbl[i, "PiN.window"], boot.tbl[i, "theta"], boot.tbl[i, "tmrca"], method='spearman')$estimate
   },
   R = 10000
 )
@@ -4681,7 +4681,7 @@ boot.ci(boot.PiN.theta, type = "basic")
 
 boot.PiS.theta <- boot(boot.tbl, 
   statistic = function(boot.tbl, i) {
-    cor.test(boot.tbl[i, "PiS.window"], boot.tbl[i, "theta"], method='spearman')$estimate
+    pcor.test(boot.tbl[i, "PiS.window"], boot.tbl[i, "theta"], boot.tbl[i, "tmrca"], method='spearman')$estimate
   },
   R = 10000
 )
