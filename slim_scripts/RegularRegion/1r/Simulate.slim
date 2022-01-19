@@ -1,0 +1,121 @@
+// slim -m -d seed=42 -d rep=1 
+
+initialize() {
+  setSeed(seed);
+  defineConstant( "N", 10000);  // pop size 
+  defineConstant( "L", 30e6);    // total chromosome length 
+  defineConstant( "L0", 200e3); // between genes 
+  defineConstant( "L1", 1e3);   // gene length   
+  initializeTreeSeq(simplificationRatio=100);
+  initializeMutationType("m1", 0.5, "g", -(5/N), 1.0); //Mean and shape of the gamma distribution
+  initializeGenomicElementType("g1", m1, 1.0);
+  initializeMutationRate(1e-7);
+
+  // add a variable recombination map:
+  rates = c(0.1, 1.5, 0.1, 1.5, 0.1, 1.5) * 1e-8;
+  ends = c(5, 10, 15, 20, 25, 30) * 1e6;
+  initializeRecombinationRate(rates, ends);
+
+  // add genes:
+  geneCount = 0;
+  for (begin in seq(from=L0, to=L-(L0+L1), by=(L0+L1))) {
+    geneCount = geneCount + 1;
+    end = begin + L1 - 1;
+    initializeGenomicElement(g1, begin, end);
+    print("Adding gene " + geneCount + " starting " + begin + " up to " + end + ".");
+  }
+
+  // time recording:
+  defineConstant("start", clock());
+}
+
+s1 20000 late() {
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+  sim.simulationFinished();
+}
+
+1 {
+  print("Starting simulations...");
+}
+
+100 {
+  print((clock() - start) + ": 100 generations done.");
+}
+
+1000 {
+  print((clock() - start) + ": 1000 generations done.");
+}
+
+10000 {
+  print((clock() - start) + ": 10000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+20000 {
+  print((clock() - start) + ": 20000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+50000 {
+  print((clock() - start) + ": 50000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+100000 {
+  print((clock() - start) + ": 100000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+200000 {
+  print((clock() - start) + ": 200000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+300000 {
+  print((clock() - start) + ": 300000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+400000 {
+  print((clock() - start) + ": 400000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+500000 {
+  print((clock() - start) + ": 500000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+600000 {
+  print((clock() - start) + ": 600000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+700000 {
+  print((clock() - start) + ": 700000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+800000 {
+  print((clock() - start) + ": 800000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+900000 {
+  print((clock() - start) + ": 900000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+1000000 {
+  print((clock() - start) + ": 1000000 generations done.");
+  sim.treeSeqOutput(paste0("bgs_rep", rep, ".trees"));
+}
+
+
+
+
+1 {
+  sim.addSubpop("p1", N);
+  sim.rescheduleScriptBlock(s1, start=100*N, end=100*N);
+}
+
