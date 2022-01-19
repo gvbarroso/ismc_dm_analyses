@@ -43,7 +43,7 @@ moving.average <- function(rate.ranges, window.size) {
   ave <- numeric(length(window.ranges))
   for (i in 1:length(window.ranges)) {
     x <- restrict(rate.ranges, start(window.ranges[i]), end(window.ranges[i]))
-    ave[i] <- weighted.mean(x@elementMetadata$Rate, weights = width(x))
+    ave[i] <- weighted.mean(x@elementMetadata$Rate, w = width(x))
   }
   res <- data.frame(Start = start(window.ranges), Stop = end(window.ranges), Rate = ave)
   return(res)
