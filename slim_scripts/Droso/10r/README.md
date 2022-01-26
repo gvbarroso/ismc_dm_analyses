@@ -59,7 +59,6 @@ for i in {1..10}; do
   python3.9 ../getTmrca.py dm2L_bgs_rep$i $((42 + i)) 1000000
 done
 ```
-CONTINUE HERE
 
 Compute diversity:
 ```bash
@@ -90,6 +89,7 @@ for i in {1..10}; do
 done
 cd ..
 ```
+CONTINUE HERE
 
 
 Merge all informations into one big data file:
