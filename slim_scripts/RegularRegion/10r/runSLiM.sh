@@ -8,7 +8,7 @@
 #SBATCH --error=log/bgs_slim_30mb.%J.err
 #SBATCH --output=log/bgs_slim_30mb.%J.out
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=####
+#SBATCH --mail-user=dutheil@evolbio.mpg.de
 #SBATCH --partition=global 
 #SBATCH --array=1-10
 

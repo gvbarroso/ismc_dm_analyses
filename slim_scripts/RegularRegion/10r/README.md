@@ -6,13 +6,22 @@ Run 10 replicates on the cluster:
 ```bash
 sbatch runSLiM.sh
 ```
+Runs for 1,000,000 generations.
+
+Recapitate and sample tree sequence:
+```bash
+for i in {1..10}; do
+  echo "Rep $i..."
+  python3.9 recapitateAndSample.py bgs_rep$i $((42 + i)) > bgs_rep${i}_msprime_recapitation.log
+done
+```
 
 Add mutations to the tree sequence. First with a uniform mutation rate:
 ```bash
 mkdir Homogeneous
 for i in {1..10}; do
   echo "Rep $i..."
-  python3.9 ../simBGS.py bgs_rep$i $((42 + i)) > Homogeneous/bgs_rep${i}_msprime.log
+  python3.9 simBGS.py bgs_rep$i $((42 + i)) > Homogeneous/bgs_rep${i}_msprime_mutation.log
 done
 ```
 Compress VCF files:
@@ -28,7 +37,7 @@ Then with a variable mutation rate.
 mkdir NonHomogeneous
 for i in {1..10}; do
   echo "Rep $i..."
-  python3.9 ../simBGS_varmut.py bgs_rep$i $((42 + i)) > NonHomogeneous/bgs_rep${i}_msprime.log
+  python3.9 simBGS_varmut.py bgs_rep$i $((42 + i)) > NonHomogeneous/bgs_rep${i}_msprime_mutation.log
 done
 ```
 Compress VCF files:
