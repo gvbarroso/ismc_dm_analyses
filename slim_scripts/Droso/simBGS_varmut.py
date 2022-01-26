@@ -1,4 +1,4 @@
-import subprocess, msprime, pyslim, numpy, pandas, sys, random
+import subprocess, msprime, tskit, numpy, sys, random, warnings
 
 
 # see: https://github.com/tskit-dev/pyslim/issues/168
@@ -13,53 +13,30 @@ def make_alleles(n):
     return alleles[:n]
 
 if __name__ == "__main__":
-    ts_path = sys.argv[1] + ".trees"
+    ts_path = sys.argv[1] + ".5indv.trees"
     print("Input tree sequence: %s\n" % ts_path)
     seed = int(sys.argv[2])
     print("Random seed: %i\n" % seed)
     numpy.random.seed(seed)
 
-    orig_ts = pyslim.load(ts_path)
-
-    positions = []
-    rates = []
-    with open('../Comeron_tables/Comeron_100kb_chr2L.txt', 'r') as file:
-        for line in file:
-            components = line.split("\t")
-            positions.append(float(components[0]))
-            rates.append(1e-8 * float(components[1]))
-
-    # step 1
-    positions.insert(0, 0)
-    # step 2
-    rates.append(0.0)
-    # step 3
-    positions[-1] = 23.51e6
-    positions[-1] += 1
-
-    recomb_map = msprime.RecombinationMap(positions, rates)
-    rts = orig_ts.recapitate(recombination_map = recomb_map, Ne = 10000)
-
-    assert(max([t.num_roots for t in rts.trees()]) == 1)
-
-
-    alive_inds = rts.individuals_alive_at(0)
-    keep_indivs = numpy.random.choice(alive_inds, 5, replace = False)
-    print(f"Individuals kept: {keep_indivs}")
-
-    keep_nodes = []
-    for i in keep_indivs:
-        keep_nodes.extend(rts.individual(i).nodes)
-    sts = rts.simplify(keep_nodes)
-    print(f"Nodes kept: {keep_nodes}")
-
-    print(f"Before, there were {rts.num_samples} sample nodes (and {rts.num_individuals} individuals) "
-          f"in the tree sequence, and now there are {sts.num_samples} sample nodes "
-          f"(and {sts.num_individuals} individuals).")
+    ts = tskit.load(ts_path)
 
     mutation_model = msprime.SLiMMutationModel(0, 0)
 
-    mts = msprime.sim_mutations(sts, rate = 1e-7, model = mutation_model, keep = True, random_seed = seed)
+    mut_positions = []
+    mut_rates = []
+    with open('../MutationMap.csv', 'r') as file:
+        next(file) # Skip header
+        for line in file:
+            components = line.split(",")
+            mut_positions.append(int(components[0]))
+            mut_rates.append(1e-7 * float(components[1]))
+    mut_positions.append(23.51e6)
+    mut_positions[-1] += 1
+
+    mutation_map = msprime.RateMap(position = mut_positions, rate = mut_rates)
+
+    mts = msprime.sim_mutations(ts, rate = mutation_map, model = mutation_model, keep = True, random_seed = seed)
 
     t = mts.tables
     t.sites.clear()
@@ -74,7 +51,7 @@ if __name__ == "__main__":
 
     mts = t.tree_sequence()
 
-    outfile = "Homogeneous/" + sys.argv[1] + "_5.vcf"
+    outfile = "NonHomogeneous/" + sys.argv[1] + "_5.vcf"
 
     with open(outfile, "w") as vcf_file:
         mts.write_vcf(vcf_file) #, position_transform = "legacy") # 'legacy' is used to avoid SNPs at the same position
@@ -100,7 +77,7 @@ if __name__ == "__main__":
 
     # print out the sequences
 
-    with open("Homogeneous/" + sys.argv[1] + "_5.fasta", 'w') as output:
+    with open("NonHomogeneous/" + sys.argv[1] + "_5.fasta", 'w') as output:
         for i, s in enumerate(S) :
             output.write(">hap%i\n" % i)
             output.write(s.tobytes().decode(encoding))
