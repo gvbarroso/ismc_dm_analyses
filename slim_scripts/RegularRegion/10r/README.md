@@ -21,7 +21,7 @@ Add mutations to the tree sequence. First with a uniform mutation rate:
 mkdir Homogeneous
 for i in {1..10}; do
   echo "Rep $i..."
-  python3.9 simBGS.py bgs_rep$i $((42 + i)) > Homogeneous/bgs_rep${i}_msprime_mutation.log
+  python3.9 ../simBGS.py bgs_rep$i $((42 + i)) > Homogeneous/bgs_rep${i}_msprime_mutation.log
 done
 ```
 Compress VCF files:
@@ -37,7 +37,7 @@ Then with a variable mutation rate.
 mkdir NonHomogeneous
 for i in {1..10}; do
   echo "Rep $i..."
-  python3.9 simBGS_varmut.py bgs_rep$i $((42 + i)) > NonHomogeneous/bgs_rep${i}_msprime_mutation.log
+  python3.9 ../simBGS_varmut.py bgs_rep$i $((42 + i)) > NonHomogeneous/bgs_rep${i}_msprime_mutation.log
 done
 ```
 Compress VCF files:
