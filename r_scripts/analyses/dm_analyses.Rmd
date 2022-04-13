@@ -24,7 +24,7 @@ library(boot)
 library(car)
 library(plyr)
 library(tidyverse)
-library(GenomicRanges) #From BioConductor
+library(GenomicRanges) # from BioConductor
 library(RColorBrewer)
 library(scales)
 library(interactions)
@@ -4718,9 +4718,10 @@ ggsave("Fig4.pdf", r2.plot, device = "pdf", )
 ```
 
 
+# Simulations with BGS in SLiM
 
 ```{r, message=FALSE, warning=FALSE}
-# Simulations with BGS
+
 
 ```
 
