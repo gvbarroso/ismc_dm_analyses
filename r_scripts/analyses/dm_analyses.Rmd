@@ -31,7 +31,7 @@ library(interactions)
 library(magrittr)
 
 # Update according to where the data from FigShare was extracted, if needed:
-knitr::opts_knit$set(root.dir = "~/Data/iSMC/theta_paper/root/")
+knitr::opts_knit$set(root.dir = "~/Data/root/")
 
 nreps <- 10
 reps <- character(length = nreps)
@@ -79,8 +79,8 @@ sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
 sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
 
 # for merging:
-sim.lands.50kb.rep1 <- sim.lands.50kb
-sim.lands.50kb.rep1$Replicate <- 1
+sim.lands.50kb.rep5 <- sim.lands.50kb
+sim.lands.50kb.rep5$Replicate <- 1
 
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
 m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb)
@@ -494,8 +494,8 @@ sim.lands.50kb$rhoC <- sim.lands.50kb$rho - mean(sim.lands.50kb$rho)
 sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
 
 # for merging:
-sim.lands.50kb.rep10 <- sim.lands.50kb
-sim.lands.50kb.rep10$Replicate <- 10
+sim.lands.50kb.rep50 <- sim.lands.50kb
+sim.lands.50kb.rep50$Replicate <- 10
 
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb)
 plot(resid(m.div.50kb)~fitted(m.div.50kb))
@@ -522,7 +522,7 @@ r2.sim.50kb <- transform(r2.sim.50kb, sd=apply(r2.sim.50kb, 1, sd, na.rm = TRUE)
 ### all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
-sim.lands.50kb.all <- rbind(sim.lands.50kb.rep1, sim.lands.50kb.rep2, sim.lands.50kb.rep3, sim.lands.50kb.rep4, sim.lands.50kb.rep5, sim.lands.50kb.rep6, sim.lands.50kb.rep7, sim.lands.50kb.rep8, sim.lands.50kb.rep9, sim.lands.50kb.rep10)
+sim.lands.50kb.all <- rbind(sim.lands.50kb.rep5, sim.lands.50kb.rep2, sim.lands.50kb.rep3, sim.lands.50kb.rep4, sim.lands.50kb.rep5, sim.lands.50kb.rep6, sim.lands.50kb.rep7, sim.lands.50kb.rep8, sim.lands.50kb.rep9, sim.lands.50kb.rep50)
 
 m.div.50kb <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC)*as.factor(Replicate), data = sim.lands.50kb.all)
 plot(resid(m.div.50kb)~fitted(m.div.50kb))
@@ -569,8 +569,8 @@ sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
 sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
 
 # for merging:
-sim.lands.200kb.rep1 <- sim.lands.200kb
-sim.lands.200kb.rep1$Replicate <- 1
+sim.lands.200kb.rep5 <- sim.lands.200kb
+sim.lands.200kb.rep5$Replicate <- 1
 
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
 plot(resid(m.div.200kb)~fitted(m.div.200kb))
@@ -956,8 +956,8 @@ sim.lands.200kb$rhoC <- sim.lands.200kb$rho - mean(sim.lands.200kb$rho)
 sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
 
 # for merging:
-sim.lands.200kb.rep10 <- sim.lands.200kb
-sim.lands.200kb.rep10$Replicate <- 10
+sim.lands.200kb.rep50 <- sim.lands.200kb
+sim.lands.200kb.rep50$Replicate <- 10
 
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb)
 plot(resid(m.div.200kb)~fitted(m.div.200kb))
@@ -984,7 +984,7 @@ r2.sim.200kb <- transform(r2.sim.200kb, sd=apply(r2.sim.200kb, 1, sd, na.rm = TR
 ### all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
-sim.lands.200kb.all <- rbind(sim.lands.200kb.rep1, sim.lands.200kb.rep2, sim.lands.200kb.rep3, sim.lands.200kb.rep4, sim.lands.200kb.rep5, sim.lands.200kb.rep6, sim.lands.200kb.rep7, sim.lands.200kb.rep8, sim.lands.200kb.rep9, sim.lands.200kb.rep10)
+sim.lands.200kb.all <- rbind(sim.lands.200kb.rep5, sim.lands.200kb.rep2, sim.lands.200kb.rep3, sim.lands.200kb.rep4, sim.lands.200kb.rep5, sim.lands.200kb.rep6, sim.lands.200kb.rep7, sim.lands.200kb.rep8, sim.lands.200kb.rep9, sim.lands.200kb.rep50)
 
 m.div.200kb <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC)*as.factor(Replicate), data = sim.lands.200kb.all)
 plot(resid(m.div.200kb)~fitted(m.div.200kb))
@@ -1031,8 +1031,8 @@ sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
 sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
 
 # for merging:
-sim.lands.1Mb.rep1 <- sim.lands.1Mb
-sim.lands.1Mb.rep1$Replicate <- 1
+sim.lands.1Mb.rep5 <- sim.lands.1Mb
+sim.lands.1Mb.rep5$Replicate <- 1
 
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
 plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
@@ -1430,8 +1430,8 @@ sim.lands.1Mb$rhoC <- sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)
 sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
 
 # for merging:
-sim.lands.1Mb.rep10 <- sim.lands.1Mb
-sim.lands.1Mb.rep10$Replicate <- 10
+sim.lands.1Mb.rep50 <- sim.lands.1Mb
+sim.lands.1Mb.rep50$Replicate <- 10
 
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb)
 plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
@@ -1459,7 +1459,7 @@ r2.sim.1Mb <- transform(r2.sim.1Mb, sd=apply(r2.sim.1Mb, 1, sd, na.rm = TRUE))
 ### all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
-sim.lands.1Mb.all <- rbind(sim.lands.1Mb.rep1, sim.lands.1Mb.rep2, sim.lands.1Mb.rep3, sim.lands.1Mb.rep4, sim.lands.1Mb.rep5, sim.lands.1Mb.rep6, sim.lands.1Mb.rep7, sim.lands.1Mb.rep8, sim.lands.1Mb.rep9, sim.lands.1Mb.rep10)
+sim.lands.1Mb.all <- rbind(sim.lands.1Mb.rep5, sim.lands.1Mb.rep2, sim.lands.1Mb.rep3, sim.lands.1Mb.rep4, sim.lands.1Mb.rep5, sim.lands.1Mb.rep6, sim.lands.1Mb.rep7, sim.lands.1Mb.rep8, sim.lands.1Mb.rep9, sim.lands.1Mb.rep50)
 
 m.div.1Mb <- lm(diversity ~ (thetaC + rhoC + tmrcaC + thetaC:tmrcaC)*as.factor(Replicate), data = sim.lands.1Mb.all)
 plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
@@ -4718,11 +4718,2166 @@ ggsave("Fig4.pdf", r2.plot, device = "pdf", )
 ```
 
 
-# Simulations with BGS in SLiM
+# Simulations with BGS in SLiM (iSMC-inferred landscapes)
+
+## 50 kb scale
+
+```{r, message=FALSE, warning=FALSE}
+r2.bgs.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.bgs.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.bgs.50kb) <- reps
+
+sim.theta.50kb <- read.table("bgs/Droso/MutationMap_50kb.csv", header = T)
+sim.rho.50kb <- read.table("bgs/Droso/RecombinationMap_50kb.csv", header = T)
+```
+
+### Replicate 1
+
+```{r, message=FALSE, warning=FALSE}
+rep_1.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.50kb.bedgraph", header = T)
+rep_1.pi.50kb$avg <- apply(rep_1.pi.50kb[4:ncol(rep_1.pi.50kb)], 1, mean)
+rep_1.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.50kb.bedgraph", header = T)
+rep_1.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb$avg <- apply(rep_1.tmrca.50kb[4:ncol(rep_1.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep1 <- as.data.frame(cbind(rep_1.pi.50kb$avg, rep_1.theta.50kb$sample_mean, rep_1.tmrca.50kb$avg, rep_1.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep1, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep1, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep1, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep1$thetaC <- sim.lands.50kb.rep1$theta - mean(sim.lands.50kb.rep1$theta)
+sim.lands.50kb.rep1$tmrcaC <- sim.lands.50kb.rep1$tmrca - mean(sim.lands.50kb.rep1$tmrca)
+sim.lands.50kb.rep1$rhoC <- sim.lands.50kb.rep1$rho - mean(sim.lands.50kb.rep1$rho)
+
+sim.lands.50kb.rep1$bin <- 1:nrow(sim.lands.50kb.rep1)
+
+# for merging:
+sim.lands.50kb.rep1.rep5 <- sim.lands.50kb.rep1
+sim.lands.50kb.rep1.rep5$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep1)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep1)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep1)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 1] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep1, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep1, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep1, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep1, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 2
+
+```{r, message=FALSE, warning=FALSE}
+rep_2.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.50kb.bedgraph", header = T)
+rep_2.pi.50kb$avg <- apply(rep_2.pi.50kb[4:ncol(rep_2.pi.50kb)], 1, mean)
+rep_2.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.50kb.bedgraph", header = T)
+rep_2.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb$avg <- apply(rep_2.tmrca.50kb[4:ncol(rep_2.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep2 <- as.data.frame(cbind(rep_2.pi.50kb$avg, rep_2.theta.50kb$sample_mean, rep_2.tmrca.50kb$avg, rep_2.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep2, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep2, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep2, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep2$thetaC <- sim.lands.50kb.rep2$theta - mean(sim.lands.50kb.rep2$theta)
+sim.lands.50kb.rep2$tmrcaC <- sim.lands.50kb.rep2$tmrca - mean(sim.lands.50kb.rep2$tmrca)
+sim.lands.50kb.rep2$rhoC <- sim.lands.50kb.rep2$rho - mean(sim.lands.50kb.rep2$rho)
+
+sim.lands.50kb.rep2$bin <- 1:nrow(sim.lands.50kb.rep2)
+
+# for merging:
+sim.lands.50kb.rep2.rep2 <- sim.lands.50kb.rep2
+sim.lands.50kb.rep2.rep2$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep2)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep2)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep2)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep2, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep2, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep2, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep2, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 3
+
+```{r, message=FALSE, warning=FALSE}
+rep_3.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.50kb.bedgraph", header = T)
+rep_3.pi.50kb$avg <- apply(rep_3.pi.50kb[4:ncol(rep_3.pi.50kb)], 1, mean)
+rep_3.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.50kb.bedgraph", header = T)
+rep_3.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb$avg <- apply(rep_3.tmrca.50kb[4:ncol(rep_3.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep3 <- as.data.frame(cbind(rep_3.pi.50kb$avg, rep_3.theta.50kb$sample_mean, rep_3.tmrca.50kb$avg, rep_3.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep3, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep3, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep3, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep3$thetaC <- sim.lands.50kb.rep3$theta - mean(sim.lands.50kb.rep3$theta)
+sim.lands.50kb.rep3$tmrcaC <- sim.lands.50kb.rep3$tmrca - mean(sim.lands.50kb.rep3$tmrca)
+sim.lands.50kb.rep3$rhoC <- sim.lands.50kb.rep3$rho - mean(sim.lands.50kb.rep3$rho)
+
+sim.lands.50kb.rep3$bin <- 1:nrow(sim.lands.50kb.rep3)
+
+# for merging:
+sim.lands.50kb.rep3.rep3 <- sim.lands.50kb.rep3
+sim.lands.50kb.rep3.rep3$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep3)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep3)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep3)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep3, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep3, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep3, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep3, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 4
+
+```{r, message=FALSE, warning=FALSE}
+rep_4.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.50kb.bedgraph", header = T)
+rep_4.pi.50kb$avg <- apply(rep_4.pi.50kb[4:ncol(rep_4.pi.50kb)], 1, mean)
+rep_4.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.50kb.bedgraph", header = T)
+rep_4.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb$avg <- apply(rep_4.tmrca.50kb[4:ncol(rep_4.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep4 <- as.data.frame(cbind(rep_4.pi.50kb$avg, rep_4.theta.50kb$sample_mean, rep_4.tmrca.50kb$avg, rep_4.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep4, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep4, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep4, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep4$thetaC <- sim.lands.50kb.rep4$theta - mean(sim.lands.50kb.rep4$theta)
+sim.lands.50kb.rep4$tmrcaC <- sim.lands.50kb.rep4$tmrca - mean(sim.lands.50kb.rep4$tmrca)
+sim.lands.50kb.rep4$rhoC <- sim.lands.50kb.rep4$rho - mean(sim.lands.50kb.rep4$rho)
+
+sim.lands.50kb.rep4$bin <- 1:nrow(sim.lands.50kb.rep4)
+
+# for merging:
+sim.lands.50kb.rep4.rep4 <- sim.lands.50kb.rep4
+sim.lands.50kb.rep4.rep4$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep4)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep4)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep4)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep4, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep4, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep4, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep4, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 5
+
+```{r, message=FALSE, warning=FALSE}
+rep_5.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.50kb.bedgraph", header = T)
+rep_5.pi.50kb$avg <- apply(rep_5.pi.50kb[4:ncol(rep_5.pi.50kb)], 1, mean)
+rep_5.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.50kb.bedgraph", header = T)
+rep_5.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb$avg <- apply(rep_5.tmrca.50kb[4:ncol(rep_5.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep5 <- as.data.frame(cbind(rep_5.pi.50kb$avg, rep_5.theta.50kb$sample_mean, rep_5.tmrca.50kb$avg, rep_5.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep5, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep5, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep5, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep5$thetaC <- sim.lands.50kb.rep5$theta - mean(sim.lands.50kb.rep5$theta)
+sim.lands.50kb.rep5$tmrcaC <- sim.lands.50kb.rep5$tmrca - mean(sim.lands.50kb.rep5$tmrca)
+sim.lands.50kb.rep5$rhoC <- sim.lands.50kb.rep5$rho - mean(sim.lands.50kb.rep5$rho)
+
+sim.lands.50kb.rep5$bin <- 1:nrow(sim.lands.50kb.rep5)
+
+# for merging:
+sim.lands.50kb.rep5.rep5 <- sim.lands.50kb.rep5
+sim.lands.50kb.rep5.rep5$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep5)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep5)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep5)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep5, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep5, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep5, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep5, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 6
+
+```{r, message=FALSE, warning=FALSE}
+rep_6.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
+rep_6.pi.50kb$avg <- apply(rep_6.pi.50kb[4:ncol(rep_6.pi.50kb)], 1, mean)
+rep_6.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
+rep_6.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb$avg <- apply(rep_6.tmrca.50kb[4:ncol(rep_6.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep6 <- as.data.frame(cbind(rep_6.pi.50kb$avg, rep_6.theta.50kb$sample_mean, rep_6.tmrca.50kb$avg, rep_6.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep6, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep6, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep6, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep6$thetaC <- sim.lands.50kb.rep6$theta - mean(sim.lands.50kb.rep6$theta)
+sim.lands.50kb.rep6$tmrcaC <- sim.lands.50kb.rep6$tmrca - mean(sim.lands.50kb.rep6$tmrca)
+sim.lands.50kb.rep6$rhoC <- sim.lands.50kb.rep6$rho - mean(sim.lands.50kb.rep6$rho)
+
+sim.lands.50kb.rep6$bin <- 1:nrow(sim.lands.50kb.rep6)
+
+# for merging:
+sim.lands.50kb.rep6.rep6 <- sim.lands.50kb.rep6
+sim.lands.50kb.rep6.rep6$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep6)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep6)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep6)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep6, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep6, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep6, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep6, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 7
+
+```{r, message=FALSE, warning=FALSE}
+rep_7.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
+rep_7.pi.50kb$avg <- apply(rep_7.pi.50kb[4:ncol(rep_7.pi.50kb)], 1, mean)
+rep_7.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
+rep_7.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb$avg <- apply(rep_7.tmrca.50kb[4:ncol(rep_7.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep7 <- as.data.frame(cbind(rep_7.pi.50kb$avg, rep_7.theta.50kb$sample_mean, rep_7.tmrca.50kb$avg, rep_7.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep7, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep7, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep7, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep7$thetaC <- sim.lands.50kb.rep7$theta - mean(sim.lands.50kb.rep7$theta)
+sim.lands.50kb.rep7$tmrcaC <- sim.lands.50kb.rep7$tmrca - mean(sim.lands.50kb.rep7$tmrca)
+sim.lands.50kb.rep7$rhoC <- sim.lands.50kb.rep7$rho - mean(sim.lands.50kb.rep7$rho)
+
+sim.lands.50kb.rep7$bin <- 1:nrow(sim.lands.50kb.rep7)
+
+# for merging:
+sim.lands.50kb.rep7.rep7 <- sim.lands.50kb.rep7
+sim.lands.50kb.rep7.rep7$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep7)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep7)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep7)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep7, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep7, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep7, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep7, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 8
+
+```{r, message=FALSE, warning=FALSE}
+rep_8.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.50kb.bedgraph", header = T)
+rep_8.pi.50kb$avg <- apply(rep_8.pi.50kb[4:ncol(rep_8.pi.50kb)], 1, mean)
+rep_8.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.50kb.bedgraph", header = T)
+rep_8.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb$avg <- apply(rep_8.tmrca.50kb[4:ncol(rep_8.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep8 <- as.data.frame(cbind(rep_8.pi.50kb$avg, rep_8.theta.50kb$sample_mean, rep_8.tmrca.50kb$avg, rep_8.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep8, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep8, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep8, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep8$thetaC <- sim.lands.50kb.rep8$theta - mean(sim.lands.50kb.rep8$theta)
+sim.lands.50kb.rep8$tmrcaC <- sim.lands.50kb.rep8$tmrca - mean(sim.lands.50kb.rep8$tmrca)
+sim.lands.50kb.rep8$rhoC <- sim.lands.50kb.rep8$rho - mean(sim.lands.50kb.rep8$rho)
+
+sim.lands.50kb.rep8$bin <- 1:nrow(sim.lands.50kb.rep8)
+
+# for merging:
+sim.lands.50kb.rep8.rep8 <- sim.lands.50kb.rep8
+sim.lands.50kb.rep8.rep8$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep8)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep8)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep8)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep8, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep8, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep8, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep8, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 9
+
+```{r, message=FALSE, warning=FALSE}
+rep_9.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.50kb.bedgraph", header = T)
+rep_9.pi.50kb$avg <- apply(rep_9.pi.50kb[4:ncol(rep_9.pi.50kb)], 1, mean)
+rep_9.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.50kb.bedgraph", header = T)
+rep_9.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb$avg <- apply(rep_9.tmrca.50kb[4:ncol(rep_9.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep9 <- as.data.frame(cbind(rep_9.pi.50kb$avg, rep_9.theta.50kb$sample_mean, rep_9.tmrca.50kb$avg, rep_9.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep9, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep9, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep9, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep9$thetaC <- sim.lands.50kb.rep9$theta - mean(sim.lands.50kb.rep9$theta)
+sim.lands.50kb.rep9$tmrcaC <- sim.lands.50kb.rep9$tmrca - mean(sim.lands.50kb.rep9$tmrca)
+sim.lands.50kb.rep9$rhoC <- sim.lands.50kb.rep9$rho - mean(sim.lands.50kb.rep9$rho)
+
+sim.lands.50kb.rep9$bin <- 1:nrow(sim.lands.50kb.rep9)
+
+# for merging:
+sim.lands.50kb.rep9.rep9 <- sim.lands.50kb.rep9
+sim.lands.50kb.rep9.rep9$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep9)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep9)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep9)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 9] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep9, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep9, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep9, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep9, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+### Replicate 10
+
+```{r, message=FALSE, warning=FALSE}
+rep_10.pi.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.50kb.bedgraph", header = T)
+rep_10.pi.50kb$avg <- apply(rep_10.pi.50kb[4:ncol(rep_10.pi.50kb)], 1, mean)
+rep_10.rho.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.50kb.bedgraph", header = T)
+rep_10.theta.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.50kb.bedgraph", header = T)
+rep_10.tmrca.50kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.50kb.bedgraph", header = T)
+rep_10.tmrca.50kb$avg <- apply(rep_10.tmrca.50kb[4:ncol(rep_10.tmrca.50kb)], 1, mean)
+
+sim.lands.50kb.rep10 <- as.data.frame(cbind(rep_10.pi.50kb$avg, rep_10.theta.50kb$sample_mean, rep_10.tmrca.50kb$avg, rep_1.rho.50kb$sample_mean))
+names(sim.lands.50kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.50kb.rep10, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.50kb.rep10, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.50kb.rep10, method = "spearman") 
+
+# centering
+sim.lands.50kb.rep10$thetaC <- sim.lands.50kb.rep10$theta - mean(sim.lands.50kb.rep10$theta)
+sim.lands.50kb.rep10$tmrcaC <- sim.lands.50kb.rep10$tmrca - mean(sim.lands.50kb.rep10$tmrca)
+sim.lands.50kb.rep10$rhoC <- sim.lands.50kb.rep10$rho - mean(sim.lands.50kb.rep10$rho)
+
+sim.lands.50kb.rep10$bin <- 1:nrow(sim.lands.50kb.rep10)
+
+# for merging:
+sim.lands.50kb.rep10.rep10 <- sim.lands.50kb.rep10
+sim.lands.50kb.rep10.rep10$Replicate <- 1
+
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.50kb.rep10)
+m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep10)
+m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep10)
+
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
+
+plot(resid(m.div.50kb)~fitted(m.div.50kb))
+dwtest(m.div.50kb)
+hmctest(m.div.50kb)
+hist(resid(m.div.50kb))
+
+summary(m.div.50kb)
+
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.50kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+g.div.50kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.50kb.rep10, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep10, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.50kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep10, weights = varPower(0, ~theta), method = "ML")
+
+g.div.50kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.50kb.rep10, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.50kb.1, g.div.50kb.2, g.div.50kb.3, g.div.50kb.4)
+
+summary(g.div.50kb.3)
+
+vif(g.div.50kb.3)
+```
+
+
+
+## 200 kb scale
+
+```{r, message=FALSE, warning=FALSE}
+r2.bgs.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.bgs.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.bgs.200kb) <- reps
+
+sim.theta.200kb <- read.table("bgs/Droso/MutationMap_200kb.csv", header = T)
+sim.rho.200kb <- read.table("bgs/Droso/RecombinationMap_200kb.csv", header = T)
+```
+
+### Replicate 1
+
+```{r, message=FALSE, warning=FALSE}
+rep_1.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.200kb.bedgraph", header = T)
+rep_1.pi.200kb$avg <- apply(rep_1.pi.200kb[4:ncol(rep_1.pi.200kb)], 1, mean)
+rep_1.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.200kb.bedgraph", header = T)
+rep_1.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.200kb.bedgraph", header = T)
+rep_1.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.200kb.bedgraph", header = T)
+rep_1.tmrca.200kb$avg <- apply(rep_1.tmrca.200kb[4:ncol(rep_1.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep1 <- as.data.frame(cbind(rep_1.pi.200kb$avg, rep_1.theta.200kb$sample_mean, rep_1.tmrca.200kb$avg, rep_1.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep1, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep1, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep1, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep1$thetaC <- sim.lands.200kb.rep1$theta - mean(sim.lands.200kb.rep1$theta)
+sim.lands.200kb.rep1$tmrcaC <- sim.lands.200kb.rep1$tmrca - mean(sim.lands.200kb.rep1$tmrca)
+sim.lands.200kb.rep1$rhoC <- sim.lands.200kb.rep1$rho - mean(sim.lands.200kb.rep1$rho)
+
+sim.lands.200kb.rep1$bin <- 1:nrow(sim.lands.200kb.rep1)
+
+# for merging:
+sim.lands.200kb.rep1.rep5 <- sim.lands.200kb.rep1
+sim.lands.200kb.rep1.rep5$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep1)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep1)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep1)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 1] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep1, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep1, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep1, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep1, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 2
+
+```{r, message=FALSE, warning=FALSE}
+rep_2.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.200kb.bedgraph", header = T)
+rep_2.pi.200kb$avg <- apply(rep_2.pi.200kb[4:ncol(rep_2.pi.200kb)], 1, mean)
+rep_2.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.200kb.bedgraph", header = T)
+rep_2.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.200kb.bedgraph", header = T)
+rep_2.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.200kb.bedgraph", header = T)
+rep_2.tmrca.200kb$avg <- apply(rep_2.tmrca.200kb[4:ncol(rep_2.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep2 <- as.data.frame(cbind(rep_2.pi.200kb$avg, rep_2.theta.200kb$sample_mean, rep_2.tmrca.200kb$avg, rep_2.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep2, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep2, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep2, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep2$thetaC <- sim.lands.200kb.rep2$theta - mean(sim.lands.200kb.rep2$theta)
+sim.lands.200kb.rep2$tmrcaC <- sim.lands.200kb.rep2$tmrca - mean(sim.lands.200kb.rep2$tmrca)
+sim.lands.200kb.rep2$rhoC <- sim.lands.200kb.rep2$rho - mean(sim.lands.200kb.rep2$rho)
+
+sim.lands.200kb.rep2$bin <- 1:nrow(sim.lands.200kb.rep2)
+
+# for merging:
+sim.lands.200kb.rep2.rep2 <- sim.lands.200kb.rep2
+sim.lands.200kb.rep2.rep2$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep2)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep2)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep2)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep2, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep2, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep2, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep2, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 3
+
+```{r, message=FALSE, warning=FALSE}
+rep_3.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.200kb.bedgraph", header = T)
+rep_3.pi.200kb$avg <- apply(rep_3.pi.200kb[4:ncol(rep_3.pi.200kb)], 1, mean)
+rep_3.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.200kb.bedgraph", header = T)
+rep_3.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.200kb.bedgraph", header = T)
+rep_3.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.200kb.bedgraph", header = T)
+rep_3.tmrca.200kb$avg <- apply(rep_3.tmrca.200kb[4:ncol(rep_3.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep3 <- as.data.frame(cbind(rep_3.pi.200kb$avg, rep_3.theta.200kb$sample_mean, rep_3.tmrca.200kb$avg, rep_3.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep3, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep3, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep3, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep3$thetaC <- sim.lands.200kb.rep3$theta - mean(sim.lands.200kb.rep3$theta)
+sim.lands.200kb.rep3$tmrcaC <- sim.lands.200kb.rep3$tmrca - mean(sim.lands.200kb.rep3$tmrca)
+sim.lands.200kb.rep3$rhoC <- sim.lands.200kb.rep3$rho - mean(sim.lands.200kb.rep3$rho)
+
+sim.lands.200kb.rep3$bin <- 1:nrow(sim.lands.200kb.rep3)
+
+# for merging:
+sim.lands.200kb.rep3.rep3 <- sim.lands.200kb.rep3
+sim.lands.200kb.rep3.rep3$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep3)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep3)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep3)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep3, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep3, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep3, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep3, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 4
+
+```{r, message=FALSE, warning=FALSE}
+rep_4.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.200kb.bedgraph", header = T)
+rep_4.pi.200kb$avg <- apply(rep_4.pi.200kb[4:ncol(rep_4.pi.200kb)], 1, mean)
+rep_4.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.200kb.bedgraph", header = T)
+rep_4.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.200kb.bedgraph", header = T)
+rep_4.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.200kb.bedgraph", header = T)
+rep_4.tmrca.200kb$avg <- apply(rep_4.tmrca.200kb[4:ncol(rep_4.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep4 <- as.data.frame(cbind(rep_4.pi.200kb$avg, rep_4.theta.200kb$sample_mean, rep_4.tmrca.200kb$avg, rep_4.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep4, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep4, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep4, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep4$thetaC <- sim.lands.200kb.rep4$theta - mean(sim.lands.200kb.rep4$theta)
+sim.lands.200kb.rep4$tmrcaC <- sim.lands.200kb.rep4$tmrca - mean(sim.lands.200kb.rep4$tmrca)
+sim.lands.200kb.rep4$rhoC <- sim.lands.200kb.rep4$rho - mean(sim.lands.200kb.rep4$rho)
+
+sim.lands.200kb.rep4$bin <- 1:nrow(sim.lands.200kb.rep4)
+
+# for merging:
+sim.lands.200kb.rep4.rep4 <- sim.lands.200kb.rep4
+sim.lands.200kb.rep4.rep4$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep4)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep4)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep4)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep4, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep4, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep4, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep4, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 5
+
+```{r, message=FALSE, warning=FALSE}
+rep_5.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.200kb.bedgraph", header = T)
+rep_5.pi.200kb$avg <- apply(rep_5.pi.200kb[4:ncol(rep_5.pi.200kb)], 1, mean)
+rep_5.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.200kb.bedgraph", header = T)
+rep_5.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.200kb.bedgraph", header = T)
+rep_5.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.200kb.bedgraph", header = T)
+rep_5.tmrca.200kb$avg <- apply(rep_5.tmrca.200kb[4:ncol(rep_5.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep5 <- as.data.frame(cbind(rep_5.pi.200kb$avg, rep_5.theta.200kb$sample_mean, rep_5.tmrca.200kb$avg, rep_5.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep5, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep5, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep5, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep5$thetaC <- sim.lands.200kb.rep5$theta - mean(sim.lands.200kb.rep5$theta)
+sim.lands.200kb.rep5$tmrcaC <- sim.lands.200kb.rep5$tmrca - mean(sim.lands.200kb.rep5$tmrca)
+sim.lands.200kb.rep5$rhoC <- sim.lands.200kb.rep5$rho - mean(sim.lands.200kb.rep5$rho)
+
+sim.lands.200kb.rep5$bin <- 1:nrow(sim.lands.200kb.rep5)
+
+# for merging:
+sim.lands.200kb.rep5.rep5 <- sim.lands.200kb.rep5
+sim.lands.200kb.rep5.rep5$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep5)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep5)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep5)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep5, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep5, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep5, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep5, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 6
+
+```{r, message=FALSE, warning=FALSE}
+rep_6.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
+rep_6.pi.200kb$avg <- apply(rep_6.pi.200kb[4:ncol(rep_6.pi.200kb)], 1, mean)
+rep_6.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
+rep_6.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
+rep_6.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
+rep_6.tmrca.200kb$avg <- apply(rep_6.tmrca.200kb[4:ncol(rep_6.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep6 <- as.data.frame(cbind(rep_6.pi.200kb$avg, rep_6.theta.200kb$sample_mean, rep_6.tmrca.200kb$avg, rep_6.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep6, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep6, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep6, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep6$thetaC <- sim.lands.200kb.rep6$theta - mean(sim.lands.200kb.rep6$theta)
+sim.lands.200kb.rep6$tmrcaC <- sim.lands.200kb.rep6$tmrca - mean(sim.lands.200kb.rep6$tmrca)
+sim.lands.200kb.rep6$rhoC <- sim.lands.200kb.rep6$rho - mean(sim.lands.200kb.rep6$rho)
+
+sim.lands.200kb.rep6$bin <- 1:nrow(sim.lands.200kb.rep6)
+
+# for merging:
+sim.lands.200kb.rep6.rep6 <- sim.lands.200kb.rep6
+sim.lands.200kb.rep6.rep6$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep6)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep6)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep6)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep6, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep6, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep6, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep6, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 7
+
+```{r, message=FALSE, warning=FALSE}
+rep_7.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
+rep_7.pi.200kb$avg <- apply(rep_7.pi.200kb[4:ncol(rep_7.pi.200kb)], 1, mean)
+rep_7.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
+rep_7.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
+rep_7.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
+rep_7.tmrca.200kb$avg <- apply(rep_7.tmrca.200kb[4:ncol(rep_7.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep7 <- as.data.frame(cbind(rep_7.pi.200kb$avg, rep_7.theta.200kb$sample_mean, rep_7.tmrca.200kb$avg, rep_7.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep7, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep7, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep7, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep7$thetaC <- sim.lands.200kb.rep7$theta - mean(sim.lands.200kb.rep7$theta)
+sim.lands.200kb.rep7$tmrcaC <- sim.lands.200kb.rep7$tmrca - mean(sim.lands.200kb.rep7$tmrca)
+sim.lands.200kb.rep7$rhoC <- sim.lands.200kb.rep7$rho - mean(sim.lands.200kb.rep7$rho)
+
+sim.lands.200kb.rep7$bin <- 1:nrow(sim.lands.200kb.rep7)
+
+# for merging:
+sim.lands.200kb.rep7.rep7 <- sim.lands.200kb.rep7
+sim.lands.200kb.rep7.rep7$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep7)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep7)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep7)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep7, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep7, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep7, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep7, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 8
+
+```{r, message=FALSE, warning=FALSE}
+rep_8.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.200kb.bedgraph", header = T)
+rep_8.pi.200kb$avg <- apply(rep_8.pi.200kb[4:ncol(rep_8.pi.200kb)], 1, mean)
+rep_8.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.200kb.bedgraph", header = T)
+rep_8.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.200kb.bedgraph", header = T)
+rep_8.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.200kb.bedgraph", header = T)
+rep_8.tmrca.200kb$avg <- apply(rep_8.tmrca.200kb[4:ncol(rep_8.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep8 <- as.data.frame(cbind(rep_8.pi.200kb$avg, rep_8.theta.200kb$sample_mean, rep_8.tmrca.200kb$avg, rep_8.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep8, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep8, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep8, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep8$thetaC <- sim.lands.200kb.rep8$theta - mean(sim.lands.200kb.rep8$theta)
+sim.lands.200kb.rep8$tmrcaC <- sim.lands.200kb.rep8$tmrca - mean(sim.lands.200kb.rep8$tmrca)
+sim.lands.200kb.rep8$rhoC <- sim.lands.200kb.rep8$rho - mean(sim.lands.200kb.rep8$rho)
+
+sim.lands.200kb.rep8$bin <- 1:nrow(sim.lands.200kb.rep8)
+
+# for merging:
+sim.lands.200kb.rep8.rep8 <- sim.lands.200kb.rep8
+sim.lands.200kb.rep8.rep8$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep8)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep8)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep8)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep8, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep8, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep8, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep8, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 9
+
+```{r, message=FALSE, warning=FALSE}
+rep_9.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.200kb.bedgraph", header = T)
+rep_9.pi.200kb$avg <- apply(rep_9.pi.200kb[4:ncol(rep_9.pi.200kb)], 1, mean)
+rep_9.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.200kb.bedgraph", header = T)
+rep_9.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.200kb.bedgraph", header = T)
+rep_9.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.200kb.bedgraph", header = T)
+rep_9.tmrca.200kb$avg <- apply(rep_9.tmrca.200kb[4:ncol(rep_9.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep9 <- as.data.frame(cbind(rep_9.pi.200kb$avg, rep_9.theta.200kb$sample_mean, rep_9.tmrca.200kb$avg, rep_9.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep9, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep9, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep9, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep9$thetaC <- sim.lands.200kb.rep9$theta - mean(sim.lands.200kb.rep9$theta)
+sim.lands.200kb.rep9$tmrcaC <- sim.lands.200kb.rep9$tmrca - mean(sim.lands.200kb.rep9$tmrca)
+sim.lands.200kb.rep9$rhoC <- sim.lands.200kb.rep9$rho - mean(sim.lands.200kb.rep9$rho)
+
+sim.lands.200kb.rep9$bin <- 1:nrow(sim.lands.200kb.rep9)
+
+# for merging:
+sim.lands.200kb.rep9.rep9 <- sim.lands.200kb.rep9
+sim.lands.200kb.rep9.rep9$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep9)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep9)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep9)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 9] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep9, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep9, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep9, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep9, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+### Replicate 10
+
+```{r, message=FALSE, warning=FALSE}
+rep_10.pi.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.200kb.bedgraph", header = T)
+rep_10.pi.200kb$avg <- apply(rep_10.pi.200kb[4:ncol(rep_10.pi.200kb)], 1, mean)
+rep_10.rho.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.200kb.bedgraph", header = T)
+rep_10.theta.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.200kb.bedgraph", header = T)
+rep_10.tmrca.200kb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.200kb.bedgraph", header = T)
+rep_10.tmrca.200kb$avg <- apply(rep_10.tmrca.200kb[4:ncol(rep_10.tmrca.200kb)], 1, mean)
+
+sim.lands.200kb.rep10 <- as.data.frame(cbind(rep_10.pi.200kb$avg, rep_10.theta.200kb$sample_mean, rep_10.tmrca.200kb$avg, rep_1.rho.200kb$sample_mean))
+names(sim.lands.200kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.200kb.rep10, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.200kb.rep10, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.200kb.rep10, method = "spearman") 
+
+# centering
+sim.lands.200kb.rep10$thetaC <- sim.lands.200kb.rep10$theta - mean(sim.lands.200kb.rep10$theta)
+sim.lands.200kb.rep10$tmrcaC <- sim.lands.200kb.rep10$tmrca - mean(sim.lands.200kb.rep10$tmrca)
+sim.lands.200kb.rep10$rhoC <- sim.lands.200kb.rep10$rho - mean(sim.lands.200kb.rep10$rho)
+
+sim.lands.200kb.rep10$bin <- 1:nrow(sim.lands.200kb.rep10)
+
+# for merging:
+sim.lands.200kb.rep10.rep10 <- sim.lands.200kb.rep10
+sim.lands.200kb.rep10.rep10$Replicate <- 1
+
+m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.200kb.rep10)
+m.div.200kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.200kb.rep10)
+m.div.200kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.200kb.rep10)
+
+AIC(m.div.200kb, m.div.200kb.2, m.div.200kb.3)
+
+plot(resid(m.div.200kb)~fitted(m.div.200kb))
+dwtest(m.div.200kb)
+hmctest(m.div.200kb)
+hist(resid(m.div.200kb))
+
+summary(m.div.200kb)
+
+anova.diversity <- Anova(m.div.200kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.200kb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.200kb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.bgs.200kb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.bgs.200kb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.bgs.200kb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+g.div.200kb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.200kb.rep10, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep10, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.200kb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep10, weights = varPower(0, ~theta), method = "ML")
+
+g.div.200kb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.200kb.rep10, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.200kb.1, g.div.200kb.2, g.div.200kb.3, g.div.200kb.4)
+
+summary(g.div.200kb.3)
+
+vif(g.div.200kb.3)
+```
+
+
+## 1 Mb scale
+
+```{r, message=FALSE, warning=FALSE}
+r2.bgs.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.bgs.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.bgs.1Mb) <- reps
+
+sim.theta.1Mb <- read.table("bgs/Droso/MutationMap_1000kb.csv", header = T)
+sim.rho.1Mb <- read.table("bgs/Droso/RecombinationMap_1000kb.csv", header = T)
+```
+
+### Replicate 1
+
+```{r, message=FALSE, warning=FALSE}
+rep_1.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.1Mb.bedgraph", header = T)
+rep_1.pi.1Mb$avg <- apply(rep_1.pi.1Mb[4:ncol(rep_1.pi.1Mb)], 1, mean)
+rep_1.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.1Mb.bedgraph", header = T)
+rep_1.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.1Mb.bedgraph", header = T)
+rep_1.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.1Mb.bedgraph", header = T)
+rep_1.tmrca.1Mb$avg <- apply(rep_1.tmrca.1Mb[4:ncol(rep_1.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep1 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, rep_1.theta.1Mb$sample_mean, rep_1.tmrca.1Mb$avg, rep_1.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep1) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep1, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep1, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep1, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep1$thetaC <- sim.lands.1Mb.rep1$theta - mean(sim.lands.1Mb.rep1$theta)
+sim.lands.1Mb.rep1$tmrcaC <- sim.lands.1Mb.rep1$tmrca - mean(sim.lands.1Mb.rep1$tmrca)
+sim.lands.1Mb.rep1$rhoC <- sim.lands.1Mb.rep1$rho - mean(sim.lands.1Mb.rep1$rho)
+
+sim.lands.1Mb.rep1$bin <- 1:nrow(sim.lands.1Mb.rep1)
+
+# for merging:
+sim.lands.1Mb.rep1.rep5 <- sim.lands.1Mb.rep1
+sim.lands.1Mb.rep1.rep5$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep1)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep1)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep1)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 1] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep1, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep1, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep1, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep1, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 2
+
+```{r, message=FALSE, warning=FALSE}
+rep_2.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.1Mb.bedgraph", header = T)
+rep_2.pi.1Mb$avg <- apply(rep_2.pi.1Mb[4:ncol(rep_2.pi.1Mb)], 1, mean)
+rep_2.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.1Mb.bedgraph", header = T)
+rep_2.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.1Mb.bedgraph", header = T)
+rep_2.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.1Mb.bedgraph", header = T)
+rep_2.tmrca.1Mb$avg <- apply(rep_2.tmrca.1Mb[4:ncol(rep_2.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep2 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, rep_2.theta.1Mb$sample_mean, rep_2.tmrca.1Mb$avg, rep_2.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep2) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep2, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep2, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep2, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep2$thetaC <- sim.lands.1Mb.rep2$theta - mean(sim.lands.1Mb.rep2$theta)
+sim.lands.1Mb.rep2$tmrcaC <- sim.lands.1Mb.rep2$tmrca - mean(sim.lands.1Mb.rep2$tmrca)
+sim.lands.1Mb.rep2$rhoC <- sim.lands.1Mb.rep2$rho - mean(sim.lands.1Mb.rep2$rho)
+
+sim.lands.1Mb.rep2$bin <- 1:nrow(sim.lands.1Mb.rep2)
+
+# for merging:
+sim.lands.1Mb.rep2.rep2 <- sim.lands.1Mb.rep2
+sim.lands.1Mb.rep2.rep2$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep2)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep2)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep2)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 2] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 2] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 2] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 2] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 2] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep2, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep2, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep2, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep2, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 3
+
+```{r, message=FALSE, warning=FALSE}
+rep_3.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.1Mb.bedgraph", header = T)
+rep_3.pi.1Mb$avg <- apply(rep_3.pi.1Mb[4:ncol(rep_3.pi.1Mb)], 1, mean)
+rep_3.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.1Mb.bedgraph", header = T)
+rep_3.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.1Mb.bedgraph", header = T)
+rep_3.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.1Mb.bedgraph", header = T)
+rep_3.tmrca.1Mb$avg <- apply(rep_3.tmrca.1Mb[4:ncol(rep_3.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep3 <- as.data.frame(cbind(rep_3.pi.1Mb$avg, rep_3.theta.1Mb$sample_mean, rep_3.tmrca.1Mb$avg, rep_3.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep3) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep3, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep3, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep3, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep3$thetaC <- sim.lands.1Mb.rep3$theta - mean(sim.lands.1Mb.rep3$theta)
+sim.lands.1Mb.rep3$tmrcaC <- sim.lands.1Mb.rep3$tmrca - mean(sim.lands.1Mb.rep3$tmrca)
+sim.lands.1Mb.rep3$rhoC <- sim.lands.1Mb.rep3$rho - mean(sim.lands.1Mb.rep3$rho)
+
+sim.lands.1Mb.rep3$bin <- 1:nrow(sim.lands.1Mb.rep3)
+
+# for merging:
+sim.lands.1Mb.rep3.rep3 <- sim.lands.1Mb.rep3
+sim.lands.1Mb.rep3.rep3$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep3)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep3)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep3)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 3] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 3] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 3] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 3] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 3] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep3, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep3, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep3, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep3, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 4
+
+```{r, message=FALSE, warning=FALSE}
+rep_4.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.1Mb.bedgraph", header = T)
+rep_4.pi.1Mb$avg <- apply(rep_4.pi.1Mb[4:ncol(rep_4.pi.1Mb)], 1, mean)
+rep_4.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.1Mb.bedgraph", header = T)
+rep_4.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.1Mb.bedgraph", header = T)
+rep_4.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.1Mb.bedgraph", header = T)
+rep_4.tmrca.1Mb$avg <- apply(rep_4.tmrca.1Mb[4:ncol(rep_4.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep4 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, rep_4.theta.1Mb$sample_mean, rep_4.tmrca.1Mb$avg, rep_4.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep4) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep4, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep4, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep4, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep4$thetaC <- sim.lands.1Mb.rep4$theta - mean(sim.lands.1Mb.rep4$theta)
+sim.lands.1Mb.rep4$tmrcaC <- sim.lands.1Mb.rep4$tmrca - mean(sim.lands.1Mb.rep4$tmrca)
+sim.lands.1Mb.rep4$rhoC <- sim.lands.1Mb.rep4$rho - mean(sim.lands.1Mb.rep4$rho)
+
+sim.lands.1Mb.rep4$bin <- 1:nrow(sim.lands.1Mb.rep4)
+
+# for merging:
+sim.lands.1Mb.rep4.rep4 <- sim.lands.1Mb.rep4
+sim.lands.1Mb.rep4.rep4$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep4)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep4)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep4)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 4] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 4] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 4] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 4] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 4] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep4, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep4, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep4, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep4, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 5
+
+```{r, message=FALSE, warning=FALSE}
+rep_5.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.1Mb.bedgraph", header = T)
+rep_5.pi.1Mb$avg <- apply(rep_5.pi.1Mb[4:ncol(rep_5.pi.1Mb)], 1, mean)
+rep_5.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.1Mb.bedgraph", header = T)
+rep_5.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.1Mb.bedgraph", header = T)
+rep_5.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.1Mb.bedgraph", header = T)
+rep_5.tmrca.1Mb$avg <- apply(rep_5.tmrca.1Mb[4:ncol(rep_5.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep5 <- as.data.frame(cbind(rep_5.pi.1Mb$avg, rep_5.theta.1Mb$sample_mean, rep_5.tmrca.1Mb$avg, rep_5.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep5) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep5, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep5, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep5, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep5$thetaC <- sim.lands.1Mb.rep5$theta - mean(sim.lands.1Mb.rep5$theta)
+sim.lands.1Mb.rep5$tmrcaC <- sim.lands.1Mb.rep5$tmrca - mean(sim.lands.1Mb.rep5$tmrca)
+sim.lands.1Mb.rep5$rhoC <- sim.lands.1Mb.rep5$rho - mean(sim.lands.1Mb.rep5$rho)
+
+sim.lands.1Mb.rep5$bin <- 1:nrow(sim.lands.1Mb.rep5)
+
+# for merging:
+sim.lands.1Mb.rep5.rep5 <- sim.lands.1Mb.rep5
+sim.lands.1Mb.rep5.rep5$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep5)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep5)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep5)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 5] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 5] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 5] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 5] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 5] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep5, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep5, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep5, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep5, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 6
+
+```{r, message=FALSE, warning=FALSE}
+rep_6.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
+rep_6.pi.1Mb$avg <- apply(rep_6.pi.1Mb[4:ncol(rep_6.pi.1Mb)], 1, mean)
+rep_6.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
+rep_6.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
+rep_6.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
+rep_6.tmrca.1Mb$avg <- apply(rep_6.tmrca.1Mb[4:ncol(rep_6.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep6 <- as.data.frame(cbind(rep_6.pi.1Mb$avg, rep_6.theta.1Mb$sample_mean, rep_6.tmrca.1Mb$avg, rep_6.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep6) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep6, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep6, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep6, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep6$thetaC <- sim.lands.1Mb.rep6$theta - mean(sim.lands.1Mb.rep6$theta)
+sim.lands.1Mb.rep6$tmrcaC <- sim.lands.1Mb.rep6$tmrca - mean(sim.lands.1Mb.rep6$tmrca)
+sim.lands.1Mb.rep6$rhoC <- sim.lands.1Mb.rep6$rho - mean(sim.lands.1Mb.rep6$rho)
+
+sim.lands.1Mb.rep6$bin <- 1:nrow(sim.lands.1Mb.rep6)
+
+# for merging:
+sim.lands.1Mb.rep6.rep6 <- sim.lands.1Mb.rep6
+sim.lands.1Mb.rep6.rep6$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep6)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep6)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep6)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 6] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 6] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 6] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 6] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 6] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep6, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep6, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep6, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep6, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 7
+
+```{r, message=FALSE, warning=FALSE}
+rep_7.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
+rep_7.pi.1Mb$avg <- apply(rep_7.pi.1Mb[4:ncol(rep_7.pi.1Mb)], 1, mean)
+rep_7.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
+rep_7.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
+rep_7.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
+rep_7.tmrca.1Mb$avg <- apply(rep_7.tmrca.1Mb[4:ncol(rep_7.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep7 <- as.data.frame(cbind(rep_7.pi.1Mb$avg, rep_7.theta.1Mb$sample_mean, rep_7.tmrca.1Mb$avg, rep_7.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep7) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep7, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep7, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep7, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep7$thetaC <- sim.lands.1Mb.rep7$theta - mean(sim.lands.1Mb.rep7$theta)
+sim.lands.1Mb.rep7$tmrcaC <- sim.lands.1Mb.rep7$tmrca - mean(sim.lands.1Mb.rep7$tmrca)
+sim.lands.1Mb.rep7$rhoC <- sim.lands.1Mb.rep7$rho - mean(sim.lands.1Mb.rep7$rho)
+
+sim.lands.1Mb.rep7$bin <- 1:nrow(sim.lands.1Mb.rep7)
+
+# for merging:
+sim.lands.1Mb.rep7.rep7 <- sim.lands.1Mb.rep7
+sim.lands.1Mb.rep7.rep7$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep7)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep7)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep7)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 7] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 7] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 7] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 7] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 7] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep7, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep7, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep7, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep7, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 8
+
+```{r, message=FALSE, warning=FALSE}
+rep_8.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.1Mb.bedgraph", header = T)
+rep_8.pi.1Mb$avg <- apply(rep_8.pi.1Mb[4:ncol(rep_8.pi.1Mb)], 1, mean)
+rep_8.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.1Mb.bedgraph", header = T)
+rep_8.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.1Mb.bedgraph", header = T)
+rep_8.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.1Mb.bedgraph", header = T)
+rep_8.tmrca.1Mb$avg <- apply(rep_8.tmrca.1Mb[4:ncol(rep_8.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep8 <- as.data.frame(cbind(rep_8.pi.1Mb$avg, rep_8.theta.1Mb$sample_mean, rep_8.tmrca.1Mb$avg, rep_8.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep8) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep8, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep8, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep8, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep8$thetaC <- sim.lands.1Mb.rep8$theta - mean(sim.lands.1Mb.rep8$theta)
+sim.lands.1Mb.rep8$tmrcaC <- sim.lands.1Mb.rep8$tmrca - mean(sim.lands.1Mb.rep8$tmrca)
+sim.lands.1Mb.rep8$rhoC <- sim.lands.1Mb.rep8$rho - mean(sim.lands.1Mb.rep8$rho)
+
+sim.lands.1Mb.rep8$bin <- 1:nrow(sim.lands.1Mb.rep8)
+
+# for merging:
+sim.lands.1Mb.rep8.rep8 <- sim.lands.1Mb.rep8
+sim.lands.1Mb.rep8.rep8$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep8)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep8)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep8)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 8] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 8] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 8] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 8] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 8] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep8, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep8, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep8, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep8, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 9
+
+```{r, message=FALSE, warning=FALSE}
+rep_9.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.1Mb.bedgraph", header = T)
+rep_9.pi.1Mb$avg <- apply(rep_9.pi.1Mb[4:ncol(rep_9.pi.1Mb)], 1, mean)
+rep_9.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.1Mb.bedgraph", header = T)
+rep_9.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.1Mb.bedgraph", header = T)
+rep_9.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.1Mb.bedgraph", header = T)
+rep_9.tmrca.1Mb$avg <- apply(rep_9.tmrca.1Mb[4:ncol(rep_9.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep9 <- as.data.frame(cbind(rep_9.pi.1Mb$avg, rep_9.theta.1Mb$sample_mean, rep_9.tmrca.1Mb$avg, rep_9.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep9) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep9, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep9, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep9, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep9$thetaC <- sim.lands.1Mb.rep9$theta - mean(sim.lands.1Mb.rep9$theta)
+sim.lands.1Mb.rep9$tmrcaC <- sim.lands.1Mb.rep9$tmrca - mean(sim.lands.1Mb.rep9$tmrca)
+sim.lands.1Mb.rep9$rhoC <- sim.lands.1Mb.rep9$rho - mean(sim.lands.1Mb.rep9$rho)
+
+sim.lands.1Mb.rep9$bin <- 1:nrow(sim.lands.1Mb.rep9)
+
+# for merging:
+sim.lands.1Mb.rep9.rep9 <- sim.lands.1Mb.rep9
+sim.lands.1Mb.rep9.rep9$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep9)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep9)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep9)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 9] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 9] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 9] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 9] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 9] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep9, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep9, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep9, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep9, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+### Replicate 10
+
+```{r, message=FALSE, warning=FALSE}
+rep_10.pi.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.1Mb.bedgraph", header = T)
+rep_10.pi.1Mb$avg <- apply(rep_10.pi.1Mb[4:ncol(rep_10.pi.1Mb)], 1, mean)
+rep_10.rho.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.1Mb.bedgraph", header = T)
+rep_10.theta.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.1Mb.bedgraph", header = T)
+rep_10.tmrca.1Mb <- read.table("bgs/Droso/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.1Mb.bedgraph", header = T)
+rep_10.tmrca.1Mb$avg <- apply(rep_10.tmrca.1Mb[4:ncol(rep_10.tmrca.1Mb)], 1, mean)
+
+sim.lands.1Mb.rep10 <- as.data.frame(cbind(rep_10.pi.1Mb$avg, rep_10.theta.1Mb$sample_mean, rep_10.tmrca.1Mb$avg, rep_1.rho.1Mb$sample_mean))
+names(sim.lands.1Mb.rep10) <- c("diversity", "theta", "tmrca", "rho")
+
+cor.test(~theta+tmrca, data = sim.lands.1Mb.rep10, method = "spearman") 
+cor.test(~theta+rho, data = sim.lands.1Mb.rep10, method = "spearman") 
+cor.test(~rho+tmrca, data = sim.lands.1Mb.rep10, method = "spearman") 
+
+# centering
+sim.lands.1Mb.rep10$thetaC <- sim.lands.1Mb.rep10$theta - mean(sim.lands.1Mb.rep10$theta)
+sim.lands.1Mb.rep10$tmrcaC <- sim.lands.1Mb.rep10$tmrca - mean(sim.lands.1Mb.rep10$tmrca)
+sim.lands.1Mb.rep10$rhoC <- sim.lands.1Mb.rep10$rho - mean(sim.lands.1Mb.rep10$rho)
+
+sim.lands.1Mb.rep10$bin <- 1:nrow(sim.lands.1Mb.rep10)
+
+# for merging:
+sim.lands.1Mb.rep10.rep10 <- sim.lands.1Mb.rep10
+sim.lands.1Mb.rep10.rep10$Replicate <- 1
+
+m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.lands.1Mb.rep10)
+m.div.1Mb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.1Mb.rep10)
+m.div.1Mb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.1Mb.rep10)
+
+AIC(m.div.1Mb, m.div.1Mb.2, m.div.1Mb.3)
+
+plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
+dwtest(m.div.1Mb)
+hmctest(m.div.1Mb)
+hist(resid(m.div.1Mb))
+
+summary(m.div.1Mb)
+
+anova.diversity <- Anova(m.div.1Mb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+
+r2.bgs.1Mb[1, 10] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.1Mb[2, 10] <- anova.diversity$VarExp[1] * 100
+r2.bgs.1Mb[3, 10] <- anova.diversity$VarExp[2] * 100
+r2.bgs.1Mb[4, 10] <- anova.diversity$VarExp[3] * 100
+r2.bgs.1Mb[5, 10] <- anova.diversity$VarExp[4] * 100
+
+g.div.1Mb.1 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                  data = sim.lands.1Mb.rep10, weights = varPower(0, ~tmrcaC), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.2 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep10, weights = varPower(0, ~theta), cor = corAR1(0, ~bin), method = "ML")
+
+g.div.1Mb.3 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep10, weights = varPower(0, ~theta), method = "ML")
+
+g.div.1Mb.4 <- gls(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC,
+                    data = sim.lands.1Mb.rep10, weights = varPower(0, ~tmrcaC), method = "ML")
+
+AIC(g.div.1Mb.1, g.div.1Mb.2, g.div.1Mb.3, g.div.1Mb.4)
+
+summary(g.div.1Mb.3)
+
+vif(g.div.1Mb.3)
+```
+
+
+# all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
 
+# inferred landscapes
+r2.inf.avg <- rbind.data.frame(r2.bgs.50kb$average, r2.bgs.200kb$average, r2.bgs.1Mb$average, make.row.names = F)
+colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA")
+r2.inf.avg$bin.size <- c(50, 200, 1000)
+  
+r2.tab.comb <- rbind.data.frame(r2.inf.avg)
 
+molten.r2 <- melt(r2.tab.comb, id.vars = "bin.size")
+r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable))
+r2.plot <- r2.plot + geom_line(data = molten.r2)
+r2.plot <- r2.plot + geom_point(aes(shape = variable), size = 4)
+r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
+r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks())
+r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2))
+r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
+r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
+r2.plot
+ggsave("FigX.pdf", r2.plot, device = "pdf", )
 ```
-
 
