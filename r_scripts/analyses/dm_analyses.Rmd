@@ -6805,7 +6805,7 @@ row.names(r2.bgs.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.50kb) <- reps
 
 sim.theta.50kb <- read.table("dm_bgs/MutationMap_50kb.csv", sep = ",", header = T)
-sim.rho.50kb <- read.table("dm_bgs/RecombinationMap_50kb.csv", header = T)
+sim.rho.50kb <- read.table("dm_bgs/RecombinationMap_50kb.csv", sep = ",", header = T)
 ```
 
 ### Replicate 1
@@ -6838,7 +6838,7 @@ m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = sim.
 m.div.50kb.2 <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC + rhoC:tmrcaC, data = sim.lands.50kb.rep1)
 m.div.50kb.3 <- lm(diversity ~ (thetaC + rhoC + tmrcaC) ^ 2, data = sim.lands.50kb.rep1)
 
-AIC(m.div.50kb.2, m.div.50kb.2.2, m.div.50kb.2.3)
+AIC(m.div.50kb, m.div.50kb.2, m.div.50kb.3)
 
 plot(resid(m.div.50kb.2)~fitted(m.div.50kb.2))
 dwtest(m.div.50kb.2)
@@ -7497,8 +7497,8 @@ r2.bgs.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.200kb) <- reps
 
-sim.theta.200kb <- read.table("dm_bgs/MutationMap_200kb.csv", header = T)
-sim.rho.200kb <- read.table("dm_bgs/RecombinationMap_200kb.csv", header = T)
+sim.theta.200kb <- read.table("dm_bgs/MutationMap_200kb.csv", sep = ",", header = T)
+sim.rho.200kb <- read.table("dm_bgs/RecombinationMap_200kb.csv", sep = ",", header = T)
 ```
 
 ### Replicate 1
@@ -8189,8 +8189,8 @@ r2.bgs.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.1Mb) <- reps
 
-sim.theta.1Mb <- read.table("dm_bgs/MutationMap_1000kb.csv", header = T)
-sim.rho.1Mb <- read.table("dm_bgs/RecombinationMap_1000kb.csv", header = T)
+sim.theta.1Mb <- read.table("dm_bgs/MutationMap_1000kb.csv", sep = ",", header = T)
+sim.rho.1Mb <- read.table("dm_bgs/RecombinationMap_1000kb.csv", sep = ",", header = T)
 ```
 
 ### Replicate 1
