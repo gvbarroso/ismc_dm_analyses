@@ -3554,7 +3554,7 @@ theta.map.1Mb <- theta.map.1Mb + theme(text = element_text(size = 20), axis.titl
 plot_grid(rho.map.1Mb, theta.map.1Mb, nrow = 2, ncol = 1)
 
 fig2 <- plot_grid(theta.map.50kb, theta.map.200kb, theta.map.1Mb, labels = "AUTO", nrow = 3, ncol = 1)
-save_plot("fig2.pdf", fig2, base_height = 16, base_width = 12)
+save_plot("Figure2.pdf", fig2, base_height = 16, base_width = 12)
 ```
 
 # Real Drosophila data.
@@ -6791,7 +6791,7 @@ r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
 r2.plot
-ggsave("FigX.pdf", r2.plot, device = "pdf", )
+ggsave("Fig7.pdf", r2.plot, device = "pdf", )
 ```
 
 
@@ -8898,6 +8898,6 @@ r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
 r2.plot
-ggsave("FigY.pdf", r2.plot, device = "pdf", )
+ggsave("Fig8.pdf", r2.plot, device = "pdf", )
 ```
 
