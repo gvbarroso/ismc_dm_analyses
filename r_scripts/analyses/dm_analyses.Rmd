@@ -4714,7 +4714,7 @@ r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
 r2.plot
-ggsave("Fig4.pdf", r2.plot, device = "pdf", )
+ggsave("Figure4.pdf", r2.plot, device = "pdf", )
 ```
 
 
@@ -4727,18 +4727,18 @@ r2.bgs.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.50kb) <- reps
 
-sim.theta.50kb <- read.table("dm_bgs/MutationMap_50kb.csv", header = T)
-sim.rho.50kb <- read.table("dm_bgs/RecombinationMap_50kb.csv", header = T)
+sim.theta.50kb <- read.table("dm_bgs_sims/MutationMap_50kb.csv", header = T)
+sim.rho.50kb <- read.table("dm_bgs_sims/RecombinationMap_50kb.csv", header = T)
 ```
 
 ### Replicate 1
 
 ```{r, message=FALSE, warning=FALSE}
-rep_1.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.50kb.bedgraph", header = T)
+rep_1.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.50kb.bedgraph", header = T)
 rep_1.pi.50kb$avg <- apply(rep_1.pi.50kb[4:ncol(rep_1.pi.50kb)], 1, mean)
-rep_1.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.50kb.bedgraph", header = T)
-rep_1.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.50kb.bedgraph", header = T)
-rep_1.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.50kb.bedgraph", header = T)
+rep_1.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.50kb.bedgraph", header = T)
+rep_1.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.50kb.bedgraph", header = T)
 rep_1.tmrca.50kb$avg <- apply(rep_1.tmrca.50kb[4:ncol(rep_1.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep1 <- as.data.frame(cbind(rep_1.pi.50kb$avg, rep_1.theta.50kb$sample_mean, rep_1.tmrca.50kb$avg, rep_1.rho.50kb$sample_mean))
@@ -4800,11 +4800,11 @@ vif(g.div.50kb.3)
 ### Replicate 2
 
 ```{r, message=FALSE, warning=FALSE}
-rep_2.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.50kb.bedgraph", header = T)
+rep_2.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.50kb.bedgraph", header = T)
 rep_2.pi.50kb$avg <- apply(rep_2.pi.50kb[4:ncol(rep_2.pi.50kb)], 1, mean)
-rep_2.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.50kb.bedgraph", header = T)
-rep_2.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.50kb.bedgraph", header = T)
-rep_2.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.50kb.bedgraph", header = T)
+rep_2.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.50kb.bedgraph", header = T)
+rep_2.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.50kb.bedgraph", header = T)
 rep_2.tmrca.50kb$avg <- apply(rep_2.tmrca.50kb[4:ncol(rep_2.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep2 <- as.data.frame(cbind(rep_2.pi.50kb$avg, rep_2.theta.50kb$sample_mean, rep_2.tmrca.50kb$avg, rep_2.rho.50kb$sample_mean))
@@ -4866,11 +4866,11 @@ vif(g.div.50kb.3)
 ### Replicate 3
 
 ```{r, message=FALSE, warning=FALSE}
-rep_3.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.50kb.bedgraph", header = T)
+rep_3.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.50kb.bedgraph", header = T)
 rep_3.pi.50kb$avg <- apply(rep_3.pi.50kb[4:ncol(rep_3.pi.50kb)], 1, mean)
-rep_3.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.50kb.bedgraph", header = T)
-rep_3.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.50kb.bedgraph", header = T)
-rep_3.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.50kb.bedgraph", header = T)
+rep_3.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.50kb.bedgraph", header = T)
+rep_3.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.50kb.bedgraph", header = T)
 rep_3.tmrca.50kb$avg <- apply(rep_3.tmrca.50kb[4:ncol(rep_3.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep3 <- as.data.frame(cbind(rep_3.pi.50kb$avg, rep_3.theta.50kb$sample_mean, rep_3.tmrca.50kb$avg, rep_3.rho.50kb$sample_mean))
@@ -4932,11 +4932,11 @@ vif(g.div.50kb.3)
 ### Replicate 4
 
 ```{r, message=FALSE, warning=FALSE}
-rep_4.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.50kb.bedgraph", header = T)
+rep_4.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.50kb.bedgraph", header = T)
 rep_4.pi.50kb$avg <- apply(rep_4.pi.50kb[4:ncol(rep_4.pi.50kb)], 1, mean)
-rep_4.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.50kb.bedgraph", header = T)
-rep_4.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.50kb.bedgraph", header = T)
-rep_4.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.50kb.bedgraph", header = T)
+rep_4.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.50kb.bedgraph", header = T)
+rep_4.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.50kb.bedgraph", header = T)
 rep_4.tmrca.50kb$avg <- apply(rep_4.tmrca.50kb[4:ncol(rep_4.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep4 <- as.data.frame(cbind(rep_4.pi.50kb$avg, rep_4.theta.50kb$sample_mean, rep_4.tmrca.50kb$avg, rep_4.rho.50kb$sample_mean))
@@ -4998,11 +4998,11 @@ vif(g.div.50kb.3)
 ### Replicate 5
 
 ```{r, message=FALSE, warning=FALSE}
-rep_5.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.50kb.bedgraph", header = T)
+rep_5.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.50kb.bedgraph", header = T)
 rep_5.pi.50kb$avg <- apply(rep_5.pi.50kb[4:ncol(rep_5.pi.50kb)], 1, mean)
-rep_5.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.50kb.bedgraph", header = T)
-rep_5.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.50kb.bedgraph", header = T)
-rep_5.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.50kb.bedgraph", header = T)
+rep_5.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.50kb.bedgraph", header = T)
+rep_5.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.50kb.bedgraph", header = T)
 rep_5.tmrca.50kb$avg <- apply(rep_5.tmrca.50kb[4:ncol(rep_5.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep5 <- as.data.frame(cbind(rep_5.pi.50kb$avg, rep_5.theta.50kb$sample_mean, rep_5.tmrca.50kb$avg, rep_5.rho.50kb$sample_mean))
@@ -5064,11 +5064,11 @@ vif(g.div.50kb.3)
 ### Replicate 6
 
 ```{r, message=FALSE, warning=FALSE}
-rep_6.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
+rep_6.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
 rep_6.pi.50kb$avg <- apply(rep_6.pi.50kb[4:ncol(rep_6.pi.50kb)], 1, mean)
-rep_6.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
-rep_6.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
-rep_6.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
+rep_6.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
+rep_6.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
 rep_6.tmrca.50kb$avg <- apply(rep_6.tmrca.50kb[4:ncol(rep_6.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep6 <- as.data.frame(cbind(rep_6.pi.50kb$avg, rep_6.theta.50kb$sample_mean, rep_6.tmrca.50kb$avg, rep_6.rho.50kb$sample_mean))
@@ -5130,11 +5130,11 @@ vif(g.div.50kb.3)
 ### Replicate 7
 
 ```{r, message=FALSE, warning=FALSE}
-rep_7.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
+rep_7.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
 rep_7.pi.50kb$avg <- apply(rep_7.pi.50kb[4:ncol(rep_7.pi.50kb)], 1, mean)
-rep_7.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
-rep_7.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
-rep_7.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
+rep_7.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
+rep_7.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
 rep_7.tmrca.50kb$avg <- apply(rep_7.tmrca.50kb[4:ncol(rep_7.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep7 <- as.data.frame(cbind(rep_7.pi.50kb$avg, rep_7.theta.50kb$sample_mean, rep_7.tmrca.50kb$avg, rep_7.rho.50kb$sample_mean))
@@ -5196,11 +5196,11 @@ vif(g.div.50kb.3)
 ### Replicate 8
 
 ```{r, message=FALSE, warning=FALSE}
-rep_8.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.50kb.bedgraph", header = T)
+rep_8.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.50kb.bedgraph", header = T)
 rep_8.pi.50kb$avg <- apply(rep_8.pi.50kb[4:ncol(rep_8.pi.50kb)], 1, mean)
-rep_8.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.50kb.bedgraph", header = T)
-rep_8.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.50kb.bedgraph", header = T)
-rep_8.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.50kb.bedgraph", header = T)
+rep_8.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.50kb.bedgraph", header = T)
+rep_8.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.50kb.bedgraph", header = T)
 rep_8.tmrca.50kb$avg <- apply(rep_8.tmrca.50kb[4:ncol(rep_8.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep8 <- as.data.frame(cbind(rep_8.pi.50kb$avg, rep_8.theta.50kb$sample_mean, rep_8.tmrca.50kb$avg, rep_8.rho.50kb$sample_mean))
@@ -5262,11 +5262,11 @@ vif(g.div.50kb.3)
 ### Replicate 9
 
 ```{r, message=FALSE, warning=FALSE}
-rep_9.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.50kb.bedgraph", header = T)
+rep_9.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.50kb.bedgraph", header = T)
 rep_9.pi.50kb$avg <- apply(rep_9.pi.50kb[4:ncol(rep_9.pi.50kb)], 1, mean)
-rep_9.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.50kb.bedgraph", header = T)
-rep_9.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.50kb.bedgraph", header = T)
-rep_9.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.50kb.bedgraph", header = T)
+rep_9.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.50kb.bedgraph", header = T)
+rep_9.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.50kb.bedgraph", header = T)
 rep_9.tmrca.50kb$avg <- apply(rep_9.tmrca.50kb[4:ncol(rep_9.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep9 <- as.data.frame(cbind(rep_9.pi.50kb$avg, rep_9.theta.50kb$sample_mean, rep_9.tmrca.50kb$avg, rep_9.rho.50kb$sample_mean))
@@ -5328,11 +5328,11 @@ vif(g.div.50kb.3)
 ### Replicate 10
 
 ```{r, message=FALSE, warning=FALSE}
-rep_10.pi.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.50kb.bedgraph", header = T)
+rep_10.pi.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.50kb.bedgraph", header = T)
 rep_10.pi.50kb$avg <- apply(rep_10.pi.50kb[4:ncol(rep_10.pi.50kb)], 1, mean)
-rep_10.rho.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.50kb.bedgraph", header = T)
-rep_10.theta.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.50kb.bedgraph", header = T)
-rep_10.tmrca.50kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.50kb.bedgraph", header = T)
+rep_10.rho.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.50kb.bedgraph", header = T)
+rep_10.theta.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.50kb.bedgraph", header = T)
+rep_10.tmrca.50kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.50kb.bedgraph", header = T)
 rep_10.tmrca.50kb$avg <- apply(rep_10.tmrca.50kb[4:ncol(rep_10.tmrca.50kb)], 1, mean)
 
 sim.lands.50kb.rep10 <- as.data.frame(cbind(rep_10.pi.50kb$avg, rep_10.theta.50kb$sample_mean, rep_10.tmrca.50kb$avg, rep_1.rho.50kb$sample_mean))
@@ -5398,18 +5398,18 @@ r2.bgs.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.200kb) <- reps
 
-sim.theta.200kb <- read.table("dm_bgs/MutationMap_200kb.csv", header = T)
-sim.rho.200kb <- read.table("dm_bgs/RecombinationMap_200kb.csv", header = T)
+sim.theta.200kb <- read.table("dm_bgs_sims/MutationMap_200kb.csv", header = T)
+sim.rho.200kb <- read.table("dm_bgs_sims/RecombinationMap_200kb.csv", header = T)
 ```
 
 ### Replicate 1
 
 ```{r, message=FALSE, warning=FALSE}
-rep_1.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.200kb.bedgraph", header = T)
+rep_1.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.200kb.bedgraph", header = T)
 rep_1.pi.200kb$avg <- apply(rep_1.pi.200kb[4:ncol(rep_1.pi.200kb)], 1, mean)
-rep_1.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.200kb.bedgraph", header = T)
-rep_1.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.200kb.bedgraph", header = T)
-rep_1.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.200kb.bedgraph", header = T)
+rep_1.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.200kb.bedgraph", header = T)
+rep_1.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.200kb.bedgraph", header = T)
+rep_1.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.200kb.bedgraph", header = T)
 rep_1.tmrca.200kb$avg <- apply(rep_1.tmrca.200kb[4:ncol(rep_1.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep1 <- as.data.frame(cbind(rep_1.pi.200kb$avg, rep_1.theta.200kb$sample_mean, rep_1.tmrca.200kb$avg, rep_1.rho.200kb$sample_mean))
@@ -5471,11 +5471,11 @@ vif(g.div.200kb.3)
 ### Replicate 2
 
 ```{r, message=FALSE, warning=FALSE}
-rep_2.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.200kb.bedgraph", header = T)
+rep_2.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.200kb.bedgraph", header = T)
 rep_2.pi.200kb$avg <- apply(rep_2.pi.200kb[4:ncol(rep_2.pi.200kb)], 1, mean)
-rep_2.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.200kb.bedgraph", header = T)
-rep_2.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.200kb.bedgraph", header = T)
-rep_2.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.200kb.bedgraph", header = T)
+rep_2.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.200kb.bedgraph", header = T)
+rep_2.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.200kb.bedgraph", header = T)
+rep_2.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.200kb.bedgraph", header = T)
 rep_2.tmrca.200kb$avg <- apply(rep_2.tmrca.200kb[4:ncol(rep_2.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep2 <- as.data.frame(cbind(rep_2.pi.200kb$avg, rep_2.theta.200kb$sample_mean, rep_2.tmrca.200kb$avg, rep_2.rho.200kb$sample_mean))
@@ -5537,11 +5537,11 @@ vif(g.div.200kb.3)
 ### Replicate 3
 
 ```{r, message=FALSE, warning=FALSE}
-rep_3.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.200kb.bedgraph", header = T)
+rep_3.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.200kb.bedgraph", header = T)
 rep_3.pi.200kb$avg <- apply(rep_3.pi.200kb[4:ncol(rep_3.pi.200kb)], 1, mean)
-rep_3.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.200kb.bedgraph", header = T)
-rep_3.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.200kb.bedgraph", header = T)
-rep_3.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.200kb.bedgraph", header = T)
+rep_3.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.200kb.bedgraph", header = T)
+rep_3.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.200kb.bedgraph", header = T)
+rep_3.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.200kb.bedgraph", header = T)
 rep_3.tmrca.200kb$avg <- apply(rep_3.tmrca.200kb[4:ncol(rep_3.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep3 <- as.data.frame(cbind(rep_3.pi.200kb$avg, rep_3.theta.200kb$sample_mean, rep_3.tmrca.200kb$avg, rep_3.rho.200kb$sample_mean))
@@ -5603,11 +5603,11 @@ vif(g.div.200kb.3)
 ### Replicate 4
 
 ```{r, message=FALSE, warning=FALSE}
-rep_4.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.200kb.bedgraph", header = T)
+rep_4.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.200kb.bedgraph", header = T)
 rep_4.pi.200kb$avg <- apply(rep_4.pi.200kb[4:ncol(rep_4.pi.200kb)], 1, mean)
-rep_4.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.200kb.bedgraph", header = T)
-rep_4.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.200kb.bedgraph", header = T)
-rep_4.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.200kb.bedgraph", header = T)
+rep_4.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.200kb.bedgraph", header = T)
+rep_4.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.200kb.bedgraph", header = T)
+rep_4.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.200kb.bedgraph", header = T)
 rep_4.tmrca.200kb$avg <- apply(rep_4.tmrca.200kb[4:ncol(rep_4.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep4 <- as.data.frame(cbind(rep_4.pi.200kb$avg, rep_4.theta.200kb$sample_mean, rep_4.tmrca.200kb$avg, rep_4.rho.200kb$sample_mean))
@@ -5669,11 +5669,11 @@ vif(g.div.200kb.3)
 ### Replicate 5
 
 ```{r, message=FALSE, warning=FALSE}
-rep_5.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.200kb.bedgraph", header = T)
+rep_5.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.200kb.bedgraph", header = T)
 rep_5.pi.200kb$avg <- apply(rep_5.pi.200kb[4:ncol(rep_5.pi.200kb)], 1, mean)
-rep_5.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.200kb.bedgraph", header = T)
-rep_5.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.200kb.bedgraph", header = T)
-rep_5.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.200kb.bedgraph", header = T)
+rep_5.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.200kb.bedgraph", header = T)
+rep_5.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.200kb.bedgraph", header = T)
+rep_5.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.200kb.bedgraph", header = T)
 rep_5.tmrca.200kb$avg <- apply(rep_5.tmrca.200kb[4:ncol(rep_5.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep5 <- as.data.frame(cbind(rep_5.pi.200kb$avg, rep_5.theta.200kb$sample_mean, rep_5.tmrca.200kb$avg, rep_5.rho.200kb$sample_mean))
@@ -5735,11 +5735,11 @@ vif(g.div.200kb.3)
 ### Replicate 6
 
 ```{r, message=FALSE, warning=FALSE}
-rep_6.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
+rep_6.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
 rep_6.pi.200kb$avg <- apply(rep_6.pi.200kb[4:ncol(rep_6.pi.200kb)], 1, mean)
-rep_6.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
-rep_6.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
-rep_6.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
+rep_6.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
+rep_6.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
+rep_6.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
 rep_6.tmrca.200kb$avg <- apply(rep_6.tmrca.200kb[4:ncol(rep_6.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep6 <- as.data.frame(cbind(rep_6.pi.200kb$avg, rep_6.theta.200kb$sample_mean, rep_6.tmrca.200kb$avg, rep_6.rho.200kb$sample_mean))
@@ -5801,11 +5801,11 @@ vif(g.div.200kb.3)
 ### Replicate 7
 
 ```{r, message=FALSE, warning=FALSE}
-rep_7.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
+rep_7.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
 rep_7.pi.200kb$avg <- apply(rep_7.pi.200kb[4:ncol(rep_7.pi.200kb)], 1, mean)
-rep_7.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
-rep_7.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
-rep_7.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
+rep_7.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
+rep_7.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
+rep_7.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
 rep_7.tmrca.200kb$avg <- apply(rep_7.tmrca.200kb[4:ncol(rep_7.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep7 <- as.data.frame(cbind(rep_7.pi.200kb$avg, rep_7.theta.200kb$sample_mean, rep_7.tmrca.200kb$avg, rep_7.rho.200kb$sample_mean))
@@ -5867,11 +5867,11 @@ vif(g.div.200kb.3)
 ### Replicate 8
 
 ```{r, message=FALSE, warning=FALSE}
-rep_8.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.200kb.bedgraph", header = T)
+rep_8.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.200kb.bedgraph", header = T)
 rep_8.pi.200kb$avg <- apply(rep_8.pi.200kb[4:ncol(rep_8.pi.200kb)], 1, mean)
-rep_8.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.200kb.bedgraph", header = T)
-rep_8.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.200kb.bedgraph", header = T)
-rep_8.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.200kb.bedgraph", header = T)
+rep_8.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.200kb.bedgraph", header = T)
+rep_8.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.200kb.bedgraph", header = T)
+rep_8.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.200kb.bedgraph", header = T)
 rep_8.tmrca.200kb$avg <- apply(rep_8.tmrca.200kb[4:ncol(rep_8.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep8 <- as.data.frame(cbind(rep_8.pi.200kb$avg, rep_8.theta.200kb$sample_mean, rep_8.tmrca.200kb$avg, rep_8.rho.200kb$sample_mean))
@@ -5933,11 +5933,11 @@ vif(g.div.200kb.3)
 ### Replicate 9
 
 ```{r, message=FALSE, warning=FALSE}
-rep_9.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.200kb.bedgraph", header = T)
+rep_9.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.200kb.bedgraph", header = T)
 rep_9.pi.200kb$avg <- apply(rep_9.pi.200kb[4:ncol(rep_9.pi.200kb)], 1, mean)
-rep_9.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.200kb.bedgraph", header = T)
-rep_9.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.200kb.bedgraph", header = T)
-rep_9.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.200kb.bedgraph", header = T)
+rep_9.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.200kb.bedgraph", header = T)
+rep_9.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.200kb.bedgraph", header = T)
+rep_9.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.200kb.bedgraph", header = T)
 rep_9.tmrca.200kb$avg <- apply(rep_9.tmrca.200kb[4:ncol(rep_9.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep9 <- as.data.frame(cbind(rep_9.pi.200kb$avg, rep_9.theta.200kb$sample_mean, rep_9.tmrca.200kb$avg, rep_9.rho.200kb$sample_mean))
@@ -5999,11 +5999,11 @@ vif(g.div.200kb.3)
 ### Replicate 10
 
 ```{r, message=FALSE, warning=FALSE}
-rep_10.pi.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.200kb.bedgraph", header = T)
+rep_10.pi.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.200kb.bedgraph", header = T)
 rep_10.pi.200kb$avg <- apply(rep_10.pi.200kb[4:ncol(rep_10.pi.200kb)], 1, mean)
-rep_10.rho.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.200kb.bedgraph", header = T)
-rep_10.theta.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.200kb.bedgraph", header = T)
-rep_10.tmrca.200kb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.200kb.bedgraph", header = T)
+rep_10.rho.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.200kb.bedgraph", header = T)
+rep_10.theta.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.200kb.bedgraph", header = T)
+rep_10.tmrca.200kb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.200kb.bedgraph", header = T)
 rep_10.tmrca.200kb$avg <- apply(rep_10.tmrca.200kb[4:ncol(rep_10.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep10 <- as.data.frame(cbind(rep_10.pi.200kb$avg, rep_10.theta.200kb$sample_mean, rep_10.tmrca.200kb$avg, rep_1.rho.200kb$sample_mean))
@@ -6070,18 +6070,18 @@ r2.bgs.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.1Mb) <- reps
 
-sim.theta.1Mb <- read.table("dm_bgs/MutationMap_1000kb.csv", header = T)
-sim.rho.1Mb <- read.table("dm_bgs/RecombinationMap_1000kb.csv", header = T)
+sim.theta.1Mb <- read.table("dm_bgs_sims/MutationMap_1000kb.csv", header = T)
+sim.rho.1Mb <- read.table("dm_bgs_sims/RecombinationMap_1000kb.csv", header = T)
 ```
 
 ### Replicate 1
 
 ```{r, message=FALSE, warning=FALSE}
-rep_1.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.1Mb.bedgraph", header = T)
+rep_1.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.1Mb.bedgraph", header = T)
 rep_1.pi.1Mb$avg <- apply(rep_1.pi.1Mb[4:ncol(rep_1.pi.1Mb)], 1, mean)
-rep_1.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.1Mb.bedgraph", header = T)
-rep_1.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.1Mb.bedgraph", header = T)
-rep_1.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.1Mb.bedgraph", header = T)
+rep_1.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.1Mb.bedgraph", header = T)
+rep_1.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.1Mb.bedgraph", header = T)
+rep_1.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.1Mb.bedgraph", header = T)
 rep_1.tmrca.1Mb$avg <- apply(rep_1.tmrca.1Mb[4:ncol(rep_1.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep1 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, rep_1.theta.1Mb$sample_mean, rep_1.tmrca.1Mb$avg, rep_1.rho.1Mb$sample_mean))
@@ -6143,11 +6143,11 @@ vif(g.div.1Mb.3)
 ### Replicate 2
 
 ```{r, message=FALSE, warning=FALSE}
-rep_2.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.1Mb.bedgraph", header = T)
+rep_2.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.1Mb.bedgraph", header = T)
 rep_2.pi.1Mb$avg <- apply(rep_2.pi.1Mb[4:ncol(rep_2.pi.1Mb)], 1, mean)
-rep_2.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.1Mb.bedgraph", header = T)
-rep_2.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.1Mb.bedgraph", header = T)
-rep_2.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.1Mb.bedgraph", header = T)
+rep_2.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.1Mb.bedgraph", header = T)
+rep_2.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.1Mb.bedgraph", header = T)
+rep_2.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.1Mb.bedgraph", header = T)
 rep_2.tmrca.1Mb$avg <- apply(rep_2.tmrca.1Mb[4:ncol(rep_2.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep2 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, rep_2.theta.1Mb$sample_mean, rep_2.tmrca.1Mb$avg, rep_2.rho.1Mb$sample_mean))
@@ -6209,11 +6209,11 @@ vif(g.div.1Mb.3)
 ### Replicate 3
 
 ```{r, message=FALSE, warning=FALSE}
-rep_3.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.1Mb.bedgraph", header = T)
+rep_3.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.1Mb.bedgraph", header = T)
 rep_3.pi.1Mb$avg <- apply(rep_3.pi.1Mb[4:ncol(rep_3.pi.1Mb)], 1, mean)
-rep_3.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.1Mb.bedgraph", header = T)
-rep_3.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.1Mb.bedgraph", header = T)
-rep_3.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.1Mb.bedgraph", header = T)
+rep_3.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.1Mb.bedgraph", header = T)
+rep_3.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.1Mb.bedgraph", header = T)
+rep_3.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.1Mb.bedgraph", header = T)
 rep_3.tmrca.1Mb$avg <- apply(rep_3.tmrca.1Mb[4:ncol(rep_3.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep3 <- as.data.frame(cbind(rep_3.pi.1Mb$avg, rep_3.theta.1Mb$sample_mean, rep_3.tmrca.1Mb$avg, rep_3.rho.1Mb$sample_mean))
@@ -6279,11 +6279,11 @@ vif(g.div.1Mb.3)
 ### Replicate 4
 
 ```{r, message=FALSE, warning=FALSE}
-rep_4.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.1Mb.bedgraph", header = T)
+rep_4.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.1Mb.bedgraph", header = T)
 rep_4.pi.1Mb$avg <- apply(rep_4.pi.1Mb[4:ncol(rep_4.pi.1Mb)], 1, mean)
-rep_4.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.1Mb.bedgraph", header = T)
-rep_4.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.1Mb.bedgraph", header = T)
-rep_4.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.1Mb.bedgraph", header = T)
+rep_4.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.1Mb.bedgraph", header = T)
+rep_4.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.1Mb.bedgraph", header = T)
+rep_4.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.1Mb.bedgraph", header = T)
 rep_4.tmrca.1Mb$avg <- apply(rep_4.tmrca.1Mb[4:ncol(rep_4.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep4 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, rep_4.theta.1Mb$sample_mean, rep_4.tmrca.1Mb$avg, rep_4.rho.1Mb$sample_mean))
@@ -6349,11 +6349,11 @@ vif(g.div.1Mb.3)
 ### Replicate 5
 
 ```{r, message=FALSE, warning=FALSE}
-rep_5.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.1Mb.bedgraph", header = T)
+rep_5.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.1Mb.bedgraph", header = T)
 rep_5.pi.1Mb$avg <- apply(rep_5.pi.1Mb[4:ncol(rep_5.pi.1Mb)], 1, mean)
-rep_5.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.1Mb.bedgraph", header = T)
-rep_5.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.1Mb.bedgraph", header = T)
-rep_5.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.1Mb.bedgraph", header = T)
+rep_5.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.1Mb.bedgraph", header = T)
+rep_5.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.1Mb.bedgraph", header = T)
+rep_5.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.1Mb.bedgraph", header = T)
 rep_5.tmrca.1Mb$avg <- apply(rep_5.tmrca.1Mb[4:ncol(rep_5.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep5 <- as.data.frame(cbind(rep_5.pi.1Mb$avg, rep_5.theta.1Mb$sample_mean, rep_5.tmrca.1Mb$avg, rep_5.rho.1Mb$sample_mean))
@@ -6419,11 +6419,11 @@ vif(g.div.1Mb.3)
 ### Replicate 6
 
 ```{r, message=FALSE, warning=FALSE}
-rep_6.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
+rep_6.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
 rep_6.pi.1Mb$avg <- apply(rep_6.pi.1Mb[4:ncol(rep_6.pi.1Mb)], 1, mean)
-rep_6.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
-rep_6.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
-rep_6.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
+rep_6.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
+rep_6.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
+rep_6.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
 rep_6.tmrca.1Mb$avg <- apply(rep_6.tmrca.1Mb[4:ncol(rep_6.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep6 <- as.data.frame(cbind(rep_6.pi.1Mb$avg, rep_6.theta.1Mb$sample_mean, rep_6.tmrca.1Mb$avg, rep_6.rho.1Mb$sample_mean))
@@ -6489,11 +6489,11 @@ vif(g.div.1Mb.3)
 ### Replicate 7
 
 ```{r, message=FALSE, warning=FALSE}
-rep_7.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
+rep_7.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
 rep_7.pi.1Mb$avg <- apply(rep_7.pi.1Mb[4:ncol(rep_7.pi.1Mb)], 1, mean)
-rep_7.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
-rep_7.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
-rep_7.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
+rep_7.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
+rep_7.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
+rep_7.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
 rep_7.tmrca.1Mb$avg <- apply(rep_7.tmrca.1Mb[4:ncol(rep_7.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep7 <- as.data.frame(cbind(rep_7.pi.1Mb$avg, rep_7.theta.1Mb$sample_mean, rep_7.tmrca.1Mb$avg, rep_7.rho.1Mb$sample_mean))
@@ -6559,11 +6559,11 @@ vif(g.div.1Mb.3)
 ### Replicate 8
 
 ```{r, message=FALSE, warning=FALSE}
-rep_8.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.1Mb.bedgraph", header = T)
+rep_8.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.1Mb.bedgraph", header = T)
 rep_8.pi.1Mb$avg <- apply(rep_8.pi.1Mb[4:ncol(rep_8.pi.1Mb)], 1, mean)
-rep_8.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.1Mb.bedgraph", header = T)
-rep_8.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.1Mb.bedgraph", header = T)
-rep_8.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.1Mb.bedgraph", header = T)
+rep_8.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.1Mb.bedgraph", header = T)
+rep_8.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.1Mb.bedgraph", header = T)
+rep_8.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.1Mb.bedgraph", header = T)
 rep_8.tmrca.1Mb$avg <- apply(rep_8.tmrca.1Mb[4:ncol(rep_8.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep8 <- as.data.frame(cbind(rep_8.pi.1Mb$avg, rep_8.theta.1Mb$sample_mean, rep_8.tmrca.1Mb$avg, rep_8.rho.1Mb$sample_mean))
@@ -6629,11 +6629,11 @@ vif(g.div.1Mb.3)
 ### Replicate 9
 
 ```{r, message=FALSE, warning=FALSE}
-rep_9.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.1Mb.bedgraph", header = T)
+rep_9.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.1Mb.bedgraph", header = T)
 rep_9.pi.1Mb$avg <- apply(rep_9.pi.1Mb[4:ncol(rep_9.pi.1Mb)], 1, mean)
-rep_9.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.1Mb.bedgraph", header = T)
-rep_9.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.1Mb.bedgraph", header = T)
-rep_9.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.1Mb.bedgraph", header = T)
+rep_9.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.1Mb.bedgraph", header = T)
+rep_9.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.1Mb.bedgraph", header = T)
+rep_9.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.1Mb.bedgraph", header = T)
 rep_9.tmrca.1Mb$avg <- apply(rep_9.tmrca.1Mb[4:ncol(rep_9.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep9 <- as.data.frame(cbind(rep_9.pi.1Mb$avg, rep_9.theta.1Mb$sample_mean, rep_9.tmrca.1Mb$avg, rep_9.rho.1Mb$sample_mean))
@@ -6699,11 +6699,11 @@ vif(g.div.1Mb.3)
 ### Replicate 10
 
 ```{r, message=FALSE, warning=FALSE}
-rep_10.pi.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.1Mb.bedgraph", header = T)
+rep_10.pi.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.1Mb.bedgraph", header = T)
 rep_10.pi.1Mb$avg <- apply(rep_10.pi.1Mb[4:ncol(rep_10.pi.1Mb)], 1, mean)
-rep_10.rho.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.1Mb.bedgraph", header = T)
-rep_10.theta.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.1Mb.bedgraph", header = T)
-rep_10.tmrca.1Mb <- read.table("dm_bgs/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.1Mb.bedgraph", header = T)
+rep_10.rho.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.1Mb.bedgraph", header = T)
+rep_10.theta.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.1Mb.bedgraph", header = T)
+rep_10.tmrca.1Mb <- read.table("dm_bgs_sims/10r/Homogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.1Mb.bedgraph", header = T)
 rep_10.tmrca.1Mb$avg <- apply(rep_10.tmrca.1Mb[4:ncol(rep_10.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep10 <- as.data.frame(cbind(rep_10.pi.1Mb$avg, rep_10.theta.1Mb$sample_mean, rep_10.tmrca.1Mb$avg, rep_1.rho.1Mb$sample_mean))
@@ -6767,7 +6767,7 @@ vif(g.div.1Mb.3)
 ```
 
 
-# all replicates:
+## all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
 r2.bgs.50kb$average <- apply(r2.bgs.50kb, 1, mean)
@@ -6791,7 +6791,7 @@ r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
 r2.plot
-ggsave("Fig7.pdf", r2.plot, device = "pdf", )
+ggsave("Figure7.pdf", r2.plot, device = "pdf", )
 ```
 
 
@@ -6804,24 +6804,52 @@ r2.bgs.50kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.50kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.50kb) <- reps
 
-sim.theta.50kb <- read.table("dm_bgs/MutationMap_50kb.csv", sep = ",", header = T)
-sim.rho.50kb <- read.table("dm_bgs/RecombinationMap_50kb.csv", sep = ",", header = T)
+r2.bgs.50kb.true <- as.data.frame(matrix(ncol = nreps, nrow = 5))
+row.names(r2.bgs.50kb.true) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
+colnames(r2.bgs.50kb.true) <- reps
+
+sim.theta.50kb <- read.table("dm_bgs_sims/MutationMap_50kb.csv", sep = ",", header = T)
+sim.rho.50kb <- read.table("dm_bgs_sims/RecombinationMap_50kb.csv", sep = ",", header = T)
+
+cor.table <- as.data.frame(matrix(ncol = 3, nrow = nreps))
+row.names(cor.table) <- reps
+colnames(cor.table) <- c("50kb", "200kb", "1Mb")
 ```
 
 ### Replicate 1
 
 ```{r, message=FALSE, warning=FALSE}
-rep_1.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.50kb.bedgraph", header = T)
+rep1.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep1_w50000.csv", sep = ",", header = T)
+
+rep_1.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.50kb.bedgraph", header = T)
 rep_1.pi.50kb$avg <- apply(rep_1.pi.50kb[4:ncol(rep_1.pi.50kb)], 1, mean)
-rep_1.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.50kb.bedgraph", header = T)
-rep_1.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.50kb.bedgraph", header = T)
-rep_1.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.50kb.bedgraph", header = T)
+rep_1.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.50kb.bedgraph", header = T)
+rep_1.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.50kb.bedgraph", header = T)
+rep_1.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.50kb.bedgraph", header = T)
 rep_1.tmrca.50kb$avg <- apply(rep_1.tmrca.50kb[4:ncol(rep_1.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep1 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep1.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep1$thetaC <- true.lands.50kb.rep1$theta - mean(true.lands.50kb.rep1$theta)
+true.lands.50kb.rep1$tmrcaC <- true.lands.50kb.rep1$tmrca - mean(true.lands.50kb.rep1$tmrca)
+true.lands.50kb.rep1$rhoC <- true.lands.50kb.rep1$rho - mean(true.lands.50kb.rep1$rho, na.rm = T)
+true.lands.50kb.rep1$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep1)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
+
 
 sim.lands.50kb.rep1 <- as.data.frame(cbind(rep_1.pi.50kb$avg, rep_1.theta.50kb$sample_mean, rep_1.tmrca.50kb$avg, rep_1.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_1.theta.50kb$sample_mean, method = "spearman") 
+cor.table[1, 1] <- cor.test(sim.theta.50kb$Rate, rep_1.theta.50kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.50kb.rep1$thetaC <- sim.lands.50kb.rep1$theta - mean(sim.lands.50kb.rep1$theta)
@@ -6879,17 +6907,36 @@ vif(g.div.50kb.3)
 ### Replicate 2
 
 ```{r, message=FALSE, warning=FALSE}
-rep_2.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.50kb.bedgraph", header = T)
+rep2.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep2_w50000.csv", sep = ",", header = T)
+
+rep_2.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.50kb.bedgraph", header = T)
 rep_2.pi.50kb$avg <- apply(rep_2.pi.50kb[4:ncol(rep_2.pi.50kb)], 1, mean)
-rep_2.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.50kb.bedgraph", header = T)
-rep_2.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.50kb.bedgraph", header = T)
-rep_2.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.50kb.bedgraph", header = T)
+rep_2.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.50kb.bedgraph", header = T)
+rep_2.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.50kb.bedgraph", header = T)
+rep_2.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.50kb.bedgraph", header = T)
 rep_2.tmrca.50kb$avg <- apply(rep_2.tmrca.50kb[4:ncol(rep_2.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep2 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep2.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep2$thetaC <- true.lands.50kb.rep2$theta - mean(true.lands.50kb.rep2$theta)
+true.lands.50kb.rep2$tmrcaC <- true.lands.50kb.rep2$tmrca - mean(true.lands.50kb.rep2$tmrca)
+true.lands.50kb.rep2$rhoC <- true.lands.50kb.rep2$rho - mean(true.lands.50kb.rep2$rho, na.rm = T)
+true.lands.50kb.rep2$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep2)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep2 <- as.data.frame(cbind(rep_2.pi.50kb$avg, rep_2.theta.50kb$sample_mean, rep_2.tmrca.50kb$avg, rep_2.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_2.theta.50kb$sample_mean, method = "spearman") 
+cor.table[2, 1] <- cor.test(sim.theta.50kb$Rate, rep_2.theta.50kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.50kb.rep2$thetaC <- sim.lands.50kb.rep2$theta - mean(sim.lands.50kb.rep2$theta)
@@ -6947,17 +6994,36 @@ vif(g.div.50kb.3)
 ### Replicate 3
 
 ```{r, message=FALSE, warning=FALSE}
-rep_3.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.50kb.bedgraph", header = T)
+rep3.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep3_w50000.csv", sep = ",", header = T)
+
+rep_3.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.50kb.bedgraph", header = T)
 rep_3.pi.50kb$avg <- apply(rep_3.pi.50kb[4:ncol(rep_3.pi.50kb)], 1, mean)
-rep_3.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.50kb.bedgraph", header = T)
-rep_3.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.50kb.bedgraph", header = T)
-rep_3.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.50kb.bedgraph", header = T)
+rep_3.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.50kb.bedgraph", header = T)
+rep_3.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.50kb.bedgraph", header = T)
+rep_3.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.50kb.bedgraph", header = T)
 rep_3.tmrca.50kb$avg <- apply(rep_3.tmrca.50kb[4:ncol(rep_3.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep3 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep3.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep3$thetaC <- true.lands.50kb.rep3$theta - mean(true.lands.50kb.rep3$theta)
+true.lands.50kb.rep3$tmrcaC <- true.lands.50kb.rep3$tmrca - mean(true.lands.50kb.rep3$tmrca)
+true.lands.50kb.rep3$rhoC <- true.lands.50kb.rep3$rho - mean(true.lands.50kb.rep3$rho, na.rm = T)
+true.lands.50kb.rep3$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep3)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep3 <- as.data.frame(cbind(rep_3.pi.50kb$avg, rep_3.theta.50kb$sample_mean, rep_3.tmrca.50kb$avg, rep_3.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_3.theta.50kb$sample_mean, method = "spearman") 
+cor.table[3, 1] <- cor.test(sim.theta.50kb$Rate, rep_3.theta.50kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.50kb.rep3$thetaC <- sim.lands.50kb.rep3$theta - mean(sim.lands.50kb.rep3$theta)
@@ -7015,17 +7081,36 @@ vif(g.div.50kb.3)
 ### Replicate 4
 
 ```{r, message=FALSE, warning=FALSE}
-rep_4.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.50kb.bedgraph", header = T)
+rep4.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep4_w50000.csv", sep = ",", header = T)
+
+rep_4.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.50kb.bedgraph", header = T)
 rep_4.pi.50kb$avg <- apply(rep_4.pi.50kb[4:ncol(rep_4.pi.50kb)], 1, mean)
-rep_4.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.50kb.bedgraph", header = T)
-rep_4.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.50kb.bedgraph", header = T)
-rep_4.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.50kb.bedgraph", header = T)
+rep_4.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.50kb.bedgraph", header = T)
+rep_4.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.50kb.bedgraph", header = T)
+rep_4.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.50kb.bedgraph", header = T)
 rep_4.tmrca.50kb$avg <- apply(rep_4.tmrca.50kb[4:ncol(rep_4.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep4 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep4.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep4$thetaC <- true.lands.50kb.rep4$theta - mean(true.lands.50kb.rep4$theta)
+true.lands.50kb.rep4$tmrcaC <- true.lands.50kb.rep4$tmrca - mean(true.lands.50kb.rep4$tmrca)
+true.lands.50kb.rep4$rhoC <- true.lands.50kb.rep4$rho - mean(true.lands.50kb.rep4$rho, na.rm = T)
+true.lands.50kb.rep4$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep4)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep4 <- as.data.frame(cbind(rep_4.pi.50kb$avg, rep_4.theta.50kb$sample_mean, rep_4.tmrca.50kb$avg, rep_4.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_4.theta.50kb$sample_mean, method = "spearman") 
+cor.table[4, 1] <- cor.test(sim.theta.50kb$Rate, rep_4.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep4$thetaC <- sim.lands.50kb.rep4$theta - mean(sim.lands.50kb.rep4$theta)
@@ -7083,17 +7168,36 @@ vif(g.div.50kb.3)
 ### Replicate 5
 
 ```{r, message=FALSE, warning=FALSE}
-rep_5.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.50kb.bedgraph", header = T)
+rep5.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep5_w50000.csv", sep = ",", header = T)
+
+rep_5.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.50kb.bedgraph", header = T)
 rep_5.pi.50kb$avg <- apply(rep_5.pi.50kb[4:ncol(rep_5.pi.50kb)], 1, mean)
-rep_5.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.50kb.bedgraph", header = T)
-rep_5.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.50kb.bedgraph", header = T)
-rep_5.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.50kb.bedgraph", header = T)
+rep_5.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.50kb.bedgraph", header = T)
+rep_5.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.50kb.bedgraph", header = T)
+rep_5.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.50kb.bedgraph", header = T)
 rep_5.tmrca.50kb$avg <- apply(rep_5.tmrca.50kb[4:ncol(rep_5.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep5 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep5.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep5$thetaC <- true.lands.50kb.rep5$theta - mean(true.lands.50kb.rep5$theta)
+true.lands.50kb.rep5$tmrcaC <- true.lands.50kb.rep5$tmrca - mean(true.lands.50kb.rep5$tmrca)
+true.lands.50kb.rep5$rhoC <- true.lands.50kb.rep5$rho - mean(true.lands.50kb.rep5$rho, na.rm = T)
+true.lands.50kb.rep5$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep5)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep5 <- as.data.frame(cbind(rep_5.pi.50kb$avg, rep_5.theta.50kb$sample_mean, rep_5.tmrca.50kb$avg, rep_5.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_5.theta.50kb$sample_mean, method = "spearman") 
+cor.table[5, 1] <- cor.test(sim.theta.50kb$Rate, rep_5.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep5$thetaC <- sim.lands.50kb.rep5$theta - mean(sim.lands.50kb.rep5$theta)
@@ -7151,17 +7255,36 @@ vif(g.div.50kb.3)
 ### Replicate 6
 
 ```{r, message=FALSE, warning=FALSE}
-rep_6.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
+rep6.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep6_w50000.csv", sep = ",", header = T)
+
+rep_6.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.50kb.bedgraph", header = T)
 rep_6.pi.50kb$avg <- apply(rep_6.pi.50kb[4:ncol(rep_6.pi.50kb)], 1, mean)
-rep_6.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
-rep_6.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
-rep_6.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
+rep_6.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.50kb.bedgraph", header = T)
+rep_6.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.50kb.bedgraph", header = T)
+rep_6.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.50kb.bedgraph", header = T)
 rep_6.tmrca.50kb$avg <- apply(rep_6.tmrca.50kb[4:ncol(rep_6.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep6 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep6.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep6$thetaC <- true.lands.50kb.rep6$theta - mean(true.lands.50kb.rep6$theta)
+true.lands.50kb.rep6$tmrcaC <- true.lands.50kb.rep6$tmrca - mean(true.lands.50kb.rep6$tmrca)
+true.lands.50kb.rep6$rhoC <- true.lands.50kb.rep6$rho - mean(true.lands.50kb.rep6$rho, na.rm = T)
+true.lands.50kb.rep6$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep6)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep6 <- as.data.frame(cbind(rep_6.pi.50kb$avg, rep_6.theta.50kb$sample_mean, rep_6.tmrca.50kb$avg, rep_6.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_6.theta.50kb$sample_mean, method = "spearman") 
+cor.table[6, 1] <- cor.test(sim.theta.50kb$Rate, rep_6.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep6$thetaC <- sim.lands.50kb.rep6$theta - mean(sim.lands.50kb.rep6$theta)
@@ -7219,17 +7342,36 @@ vif(g.div.50kb.3)
 ### Replicate 7
 
 ```{r, message=FALSE, warning=FALSE}
-rep_7.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.diversity.50kb.bedgraph", header = T)
+rep7.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep7_w50000.csv", sep = ",", header = T)
+
+rep_7.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.diversity.50kb.bedgraph", header = T)
 rep_7.pi.50kb$avg <- apply(rep_7.pi.50kb[4:ncol(rep_7.pi.50kb)], 1, mean)
-rep_7.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.rho.50kb.bedgraph", header = T)
-rep_7.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.theta.50kb.bedgraph", header = T)
-rep_7.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.TMRCA.50kb.bedgraph", header = T)
+rep_7.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.rho.50kb.bedgraph", header = T)
+rep_7.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.theta.50kb.bedgraph", header = T)
+rep_7.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep7/dm2L_bgs_rep7_5.TMRCA.50kb.bedgraph", header = T)
 rep_7.tmrca.50kb$avg <- apply(rep_7.tmrca.50kb[4:ncol(rep_7.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep7 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep7.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep7$thetaC <- true.lands.50kb.rep7$theta - mean(true.lands.50kb.rep7$theta)
+true.lands.50kb.rep7$tmrcaC <- true.lands.50kb.rep7$tmrca - mean(true.lands.50kb.rep7$tmrca)
+true.lands.50kb.rep7$rhoC <- true.lands.50kb.rep7$rho - mean(true.lands.50kb.rep7$rho, na.rm = T)
+true.lands.50kb.rep7$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep7)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep7 <- as.data.frame(cbind(rep_7.pi.50kb$avg, rep_7.theta.50kb$sample_mean, rep_7.tmrca.50kb$avg, rep_7.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_7.theta.50kb$sample_mean, method = "spearman") 
+cor.table[7, 1] <- cor.test(sim.theta.50kb$Rate, rep_7.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep7$thetaC <- sim.lands.50kb.rep7$theta - mean(sim.lands.50kb.rep7$theta)
@@ -7287,17 +7429,36 @@ vif(g.div.50kb.3)
 ### Replicate 8
 
 ```{r, message=FALSE, warning=FALSE}
-rep_8.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.50kb.bedgraph", header = T)
+rep8.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep8_w50000.csv", sep = ",", header = T)
+
+rep_8.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.50kb.bedgraph", header = T)
 rep_8.pi.50kb$avg <- apply(rep_8.pi.50kb[4:ncol(rep_8.pi.50kb)], 1, mean)
-rep_8.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.50kb.bedgraph", header = T)
-rep_8.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.50kb.bedgraph", header = T)
-rep_8.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.50kb.bedgraph", header = T)
+rep_8.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.50kb.bedgraph", header = T)
+rep_8.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.50kb.bedgraph", header = T)
+rep_8.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.50kb.bedgraph", header = T)
 rep_8.tmrca.50kb$avg <- apply(rep_8.tmrca.50kb[4:ncol(rep_8.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep8 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep8.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep8$thetaC <- true.lands.50kb.rep8$theta - mean(true.lands.50kb.rep8$theta)
+true.lands.50kb.rep8$tmrcaC <- true.lands.50kb.rep8$tmrca - mean(true.lands.50kb.rep8$tmrca)
+true.lands.50kb.rep8$rhoC <- true.lands.50kb.rep8$rho - mean(true.lands.50kb.rep8$rho, na.rm = T)
+true.lands.50kb.rep8$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep8)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep8 <- as.data.frame(cbind(rep_8.pi.50kb$avg, rep_8.theta.50kb$sample_mean, rep_8.tmrca.50kb$avg, rep_8.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_8.theta.50kb$sample_mean, method = "spearman") 
+cor.table[8, 1] <- cor.test(sim.theta.50kb$Rate, rep_8.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep8$thetaC <- sim.lands.50kb.rep8$theta - mean(sim.lands.50kb.rep8$theta)
@@ -7355,17 +7516,36 @@ vif(g.div.50kb.3)
 ### Replicate 9
 
 ```{r, message=FALSE, warning=FALSE}
-rep_9.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.50kb.bedgraph", header = T)
+rep9.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep9_w50000.csv", sep = ",", header = T)
+
+rep_9.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.50kb.bedgraph", header = T)
 rep_9.pi.50kb$avg <- apply(rep_9.pi.50kb[4:ncol(rep_9.pi.50kb)], 1, mean)
-rep_9.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.50kb.bedgraph", header = T)
-rep_9.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.50kb.bedgraph", header = T)
-rep_9.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.50kb.bedgraph", header = T)
+rep_9.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.50kb.bedgraph", header = T)
+rep_9.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.50kb.bedgraph", header = T)
+rep_9.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.50kb.bedgraph", header = T)
 rep_9.tmrca.50kb$avg <- apply(rep_9.tmrca.50kb[4:ncol(rep_9.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep9 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep9.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep9$thetaC <- true.lands.50kb.rep9$theta - mean(true.lands.50kb.rep9$theta)
+true.lands.50kb.rep9$tmrcaC <- true.lands.50kb.rep9$tmrca - mean(true.lands.50kb.rep9$tmrca)
+true.lands.50kb.rep9$rhoC <- true.lands.50kb.rep9$rho - mean(true.lands.50kb.rep9$rho, na.rm = T)
+true.lands.50kb.rep9$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep9)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep9 <- as.data.frame(cbind(rep_9.pi.50kb$avg, rep_9.theta.50kb$sample_mean, rep_9.tmrca.50kb$avg, rep_9.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_9.theta.50kb$sample_mean, method = "spearman") 
+cor.table[9, 1] <- cor.test(sim.theta.50kb$Rate, rep_9.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep9$thetaC <- sim.lands.50kb.rep9$theta - mean(sim.lands.50kb.rep9$theta)
@@ -7423,17 +7603,36 @@ vif(g.div.50kb.3)
 ### Replicate 10
 
 ```{r, message=FALSE, warning=FALSE}
-rep_10.pi.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.50kb.bedgraph", header = T)
+rep10.sim.tmrca.50kb <- read.table("dm_bgs_sims/10r/dm2L_bgs_rep10_w50000.csv", sep = ",", header = T)
+
+rep_10.pi.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.50kb.bedgraph", header = T)
 rep_10.pi.50kb$avg <- apply(rep_10.pi.50kb[4:ncol(rep_10.pi.50kb)], 1, mean)
-rep_10.rho.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.50kb.bedgraph", header = T)
-rep_10.theta.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.50kb.bedgraph", header = T)
-rep_10.tmrca.50kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.50kb.bedgraph", header = T)
+rep_10.rho.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.50kb.bedgraph", header = T)
+rep_10.theta.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.50kb.bedgraph", header = T)
+rep_10.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.50kb.bedgraph", header = T)
 rep_10.tmrca.50kb$avg <- apply(rep_10.tmrca.50kb[4:ncol(rep_10.tmrca.50kb)], 1, mean)
+
+# first the linear modeling with the true (simulated) landscapes
+true.lands.50kb.rep10 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep10.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+names(true.lands.50kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
+true.lands.50kb.rep10$thetaC <- true.lands.50kb.rep10$theta - mean(true.lands.50kb.rep10$theta)
+true.lands.50kb.rep10$tmrcaC <- true.lands.50kb.rep10$tmrca - mean(true.lands.50kb.rep10$tmrca)
+true.lands.50kb.rep10$rhoC <- true.lands.50kb.rep10$rho - mean(true.lands.50kb.rep10$rho, na.rm = T)
+true.lands.50kb.rep10$Replicate <- 1
+m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep10)
+anova.diversity <- Anova(m.div.50kb)
+apiss <- anova.diversity$"Sum Sq"
+anova.diversity$VarExp <- apiss / sum(apiss)
+r2.bgs.50kb.true[1, 1] <- (anova.diversity$VarExp[1] + anova.diversity$VarExp[2] + anova.diversity$VarExp[3] + anova.diversity$VarExp[4]) * 100
+r2.bgs.50kb.true[2, 1] <- anova.diversity$VarExp[1] * 100
+r2.bgs.50kb.true[3, 1] <- anova.diversity$VarExp[2] * 100
+r2.bgs.50kb.true[4, 1] <- anova.diversity$VarExp[3] * 100
+r2.bgs.50kb.true[5, 1] <- anova.diversity$VarExp[4] * 100
 
 sim.lands.50kb.rep10 <- as.data.frame(cbind(rep_10.pi.50kb$avg, rep_10.theta.50kb$sample_mean, rep_10.tmrca.50kb$avg, rep_1.rho.50kb$sample_mean))
 names(sim.lands.50kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.50kb$Rate, rep_10.theta.50kb$sample_mean, method = "spearman") 
+cor.table[10, 1] <- cor.test(sim.theta.50kb$Rate, rep_10.theta.50kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.50kb.rep10$thetaC <- sim.lands.50kb.rep10$theta - mean(sim.lands.50kb.rep10$theta)
@@ -7497,24 +7696,24 @@ r2.bgs.200kb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.200kb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.200kb) <- reps
 
-sim.theta.200kb <- read.table("dm_bgs/MutationMap_200kb.csv", sep = ",", header = T)
-sim.rho.200kb <- read.table("dm_bgs/RecombinationMap_200kb.csv", sep = ",", header = T)
+sim.theta.200kb <- read.table("dm_bgs_sims/MutationMap_200kb.csv", sep = ",", header = T)
+sim.rho.200kb <- read.table("dm_bgs_sims/RecombinationMap_200kb.csv", sep = ",", header = T)
 ```
 
 ### Replicate 1
 
 ```{r, message=FALSE, warning=FALSE}
-rep_1.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.200kb.bedgraph", header = T)
+rep_1.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.200kb.bedgraph", header = T)
 rep_1.pi.200kb$avg <- apply(rep_1.pi.200kb[4:ncol(rep_1.pi.200kb)], 1, mean)
-rep_1.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.200kb.bedgraph", header = T)
-rep_1.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.200kb.bedgraph", header = T)
-rep_1.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.200kb.bedgraph", header = T)
+rep_1.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.200kb.bedgraph", header = T)
+rep_1.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.200kb.bedgraph", header = T)
+rep_1.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.200kb.bedgraph", header = T)
 rep_1.tmrca.200kb$avg <- apply(rep_1.tmrca.200kb[4:ncol(rep_1.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep1 <- as.data.frame(cbind(rep_1.pi.200kb$avg, rep_1.theta.200kb$sample_mean, rep_1.tmrca.200kb$avg, rep_1.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_1.theta.200kb$sample_mean, method = "spearman") 
+cor.table[1, 2] <- cor.test(sim.theta.200kb$Rate, rep_1.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep1$thetaC <- sim.lands.200kb.rep1$theta - mean(sim.lands.200kb.rep1$theta)
@@ -7572,17 +7771,17 @@ vif(g.div.200kb.3)
 ### Replicate 2
 
 ```{r, message=FALSE, warning=FALSE}
-rep_2.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.200kb.bedgraph", header = T)
+rep_2.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.200kb.bedgraph", header = T)
 rep_2.pi.200kb$avg <- apply(rep_2.pi.200kb[4:ncol(rep_2.pi.200kb)], 1, mean)
-rep_2.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.200kb.bedgraph", header = T)
-rep_2.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.200kb.bedgraph", header = T)
-rep_2.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.200kb.bedgraph", header = T)
+rep_2.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.200kb.bedgraph", header = T)
+rep_2.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.200kb.bedgraph", header = T)
+rep_2.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.200kb.bedgraph", header = T)
 rep_2.tmrca.200kb$avg <- apply(rep_2.tmrca.200kb[4:ncol(rep_2.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep2 <- as.data.frame(cbind(rep_2.pi.200kb$avg, rep_2.theta.200kb$sample_mean, rep_2.tmrca.200kb$avg, rep_2.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_2.theta.200kb$sample_mean, method = "spearman") 
+cor.table[2, 2] <- cor.test(sim.theta.200kb$Rate, rep_2.theta.200kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.200kb.rep2$thetaC <- sim.lands.200kb.rep2$theta - mean(sim.lands.200kb.rep2$theta)
@@ -7640,17 +7839,17 @@ vif(g.div.200kb.3)
 ### Replicate 3
 
 ```{r, message=FALSE, warning=FALSE}
-rep_3.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.200kb.bedgraph", header = T)
+rep_3.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.200kb.bedgraph", header = T)
 rep_3.pi.200kb$avg <- apply(rep_3.pi.200kb[4:ncol(rep_3.pi.200kb)], 1, mean)
-rep_3.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.200kb.bedgraph", header = T)
-rep_3.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.200kb.bedgraph", header = T)
-rep_3.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.200kb.bedgraph", header = T)
+rep_3.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.200kb.bedgraph", header = T)
+rep_3.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.200kb.bedgraph", header = T)
+rep_3.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.200kb.bedgraph", header = T)
 rep_3.tmrca.200kb$avg <- apply(rep_3.tmrca.200kb[4:ncol(rep_3.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep3 <- as.data.frame(cbind(rep_3.pi.200kb$avg, rep_3.theta.200kb$sample_mean, rep_3.tmrca.200kb$avg, rep_3.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_3.theta.200kb$sample_mean, method = "spearman") 
+cor.table[3, 2] <- cor.test(sim.theta.200kb$Rate, rep_3.theta.200kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.200kb.rep3$thetaC <- sim.lands.200kb.rep3$theta - mean(sim.lands.200kb.rep3$theta)
@@ -7708,17 +7907,17 @@ vif(g.div.200kb.3)
 ### Replicate 4
 
 ```{r, message=FALSE, warning=FALSE}
-rep_4.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.200kb.bedgraph", header = T)
+rep_4.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.200kb.bedgraph", header = T)
 rep_4.pi.200kb$avg <- apply(rep_4.pi.200kb[4:ncol(rep_4.pi.200kb)], 1, mean)
-rep_4.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.200kb.bedgraph", header = T)
-rep_4.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.200kb.bedgraph", header = T)
-rep_4.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.200kb.bedgraph", header = T)
+rep_4.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.200kb.bedgraph", header = T)
+rep_4.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.200kb.bedgraph", header = T)
+rep_4.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.200kb.bedgraph", header = T)
 rep_4.tmrca.200kb$avg <- apply(rep_4.tmrca.200kb[4:ncol(rep_4.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep4 <- as.data.frame(cbind(rep_4.pi.200kb$avg, rep_4.theta.200kb$sample_mean, rep_4.tmrca.200kb$avg, rep_4.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_4.theta.200kb$sample_mean, method = "spearman") 
+cor.table[4, 2] <- cor.test(sim.theta.200kb$Rate, rep_4.theta.200kb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.200kb.rep4$thetaC <- sim.lands.200kb.rep4$theta - mean(sim.lands.200kb.rep4$theta)
@@ -7776,17 +7975,17 @@ vif(g.div.200kb.3)
 ### Replicate 5
 
 ```{r, message=FALSE, warning=FALSE}
-rep_5.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.200kb.bedgraph", header = T)
+rep_5.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.200kb.bedgraph", header = T)
 rep_5.pi.200kb$avg <- apply(rep_5.pi.200kb[4:ncol(rep_5.pi.200kb)], 1, mean)
-rep_5.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.200kb.bedgraph", header = T)
-rep_5.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.200kb.bedgraph", header = T)
-rep_5.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.200kb.bedgraph", header = T)
+rep_5.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.200kb.bedgraph", header = T)
+rep_5.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.200kb.bedgraph", header = T)
+rep_5.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.200kb.bedgraph", header = T)
 rep_5.tmrca.200kb$avg <- apply(rep_5.tmrca.200kb[4:ncol(rep_5.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep5 <- as.data.frame(cbind(rep_5.pi.200kb$avg, rep_5.theta.200kb$sample_mean, rep_5.tmrca.200kb$avg, rep_5.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_5.theta.200kb$sample_mean, method = "spearman") 
+cor.table[5, 2] <- cor.test(sim.theta.200kb$Rate, rep_5.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep5$thetaC <- sim.lands.200kb.rep5$theta - mean(sim.lands.200kb.rep5$theta)
@@ -7844,17 +8043,17 @@ vif(g.div.200kb.3)
 ### Replicate 6
 
 ```{r, message=FALSE, warning=FALSE}
-rep_6.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
+rep_6.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
 rep_6.pi.200kb$avg <- apply(rep_6.pi.200kb[4:ncol(rep_6.pi.200kb)], 1, mean)
-rep_6.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
-rep_6.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
-rep_6.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
+rep_6.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
+rep_6.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
+rep_6.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
 rep_6.tmrca.200kb$avg <- apply(rep_6.tmrca.200kb[4:ncol(rep_6.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep6 <- as.data.frame(cbind(rep_6.pi.200kb$avg, rep_6.theta.200kb$sample_mean, rep_6.tmrca.200kb$avg, rep_6.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_6.theta.200kb$sample_mean, method = "spearman") 
+cor.table[6, 2] <- cor.test(sim.theta.200kb$Rate, rep_6.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep6$thetaC <- sim.lands.200kb.rep6$theta - mean(sim.lands.200kb.rep6$theta)
@@ -7912,17 +8111,17 @@ vif(g.div.200kb.3)
 ### Replicate 7
 
 ```{r, message=FALSE, warning=FALSE}
-rep_7.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
+rep_7.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.200kb.bedgraph", header = T)
 rep_7.pi.200kb$avg <- apply(rep_7.pi.200kb[4:ncol(rep_7.pi.200kb)], 1, mean)
-rep_7.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
-rep_7.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
-rep_7.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
+rep_7.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.200kb.bedgraph", header = T)
+rep_7.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.200kb.bedgraph", header = T)
+rep_7.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.200kb.bedgraph", header = T)
 rep_7.tmrca.200kb$avg <- apply(rep_7.tmrca.200kb[4:ncol(rep_7.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep7 <- as.data.frame(cbind(rep_7.pi.200kb$avg, rep_7.theta.200kb$sample_mean, rep_7.tmrca.200kb$avg, rep_7.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_7.theta.200kb$sample_mean, method = "spearman") 
+cor.table[7, 2] <- cor.test(sim.theta.200kb$Rate, rep_7.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep7$thetaC <- sim.lands.200kb.rep7$theta - mean(sim.lands.200kb.rep7$theta)
@@ -7980,17 +8179,17 @@ vif(g.div.200kb.3)
 ### Replicate 8
 
 ```{r, message=FALSE, warning=FALSE}
-rep_8.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.200kb.bedgraph", header = T)
+rep_8.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.200kb.bedgraph", header = T)
 rep_8.pi.200kb$avg <- apply(rep_8.pi.200kb[4:ncol(rep_8.pi.200kb)], 1, mean)
-rep_8.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.200kb.bedgraph", header = T)
-rep_8.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.200kb.bedgraph", header = T)
-rep_8.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.200kb.bedgraph", header = T)
+rep_8.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.200kb.bedgraph", header = T)
+rep_8.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.200kb.bedgraph", header = T)
+rep_8.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.200kb.bedgraph", header = T)
 rep_8.tmrca.200kb$avg <- apply(rep_8.tmrca.200kb[4:ncol(rep_8.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep8 <- as.data.frame(cbind(rep_8.pi.200kb$avg, rep_8.theta.200kb$sample_mean, rep_8.tmrca.200kb$avg, rep_8.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_8.theta.200kb$sample_mean, method = "spearman") 
+cor.table[8, 2] <- cor.test(sim.theta.200kb$Rate, rep_8.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep8$thetaC <- sim.lands.200kb.rep8$theta - mean(sim.lands.200kb.rep8$theta)
@@ -8048,17 +8247,17 @@ vif(g.div.200kb.3)
 ### Replicate 9
 
 ```{r, message=FALSE, warning=FALSE}
-rep_9.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.200kb.bedgraph", header = T)
+rep_9.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.200kb.bedgraph", header = T)
 rep_9.pi.200kb$avg <- apply(rep_9.pi.200kb[4:ncol(rep_9.pi.200kb)], 1, mean)
-rep_9.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.200kb.bedgraph", header = T)
-rep_9.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.200kb.bedgraph", header = T)
-rep_9.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.200kb.bedgraph", header = T)
+rep_9.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.200kb.bedgraph", header = T)
+rep_9.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.200kb.bedgraph", header = T)
+rep_9.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.200kb.bedgraph", header = T)
 rep_9.tmrca.200kb$avg <- apply(rep_9.tmrca.200kb[4:ncol(rep_9.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep9 <- as.data.frame(cbind(rep_9.pi.200kb$avg, rep_9.theta.200kb$sample_mean, rep_9.tmrca.200kb$avg, rep_9.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_9.theta.200kb$sample_mean, method = "spearman") 
+cor.table[9, 2] <- cor.test(sim.theta.200kb$Rate, rep_9.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep9$thetaC <- sim.lands.200kb.rep9$theta - mean(sim.lands.200kb.rep9$theta)
@@ -8116,17 +8315,17 @@ vif(g.div.200kb.3)
 ### Replicate 10
 
 ```{r, message=FALSE, warning=FALSE}
-rep_10.pi.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.200kb.bedgraph", header = T)
+rep_10.pi.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.200kb.bedgraph", header = T)
 rep_10.pi.200kb$avg <- apply(rep_10.pi.200kb[4:ncol(rep_10.pi.200kb)], 1, mean)
-rep_10.rho.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.200kb.bedgraph", header = T)
-rep_10.theta.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.200kb.bedgraph", header = T)
-rep_10.tmrca.200kb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.200kb.bedgraph", header = T)
+rep_10.rho.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.200kb.bedgraph", header = T)
+rep_10.theta.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.200kb.bedgraph", header = T)
+rep_10.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.200kb.bedgraph", header = T)
 rep_10.tmrca.200kb$avg <- apply(rep_10.tmrca.200kb[4:ncol(rep_10.tmrca.200kb)], 1, mean)
 
 sim.lands.200kb.rep10 <- as.data.frame(cbind(rep_10.pi.200kb$avg, rep_10.theta.200kb$sample_mean, rep_10.tmrca.200kb$avg, rep_1.rho.200kb$sample_mean))
 names(sim.lands.200kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.200kb$Rate, rep_10.theta.200kb$sample_mean, method = "spearman") 
+cor.table[10, 2] <- cor.test(sim.theta.200kb$Rate, rep_10.theta.200kb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.200kb.rep10$thetaC <- sim.lands.200kb.rep10$theta - mean(sim.lands.200kb.rep10$theta)
@@ -8189,24 +8388,24 @@ r2.bgs.1Mb <- as.data.frame(matrix(ncol = nreps, nrow = 5))
 row.names(r2.bgs.1Mb) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 colnames(r2.bgs.1Mb) <- reps
 
-sim.theta.1Mb <- read.table("dm_bgs/MutationMap_1000kb.csv", sep = ",", header = T)
-sim.rho.1Mb <- read.table("dm_bgs/RecombinationMap_1000kb.csv", sep = ",", header = T)
+sim.theta.1Mb <- read.table("dm_bgs_sims/MutationMap_1000kb.csv", sep = ",", header = T)
+sim.rho.1Mb <- read.table("dm_bgs_sims/RecombinationMap_1000kb.csv", sep = ",", header = T)
 ```
 
 ### Replicate 1
 
 ```{r, message=FALSE, warning=FALSE}
-rep_1.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.1Mb.bedgraph", header = T)
+rep_1.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.diversity.1Mb.bedgraph", header = T)
 rep_1.pi.1Mb$avg <- apply(rep_1.pi.1Mb[4:ncol(rep_1.pi.1Mb)], 1, mean)
-rep_1.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.1Mb.bedgraph", header = T)
-rep_1.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.1Mb.bedgraph", header = T)
-rep_1.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.1Mb.bedgraph", header = T)
+rep_1.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.rho.1Mb.bedgraph", header = T)
+rep_1.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.theta.1Mb.bedgraph", header = T)
+rep_1.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep1/dm2L_bgs_rep1_5.TMRCA.1Mb.bedgraph", header = T)
 rep_1.tmrca.1Mb$avg <- apply(rep_1.tmrca.1Mb[4:ncol(rep_1.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep1 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, rep_1.theta.1Mb$sample_mean, rep_1.tmrca.1Mb$avg, rep_1.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_1.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[1, 3] <- cor.test(sim.theta.1Mb$Rate, rep_1.theta.1Mb$sample_mean, method = "spearman")$estimate
 
 # centering
 sim.lands.1Mb.rep1$thetaC <- sim.lands.1Mb.rep1$theta - mean(sim.lands.1Mb.rep1$theta)
@@ -8264,17 +8463,17 @@ vif(g.div.1Mb.3)
 ### Replicate 2
 
 ```{r, message=FALSE, warning=FALSE}
-rep_2.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.1Mb.bedgraph", header = T)
+rep_2.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.diversity.1Mb.bedgraph", header = T)
 rep_2.pi.1Mb$avg <- apply(rep_2.pi.1Mb[4:ncol(rep_2.pi.1Mb)], 1, mean)
-rep_2.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.1Mb.bedgraph", header = T)
-rep_2.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.1Mb.bedgraph", header = T)
-rep_2.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.1Mb.bedgraph", header = T)
+rep_2.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.rho.1Mb.bedgraph", header = T)
+rep_2.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.theta.1Mb.bedgraph", header = T)
+rep_2.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep2/dm2L_bgs_rep2_5.TMRCA.1Mb.bedgraph", header = T)
 rep_2.tmrca.1Mb$avg <- apply(rep_2.tmrca.1Mb[4:ncol(rep_2.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep2 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, rep_2.theta.1Mb$sample_mean, rep_2.tmrca.1Mb$avg, rep_2.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_2.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[2, 3] <- cor.test(sim.theta.1Mb$Rate, rep_2.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep2$thetaC <- sim.lands.1Mb.rep2$theta - mean(sim.lands.1Mb.rep2$theta)
@@ -8332,17 +8531,17 @@ vif(g.div.1Mb.3)
 ### Replicate 3
 
 ```{r, message=FALSE, warning=FALSE}
-rep_3.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.1Mb.bedgraph", header = T)
+rep_3.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.diversity.1Mb.bedgraph", header = T)
 rep_3.pi.1Mb$avg <- apply(rep_3.pi.1Mb[4:ncol(rep_3.pi.1Mb)], 1, mean)
-rep_3.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.1Mb.bedgraph", header = T)
-rep_3.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.1Mb.bedgraph", header = T)
-rep_3.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.1Mb.bedgraph", header = T)
+rep_3.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.rho.1Mb.bedgraph", header = T)
+rep_3.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.theta.1Mb.bedgraph", header = T)
+rep_3.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep3/dm2L_bgs_rep3_5.TMRCA.1Mb.bedgraph", header = T)
 rep_3.tmrca.1Mb$avg <- apply(rep_3.tmrca.1Mb[4:ncol(rep_3.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep3 <- as.data.frame(cbind(rep_3.pi.1Mb$avg, rep_3.theta.1Mb$sample_mean, rep_3.tmrca.1Mb$avg, rep_3.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_3.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[3, 3] <- cor.test(sim.theta.1Mb$Rate, rep_3.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep3$thetaC <- sim.lands.1Mb.rep3$theta - mean(sim.lands.1Mb.rep3$theta)
@@ -8400,17 +8599,17 @@ vif(g.div.1Mb.3)
 ### Replicate 4
 
 ```{r, message=FALSE, warning=FALSE}
-rep_4.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.1Mb.bedgraph", header = T)
+rep_4.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.diversity.1Mb.bedgraph", header = T)
 rep_4.pi.1Mb$avg <- apply(rep_4.pi.1Mb[4:ncol(rep_4.pi.1Mb)], 1, mean)
-rep_4.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.1Mb.bedgraph", header = T)
-rep_4.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.1Mb.bedgraph", header = T)
-rep_4.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.1Mb.bedgraph", header = T)
+rep_4.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.rho.1Mb.bedgraph", header = T)
+rep_4.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.theta.1Mb.bedgraph", header = T)
+rep_4.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep4/dm2L_bgs_rep4_5.TMRCA.1Mb.bedgraph", header = T)
 rep_4.tmrca.1Mb$avg <- apply(rep_4.tmrca.1Mb[4:ncol(rep_4.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep4 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, rep_4.theta.1Mb$sample_mean, rep_4.tmrca.1Mb$avg, rep_4.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_4.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[4, 3] <- cor.test(sim.theta.1Mb$Rate, rep_4.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep4$thetaC <- sim.lands.1Mb.rep4$theta - mean(sim.lands.1Mb.rep4$theta)
@@ -8468,17 +8667,17 @@ vif(g.div.1Mb.3)
 ### Replicate 5
 
 ```{r, message=FALSE, warning=FALSE}
-rep_5.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.1Mb.bedgraph", header = T)
+rep_5.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.diversity.1Mb.bedgraph", header = T)
 rep_5.pi.1Mb$avg <- apply(rep_5.pi.1Mb[4:ncol(rep_5.pi.1Mb)], 1, mean)
-rep_5.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.1Mb.bedgraph", header = T)
-rep_5.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.1Mb.bedgraph", header = T)
-rep_5.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.1Mb.bedgraph", header = T)
+rep_5.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.rho.1Mb.bedgraph", header = T)
+rep_5.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.theta.1Mb.bedgraph", header = T)
+rep_5.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep5/dm2L_bgs_rep5_5.TMRCA.1Mb.bedgraph", header = T)
 rep_5.tmrca.1Mb$avg <- apply(rep_5.tmrca.1Mb[4:ncol(rep_5.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep5 <- as.data.frame(cbind(rep_5.pi.1Mb$avg, rep_5.theta.1Mb$sample_mean, rep_5.tmrca.1Mb$avg, rep_5.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_5.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[5, 3] <- cor.test(sim.theta.1Mb$Rate, rep_5.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep5$thetaC <- sim.lands.1Mb.rep5$theta - mean(sim.lands.1Mb.rep5$theta)
@@ -8536,17 +8735,17 @@ vif(g.div.1Mb.3)
 ### Replicate 6
 
 ```{r, message=FALSE, warning=FALSE}
-rep_6.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
+rep_6.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
 rep_6.pi.1Mb$avg <- apply(rep_6.pi.1Mb[4:ncol(rep_6.pi.1Mb)], 1, mean)
-rep_6.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
-rep_6.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
-rep_6.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
+rep_6.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
+rep_6.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
+rep_6.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
 rep_6.tmrca.1Mb$avg <- apply(rep_6.tmrca.1Mb[4:ncol(rep_6.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep6 <- as.data.frame(cbind(rep_6.pi.1Mb$avg, rep_6.theta.1Mb$sample_mean, rep_6.tmrca.1Mb$avg, rep_6.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_6.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[6, 3] <- cor.test(sim.theta.1Mb$Rate, rep_6.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep6$thetaC <- sim.lands.1Mb.rep6$theta - mean(sim.lands.1Mb.rep6$theta)
@@ -8604,17 +8803,17 @@ vif(g.div.1Mb.3)
 ### Replicate 7
 
 ```{r, message=FALSE, warning=FALSE}
-rep_7.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
+rep_7.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.diversity.1Mb.bedgraph", header = T)
 rep_7.pi.1Mb$avg <- apply(rep_7.pi.1Mb[4:ncol(rep_7.pi.1Mb)], 1, mean)
-rep_7.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
-rep_7.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
-rep_7.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
+rep_7.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.rho.1Mb.bedgraph", header = T)
+rep_7.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.theta.1Mb.bedgraph", header = T)
+rep_7.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep6/dm2L_bgs_rep6_5.TMRCA.1Mb.bedgraph", header = T)
 rep_7.tmrca.1Mb$avg <- apply(rep_7.tmrca.1Mb[4:ncol(rep_7.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep7 <- as.data.frame(cbind(rep_7.pi.1Mb$avg, rep_7.theta.1Mb$sample_mean, rep_7.tmrca.1Mb$avg, rep_7.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_7.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[7, 3] <- cor.test(sim.theta.1Mb$Rate, rep_7.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep7$thetaC <- sim.lands.1Mb.rep7$theta - mean(sim.lands.1Mb.rep7$theta)
@@ -8672,17 +8871,17 @@ vif(g.div.1Mb.3)
 ### Replicate 8
 
 ```{r, message=FALSE, warning=FALSE}
-rep_8.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.1Mb.bedgraph", header = T)
+rep_8.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.diversity.1Mb.bedgraph", header = T)
 rep_8.pi.1Mb$avg <- apply(rep_8.pi.1Mb[4:ncol(rep_8.pi.1Mb)], 1, mean)
-rep_8.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.1Mb.bedgraph", header = T)
-rep_8.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.1Mb.bedgraph", header = T)
-rep_8.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.1Mb.bedgraph", header = T)
+rep_8.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.rho.1Mb.bedgraph", header = T)
+rep_8.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.theta.1Mb.bedgraph", header = T)
+rep_8.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep8/dm2L_bgs_rep8_5.TMRCA.1Mb.bedgraph", header = T)
 rep_8.tmrca.1Mb$avg <- apply(rep_8.tmrca.1Mb[4:ncol(rep_8.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep8 <- as.data.frame(cbind(rep_8.pi.1Mb$avg, rep_8.theta.1Mb$sample_mean, rep_8.tmrca.1Mb$avg, rep_8.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_8.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[8, 3] <- cor.test(sim.theta.1Mb$Rate, rep_8.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep8$thetaC <- sim.lands.1Mb.rep8$theta - mean(sim.lands.1Mb.rep8$theta)
@@ -8740,17 +8939,17 @@ vif(g.div.1Mb.3)
 ### Replicate 9
 
 ```{r, message=FALSE, warning=FALSE}
-rep_9.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.1Mb.bedgraph", header = T)
+rep_9.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.diversity.1Mb.bedgraph", header = T)
 rep_9.pi.1Mb$avg <- apply(rep_9.pi.1Mb[4:ncol(rep_9.pi.1Mb)], 1, mean)
-rep_9.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.1Mb.bedgraph", header = T)
-rep_9.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.1Mb.bedgraph", header = T)
-rep_9.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.1Mb.bedgraph", header = T)
+rep_9.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.rho.1Mb.bedgraph", header = T)
+rep_9.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.theta.1Mb.bedgraph", header = T)
+rep_9.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep9/dm2L_bgs_rep9_5.TMRCA.1Mb.bedgraph", header = T)
 rep_9.tmrca.1Mb$avg <- apply(rep_9.tmrca.1Mb[4:ncol(rep_9.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep9 <- as.data.frame(cbind(rep_9.pi.1Mb$avg, rep_9.theta.1Mb$sample_mean, rep_9.tmrca.1Mb$avg, rep_9.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_9.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[9, 3] <- cor.test(sim.theta.1Mb$Rate, rep_9.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep9$thetaC <- sim.lands.1Mb.rep9$theta - mean(sim.lands.1Mb.rep9$theta)
@@ -8808,17 +9007,17 @@ vif(g.div.1Mb.3)
 ### Replicate 10
 
 ```{r, message=FALSE, warning=FALSE}
-rep_10.pi.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.1Mb.bedgraph", header = T)
+rep_10.pi.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.diversity.1Mb.bedgraph", header = T)
 rep_10.pi.1Mb$avg <- apply(rep_10.pi.1Mb[4:ncol(rep_10.pi.1Mb)], 1, mean)
-rep_10.rho.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.1Mb.bedgraph", header = T)
-rep_10.theta.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.1Mb.bedgraph", header = T)
-rep_10.tmrca.1Mb <- read.table("dm_bgs/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.1Mb.bedgraph", header = T)
+rep_10.rho.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.rho.1Mb.bedgraph", header = T)
+rep_10.theta.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.theta.1Mb.bedgraph", header = T)
+rep_10.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneous/rep10/dm2L_bgs_rep10_5.TMRCA.1Mb.bedgraph", header = T)
 rep_10.tmrca.1Mb$avg <- apply(rep_10.tmrca.1Mb[4:ncol(rep_10.tmrca.1Mb)], 1, mean)
 
 sim.lands.1Mb.rep10 <- as.data.frame(cbind(rep_10.pi.1Mb$avg, rep_10.theta.1Mb$sample_mean, rep_10.tmrca.1Mb$avg, rep_1.rho.1Mb$sample_mean))
 names(sim.lands.1Mb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.test(sim.theta.1Mb$Rate, rep_10.theta.1Mb$sample_mean, method = "spearman") 
+cor.table[10, 3] <- cor.test(sim.theta.1Mb$Rate, rep_10.theta.1Mb$sample_mean, method = "spearman")$estimate 
 
 # centering
 sim.lands.1Mb.rep10$thetaC <- sim.lands.1Mb.rep10$theta - mean(sim.lands.1Mb.rep10$theta)
@@ -8874,9 +9073,11 @@ vif(g.div.1Mb.3)
 ```
 
 
-# all replicates:
+## all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
+write.table(cor.table, "cor.mutation.bgs.tsv", quote = F, sep = "\t")
+
 r2.bgs.50kb$average <- apply(r2.bgs.50kb, 1, mean)
 r2.bgs.200kb$average <- apply(r2.bgs.200kb, 1, mean)
 r2.bgs.1Mb$average <- apply(r2.bgs.1Mb, 1, mean)
@@ -8898,6 +9099,6 @@ r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
 r2.plot
-ggsave("Fig8.pdf", r2.plot, device = "pdf", )
+ggsave("Figure8.pdf", r2.plot, device = "pdf", )
 ```
 
