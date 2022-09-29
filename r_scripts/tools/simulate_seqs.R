@@ -81,7 +81,7 @@ generation_times <- 4 * N0 * coal_times
 pop_sizes <- c(fold_changes, fold_changes[length(fold_changes)])
 pop_sizes <- pop_sizes * N0
 
-pdf("Misc/demographic_history.pdf")
+pdf("demographic_history.pdf")
 plot(x = generation_times, 
      y = pop_sizes, type = "s", lwd = 2.5, xaxt = "n", ylab = "Pop. Size",  xlab = "Time (4Ne Generations)")
 # plot x-axis to match time boundaries (best if x-axis is plotted in log-scale):
