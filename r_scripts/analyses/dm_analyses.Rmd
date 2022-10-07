@@ -3553,8 +3553,8 @@ theta.map.1Mb <- theta.map.1Mb + theme(text = element_text(size = 20), axis.titl
 
 plot_grid(rho.map.1Mb, theta.map.1Mb, nrow = 2, ncol = 1)
 
-fig2 <- plot_grid(theta.map.50kb, theta.map.200kb, theta.map.1Mb, labels = "AUTO", nrow = 3, ncol = 1)
-save_plot("Figure2.pdf", fig2, base_height = 16, base_width = 12)
+theta.maps.coal <- plot_grid(theta.map.50kb, theta.map.200kb, theta.map.1Mb, nrow = 3, ncol = 1)
+theta.maps.coal
 ```
 
 # Real Drosophila data.
@@ -4702,19 +4702,20 @@ colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 r2.inf.avg$bin.size <- c(50, 200, 1000)
   
 r2.tab.comb <- rbind.data.frame(r2.dm.tab, r2.sim.avg, r2.inf.avg)
-r2.tab.comb$type <- c(rep("real", 3), rep("sim", 3), rep("inf", 3))
+r2.tab.comb$type <- c(rep("drosophila_data", 3), rep("simulated", 3), rep("iSMC-inferred", 3))
 
 molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
-r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable, fill = type))
-r2.plot <- r2.plot + geom_line(data = molten.r2)
-r2.plot <- r2.plot + geom_point(aes(shape = type, colour = variable), size = 4)
-r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
-r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks())
-r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2))
-r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
-r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
-r2.plot
-ggsave("Figure4.pdf", r2.plot, device = "pdf")
+r2.coal.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, shape = variable))
+r2.coal.plot <- r2.coal.plot + geom_line(data = molten.r2)
+r2.coal.plot <- r2.coal.plot + geom_point(aes(shape = variable), size = 4) + facet_wrap(~type)
+r2.coal.plot <- r2.coal.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
+r2.coal.plot <- r2.coal.plot + scale_y_continuous(breaks = pretty_breaks())
+r2.coal.plot <- r2.coal.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
+r2.coal.plot <- r2.coal.plot + labs(title = NULL, x = NULL, y = "Variance Explained (%)") 
+r2.coal.plot <- r2.coal.plot + theme_bw()
+r2.coal.plot <- r2.coal.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16),
+                                     legend.position = "none")
+r2.coal.plot
 ```
 
 
@@ -6791,7 +6792,6 @@ r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
 r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
 r2.plot
-ggsave("Figure7.pdf", r2.plot, device = "pdf", )
 ```
 
 
@@ -6801,6 +6801,10 @@ ggsave("Figure7.pdf", r2.plot, device = "pdf", )
 cor.table.theta <- as.data.frame(matrix(ncol = 3, nrow = nreps))
 row.names(cor.table.theta) <- reps
 colnames(cor.table.theta) <- c("50kb", "200kb", "1Mb")
+
+cor.table.rho <- as.data.frame(matrix(ncol = 3, nrow = nreps))
+row.names(cor.table.rho) <- reps
+colnames(cor.table.rho) <- c("50kb", "200kb", "1Mb")
 
 cor.table.tmrca <- as.data.frame(matrix(ncol = 3, nrow = nreps))
 row.names(cor.table.tmrca) <- reps
@@ -6856,6 +6860,7 @@ inf.lands.50kb.rep1 <- as.data.frame(cbind(rep_1.pi.50kb$avg, rep_1.theta.50kb$s
 names(inf.lands.50kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[1, 1] <- cor.test(sim.theta.50kb$Rate, rep_1.theta.50kb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[1, 1] <- cor.test(sim.rho.50kb$Rate, rep_1.rho.50kb$sample_mean, method = "spearman")$estimate 
 cor.table.tmrca[1, 1] <- cor.test(rep1.sim.tmrca.50kb$AverageTmrca, rep_1.tmrca.50kb$avg, method = "spearman")$estimate 
 
 # centering
@@ -6944,6 +6949,7 @@ inf.lands.50kb.rep2 <- as.data.frame(cbind(rep_2.pi.50kb$avg, rep_2.theta.50kb$s
 names(inf.lands.50kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[2, 1] <- cor.test(sim.theta.50kb$Rate, rep_2.theta.50kb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[2, 1] <- cor.test(sim.rho.50kb$Rate, rep_2.rho.50kb$sample_mean, method = "spearman")$estimate 
 cor.table.tmrca[2, 1] <- cor.test(rep2.sim.tmrca.50kb$AverageTmrca, rep_2.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7032,6 +7038,7 @@ inf.lands.50kb.rep3 <- as.data.frame(cbind(rep_3.pi.50kb$avg, rep_3.theta.50kb$s
 names(inf.lands.50kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[3, 1] <- cor.test(sim.theta.50kb$Rate, rep_3.theta.50kb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[3, 1] <- cor.test(sim.rho.50kb$Rate, rep_3.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[3, 1] <- cor.test(rep3.sim.tmrca.50kb$AverageTmrca, rep_3.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7120,6 +7127,7 @@ inf.lands.50kb.rep4 <- as.data.frame(cbind(rep_4.pi.50kb$avg, rep_4.theta.50kb$s
 names(inf.lands.50kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[4, 1] <- cor.test(sim.theta.50kb$Rate, rep_4.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[4, 1] <- cor.test(sim.rho.50kb$Rate, rep_4.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[4, 1] <- cor.test(rep4.sim.tmrca.50kb$AverageTmrca, rep_4.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7208,6 +7216,7 @@ inf.lands.50kb.rep5 <- as.data.frame(cbind(rep_5.pi.50kb$avg, rep_5.theta.50kb$s
 names(inf.lands.50kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[5, 1] <- cor.test(sim.theta.50kb$Rate, rep_5.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[5, 1] <- cor.test(sim.rho.50kb$Rate, rep_5.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[5, 1] <- cor.test(rep5.sim.tmrca.50kb$AverageTmrca, rep_5.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7296,6 +7305,7 @@ inf.lands.50kb.rep6 <- as.data.frame(cbind(rep_6.pi.50kb$avg, rep_6.theta.50kb$s
 names(inf.lands.50kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[6, 1] <- cor.test(sim.theta.50kb$Rate, rep_6.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[6, 1] <- cor.test(sim.rho.50kb$Rate, rep_6.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[6, 1] <- cor.test(rep6.sim.tmrca.50kb$AverageTmrca, rep_6.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7384,6 +7394,7 @@ inf.lands.50kb.rep7 <- as.data.frame(cbind(rep_7.pi.50kb$avg, rep_7.theta.50kb$s
 names(inf.lands.50kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[7, 1] <- cor.test(sim.theta.50kb$Rate, rep_7.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[7, 1] <- cor.test(sim.rho.50kb$Rate, rep_7.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[7, 1] <- cor.test(rep7.sim.tmrca.50kb$AverageTmrca, rep_7.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7472,6 +7483,7 @@ inf.lands.50kb.rep8 <- as.data.frame(cbind(rep_8.pi.50kb$avg, rep_8.theta.50kb$s
 names(inf.lands.50kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[8, 1] <- cor.test(sim.theta.50kb$Rate, rep_8.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[8, 1] <- cor.test(sim.rho.50kb$Rate, rep_8.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[8, 1] <- cor.test(rep8.sim.tmrca.50kb$AverageTmrca, rep_8.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7560,6 +7572,7 @@ inf.lands.50kb.rep9 <- as.data.frame(cbind(rep_9.pi.50kb$avg, rep_9.theta.50kb$s
 names(inf.lands.50kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[9, 1] <- cor.test(sim.theta.50kb$Rate, rep_9.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[9, 1] <- cor.test(sim.rho.50kb$Rate, rep_9.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[9, 1] <- cor.test(rep9.sim.tmrca.50kb$AverageTmrca, rep_9.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7648,6 +7661,7 @@ inf.lands.50kb.rep10 <- as.data.frame(cbind(rep_10.pi.50kb$avg, rep_10.theta.50k
 names(inf.lands.50kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[10, 1] <- cor.test(sim.theta.50kb$Rate, rep_10.theta.50kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[10, 1] <- cor.test(sim.rho.50kb$Rate, rep_10.rho.50kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[10, 1] <- cor.test(rep10.sim.tmrca.50kb$AverageTmrca, rep_10.tmrca.50kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7703,6 +7717,32 @@ summary(g.div.50kb.3)
 vif(g.div.50kb.3)
 ```
 
+## all replicates:
+
+```{r, message=FALSE, warning=FALSE}
+theta.plot <- as.data.frame(cbind(1:nrow(sim.theta.50kb),
+                                sim.theta.50kb$Rate * 1e-7 * 3e+4, 
+                                rep_1.theta.50kb$sample_mean,
+                                rep_2.theta.50kb$sample_mean,
+                                rep_3.theta.50kb$sample_mean,
+                                rep_4.theta.50kb$sample_mean,
+                                rep_5.theta.50kb$sample_mean,
+                                rep_6.theta.50kb$sample_mean,
+                                rep_7.theta.50kb$sample_mean,
+                                rep_8.theta.50kb$sample_mean,
+                                rep_9.theta.50kb$sample_mean,
+                                rep_10.theta.50kb$sample_mean))
+
+names(theta.plot) <- c("bin", "sim", reps)
+molten.theta <- melt(theta.plot, id.vars = "bin")
+theta.map.50kb.bgs <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
+theta.map.50kb.bgs <- theta.map.50kb.bgs + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
+theta.map.50kb.bgs <- theta.map.50kb.bgs + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
+theta.map.50kb.bgs <- theta.map.50kb.bgs + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.50kb.bgs <- theta.map.50kb.bgs + labs(title = NULL, x = NULL, y = NULL)
+theta.map.50kb.bgs <- theta.map.50kb.bgs + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
+theta.map.50kb.bgs
+```
 
 
 ## 200 kb scale
@@ -7754,6 +7794,7 @@ inf.lands.200kb.rep1 <- as.data.frame(cbind(rep_1.pi.200kb$avg, rep_1.theta.200k
 names(inf.lands.200kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[1, 2] <- cor.test(sim.theta.200kb$Rate, rep_1.theta.200kb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[1, 2] <- cor.test(sim.rho.200kb$Rate, rep_1.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[1, 2] <- cor.test(rep1.sim.tmrca.200kb$AverageTmrca, rep_1.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7841,7 +7882,8 @@ r2.bgs.200kb.true[5, 2] <- anova.diversity$VarExp[4] * 100
 inf.lands.200kb.rep2 <- as.data.frame(cbind(rep_2.pi.200kb$avg, rep_2.theta.200kb$sample_mean, rep_2.tmrca.200kb$avg, rep_2.rho.200kb$sample_mean))
 names(inf.lands.200kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
-cor.table.theta[2, 2] <- cor.test(sim.theta.200kb$Rate, rep_2.theta.200kb$sample_mean, method = "spearman")$estimate 
+cor.table.theta[2, 2] <- cor.test(sim.theta.200kb$Rate, rep_2.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[2, 2] <- cor.test(sim.rho.200kb$Rate, rep_2.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[2, 2] <- cor.test(rep2.sim.tmrca.200kb$AverageTmrca, rep_2.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -7930,6 +7972,7 @@ inf.lands.200kb.rep3 <- as.data.frame(cbind(rep_3.pi.200kb$avg, rep_3.theta.200k
 names(inf.lands.200kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[3, 2] <- cor.test(sim.theta.200kb$Rate, rep_3.theta.200kb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[3, 2] <- cor.test(sim.rho.200kb$Rate, rep_3.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[3, 2] <- cor.test(rep3.sim.tmrca.200kb$AverageTmrca, rep_3.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8018,6 +8061,7 @@ inf.lands.200kb.rep4 <- as.data.frame(cbind(rep_4.pi.200kb$avg, rep_4.theta.200k
 names(inf.lands.200kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[4, 2] <- cor.test(sim.theta.200kb$Rate, rep_4.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[4, 2] <- cor.test(sim.rho.200kb$Rate, rep_4.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[4, 2] <- cor.test(rep4.sim.tmrca.200kb$AverageTmrca, rep_4.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8106,6 +8150,7 @@ inf.lands.200kb.rep5 <- as.data.frame(cbind(rep_5.pi.200kb$avg, rep_5.theta.200k
 names(inf.lands.200kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[5, 2] <- cor.test(sim.theta.200kb$Rate, rep_5.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[5, 2] <- cor.test(sim.rho.200kb$Rate, rep_5.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[5, 2] <- cor.test(rep5.sim.tmrca.200kb$AverageTmrca, rep_5.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8194,6 +8239,7 @@ inf.lands.200kb.rep6 <- as.data.frame(cbind(rep_6.pi.200kb$avg, rep_6.theta.200k
 names(inf.lands.200kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[6, 2] <- cor.test(sim.theta.200kb$Rate, rep_6.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[6, 2] <- cor.test(sim.rho.200kb$Rate, rep_6.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[6, 2] <- cor.test(rep6.sim.tmrca.200kb$AverageTmrca, rep_6.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8282,6 +8328,7 @@ inf.lands.200kb.rep7 <- as.data.frame(cbind(rep_7.pi.200kb$avg, rep_7.theta.200k
 names(inf.lands.200kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[7, 2] <- cor.test(sim.theta.200kb$Rate, rep_7.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[7, 2] <- cor.test(sim.rho.200kb$Rate, rep_1.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[7, 2] <- cor.test(rep7.sim.tmrca.200kb$AverageTmrca, rep_7.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8370,6 +8417,7 @@ inf.lands.200kb.rep8 <- as.data.frame(cbind(rep_8.pi.200kb$avg, rep_8.theta.200k
 names(inf.lands.200kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[8, 2] <- cor.test(sim.theta.200kb$Rate, rep_8.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[8, 2] <- cor.test(sim.rho.200kb$Rate, rep_8.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[8, 2] <- cor.test(rep8.sim.tmrca.200kb$AverageTmrca, rep_8.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8458,6 +8506,7 @@ inf.lands.200kb.rep9 <- as.data.frame(cbind(rep_9.pi.200kb$avg, rep_9.theta.200k
 names(inf.lands.200kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[9, 2] <- cor.test(sim.theta.200kb$Rate, rep_9.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[9, 2] <- cor.test(sim.rho.200kb$Rate, rep_9.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[9, 2] <- cor.test(rep9.sim.tmrca.200kb$AverageTmrca, rep_9.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8546,6 +8595,7 @@ inf.lands.200kb.rep10 <- as.data.frame(cbind(rep_10.pi.200kb$avg, rep_10.theta.2
 names(inf.lands.200kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[10, 2] <- cor.test(sim.theta.200kb$Rate, rep_10.theta.200kb$sample_mean, method = "spearman")$estimate
+cor.table.rho[10, 2] <- cor.test(sim.rho.200kb$Rate, rep_10.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[10, 2] <- cor.test(rep10.sim.tmrca.200kb$AverageTmrca, rep_10.tmrca.200kb$avg, method = "spearman")$estimate
 
 # centering
@@ -8601,6 +8651,32 @@ summary(g.div.200kb.3)
 vif(g.div.200kb.3)
 ```
 
+## all replicates:
+
+```{r, message=FALSE, warning=FALSE}
+theta.plot <- as.data.frame(cbind(1:nrow(sim.theta.200kb),
+                                sim.theta.200kb$Rate * 1e-7 * 3e+4, 
+                                rep_1.theta.200kb$sample_mean,
+                                rep_2.theta.200kb$sample_mean,
+                                rep_3.theta.200kb$sample_mean,
+                                rep_4.theta.200kb$sample_mean,
+                                rep_5.theta.200kb$sample_mean,
+                                rep_6.theta.200kb$sample_mean,
+                                rep_7.theta.200kb$sample_mean,
+                                rep_8.theta.200kb$sample_mean,
+                                rep_9.theta.200kb$sample_mean,
+                                rep_10.theta.200kb$sample_mean))
+
+names(theta.plot) <- c("bin", "sim", reps)
+molten.theta <- melt(theta.plot, id.vars = "bin")
+theta.map.200kb.bgs <- ggplot(data = molten.theta, aes(x = bin * 200, y = value, colour = variable)) + theme_bw()
+theta.map.200kb.bgs <- theta.map.200kb.bgs + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
+theta.map.200kb.bgs <- theta.map.200kb.bgs + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
+theta.map.200kb.bgs <- theta.map.200kb.bgs + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.200kb.bgs <- theta.map.200kb.bgs + labs(title = NULL, x = NULL, y = NULL)
+theta.map.200kb.bgs <- theta.map.200kb.bgs + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
+theta.map.200kb.bgs
+```
 
 ## 1 Mb scale
 
@@ -8651,6 +8727,7 @@ inf.lands.1Mb.rep1 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, rep_1.theta.1Mb$samp
 names(inf.lands.1Mb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[1, 3] <- cor.test(sim.theta.1Mb$Rate, rep_1.theta.1Mb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[1, 3] <- cor.test(sim.rho.200kb$Rate, rep_1.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[1, 3] <- cor.test(rep1.sim.tmrca.1Mb$AverageTmrca, rep_1.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -8739,6 +8816,7 @@ inf.lands.1Mb.rep2 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, rep_2.theta.1Mb$samp
 names(inf.lands.1Mb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[2, 3] <- cor.test(sim.theta.1Mb$Rate, rep_2.theta.1Mb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[2, 3] <- cor.test(sim.rho.200kb$Rate, rep_2.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[2, 3] <- cor.test(rep2.sim.tmrca.1Mb$AverageTmrca, rep_2.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -8827,6 +8905,7 @@ inf.lands.1Mb.rep3 <- as.data.frame(cbind(rep_3.pi.1Mb$avg, rep_3.theta.1Mb$samp
 names(inf.lands.1Mb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[3, 3] <- cor.test(sim.theta.1Mb$Rate, rep_3.theta.1Mb$sample_mean, method = "spearman")$estimate 
+cor.table.rho[3, 3] <- cor.test(sim.rho.200kb$Rate, rep_3.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[3, 3] <- cor.test(rep3.sim.tmrca.1Mb$AverageTmrca, rep_3.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -8915,6 +8994,7 @@ inf.lands.1Mb.rep4 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, rep_4.theta.1Mb$samp
 names(inf.lands.1Mb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[4, 3] <- cor.test(sim.theta.1Mb$Rate, rep_4.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[4, 3] <- cor.test(sim.rho.200kb$Rate, rep_4.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[4, 3] <- cor.test(rep4.sim.tmrca.1Mb$AverageTmrca, rep_4.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9003,6 +9083,7 @@ inf.lands.1Mb.rep5 <- as.data.frame(cbind(rep_5.pi.1Mb$avg, rep_5.theta.1Mb$samp
 names(inf.lands.1Mb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[5, 3] <- cor.test(sim.theta.1Mb$Rate, rep_5.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[5, 3] <- cor.test(sim.rho.200kb$Rate, rep_5.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[5, 3] <- cor.test(rep5.sim.tmrca.1Mb$AverageTmrca, rep_5.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9091,6 +9172,7 @@ inf.lands.1Mb.rep6 <- as.data.frame(cbind(rep_6.pi.1Mb$avg, rep_6.theta.1Mb$samp
 names(inf.lands.1Mb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[6, 3] <- cor.test(sim.theta.1Mb$Rate, rep_6.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[6, 3] <- cor.test(sim.rho.200kb$Rate, rep_6.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[6, 3] <- cor.test(rep6.sim.tmrca.1Mb$AverageTmrca, rep_6.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9179,6 +9261,7 @@ inf.lands.1Mb.rep7 <- as.data.frame(cbind(rep_7.pi.1Mb$avg, rep_7.theta.1Mb$samp
 names(inf.lands.1Mb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[7, 3] <- cor.test(sim.theta.1Mb$Rate, rep_7.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[7, 3] <- cor.test(sim.rho.200kb$Rate, rep_7.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[7, 3] <- cor.test(rep7.sim.tmrca.1Mb$AverageTmrca, rep_7.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9267,6 +9350,7 @@ inf.lands.1Mb.rep8 <- as.data.frame(cbind(rep_8.pi.1Mb$avg, rep_8.theta.1Mb$samp
 names(inf.lands.1Mb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[8, 3] <- cor.test(sim.theta.1Mb$Rate, rep_8.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[8, 3] <- cor.test(sim.rho.200kb$Rate, rep_8.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[8, 3] <- cor.test(rep8.sim.tmrca.1Mb$AverageTmrca, rep_8.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9355,6 +9439,7 @@ inf.lands.1Mb.rep9 <- as.data.frame(cbind(rep_9.pi.1Mb$avg, rep_9.theta.1Mb$samp
 names(inf.lands.1Mb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[9, 3] <- cor.test(sim.theta.1Mb$Rate, rep_9.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[9, 3] <- cor.test(sim.rho.200kb$Rate, rep_9.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[9, 3] <- cor.test(rep9.sim.tmrca.1Mb$AverageTmrca, rep_9.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9443,6 +9528,7 @@ inf.lands.1Mb.rep10 <- as.data.frame(cbind(rep_10.pi.1Mb$avg, rep_10.theta.1Mb$s
 names(inf.lands.1Mb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
 cor.table.theta[10, 3] <- cor.test(sim.theta.1Mb$Rate, rep_10.theta.1Mb$sample_mean, method = "spearman")$estimate
+cor.table.rho[10, 3] <- cor.test(sim.rho.200kb$Rate, rep_10.rho.200kb$sample_mean, method = "spearman")$estimate
 cor.table.tmrca[10, 3] <- cor.test(rep10.sim.tmrca.1Mb$AverageTmrca, rep_10.tmrca.1Mb$avg, method = "spearman")$estimate
 
 # centering
@@ -9501,8 +9587,37 @@ vif(g.div.1Mb.3)
 ## all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
+theta.plot <- as.data.frame(cbind(1:nrow(sim.theta.1Mb),
+                                sim.theta.1Mb$Rate * 1e-7 * 3e+4, 
+                                rep_1.theta.1Mb$sample_mean,
+                                rep_2.theta.1Mb$sample_mean,
+                                rep_3.theta.1Mb$sample_mean,
+                                rep_4.theta.1Mb$sample_mean,
+                                rep_5.theta.1Mb$sample_mean,
+                                rep_6.theta.1Mb$sample_mean,
+                                rep_7.theta.1Mb$sample_mean,
+                                rep_8.theta.1Mb$sample_mean,
+                                rep_9.theta.1Mb$sample_mean,
+                                rep_10.theta.1Mb$sample_mean))
+
+names(theta.plot) <- c("bin", "sim", reps)
+molten.theta <- melt(theta.plot, id.vars = "bin")
+theta.map.1Mb.bgs <- ggplot(data = molten.theta, aes(x = bin * 1000, y = value, colour = variable)) + theme_bw()
+theta.map.1Mb.bgs <- theta.map.1Mb.bgs + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
+theta.map.1Mb.bgs <- theta.map.1Mb.bgs + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
+theta.map.1Mb.bgs <- theta.map.1Mb.bgs + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.1Mb.bgs <- theta.map.1Mb.bgs + labs(title = NULL, x = "Position (kb)", y = NULL)
+theta.map.1Mb.bgs <- theta.map.1Mb.bgs + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
+theta.map.1Mb.bgs
+```
+
+
+# all scales
+
+```{r, message=FALSE, warning=FALSE}
 write.table(cor.table.theta, "cor.mutation.bgs.tsv", quote = F, sep = "\t")
 write.table(cor.table.tmrca, "cor.tmrca.bgs.tsv", quote = F, sep = "\t")
+write.table(cor.table.rho, "cor.rho.bgs.tsv", quote = F, sep = "\t")
 
 # true (simulated) landscapes
 r2.bgs.50kb.true$average <- apply(r2.bgs.50kb.true, 1, mean)
@@ -9523,18 +9638,29 @@ colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 r2.inf.avg$bin.size <- c(50, 200, 1000)
 
 r2.tab.comb <- rbind.data.frame(r2.dm.tab, r2.true.avg, r2.inf.avg)
-r2.tab.comb$type <- c(rep("real", 3), rep("sim", 3), rep("inf", 3))
+r2.tab.comb$type <- c(rep("drosophila_data", 3), rep("simulated", 3), rep("iSMC-inferred", 3))
 
 molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
-r2.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, colour = variable, fill = type))
-r2.plot <- r2.plot + geom_line(data = molten.r2)
-r2.plot <- r2.plot + geom_point(aes(shape = type, colour = variable), size = 4)
-r2.plot <- r2.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
-r2.plot <- r2.plot + scale_y_continuous(breaks = pretty_breaks())
-r2.plot <- r2.plot + scale_shape_manual(values = c(0, 1, 2))
-r2.plot <- r2.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") + theme_bw()
-r2.plot <- r2.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16))
-r2.plot
-ggsave("Figure8.pdf", r2.plot, device = "pdf")
+r2.bgs.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, shape = variable))
+r2.bgs.plot <- r2.bgs.plot + geom_line(data = molten.r2)
+r2.bgs.plot <- r2.bgs.plot + geom_point(aes(shape = variable), size = 4) + facet_wrap(~type)
+r2.bgs.plot <- r2.bgs.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
+r2.bgs.plot <- r2.bgs.plot + scale_y_continuous(breaks = pretty_breaks())
+r2.bgs.plot <- r2.bgs.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
+r2.bgs.plot <- r2.bgs.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") 
+r2.bgs.plot <- r2.bgs.plot + theme_bw()
+r2.bgs.plot <- r2.bgs.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16),
+                                   legend.position = "bottom")
+r2.bgs.plot
+
+# combine coal and BGS R2 plots
+r2.comb.plot <- plot_grid(r2.coal.plot, r2.bgs.plot, nrow = 2, ncol = 1, labels = "AUTO")
+cowplot::save_plot("Figure4.pdf", r2.comb.plot, device = "pdf", base_height = 9, base_width = 12)
+
+# bench theta
+theta.maps.bgs <- plot_grid(theta.map.50kb.bgs, theta.map.200kb.bgs, theta.map.1Mb.bgs, nrow = 3, ncol = 1)
+
+theta.maps.comb <- plot_grid(theta.maps.coal, theta.maps.bgs, labels = "AUTO", nrow = 1, ncol = 2)
+save_plot("Figure3.pdf", theta.maps.comb, base_height = 16, base_width = 12)
 ```
 
