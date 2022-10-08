@@ -4702,7 +4702,7 @@ colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 r2.inf.avg$bin.size <- c(50, 200, 1000)
   
 r2.tab.comb <- rbind.data.frame(r2.dm.tab, r2.sim.avg, r2.inf.avg)
-r2.tab.comb$type <- c(rep("drosophila_data", 3), rep("simulated", 3), rep("iSMC-inferred", 3))
+r2.tab.comb$type <- c(rep("iSMC-inferred (Drosophila)", 3), rep("True landscapes (simulations)", 3), rep("iSMC-inferred (simulations)", 3))
 
 molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
 r2.coal.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, shape = variable))
@@ -9619,6 +9619,23 @@ write.table(cor.table.theta, "cor.mutation.bgs.tsv", quote = F, sep = "\t")
 write.table(cor.table.tmrca, "cor.tmrca.bgs.tsv", quote = F, sep = "\t")
 write.table(cor.table.rho, "cor.rho.bgs.tsv", quote = F, sep = "\t")
 
+cor.table.comb <- rbind.data.frame(t(cor.table.theta), t(cor.table.rho), t(cor.table.tmrca))
+cor.table.comb$bin.size <- rep(c(50, 200, 1000), 3)
+cor.table.comb$rate <- c(rep("Theta", 3), rep("Rho", 3), rep("TMRCA", 3))
+
+molten.cor <- melt(cor.table.comb, id.vars = c("bin.size", "rate"))
+cor.bgs.plot <- ggplot(data = molten.cor, aes(x = bin.size, y = value))
+cor.bgs.plot <- cor.bgs.plot + geom_point(size=3, alpha = 0.6) + facet_wrap(~rate)
+cor.bgs.plot <- cor.bgs.plot + scale_x_continuous(breaks = c(50, 200, 1000), trans="log10") 
+cor.bgs.plot <- cor.bgs.plot + scale_y_continuous(breaks = pretty_breaks())
+cor.bgs.plot <- cor.bgs.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Spearman's Rho") 
+cor.bgs.plot <- cor.bgs.plot + theme_bw() + ylim(0, 1)
+cor.bgs.plot <- cor.bgs.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16),
+                                     legend.position = "bottom")
+cor.bgs.plot
+
+ggsave("Figure4.pdf", cor.bgs.plot, device = "pdf", height = 5, width = 12)
+
 # true (simulated) landscapes
 r2.bgs.50kb.true$average <- apply(r2.bgs.50kb.true, 1, mean)
 r2.bgs.200kb.true$average <- apply(r2.bgs.200kb.true, 1, mean)
@@ -9638,7 +9655,7 @@ colnames(r2.inf.avg) <- c("Total", "Theta", "Rho", "TMRCA", "Theta:TMRCA")
 r2.inf.avg$bin.size <- c(50, 200, 1000)
 
 r2.tab.comb <- rbind.data.frame(r2.dm.tab, r2.true.avg, r2.inf.avg)
-r2.tab.comb$type <- c(rep("drosophila_data", 3), rep("simulated", 3), rep("iSMC-inferred", 3))
+r2.tab.comb$type <- c(rep("iSMC-inferred (Drosophila)", 3), rep("True landscapes (simulations)", 3), rep("iSMC-inferred (simulations)", 3))
 
 molten.r2 <- melt(r2.tab.comb, id.vars = c("bin.size", "type"))
 r2.bgs.plot <- ggplot(data = molten.r2, aes(x = bin.size, y = value, shape = variable))
@@ -9655,12 +9672,12 @@ r2.bgs.plot
 
 # combine coal and BGS R2 plots
 r2.comb.plot <- plot_grid(r2.coal.plot, r2.bgs.plot, nrow = 2, ncol = 1, labels = "AUTO")
-cowplot::save_plot("Figure4.pdf", r2.comb.plot, device = "pdf", base_height = 9, base_width = 12)
+cowplot::save_plot("Figure5.pdf", r2.comb.plot, device = "pdf", base_height = 9, base_width = 12)
 
 # bench theta
 theta.maps.bgs <- plot_grid(theta.map.50kb.bgs, theta.map.200kb.bgs, theta.map.1Mb.bgs, nrow = 3, ncol = 1)
 
 theta.maps.comb <- plot_grid(theta.maps.coal, theta.maps.bgs, labels = "AUTO", nrow = 1, ncol = 2)
-save_plot("Figure3.pdf", theta.maps.comb, base_height = 16, base_width = 12)
+save_plot("Figure2.pdf", theta.maps.comb, base_height = 16, base_width = 12)
 ```
 
