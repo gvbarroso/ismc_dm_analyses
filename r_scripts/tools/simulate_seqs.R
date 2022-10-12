@@ -43,9 +43,9 @@ for(i in 2:number_of_intervals) {
 }
 
 # vector of time points (in coal. units) where demographic changes occur
-time_demo_changes <- c(0.5)
+time_demo_changes <- c(0.18232156, 0.83624802)
 # by how much the pop. size changes (past-wards at each step) at the above time points 
-fold_changes <- c(1, 10)
+fold_changes <- c(1, 0.285714285714286, 1.5)
 
 # Now, since we have fluctuating pop. sizes, we must ajust N0 to have the (time-average) Ne that we want
 # computes total (maximum) number of generations by assuming max. scaled coal. time is equal to max. time in discretisation
@@ -83,7 +83,7 @@ pop_sizes <- pop_sizes * N0
 
 pdf("demographic_history.pdf")
 plot(x = generation_times, 
-     y = pop_sizes, type = "s", lwd = 2.5, xaxt = "n", ylab = "Pop. Size",  xlab = "Time (4Ne Generations)")
+     y = pop_sizes, type = "s", lwd = 2.5, xaxt = "n", ylab = "Ne",  xlab = "Time (4Ne Generations)")
 # plot x-axis to match time boundaries (best if x-axis is plotted in log-scale):
 x_axis <- round(4 * N0 * time_boundaries)
 # plot x axis in equally spaced boundaries (best if x-axis is plotted in linear scale)

@@ -4719,7 +4719,7 @@ r2.coal.plot
 ```
 
 
-# Simulations with BGS and flat Mutation Landscape in SLiM (iSMC-inferred landscapes)
+# Simulations with BGS and flat Mutation Landscape in SLiM
 
 ## 50 kb scale
 
@@ -6795,7 +6795,7 @@ r2.plot
 ```
 
 
-# Simulations with BGS and Gamma Mutation Landscape in SLiM (iSMC-inferred landscapes)
+# Simulations with BGS and Gamma Mutation Landscape in SLiM
 
 ```{r, message=FALSE, warning=FALSE}
 cor.table.theta <- as.data.frame(matrix(ncol = 3, nrow = nreps))
@@ -6844,7 +6844,7 @@ names(true.lands.50kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep1$thetaC <- true.lands.50kb.rep1$theta - mean(true.lands.50kb.rep1$theta)
 true.lands.50kb.rep1$tmrcaC <- true.lands.50kb.rep1$tmrca - mean(true.lands.50kb.rep1$tmrca)
 true.lands.50kb.rep1$rhoC <- true.lands.50kb.rep1$rho - mean(true.lands.50kb.rep1$rho, na.rm = T)
-true.lands.50kb.rep1$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep1)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -6934,7 +6934,7 @@ names(true.lands.50kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep2$thetaC <- true.lands.50kb.rep2$theta - mean(true.lands.50kb.rep2$theta)
 true.lands.50kb.rep2$tmrcaC <- true.lands.50kb.rep2$tmrca - mean(true.lands.50kb.rep2$tmrca)
 true.lands.50kb.rep2$rhoC <- true.lands.50kb.rep2$rho - mean(true.lands.50kb.rep2$rho, na.rm = T)
-true.lands.50kb.rep2$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep2)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7023,7 +7023,7 @@ names(true.lands.50kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep3$thetaC <- true.lands.50kb.rep3$theta - mean(true.lands.50kb.rep3$theta)
 true.lands.50kb.rep3$tmrcaC <- true.lands.50kb.rep3$tmrca - mean(true.lands.50kb.rep3$tmrca)
 true.lands.50kb.rep3$rhoC <- true.lands.50kb.rep3$rho - mean(true.lands.50kb.rep3$rho, na.rm = T)
-true.lands.50kb.rep3$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep3)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7112,7 +7112,7 @@ names(true.lands.50kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep4$thetaC <- true.lands.50kb.rep4$theta - mean(true.lands.50kb.rep4$theta)
 true.lands.50kb.rep4$tmrcaC <- true.lands.50kb.rep4$tmrca - mean(true.lands.50kb.rep4$tmrca)
 true.lands.50kb.rep4$rhoC <- true.lands.50kb.rep4$rho - mean(true.lands.50kb.rep4$rho, na.rm = T)
-true.lands.50kb.rep4$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep4)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7201,7 +7201,7 @@ names(true.lands.50kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep5$thetaC <- true.lands.50kb.rep5$theta - mean(true.lands.50kb.rep5$theta)
 true.lands.50kb.rep5$tmrcaC <- true.lands.50kb.rep5$tmrca - mean(true.lands.50kb.rep5$tmrca)
 true.lands.50kb.rep5$rhoC <- true.lands.50kb.rep5$rho - mean(true.lands.50kb.rep5$rho, na.rm = T)
-true.lands.50kb.rep5$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep5)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7290,7 +7290,7 @@ names(true.lands.50kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep6$thetaC <- true.lands.50kb.rep6$theta - mean(true.lands.50kb.rep6$theta)
 true.lands.50kb.rep6$tmrcaC <- true.lands.50kb.rep6$tmrca - mean(true.lands.50kb.rep6$tmrca)
 true.lands.50kb.rep6$rhoC <- true.lands.50kb.rep6$rho - mean(true.lands.50kb.rep6$rho, na.rm = T)
-true.lands.50kb.rep6$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep6)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7379,7 +7379,7 @@ names(true.lands.50kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep7$thetaC <- true.lands.50kb.rep7$theta - mean(true.lands.50kb.rep7$theta)
 true.lands.50kb.rep7$tmrcaC <- true.lands.50kb.rep7$tmrca - mean(true.lands.50kb.rep7$tmrca)
 true.lands.50kb.rep7$rhoC <- true.lands.50kb.rep7$rho - mean(true.lands.50kb.rep7$rho, na.rm = T)
-true.lands.50kb.rep7$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep7)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7468,7 +7468,7 @@ names(true.lands.50kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep8$thetaC <- true.lands.50kb.rep8$theta - mean(true.lands.50kb.rep8$theta)
 true.lands.50kb.rep8$tmrcaC <- true.lands.50kb.rep8$tmrca - mean(true.lands.50kb.rep8$tmrca)
 true.lands.50kb.rep8$rhoC <- true.lands.50kb.rep8$rho - mean(true.lands.50kb.rep8$rho, na.rm = T)
-true.lands.50kb.rep8$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep8)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7557,7 +7557,7 @@ names(true.lands.50kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep9$thetaC <- true.lands.50kb.rep9$theta - mean(true.lands.50kb.rep9$theta)
 true.lands.50kb.rep9$tmrcaC <- true.lands.50kb.rep9$tmrca - mean(true.lands.50kb.rep9$tmrca)
 true.lands.50kb.rep9$rhoC <- true.lands.50kb.rep9$rho - mean(true.lands.50kb.rep9$rho, na.rm = T)
-true.lands.50kb.rep9$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep9)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7646,7 +7646,7 @@ names(true.lands.50kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.50kb.rep10$thetaC <- true.lands.50kb.rep10$theta - mean(true.lands.50kb.rep10$theta)
 true.lands.50kb.rep10$tmrcaC <- true.lands.50kb.rep10$tmrca - mean(true.lands.50kb.rep10$tmrca)
 true.lands.50kb.rep10$rhoC <- true.lands.50kb.rep10$rho - mean(true.lands.50kb.rep10$rho, na.rm = T)
-true.lands.50kb.rep10$Replicate <- 1
+
 m.div.50kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.50kb.rep10)
 anova.diversity <- Anova(m.div.50kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7778,7 +7778,7 @@ names(true.lands.200kb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep1$thetaC <- true.lands.200kb.rep1$theta - mean(true.lands.200kb.rep1$theta)
 true.lands.200kb.rep1$tmrcaC <- true.lands.200kb.rep1$tmrca - mean(true.lands.200kb.rep1$tmrca)
 true.lands.200kb.rep1$rhoC <- true.lands.200kb.rep1$rho - mean(true.lands.200kb.rep1$rho, na.rm = T)
-true.lands.200kb.rep1$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep1)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7868,7 +7868,7 @@ names(true.lands.200kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep2$thetaC <- true.lands.200kb.rep2$theta - mean(true.lands.200kb.rep2$theta)
 true.lands.200kb.rep2$tmrcaC <- true.lands.200kb.rep2$tmrca - mean(true.lands.200kb.rep2$tmrca)
 true.lands.200kb.rep2$rhoC <- true.lands.200kb.rep2$rho - mean(true.lands.200kb.rep2$rho, na.rm = T)
-true.lands.200kb.rep2$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep2)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -7957,7 +7957,7 @@ names(true.lands.200kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep3$thetaC <- true.lands.200kb.rep3$theta - mean(true.lands.200kb.rep3$theta)
 true.lands.200kb.rep3$tmrcaC <- true.lands.200kb.rep3$tmrca - mean(true.lands.200kb.rep3$tmrca)
 true.lands.200kb.rep3$rhoC <- true.lands.200kb.rep3$rho - mean(true.lands.200kb.rep3$rho, na.rm = T)
-true.lands.200kb.rep3$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep3)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8046,7 +8046,7 @@ names(true.lands.200kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep4$thetaC <- true.lands.200kb.rep4$theta - mean(true.lands.200kb.rep4$theta)
 true.lands.200kb.rep4$tmrcaC <- true.lands.200kb.rep4$tmrca - mean(true.lands.200kb.rep4$tmrca)
 true.lands.200kb.rep4$rhoC <- true.lands.200kb.rep4$rho - mean(true.lands.200kb.rep4$rho, na.rm = T)
-true.lands.200kb.rep4$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep4)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8135,7 +8135,7 @@ names(true.lands.200kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep5$thetaC <- true.lands.200kb.rep5$theta - mean(true.lands.200kb.rep5$theta)
 true.lands.200kb.rep5$tmrcaC <- true.lands.200kb.rep5$tmrca - mean(true.lands.200kb.rep5$tmrca)
 true.lands.200kb.rep5$rhoC <- true.lands.200kb.rep5$rho - mean(true.lands.200kb.rep5$rho, na.rm = T)
-true.lands.200kb.rep5$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep5)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8224,7 +8224,7 @@ names(true.lands.200kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep6$thetaC <- true.lands.200kb.rep6$theta - mean(true.lands.200kb.rep6$theta)
 true.lands.200kb.rep6$tmrcaC <- true.lands.200kb.rep6$tmrca - mean(true.lands.200kb.rep6$tmrca)
 true.lands.200kb.rep6$rhoC <- true.lands.200kb.rep6$rho - mean(true.lands.200kb.rep6$rho, na.rm = T)
-true.lands.200kb.rep6$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep6)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8313,7 +8313,7 @@ names(true.lands.200kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep7$thetaC <- true.lands.200kb.rep7$theta - mean(true.lands.200kb.rep7$theta)
 true.lands.200kb.rep7$tmrcaC <- true.lands.200kb.rep7$tmrca - mean(true.lands.200kb.rep7$tmrca)
 true.lands.200kb.rep7$rhoC <- true.lands.200kb.rep7$rho - mean(true.lands.200kb.rep7$rho, na.rm = T)
-true.lands.200kb.rep7$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep7)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8402,7 +8402,7 @@ names(true.lands.200kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep8$thetaC <- true.lands.200kb.rep8$theta - mean(true.lands.200kb.rep8$theta)
 true.lands.200kb.rep8$tmrcaC <- true.lands.200kb.rep8$tmrca - mean(true.lands.200kb.rep8$tmrca)
 true.lands.200kb.rep8$rhoC <- true.lands.200kb.rep8$rho - mean(true.lands.200kb.rep8$rho, na.rm = T)
-true.lands.200kb.rep8$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep8)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8491,7 +8491,7 @@ names(true.lands.200kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep9$thetaC <- true.lands.200kb.rep9$theta - mean(true.lands.200kb.rep9$theta)
 true.lands.200kb.rep9$tmrcaC <- true.lands.200kb.rep9$tmrca - mean(true.lands.200kb.rep9$tmrca)
 true.lands.200kb.rep9$rhoC <- true.lands.200kb.rep9$rho - mean(true.lands.200kb.rep9$rho, na.rm = T)
-true.lands.200kb.rep9$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep9)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8580,7 +8580,7 @@ names(true.lands.200kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep10$thetaC <- true.lands.200kb.rep10$theta - mean(true.lands.200kb.rep10$theta)
 true.lands.200kb.rep10$tmrcaC <- true.lands.200kb.rep10$tmrca - mean(true.lands.200kb.rep10$tmrca)
 true.lands.200kb.rep10$rhoC <- true.lands.200kb.rep10$rho - mean(true.lands.200kb.rep10$rho, na.rm = T)
-true.lands.200kb.rep10$Replicate <- 1
+
 m.div.200kb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.200kb.rep10)
 anova.diversity <- Anova(m.div.200kb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8711,7 +8711,7 @@ names(true.lands.1Mb.rep1) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep1$thetaC <- true.lands.1Mb.rep1$theta - mean(true.lands.1Mb.rep1$theta)
 true.lands.1Mb.rep1$tmrcaC <- true.lands.1Mb.rep1$tmrca - mean(true.lands.1Mb.rep1$tmrca)
 true.lands.1Mb.rep1$rhoC <- true.lands.1Mb.rep1$rho - mean(true.lands.1Mb.rep1$rho, na.rm = T)
-true.lands.1Mb.rep1$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep1)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8796,12 +8796,12 @@ rep_2.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_2.tmrca.1Mb$avg <- apply(rep_2.tmrca.1Mb[4:ncol(rep_2.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep2 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep2.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep2 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, sim.theta.1Mb$Rate, rep2.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep2$thetaC <- true.lands.1Mb.rep2$theta - mean(true.lands.1Mb.rep2$theta)
 true.lands.1Mb.rep2$tmrcaC <- true.lands.1Mb.rep2$tmrca - mean(true.lands.1Mb.rep2$tmrca)
 true.lands.1Mb.rep2$rhoC <- true.lands.1Mb.rep2$rho - mean(true.lands.1Mb.rep2$rho, na.rm = T)
-true.lands.1Mb.rep2$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep2)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8885,12 +8885,12 @@ rep_3.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_3.tmrca.1Mb$avg <- apply(rep_3.tmrca.1Mb[4:ncol(rep_3.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep3 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep3.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep3 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, sim.theta.1Mb$Rate, rep3.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep3$thetaC <- true.lands.1Mb.rep3$theta - mean(true.lands.1Mb.rep3$theta)
 true.lands.1Mb.rep3$tmrcaC <- true.lands.1Mb.rep3$tmrca - mean(true.lands.1Mb.rep3$tmrca)
 true.lands.1Mb.rep3$rhoC <- true.lands.1Mb.rep3$rho - mean(true.lands.1Mb.rep3$rho, na.rm = T)
-true.lands.1Mb.rep3$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep3)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -8974,12 +8974,12 @@ rep_4.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_4.tmrca.1Mb$avg <- apply(rep_4.tmrca.1Mb[4:ncol(rep_4.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep4 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep4.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep4 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, sim.theta.1Mb$Rate, rep4.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep4$thetaC <- true.lands.1Mb.rep4$theta - mean(true.lands.1Mb.rep4$theta)
 true.lands.1Mb.rep4$tmrcaC <- true.lands.1Mb.rep4$tmrca - mean(true.lands.1Mb.rep4$tmrca)
 true.lands.1Mb.rep4$rhoC <- true.lands.1Mb.rep4$rho - mean(true.lands.1Mb.rep4$rho, na.rm = T)
-true.lands.1Mb.rep4$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep4)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9063,12 +9063,12 @@ rep_5.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_5.tmrca.1Mb$avg <- apply(rep_5.tmrca.1Mb[4:ncol(rep_5.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep5 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep5.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep5 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, sim.theta.1Mb$Rate, rep5.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep5$thetaC <- true.lands.1Mb.rep5$theta - mean(true.lands.1Mb.rep5$theta)
 true.lands.1Mb.rep5$tmrcaC <- true.lands.1Mb.rep5$tmrca - mean(true.lands.1Mb.rep5$tmrca)
 true.lands.1Mb.rep5$rhoC <- true.lands.1Mb.rep5$rho - mean(true.lands.1Mb.rep5$rho, na.rm = T)
-true.lands.1Mb.rep5$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep5)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9152,12 +9152,12 @@ rep_6.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_6.tmrca.1Mb$avg <- apply(rep_6.tmrca.1Mb[4:ncol(rep_6.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep6 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep6.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep6 <- as.data.frame(cbind(rep_6.pi.1Mb$avg, sim.theta.1Mb$Rate, rep6.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep6$thetaC <- true.lands.1Mb.rep6$theta - mean(true.lands.1Mb.rep6$theta)
 true.lands.1Mb.rep6$tmrcaC <- true.lands.1Mb.rep6$tmrca - mean(true.lands.1Mb.rep6$tmrca)
 true.lands.1Mb.rep6$rhoC <- true.lands.1Mb.rep6$rho - mean(true.lands.1Mb.rep6$rho, na.rm = T)
-true.lands.1Mb.rep6$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep6)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9241,12 +9241,12 @@ rep_7.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_7.tmrca.1Mb$avg <- apply(rep_7.tmrca.1Mb[4:ncol(rep_7.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep7 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep7.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep7 <- as.data.frame(cbind(rep_7.pi.1Mb$avg, sim.theta.1Mb$Rate, rep7.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep7$thetaC <- true.lands.1Mb.rep7$theta - mean(true.lands.1Mb.rep7$theta)
 true.lands.1Mb.rep7$tmrcaC <- true.lands.1Mb.rep7$tmrca - mean(true.lands.1Mb.rep7$tmrca)
 true.lands.1Mb.rep7$rhoC <- true.lands.1Mb.rep7$rho - mean(true.lands.1Mb.rep7$rho, na.rm = T)
-true.lands.1Mb.rep7$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep7)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9330,12 +9330,12 @@ rep_8.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_8.tmrca.1Mb$avg <- apply(rep_8.tmrca.1Mb[4:ncol(rep_8.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep8 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep8.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep8 <- as.data.frame(cbind(rep_8.pi.1Mb$avg, sim.theta.1Mb$Rate, rep8.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep8$thetaC <- true.lands.1Mb.rep8$theta - mean(true.lands.1Mb.rep8$theta)
 true.lands.1Mb.rep8$tmrcaC <- true.lands.1Mb.rep8$tmrca - mean(true.lands.1Mb.rep8$tmrca)
 true.lands.1Mb.rep8$rhoC <- true.lands.1Mb.rep8$rho - mean(true.lands.1Mb.rep8$rho, na.rm = T)
-true.lands.1Mb.rep8$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep8)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9419,12 +9419,12 @@ rep_9.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_9.tmrca.1Mb$avg <- apply(rep_9.tmrca.1Mb[4:ncol(rep_9.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep9 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep9.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep9 <- as.data.frame(cbind(rep_9.pi.1Mb$avg, sim.theta.1Mb$Rate, rep9.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep9$thetaC <- true.lands.1Mb.rep9$theta - mean(true.lands.1Mb.rep9$theta)
 true.lands.1Mb.rep9$tmrcaC <- true.lands.1Mb.rep9$tmrca - mean(true.lands.1Mb.rep9$tmrca)
 true.lands.1Mb.rep9$rhoC <- true.lands.1Mb.rep9$rho - mean(true.lands.1Mb.rep9$rho, na.rm = T)
-true.lands.1Mb.rep9$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep9)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9508,12 +9508,12 @@ rep_10.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_10.tmrca.1Mb$avg <- apply(rep_10.tmrca.1Mb[4:ncol(rep_10.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep10 <- as.data.frame(cbind(rep_1.pi.1Mb$avg, sim.theta.1Mb$Rate, rep10.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep10 <- as.data.frame(cbind(rep_10.pi.1Mb$avg, sim.theta.1Mb$Rate, rep10.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep10$thetaC <- true.lands.1Mb.rep10$theta - mean(true.lands.1Mb.rep10$theta)
 true.lands.1Mb.rep10$tmrcaC <- true.lands.1Mb.rep10$tmrca - mean(true.lands.1Mb.rep10$tmrca)
 true.lands.1Mb.rep10$rhoC <- true.lands.1Mb.rep10$rho - mean(true.lands.1Mb.rep10$rho, na.rm = T)
-true.lands.1Mb.rep10$Replicate <- 1
+
 m.div.1Mb <- lm(diversity ~ thetaC + rhoC + tmrcaC + thetaC:tmrcaC, data = true.lands.1Mb.rep10)
 anova.diversity <- Anova(m.div.1Mb)
 apiss <- anova.diversity$"Sum Sq"
@@ -9612,7 +9612,7 @@ theta.map.1Mb.bgs
 ```
 
 
-# all scales
+# Plots 
 
 ```{r, message=FALSE, warning=FALSE}
 write.table(cor.table.theta, "cor.mutation.bgs.tsv", quote = F, sep = "\t")
@@ -9679,5 +9679,209 @@ theta.maps.bgs <- plot_grid(theta.map.50kb.bgs, theta.map.200kb.bgs, theta.map.1
 
 theta.maps.comb <- plot_grid(theta.maps.coal, theta.maps.bgs, labels = "AUTO", nrow = 1, ncol = 2)
 save_plot("Figure2.pdf", theta.maps.comb, base_height = 16, base_width = 12)
+
+# vsualise true join landscapes
+dm_2L_exome <- read.table("dm_bgs_sims/GeneAnnotations/exons_chr2L.csv", header = F, sep = ",")
+names(dm_2L_exome) <- c("exon_start", "exon_end")
+
+genes_barcode <- ggplot(data = dm_2L_exome) + geom_segment(aes(x = exon_start, xend = exon_end, size = 2))
+
+## 50kb
+theta.land.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), sim.theta.50kb$Rate)
+names(theta.land.50kb) <- c("bin", "rate")
+
+rho.land.50kb <- cbind.data.frame(1:nrow(sim.rho.50kb), sim.rho.50kb$Rate)
+names(rho.land.50kb) <- c("bin", "rate")
+
+pi.lands.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), rep_1.pi.50kb$avg, rep_2.pi.50kb$avg, rep_3.pi.50kb$avg, rep_4.pi.50kb$avg, rep_5.pi.50kb$avg,
+                                 rep_6.pi.50kb$avg, rep_7.pi.50kb$avg, rep_8.pi.50kb$avg, rep_9.pi.50kb$avg, rep_10.pi.50kb$avg)
+names(pi.lands.50kb) <- c("bin", reps)
+
+
+tau.lands.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), rep1.sim.tmrca.50kb$AverageTmrca, rep2.sim.tmrca.50kb$AverageTmrca, rep3.sim.tmrca.50kb$AverageTmrca,
+                                  rep4.sim.tmrca.50kb$AverageTmrca, rep5.sim.tmrca.50kb$AverageTmrca, rep6.sim.tmrca.50kb$AverageTmrca,
+                                  rep7.sim.tmrca.50kb$AverageTmrca, rep8.sim.tmrca.50kb$AverageTmrca, rep9.sim.tmrca.50kb$AverageTmrca,
+                                  rep10.sim.tmrca.50kb$AverageTmrca)
+names(tau.lands.50kb) <- c("bin", reps)
+
+
+rho.map.50kb <- ggplot(data = rho.land.50kb, aes(x = bin * 5e+4, y = rate))
+rho.map.50kb <- rho.map.50kb + geom_line(data = rho.land.50kb) + theme_bw()
+rho.map.50kb <- rho.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map.50kb <- rho.map.50kb + labs(title = NULL, x = NULL, y = expression(rho))
+rho.map.50kb <- rho.map.50kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+rho.map.50kb
+
+theta.map.50kb <- ggplot(data = theta.land.50kb, aes(x = bin * 5e+4, y = rate))
+theta.map.50kb <- theta.map.50kb + geom_line(data = theta.land.50kb) + theme_bw()
+theta.map.50kb <- theta.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.50kb <- theta.map.50kb + labs(title = NULL, x = NULL, y = expression(theta))
+theta.map.50kb <- theta.map.50kb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = -0.1, yend = -0.1, size = 2))
+theta.map.50kb <- theta.map.50kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+theta.map.50kb
+
+molten.tau <- melt(tau.lands.50kb, id.vars = "bin")
+tau.map.50kb <- ggplot(data = molten.tau, aes(x = bin * 5e+4, y = value, colour = variable))
+tau.map.50kb <- tau.map.50kb + geom_line(data = molten.tau) + theme_bw()
+tau.map.50kb <- tau.map.50kb + scale_y_continuous(breaks = pretty_breaks())
+tau.map.50kb <- tau.map.50kb + labs(title = NULL, x = NULL, y = expression(tau))
+tau.map.50kb <- tau.map.50kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+tau.map.50kb
+
+molten.pi <- melt(pi.lands.50kb, id.vars = "bin")
+pi.map.50kb <- ggplot(data = molten.pi, aes(x = bin * 5e+4, y = value, colour = variable))
+pi.map.50kb <- pi.map.50kb + geom_line(data = molten.pi) + theme_bw()
+pi.map.50kb <- pi.map.50kb + scale_y_continuous(breaks = pretty_breaks())
+pi.map.50kb <- pi.map.50kb + labs(title = NULL, x = NULL, y = expression(pi))
+pi.map.50kb <- pi.map.50kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+pi.map.50kb
+
+true.maps.50kb <- plot_grid(pi.map.50kb, tau.map.50kb, rho.map.50kb, theta.map.50kb, ncol = 1)
+true.maps.50kb
+
+## 200kb
+theta.land.200kb <- cbind.data.frame(1:nrow(sim.theta.200kb), sim.theta.200kb$Rate)
+names(theta.land.200kb) <- c("bin", "rate")
+
+rho.land.200kb <- cbind.data.frame(1:nrow(sim.rho.200kb), sim.rho.200kb$Rate)
+names(rho.land.200kb) <- c("bin", "rate")
+
+pi.lands.200kb <- cbind.data.frame(1:nrow(sim.theta.200kb), rep_1.pi.200kb$avg, rep_2.pi.200kb$avg, rep_3.pi.200kb$avg, rep_4.pi.200kb$avg, rep_5.pi.200kb$avg,
+                                 rep_6.pi.200kb$avg, rep_7.pi.200kb$avg, rep_8.pi.200kb$avg, rep_9.pi.200kb$avg, rep_10.pi.200kb$avg)
+names(pi.lands.200kb) <- c("bin", reps)
+
+
+tau.lands.200kb <- cbind.data.frame(1:nrow(sim.theta.200kb), rep1.sim.tmrca.200kb$AverageTmrca, rep2.sim.tmrca.200kb$AverageTmrca, rep3.sim.tmrca.200kb$AverageTmrca,
+                                  rep4.sim.tmrca.200kb$AverageTmrca, rep5.sim.tmrca.200kb$AverageTmrca, rep6.sim.tmrca.200kb$AverageTmrca,
+                                  rep7.sim.tmrca.200kb$AverageTmrca, rep8.sim.tmrca.200kb$AverageTmrca, rep9.sim.tmrca.200kb$AverageTmrca,
+                                  rep10.sim.tmrca.200kb$AverageTmrca)
+names(tau.lands.200kb) <- c("bin", reps)
+
+
+rho.map.200kb <- ggplot(data = rho.land.200kb, aes(x = bin * 2e+5, y = rate))
+rho.map.200kb <- rho.map.200kb + geom_line(data = rho.land.200kb) + theme_bw()
+rho.map.200kb <- rho.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map.200kb <- rho.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+rho.map.200kb <- rho.map.200kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+rho.map.200kb
+
+theta.map.200kb <- ggplot(data = theta.land.200kb, aes(x = bin * 2e+5, y = rate))
+theta.map.200kb <- theta.map.200kb + geom_line(data = theta.land.200kb) + theme_bw()
+theta.map.200kb <- theta.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.200kb <- theta.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+theta.map.200kb <- theta.map.200kb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = -0.1, yend = -0.1, size = 2))
+theta.map.200kb <- theta.map.200kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+theta.map.200kb
+
+molten.tau <- melt(tau.lands.200kb, id.vars = "bin")
+tau.map.200kb <- ggplot(data = molten.tau, aes(x = bin * 2e+5, y = value, colour = variable))
+tau.map.200kb <- tau.map.200kb + geom_line(data = molten.tau) + theme_bw()
+tau.map.200kb <- tau.map.200kb + scale_y_continuous(breaks = pretty_breaks())
+tau.map.200kb <- tau.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+tau.map.200kb <- tau.map.200kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+tau.map.200kb
+
+molten.pi <- melt(pi.lands.200kb, id.vars = "bin")
+pi.map.200kb <- ggplot(data = molten.pi, aes(x = bin * 2e+5, y = value, colour = variable))
+pi.map.200kb <- pi.map.200kb + geom_line(data = molten.pi) + theme_bw()
+pi.map.200kb <- pi.map.200kb + scale_y_continuous(breaks = pretty_breaks())
+pi.map.200kb <- pi.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+pi.map.200kb <- pi.map.200kb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+pi.map.200kb
+
+true.maps.200kb <- plot_grid(pi.map.200kb, tau.map.200kb, rho.map.200kb, theta.map.200kb, ncol = 1)
+true.maps.200kb
+
+## 1Mb
+theta.land.1Mb <- cbind.data.frame(1:nrow(sim.theta.1Mb), sim.theta.1Mb$Rate)
+names(theta.land.1Mb) <- c("bin", "rate")
+
+rho.land.1Mb <- cbind.data.frame(1:nrow(sim.rho.1Mb), sim.rho.1Mb$Rate)
+names(rho.land.1Mb) <- c("bin", "rate")
+
+pi.lands.1Mb <- cbind.data.frame(1:nrow(sim.theta.1Mb), rep_1.pi.1Mb$avg, rep_2.pi.1Mb$avg, rep_3.pi.1Mb$avg, rep_4.pi.1Mb$avg, rep_5.pi.1Mb$avg,
+                                 rep_6.pi.1Mb$avg, rep_7.pi.1Mb$avg, rep_8.pi.1Mb$avg, rep_9.pi.1Mb$avg, rep_10.pi.1Mb$avg)
+names(pi.lands.1Mb) <- c("bin", reps)
+
+
+tau.lands.1Mb <- cbind.data.frame(1:nrow(sim.theta.1Mb), rep1.sim.tmrca.1Mb$AverageTmrca, rep2.sim.tmrca.1Mb$AverageTmrca, rep3.sim.tmrca.1Mb$AverageTmrca,
+                                  rep4.sim.tmrca.1Mb$AverageTmrca, rep5.sim.tmrca.1Mb$AverageTmrca, rep6.sim.tmrca.1Mb$AverageTmrca, rep7.sim.tmrca.1Mb$AverageTmrca,
+                                  rep8.sim.tmrca.1Mb$AverageTmrca, rep9.sim.tmrca.1Mb$AverageTmrca, rep10.sim.tmrca.1Mb$AverageTmrca)
+names(tau.lands.1Mb) <- c("bin", reps)
+
+
+rho.map.1Mb <- ggplot(data = rho.land.1Mb, aes(x = bin * 1e+6, y = rate))
+rho.map.1Mb <- rho.map.1Mb + geom_line(data = rho.land.1Mb)  + theme_bw()
+rho.map.1Mb <- rho.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map.1Mb <- rho.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+rho.map.1Mb <- rho.map.1Mb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+rho.map.1Mb
+
+theta.map.1Mb <- ggplot(data = theta.land.1Mb, aes(x = bin * 1e+6, y = rate))
+theta.map.1Mb <- theta.map.1Mb + geom_line(data = theta.land.1Mb)  + theme_bw()
+theta.map.1Mb <- theta.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.1Mb <- theta.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+theta.map.1Mb <- theta.map.1Mb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = -0.1, yend = -0.1, size = 2))
+theta.map.1Mb <- theta.map.1Mb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+theta.map.1Mb
+
+molten.tau <- melt(tau.lands.1Mb, id.vars = "bin")
+tau.map.1Mb <- ggplot(data = molten.tau, aes(x = bin * 1e+6, y = value, colour = variable))
+tau.map.1Mb <- tau.map.1Mb + geom_line(data = molten.tau) + theme_bw()
+tau.map.1Mb <- tau.map.1Mb + scale_y_continuous(breaks = pretty_breaks())
+tau.map.1Mb <- tau.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+tau.map.1Mb <- tau.map.1Mb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+tau.map.1Mb
+
+molten.pi <- melt(pi.lands.1Mb, id.vars = "bin")
+pi.map.1Mb <- ggplot(data = molten.pi, aes(x = bin * 1e+6, y = value, colour = variable))
+pi.map.1Mb <- pi.map.1Mb + geom_line(data = molten.pi) + theme_bw()
+pi.map.1Mb <- pi.map.1Mb + scale_y_continuous(breaks = pretty_breaks())
+pi.map.1Mb <- pi.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+pi.map.1Mb <- pi.map.1Mb + theme(axis.title.x=element_blank(),
+                                       axis.text.x=element_blank(),
+                                       axis.ticks.x=element_blank(),
+                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+pi.map.1Mb
+
+true.maps.1Mb <- plot_grid(pi.map.1Mb, tau.map.1Mb, rho.map.1Mb, theta.map.1Mb, ncol = 1)
+true.maps.1Mb
+
+true.maps <- plot_grid(true.maps.50kb, true.maps.200kb, true.maps.1Mb, ncol = 3)
+true.maps
+save_plot("true_maps.pdf", true.maps, base_height = 10, base_width = 20)
 ```
 
