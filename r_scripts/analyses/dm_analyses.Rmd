@@ -9704,7 +9704,6 @@ tau.lands.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), rep1.sim.tmrca.50kb$A
                                   rep10.sim.tmrca.50kb$AverageTmrca)
 names(tau.lands.50kb) <- c("bin", reps)
 
-
 rho.map.50kb <- ggplot(data = rho.land.50kb, aes(x = bin * 5e+4, y = rate))
 rho.map.50kb <- rho.map.50kb + geom_line(data = rho.land.50kb) + theme_bw()
 rho.map.50kb <- rho.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
@@ -9731,6 +9730,7 @@ tau.map.50kb <- ggplot(data = molten.tau, aes(x = bin * 5e+4, y = value, colour 
 tau.map.50kb <- tau.map.50kb + geom_line(data = molten.tau) + theme_bw()
 tau.map.50kb <- tau.map.50kb + scale_y_continuous(breaks = pretty_breaks())
 tau.map.50kb <- tau.map.50kb + labs(title = NULL, x = NULL, y = expression(tau))
+tau.map.50kb <- tau.map.50kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 tau.map.50kb <- tau.map.50kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9742,6 +9742,7 @@ pi.map.50kb <- ggplot(data = molten.pi, aes(x = bin * 5e+4, y = value, colour = 
 pi.map.50kb <- pi.map.50kb + geom_line(data = molten.pi) + theme_bw()
 pi.map.50kb <- pi.map.50kb + scale_y_continuous(breaks = pretty_breaks())
 pi.map.50kb <- pi.map.50kb + labs(title = NULL, x = NULL, y = expression(pi))
+pi.map.50kb <- pi.map.50kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.50kb <- pi.map.50kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9796,6 +9797,7 @@ tau.map.200kb <- ggplot(data = molten.tau, aes(x = bin * 2e+5, y = value, colour
 tau.map.200kb <- tau.map.200kb + geom_line(data = molten.tau) + theme_bw()
 tau.map.200kb <- tau.map.200kb + scale_y_continuous(breaks = pretty_breaks())
 tau.map.200kb <- tau.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+tau.map.200kb <- tau.map.200kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 tau.map.200kb <- tau.map.200kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9807,6 +9809,7 @@ pi.map.200kb <- ggplot(data = molten.pi, aes(x = bin * 2e+5, y = value, colour =
 pi.map.200kb <- pi.map.200kb + geom_line(data = molten.pi) + theme_bw()
 pi.map.200kb <- pi.map.200kb + scale_y_continuous(breaks = pretty_breaks())
 pi.map.200kb <- pi.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+pi.map.200kb <- pi.map.200kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.200kb <- pi.map.200kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9860,6 +9863,7 @@ tau.map.1Mb <- ggplot(data = molten.tau, aes(x = bin * 1e+6, y = value, colour =
 tau.map.1Mb <- tau.map.1Mb + geom_line(data = molten.tau) + theme_bw()
 tau.map.1Mb <- tau.map.1Mb + scale_y_continuous(breaks = pretty_breaks())
 tau.map.1Mb <- tau.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+tau.map.1Mb <- tau.map.1Mb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 tau.map.1Mb <- tau.map.1Mb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9871,6 +9875,7 @@ pi.map.1Mb <- ggplot(data = molten.pi, aes(x = bin * 1e+6, y = value, colour = v
 pi.map.1Mb <- pi.map.1Mb + geom_line(data = molten.pi) + theme_bw()
 pi.map.1Mb <- pi.map.1Mb + scale_y_continuous(breaks = pretty_breaks())
 pi.map.1Mb <- pi.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+pi.map.1Mb <- pi.map.1Mb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.1Mb <- pi.map.1Mb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9880,8 +9885,24 @@ pi.map.1Mb
 true.maps.1Mb <- plot_grid(pi.map.1Mb, tau.map.1Mb, rho.map.1Mb, theta.map.1Mb, ncol = 1)
 true.maps.1Mb
 
-true.maps <- plot_grid(true.maps.50kb, true.maps.200kb, true.maps.1Mb, ncol = 3)
+true.maps <- plot_grid(true.maps.50kb, true.maps.200kb, true.maps.1Mb, labels = "AUTO", ncol = 3)
 true.maps
-save_plot("true_maps.pdf", true.maps, base_height = 10, base_width = 20)
+save_plot("Figure7.pdf", true.maps, base_height = 10, base_width = 20)
+
+
+mean(apply(tau.lands.50kb[2:ncol(tau.lands.50kb)], 2, sd) / apply(tau.lands.50kb[2:ncol(tau.lands.50kb)], 2, mean))
+mean(apply(tau.lands.200kb[2:ncol(tau.lands.200kb)], 2, sd) / apply(tau.lands.200kb[2:ncol(tau.lands.200kb)], 2, mean))
+mean(apply(tau.lands.1Mb[2:ncol(tau.lands.1Mb)], 2, sd) / apply(tau.lands.1Mb[2:ncol(tau.lands.1Mb)], 2, mean))
+sd(apply(tau.lands.50kb[2:ncol(tau.lands.50kb)], 2, sd) / apply(tau.lands.50kb[2:ncol(tau.lands.50kb)], 2, mean))
+sd(apply(tau.lands.200kb[2:ncol(tau.lands.200kb)], 2, sd) / apply(tau.lands.200kb[2:ncol(tau.lands.200kb)], 2, mean))
+sd(apply(tau.lands.1Mb[2:ncol(tau.lands.1Mb)], 2, sd) / apply(tau.lands.1Mb[2:ncol(tau.lands.1Mb)], 2, mean))
+
+mean(apply(pi.lands.50kb[2:ncol(pi.lands.50kb)], 2, sd) / apply(pi.lands.50kb[2:ncol(pi.lands.50kb)], 2, mean))
+mean(apply(pi.lands.200kb[2:ncol(pi.lands.200kb)], 2, sd) / apply(pi.lands.200kb[2:ncol(pi.lands.200kb)], 2, mean))
+mean(apply(pi.lands.1Mb[2:ncol(pi.lands.1Mb)], 2, sd) / apply(pi.lands.1Mb[2:ncol(pi.lands.1Mb)], 2, mean))
+sd(apply(pi.lands.50kb[2:ncol(pi.lands.50kb)], 2, sd) / apply(pi.lands.50kb[2:ncol(pi.lands.50kb)], 2, mean))
+sd(apply(pi.lands.200kb[2:ncol(pi.lands.200kb)], 2, sd) / apply(pi.lands.200kb[2:ncol(pi.lands.200kb)], 2, mean))
+sd(apply(pi.lands.1Mb[2:ncol(pi.lands.1Mb)], 2, sd) / apply(pi.lands.1Mb[2:ncol(pi.lands.1Mb)], 2, mean))
+
 ```
 
