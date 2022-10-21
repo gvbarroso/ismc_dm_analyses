@@ -89,8 +89,6 @@ for i in {1..10}; do
 done
 cd ..
 ```
-CONTINUE HERE
-
 
 Merge all informations into one big data file:
 ```bash
