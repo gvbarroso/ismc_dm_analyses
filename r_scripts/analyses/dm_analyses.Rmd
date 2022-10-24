@@ -3595,6 +3595,9 @@ dm.lands.50kb$bin <- 1:nrow(dm.lands.50kb)
 # filters based on missing data
 dm.lands.50kb <- dm.lands.50kb[which(intersect.50kb == F),]
 
+# correlation between inferred TMRCA and Pi
+cor.test(dm.lands.50kb$diversity, dm.lands.50kb$tmrca, method = "spearman")
+
 # OLS
 
 # centering
@@ -3644,6 +3647,9 @@ dm.lands.200kb$bin <- 1:nrow(dm.lands.200kb)
 # filters based on missing data 
 dm.lands.200kb <- dm.lands.200kb[which(intersect.200kb == F),]
 
+# correlation between inferred TMRCA and Pi
+cor.test(dm.lands.200kb$diversity, dm.lands.200kb$tmrca, method = "spearman")
+
 # OLS
 
 dm.lands.200kb$thetaC <- dm.lands.200kb$theta - mean(dm.lands.200kb$theta)
@@ -3691,6 +3697,9 @@ names(dm.lands.1Mb) <- c("diversity", "theta", "rho", "tmrca")
 dm.lands.1Mb$bin <- 1:nrow(dm.lands.1Mb)
 # filters based on missing data
 dm.lands.1Mb <- dm.lands.1Mb[which(intersect.1Mb == F),]
+
+# correlation between inferred TMRCA and Pi
+cor.test(dm.lands.1Mb$diversity, dm.lands.1Mb$tmrca, method = "spearman")
 
 # OLS
 dm.lands.1Mb$thetaC <- dm.lands.1Mb$theta - mean(dm.lands.1Mb$theta)
@@ -9615,6 +9624,9 @@ theta.map.1Mb.bgs
 # Plots 
 
 ```{r, message=FALSE, warning=FALSE}
+
+scale.2d <- function(x) sprintf("%.2f", x)
+
 write.table(cor.table.theta, "cor.mutation.bgs.tsv", quote = F, sep = "\t")
 write.table(cor.table.tmrca, "cor.tmrca.bgs.tsv", quote = F, sep = "\t")
 write.table(cor.table.rho, "cor.rho.bgs.tsv", quote = F, sep = "\t")
@@ -9687,10 +9699,10 @@ names(dm_2L_exome) <- c("exon_start", "exon_end")
 genes_barcode <- ggplot(data = dm_2L_exome) + geom_segment(aes(x = exon_start, xend = exon_end, size = 2))
 
 ## 50kb
-theta.land.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), sim.theta.50kb$Rate)
+theta.land.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), sim.theta.50kb$Rate * 4 * 1e+4 * 1e-7)
 names(theta.land.50kb) <- c("bin", "rate")
 
-rho.land.50kb <- cbind.data.frame(1:nrow(sim.rho.50kb), sim.rho.50kb$Rate)
+rho.land.50kb <- cbind.data.frame(1:nrow(sim.rho.50kb), sim.rho.50kb$Rate * 1e-7 * 4 * 1e+4)
 names(rho.land.50kb) <- c("bin", "rate")
 
 pi.lands.50kb <- cbind.data.frame(1:nrow(sim.theta.50kb), rep_1.pi.50kb$avg, rep_2.pi.50kb$avg, rep_3.pi.50kb$avg, rep_4.pi.50kb$avg, rep_5.pi.50kb$avg,
@@ -9706,7 +9718,7 @@ names(tau.lands.50kb) <- c("bin", reps)
 
 rho.map.50kb <- ggplot(data = rho.land.50kb, aes(x = bin * 5e+4, y = rate))
 rho.map.50kb <- rho.map.50kb + geom_line(data = rho.land.50kb) + theme_bw()
-rho.map.50kb <- rho.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map.50kb <- rho.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.2d, limits = c(0, 0.042))
 rho.map.50kb <- rho.map.50kb + labs(title = NULL, x = NULL, y = expression(rho))
 rho.map.50kb <- rho.map.50kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
@@ -9716,9 +9728,9 @@ rho.map.50kb
 
 theta.map.50kb <- ggplot(data = theta.land.50kb, aes(x = bin * 5e+4, y = rate))
 theta.map.50kb <- theta.map.50kb + geom_line(data = theta.land.50kb) + theme_bw()
-theta.map.50kb <- theta.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.50kb <- theta.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.2d, limits = c(0, 0.015))
 theta.map.50kb <- theta.map.50kb + labs(title = NULL, x = NULL, y = expression(theta))
-theta.map.50kb <- theta.map.50kb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = -0.1, yend = -0.1, size = 2))
+theta.map.50kb <- theta.map.50kb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = 0, yend = 0, size = 2))
 theta.map.50kb <- theta.map.50kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9726,9 +9738,9 @@ theta.map.50kb <- theta.map.50kb + theme(axis.title.x=element_blank(),
 theta.map.50kb
 
 molten.tau <- melt(tau.lands.50kb, id.vars = "bin")
-tau.map.50kb <- ggplot(data = molten.tau, aes(x = bin * 5e+4, y = value, colour = variable))
-tau.map.50kb <- tau.map.50kb + geom_line(data = molten.tau) + theme_bw()
-tau.map.50kb <- tau.map.50kb + scale_y_continuous(breaks = pretty_breaks())
+tau.map.50kb <- ggplot(data = molten.tau, aes(x = bin * 5e+4, y = value / (4 * 1e+4), colour = variable))
+tau.map.50kb <- tau.map.50kb + geom_line(data = molten.tau) + theme_bw() 
+tau.map.50kb <- tau.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 1.01))
 tau.map.50kb <- tau.map.50kb + labs(title = NULL, x = NULL, y = expression(tau))
 tau.map.50kb <- tau.map.50kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 tau.map.50kb <- tau.map.50kb + theme(axis.title.x=element_blank(),
@@ -9740,7 +9752,7 @@ tau.map.50kb
 molten.pi <- melt(pi.lands.50kb, id.vars = "bin")
 pi.map.50kb <- ggplot(data = molten.pi, aes(x = bin * 5e+4, y = value, colour = variable))
 pi.map.50kb <- pi.map.50kb + geom_line(data = molten.pi) + theme_bw()
-pi.map.50kb <- pi.map.50kb + scale_y_continuous(breaks = pretty_breaks())
+pi.map.50kb <- pi.map.50kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.016))
 pi.map.50kb <- pi.map.50kb + labs(title = NULL, x = NULL, y = expression(pi))
 pi.map.50kb <- pi.map.50kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.50kb <- pi.map.50kb + theme(axis.title.x=element_blank(),
@@ -9753,10 +9765,10 @@ true.maps.50kb <- plot_grid(pi.map.50kb, tau.map.50kb, rho.map.50kb, theta.map.5
 true.maps.50kb
 
 ## 200kb
-theta.land.200kb <- cbind.data.frame(1:nrow(sim.theta.200kb), sim.theta.200kb$Rate)
+theta.land.200kb <- cbind.data.frame(1:nrow(sim.theta.200kb), sim.theta.200kb$Rate * 4 * 1e+4 * 1e-7)
 names(theta.land.200kb) <- c("bin", "rate")
 
-rho.land.200kb <- cbind.data.frame(1:nrow(sim.rho.200kb), sim.rho.200kb$Rate)
+rho.land.200kb <- cbind.data.frame(1:nrow(sim.rho.200kb), sim.rho.200kb$Rate * 1e-7 * 4 * 1e+4)
 names(rho.land.200kb) <- c("bin", "rate")
 
 pi.lands.200kb <- cbind.data.frame(1:nrow(sim.theta.200kb), rep_1.pi.200kb$avg, rep_2.pi.200kb$avg, rep_3.pi.200kb$avg, rep_4.pi.200kb$avg, rep_5.pi.200kb$avg,
@@ -9773,7 +9785,7 @@ names(tau.lands.200kb) <- c("bin", reps)
 
 rho.map.200kb <- ggplot(data = rho.land.200kb, aes(x = bin * 2e+5, y = rate))
 rho.map.200kb <- rho.map.200kb + geom_line(data = rho.land.200kb) + theme_bw()
-rho.map.200kb <- rho.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+rho.map.200kb <- rho.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.042))
 rho.map.200kb <- rho.map.200kb + labs(title = NULL, x = NULL, y = NULL)
 rho.map.200kb <- rho.map.200kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
@@ -9783,9 +9795,9 @@ rho.map.200kb
 
 theta.map.200kb <- ggplot(data = theta.land.200kb, aes(x = bin * 2e+5, y = rate))
 theta.map.200kb <- theta.map.200kb + geom_line(data = theta.land.200kb) + theme_bw()
-theta.map.200kb <- theta.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.200kb <- theta.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.015))
 theta.map.200kb <- theta.map.200kb + labs(title = NULL, x = NULL, y = NULL)
-theta.map.200kb <- theta.map.200kb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = -0.1, yend = -0.1, size = 2))
+theta.map.200kb <- theta.map.200kb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = 0, yend = 0, size = 2))
 theta.map.200kb <- theta.map.200kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9793,10 +9805,10 @@ theta.map.200kb <- theta.map.200kb + theme(axis.title.x=element_blank(),
 theta.map.200kb
 
 molten.tau <- melt(tau.lands.200kb, id.vars = "bin")
-tau.map.200kb <- ggplot(data = molten.tau, aes(x = bin * 2e+5, y = value, colour = variable))
+tau.map.200kb <- ggplot(data = molten.tau, aes(x = bin * 2e+5, y = value / (4 * 1e+4), colour = variable))
 tau.map.200kb <- tau.map.200kb + geom_line(data = molten.tau) + theme_bw()
-tau.map.200kb <- tau.map.200kb + scale_y_continuous(breaks = pretty_breaks())
-tau.map.200kb <- tau.map.200kb + labs(title = NULL, x = NULL, y = NULL)
+tau.map.200kb <- tau.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 1.01))
+tau.map.200kb <- tau.map.200kb + labs(title = NULL, x = NULL, y = NULL) 
 tau.map.200kb <- tau.map.200kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 tau.map.200kb <- tau.map.200kb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
@@ -9806,8 +9818,8 @@ tau.map.200kb
 
 molten.pi <- melt(pi.lands.200kb, id.vars = "bin")
 pi.map.200kb <- ggplot(data = molten.pi, aes(x = bin * 2e+5, y = value, colour = variable))
-pi.map.200kb <- pi.map.200kb + geom_line(data = molten.pi) + theme_bw()
-pi.map.200kb <- pi.map.200kb + scale_y_continuous(breaks = pretty_breaks())
+pi.map.200kb <- pi.map.200kb + geom_line(data = molten.pi) + theme_bw() 
+pi.map.200kb <- pi.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.016))
 pi.map.200kb <- pi.map.200kb + labs(title = NULL, x = NULL, y = NULL)
 pi.map.200kb <- pi.map.200kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.200kb <- pi.map.200kb + theme(axis.title.x=element_blank(),
@@ -9820,10 +9832,10 @@ true.maps.200kb <- plot_grid(pi.map.200kb, tau.map.200kb, rho.map.200kb, theta.m
 true.maps.200kb
 
 ## 1Mb
-theta.land.1Mb <- cbind.data.frame(1:nrow(sim.theta.1Mb), sim.theta.1Mb$Rate)
+theta.land.1Mb <- cbind.data.frame(1:nrow(sim.theta.1Mb), sim.theta.1Mb$Rate * 4 * 1e+4 * 1e-7)
 names(theta.land.1Mb) <- c("bin", "rate")
 
-rho.land.1Mb <- cbind.data.frame(1:nrow(sim.rho.1Mb), sim.rho.1Mb$Rate)
+rho.land.1Mb <- cbind.data.frame(1:nrow(sim.rho.1Mb), sim.rho.1Mb$Rate * 1e-7 * 4 * 1e+4)
 names(rho.land.1Mb) <- c("bin", "rate")
 
 pi.lands.1Mb <- cbind.data.frame(1:nrow(sim.theta.1Mb), rep_1.pi.1Mb$avg, rep_2.pi.1Mb$avg, rep_3.pi.1Mb$avg, rep_4.pi.1Mb$avg, rep_5.pi.1Mb$avg,
@@ -9839,8 +9851,8 @@ names(tau.lands.1Mb) <- c("bin", reps)
 
 rho.map.1Mb <- ggplot(data = rho.land.1Mb, aes(x = bin * 1e+6, y = rate))
 rho.map.1Mb <- rho.map.1Mb + geom_line(data = rho.land.1Mb)  + theme_bw()
-rho.map.1Mb <- rho.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
-rho.map.1Mb <- rho.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+rho.map.1Mb <- rho.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.042))
+rho.map.1Mb <- rho.map.1Mb + labs(title = NULL, x = NULL, y = NULL) 
 rho.map.1Mb <- rho.map.1Mb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9848,10 +9860,10 @@ rho.map.1Mb <- rho.map.1Mb + theme(axis.title.x=element_blank(),
 rho.map.1Mb
 
 theta.map.1Mb <- ggplot(data = theta.land.1Mb, aes(x = bin * 1e+6, y = rate))
-theta.map.1Mb <- theta.map.1Mb + geom_line(data = theta.land.1Mb)  + theme_bw()
-theta.map.1Mb <- theta.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
-theta.map.1Mb <- theta.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
-theta.map.1Mb <- theta.map.1Mb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = -0.1, yend = -0.1, size = 2))
+theta.map.1Mb <- theta.map.1Mb + geom_line(data = theta.land.1Mb) + theme_bw() 
+theta.map.1Mb <- theta.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.015))
+theta.map.1Mb <- theta.map.1Mb + labs(title = NULL, x = NULL, y = NULL) 
+theta.map.1Mb <- theta.map.1Mb + geom_segment(data = dm_2L_exome, aes(x = exon_start, xend = exon_end, y = 0, yend = 0, size = 2))
 theta.map.1Mb <- theta.map.1Mb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
                                        axis.ticks.x=element_blank(),
@@ -9859,9 +9871,9 @@ theta.map.1Mb <- theta.map.1Mb + theme(axis.title.x=element_blank(),
 theta.map.1Mb
 
 molten.tau <- melt(tau.lands.1Mb, id.vars = "bin")
-tau.map.1Mb <- ggplot(data = molten.tau, aes(x = bin * 1e+6, y = value, colour = variable))
+tau.map.1Mb <- ggplot(data = molten.tau, aes(x = bin * 1e+6, y = value / (4 * 1e+4), colour = variable))
 tau.map.1Mb <- tau.map.1Mb + geom_line(data = molten.tau) + theme_bw()
-tau.map.1Mb <- tau.map.1Mb + scale_y_continuous(breaks = pretty_breaks())
+tau.map.1Mb <- tau.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 1.01))
 tau.map.1Mb <- tau.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
 tau.map.1Mb <- tau.map.1Mb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 tau.map.1Mb <- tau.map.1Mb + theme(axis.title.x=element_blank(),
@@ -9873,8 +9885,8 @@ tau.map.1Mb
 molten.pi <- melt(pi.lands.1Mb, id.vars = "bin")
 pi.map.1Mb <- ggplot(data = molten.pi, aes(x = bin * 1e+6, y = value, colour = variable))
 pi.map.1Mb <- pi.map.1Mb + geom_line(data = molten.pi) + theme_bw()
-pi.map.1Mb <- pi.map.1Mb + scale_y_continuous(breaks = pretty_breaks())
-pi.map.1Mb <- pi.map.1Mb + labs(title = NULL, x = NULL, y = NULL)
+pi.map.1Mb <- pi.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.016))
+pi.map.1Mb <- pi.map.1Mb + labs(title = NULL, x = NULL, y = NULL) 
 pi.map.1Mb <- pi.map.1Mb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.1Mb <- pi.map.1Mb + theme(axis.title.x=element_blank(),
                                        axis.text.x=element_blank(),
