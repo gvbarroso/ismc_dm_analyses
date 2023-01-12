@@ -40,7 +40,7 @@ for(i in 1:nreps) {
 }
 ```
 
-# Drosophila-like neutral simulations of 2L (True Landscapes)
+# Drosophila-like neutral simulations of chr 2L (True Landscapes)
 
 Second batch of 10 replicate datasets simulated using parameters as inferred from real
 Drosophila data.
@@ -3592,14 +3592,28 @@ dm.lands.50kb <- as.data.frame(cbind(diversity.dm.50kb$avg,
 names(dm.lands.50kb) <- c("diversity", "theta", "rho", "tmrca")
 dm.lands.50kb$bin <- 1:nrow(dm.lands.50kb)
 
-# filters based on missing data
-dm.lands.50kb <- dm.lands.50kb[which(intersect.50kb == F),]
+dm.lands.50kb <- dm.lands.50kb[which(intersect.50kb == F),] # filters based on missing data
 
 # correlation between inferred TMRCA and Pi
 cor.test(dm.lands.50kb$diversity, dm.lands.50kb$tmrca, method = "spearman")
 
 # correlation with Comeron map
 comeron.50kb <- read.table("dm_bgs_sims/RecombinationMap_50kb.csv", sep = ",", header = T)
+comeron.50kb$chrom <- "2L"
+comeron.50kb_gr <- makeGRangesFromDataFrame(comeron.50kb, keep.extra.columns = T)
+
+rho.dm.50kb$chromStart <- rho.dm.50kb$chromStart + 1
+rho.dm.50kb$chrom <- "2L"
+rho.dm.50kb_gr <- makeGRangesFromDataFrame(rho.dm.50kb[,c(1:3, ncol(rho.dm.50kb))], keep.extra.columns = T)
+
+hits <- findOverlaps(query = rho.dm.50kb_gr, subject = comeron.50kb_gr, type = "equal") 
+
+comeron.50kb_gr <- comeron.50kb_gr[subjectHits(hits),]
+rho.dm.50kb_gr <- rho.dm.50kb_gr[queryHits(hits),]
+
+rec_df <- merge(as.data.frame(rho.dm.50kb_gr), as.data.frame(comeron.50kb_gr))
+cor.test(rec_df[,6], rec_df[,7], method = "spearman")
+
 
 # OLS
 
@@ -3653,6 +3667,23 @@ dm.lands.200kb <- dm.lands.200kb[which(intersect.200kb == F),]
 # correlation between inferred TMRCA and Pi
 cor.test(dm.lands.200kb$diversity, dm.lands.200kb$tmrca, method = "spearman")
 
+# correlation with Comeron map
+comeron.200kb <- read.table("dm_bgs_sims/RecombinationMap_200kb.csv", sep = ",", header = T)
+comeron.200kb$chrom <- "2L"
+comeron.200kb_gr <- makeGRangesFromDataFrame(comeron.200kb, keep.extra.columns = T)
+
+rho.dm.200kb$chromStart <- rho.dm.200kb$chromStart + 1
+rho.dm.200kb$chrom <- "2L"
+rho.dm.200kb_gr <- makeGRangesFromDataFrame(rho.dm.200kb[,c(1:3, ncol(rho.dm.200kb))], keep.extra.columns = T)
+
+hits <- findOverlaps(query = rho.dm.200kb_gr, subject = comeron.200kb_gr, type = "equal") 
+
+comeron.200kb_gr <- comeron.200kb_gr[subjectHits(hits),]
+rho.dm.200kb_gr <- rho.dm.200kb_gr[queryHits(hits),]
+
+rec_df <- merge(as.data.frame(rho.dm.200kb_gr), as.data.frame(comeron.200kb_gr))
+cor.test(rec_df[,6], rec_df[,7], method = "spearman")
+
 # OLS
 
 dm.lands.200kb$thetaC <- (dm.lands.200kb$theta - mean(dm.lands.200kb$theta)) / sd(dm.lands.200kb$theta)
@@ -3703,6 +3734,23 @@ dm.lands.1Mb <- dm.lands.1Mb[which(intersect.1Mb == F),]
 
 # correlation between inferred TMRCA and Pi
 cor.test(dm.lands.1Mb$diversity, dm.lands.1Mb$tmrca, method = "spearman")
+
+# correlation with Comeron map
+comeron.1Mb <- read.table("dm_bgs_sims/RecombinationMap_1000kb.csv", sep = ",", header = T)
+comeron.1Mb$chrom <- "2L"
+comeron.1Mb_gr <- makeGRangesFromDataFrame(comeron.1Mb, keep.extra.columns = T)
+
+rho.dm.1Mb$chromStart <- rho.dm.1Mb$chromStart + 1
+rho.dm.1Mb$chrom <- "2L"
+rho.dm.1Mb_gr <- makeGRangesFromDataFrame(rho.dm.1Mb[,c(1:3, ncol(rho.dm.1Mb))], keep.extra.columns = T)
+
+hits <- findOverlaps(query = rho.dm.1Mb_gr, subject = comeron.1Mb_gr, type = "equal") 
+
+comeron.1Mb_gr <- comeron.1Mb_gr[subjectHits(hits),]
+rho.dm.1Mb_gr <- rho.dm.1Mb_gr[queryHits(hits),]
+
+rec_df <- merge(as.data.frame(rho.dm.1Mb_gr), as.data.frame(comeron.1Mb_gr))
+cor.test(rec_df[,6], rec_df[,7], method = "spearman")
 
 # OLS
 dm.lands.1Mb$thetaC <- (dm.lands.1Mb$theta - mean(dm.lands.1Mb$theta))
@@ -3948,7 +3996,7 @@ tmrca.map <- tmrca.map + labs(title = NULL, x = "Position (kb)", y = expression(
 tmrca.map <- tmrca.map + theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20)) + theme_bw()
 tmrca.map
 
-# genome-wide correlations between maps
+# genome-wide correlations 
 cor.test(~rho + diversity, data = dm.lands.50kb, method = "spearman")
 cor.test(~rho + tmrca, data = dm.lands.50kb, method = "spearman")
 cor.test(~theta + tmrca, data = dm.lands.50kb, method = "spearman")
@@ -3969,6 +4017,7 @@ dwtest(m.div.dm.50kb)
 hmctest(m.div.dm.50kb, nsim = 10000) 
 
 summary(m.div.dm.50kb)
+vif(m.div.dm.50kb)
 
 # type 2 ANOVA
 anova.diversity <- Anova(m.div.dm.50kb)
@@ -4000,6 +4049,7 @@ g.div.dm.50kb.5 <- gls(diversity ~ (thetaC + rhoC),
                        data = dm.lands.50kb, weights = varPower(0, ~thetaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
 
 summary(g.div.dm.50kb.5)
+vif(g.div.dm.50kb.5)
 ```
 
 ## 200 kb windows
@@ -4244,6 +4294,7 @@ dwtest(m.div.dm.200kb)
 hmctest(m.div.dm.200kb, nsim = 10000) 
 
 summary(m.div.dm.200kb)
+vif(m.div.dm.200kb)
   
 # type 2 ANOVA
 anova.diversity <- Anova(m.div.dm.200kb)
@@ -4274,6 +4325,7 @@ g.div.dm.200kb.5 <- gls(diversity ~ (thetaC + rhoC),
                        data = dm.lands.200kb, weights = varPower(0, ~thetaC), cor = corAR1(0, ~bin), method = "ML")
 
 summary(g.div.dm.200kb.5)
+vif(g.div.dm.200kb.5)
 ```
 
 ## 1 Mb windows
@@ -4518,6 +4570,7 @@ dwtest(m.div.dm.1Mb)
 hmctest(m.div.dm.1Mb, nsim = 10000) 
 
 summary(m.div.dm.1Mb)
+vif(m.div.dm.1Mb)
 
 # type 2 ANOVA
 anova.diversity <- Anova(m.div.dm.1Mb)
@@ -4549,6 +4602,7 @@ g.div.dm.1Mb.5 <- gls(diversity ~ (thetaC + rhoC),
                        data = dm.lands.1Mb, weights = varPower(0, ~thetaC|chr), cor = corAR1(0, ~bin|chr), method = "ML")
 
 summary(g.div.dm.1Mb.5)
+vif(g.div.dm.1Mb.5)
 ```
 
 ## Divergence with D. yakuba
@@ -4734,7 +4788,7 @@ r2.coal.plot <- r2.coal.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.coal.plot <- r2.coal.plot + labs(title = NULL, x = NULL, y = "Variance Explained (%)") 
 r2.coal.plot <- r2.coal.plot + theme_bw()
 r2.coal.plot <- r2.coal.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16),
-                                     legend.position = "none")
+                                     strip.text.x = element_text(size = 16), legend.position = "none")
 r2.coal.plot
 ```
 
@@ -7075,7 +7129,7 @@ cor.bgs.plot <- cor.bgs.plot + scale_y_continuous(breaks = pretty_breaks())
 cor.bgs.plot <- cor.bgs.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Spearman's Rho") 
 cor.bgs.plot <- cor.bgs.plot + theme_bw() + ylim(0, 1)
 cor.bgs.plot <- cor.bgs.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16),
-                                     strip.text.x = element_text(size = 24), legend.position = "bottom")
+                                     strip.text.x = element_text(size = 16), legend.position = "bottom")
 cor.bgs.plot
 
 ggsave("Figure6.pdf", cor.bgs.plot, device = "pdf", height = 5, width = 12)
@@ -7111,12 +7165,12 @@ r2.bgs.plot <- r2.bgs.plot + scale_shape_manual(values = c(0, 1, 2, 3, 4))
 r2.bgs.plot <- r2.bgs.plot + labs(title = NULL, x = "Bin Size (kb)", y = "Variance Explained (%)") 
 r2.bgs.plot <- r2.bgs.plot + theme_bw()
 r2.bgs.plot <- r2.bgs.plot + theme(axis.title = element_text(size = 20), axis.text = element_text(size = 16),
-                                   legend.position = "bottom")
+                                   strip.text.x = element_text(size = 16), legend.position = "bottom")
 r2.bgs.plot
 
 # combine coal and BGS R2 plots
 r2.comb.plot <- plot_grid(r2.coal.plot, r2.bgs.plot, nrow = 2, ncol = 1, labels = "AUTO")
-cowplot::save_plot("Figure5.pdf", r2.comb.plot, device = "pdf", base_height = 9, base_width = 12)
+cowplot::save_plot("Figure4.pdf", r2.comb.plot, device = "pdf", base_height = 9, base_width = 12)
 
 # bench theta
 theta.maps.bgs <- plot_grid(theta.map.50kb.bgs, theta.map.200kb.bgs, theta.map.1Mb.bgs, nrow = 3, ncol = 1)
@@ -7183,7 +7237,8 @@ pi.map.50kb <- pi.map.50kb + scale_color_manual(values = c(brewer.pal(n = 9, nam
 pi.map.50kb <- pi.map.50kb + theme(axis.title.x=element_blank(),
                                    axis.text.x=element_blank(),
                                    axis.ticks.x=element_blank(),
-                                   axis.title.y=element_text(size = 20), legend.position = "none") 
+                                   axis.title.y=element_text(size = 20),
+                                   plot.title = element_text(size = 16), legend.position = "none") 
 pi.map.50kb
 
 true.maps.50kb <- plot_grid(pi.map.50kb, tau.map.50kb, rho.map.50kb, theta.map.50kb, ncol = 1)
@@ -7241,9 +7296,10 @@ pi.map.200kb <- pi.map.200kb + scale_y_continuous(breaks = pretty_breaks(), labe
 pi.map.200kb <- pi.map.200kb + labs(title = "200 kb", x = NULL, y = NULL)
 pi.map.200kb <- pi.map.200kb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.200kb <- pi.map.200kb + theme(axis.title.x=element_blank(),
-                                       axis.text.x=element_blank(),
-                                       axis.ticks.x=element_blank(),
-                                       axis.title.y=element_text(size = 20), legend.position = "none") 
+                                     axis.text.x=element_blank(),
+                                     axis.ticks.x=element_blank(),
+                                     axis.title.y=element_text(size = 20),
+                                     plot.title = element_text(size = 16), legend.position = "none") 
 pi.map.200kb
 
 true.maps.200kb <- plot_grid(pi.map.200kb, tau.map.200kb, rho.map.200kb, theta.map.200kb, ncol = 1)
@@ -7299,12 +7355,13 @@ molten.pi <- melt(pi.lands.1Mb, id.vars = "bin")
 pi.map.1Mb <- ggplot(data = molten.pi, aes(x = (bin -1) * 1000, y = value, colour = variable))
 pi.map.1Mb <- pi.map.1Mb + geom_line(data = molten.pi) + theme_bw()
 pi.map.1Mb <- pi.map.1Mb + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d, limits = c(0, 0.016))
-pi.map.1Mb <- pi.map.1Mb + labs(title = "1Mb", x = NULL, y = NULL) 
+pi.map.1Mb <- pi.map.1Mb + labs(title = "1 Mb", x = NULL, y = NULL) 
 pi.map.1Mb <- pi.map.1Mb + scale_color_manual(values = c(brewer.pal(n = 9, name = "Greys"), "Black"))
 pi.map.1Mb <- pi.map.1Mb + theme(axis.title.x=element_blank(),
                                  axis.text.x=element_blank(),
                                  axis.ticks.x=element_blank(),
-                                 axis.title.y=element_text(size = 20), legend.position = "none") 
+                                 axis.title.y=element_text(size = 20),
+                                 plot.title = element_text(size = 16), legend.position = "none") 
 pi.map.1Mb
 
 true.maps.1Mb <- plot_grid(pi.map.1Mb, tau.map.1Mb, rho.map.1Mb, theta.map.1Mb, ncol = 1)

@@ -1656,5 +1656,5 @@ r2.plot_flat_Ne <- r2.plot_flat_Ne + theme(axis.title = element_text(size = 16),
 ################################################
 
 coal.sims.plot <- plot_grid(r2.plot_flat_Ne, r2.plot_bottleneck, nrow = 2, ncol = 1, labels = "AUTO")
-save_plot("Figure6.pdf", coal.sims.plot, device = "pdf", base_width = 9, base_height = 12)
+save_plot("Figure5.pdf", coal.sims.plot, device = "pdf", base_width = 9, base_height = 12)
 
