@@ -1,0 +1,77 @@
+---
+title: "Comparison of TMRCA in neutral vs. with background selection models."
+author: "Gustavo Barroso and Julien Dutheil"
+date: '2023-02-09'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load data
+
+```{r}
+require(tidyr)
+get.data <- function(sumfun = var, name = "Variance of TMRCA") {
+  var1000kb.n <- numeric(10)
+  var200kb.n <- numeric(10)
+  var50kb.n <- numeric(10)
+  var1000kb.s <- numeric(10)
+  var200kb.s <- numeric(10)
+  var50kb.s <- numeric(10)
+  for (i in 1:10) {
+    d <- read.csv(paste("dm2L_neutral_rep", i, "_w1000000.csv", sep = ""), header = TRUE)
+    var1000kb.n[i] <- sumfun(d$AverageTmrca)
+    d <- read.csv(paste("dm2L_neutral_rep", i, "_w200000.csv", sep = ""), header = TRUE)
+    var200kb.n[i] <- sumfun(d$AverageTmrca)
+    d <- read.csv(paste("dm2L_neutral_rep", i, "_w50000.csv", sep = ""), header = TRUE)
+    var50kb.n[i] <- sumfun(d$AverageTmrca)
+    d <- read.csv(paste("dm2L_bgs_rep", i, "_w1000000.csv", sep = ""), header = TRUE)
+    var1000kb.s[i] <- sumfun(d$AverageTmrca)
+    d <- read.csv(paste("dm2L_bgs_rep", i, "_w200000.csv", sep = ""), header = TRUE)
+    var200kb.s[i] <- sumfun(d$AverageTmrca)
+    d <- read.csv(paste("dm2L_bgs_rep", i, "_w50000.csv", sep = ""), header = TRUE)
+    var50kb.s[i] <- sumfun(d$AverageTmrca)
+  }
+  d <- data.frame(Model = rep(c("Neutral", "BgS"), each = 10), 
+                  W1000kb = c(var1000kb.n, var1000kb.s),
+                  W200kb = c(var200kb.n, var200kb.s),
+                  W50kb = c(var50kb.n, var50kb.s))
+  d <- d %>% pivot_longer(cols = c(W1000kb, W200kb, W50kb),
+                          names_to = "Window size",
+                          values_to = name)
+  return(d)
+}
+dvar <- get.data(var) 
+dmean <- get.data(mean, name = "Mean of TMRCA")
+dcv <- get.data(function(x) sd(x)/mean(x), name = "CV of TMRCA")
+```
+
+## Plot results
+
+Variance:
+
+```{r}
+require(ggplot2)
+p.var <- ggplot(dvar, aes(x = Model, y = `Variance of TMRCA`)) +
+  geom_boxplot() + facet_grid(~ `Window size`)
+p.var
+```
+
+Mean:
+
+```{r}
+p.mean <- ggplot(dmean, aes(x = Model, y = `Mean of TMRCA`)) +
+  geom_boxplot() + facet_grid(~ `Window size`)
+p.mean
+```
+
+Coefficient of Variation:
+
+```{r}
+p.cv <- ggplot(dcv, aes(x = Model, y = `CV of TMRCA`)) +
+  geom_boxplot() + facet_grid(~ `Window size`)
+p.cv
+```
+

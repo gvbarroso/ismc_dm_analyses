@@ -48,6 +48,18 @@ for i in {1..10}; do
 done
 ```
 
+Compare with a purely neutral scenario (we still use SLiM so that all other things are equal):
+```bash
+sbatch runSLiMneutral.sh
+```
+Recapitate and sample tree sequence:
+```bash
+for i in {1..10}; do
+  echo "Rep $i..."
+  python3.9 recapitateAndSample.py dm2L_neutral_rep$i $((42 + i)) > dm2L_neutral_rep${i}_msprime_recapitation.log
+done
+```
+
 Compute statistics
 ==================
 
@@ -124,5 +136,14 @@ for (sim in c("50", "200", "1000")) {
     merge.data(sim, repl, paste0("RealLandscapes/RealLandscapes_", sim, "kb_rep", repl, ".csv"))
   }
 }
+```
+
+Get TMRCA in the neutral case for comparison:
+```bash
+for i in {1..10}; do
+  python3.9 ../getTmrca.py dm2L_neutral_rep$i $((42 + i)) 50000
+  python3.9 ../getTmrca.py dm2L_neutral_rep$i $((42 + i)) 200000
+  python3.9 ../getTmrca.py dm2L_neutral_rep$i $((42 + i)) 1000000
+done
 ```
 
