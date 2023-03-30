@@ -7655,7 +7655,7 @@ write.table(cor.table.rho, "cor.rho.bgs.tsv", quote = F, sep = "\t")
 
 cor.table.comb <- rbind.data.frame(t(cor.table.theta), t(cor.table.rho), t(cor.table.tmrca))
 cor.table.comb$bin.size <- rep(c(50, 200, 1000), 3)
-cor.table.comb$rate <- c(rep("Theta", 3), rep("Rho", 3), rep("TMRCA", 3))
+cor.table.comb$rate <- c(rep("Mutation map", 3), rep("Recombination map", 3), rep("TMRCA map", 3))
 
 molten.cor <- melt(cor.table.comb, id.vars = c("bin.size", "rate"))
 cor.bgs.plot <- ggplot(data = molten.cor, aes(x = bin.size, y = value, alpha = 0.6))
