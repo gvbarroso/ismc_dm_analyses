@@ -78,8 +78,8 @@ sim.lands.50kb$rhoS <- (sim.lands.50kb$rho - mean(sim.lands.50kb$rho))  / sd(sim
 sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
 
 
-sim.lands.50kb.rep5 <- sim.lands.50kb
-sim.lands.50kb.rep5$Replicate <- 1
+sim.lands.50kb.rep1 <- sim.lands.50kb
+sim.lands.50kb.rep1$Replicate <- 1
 
 m.div.50kb <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS, data = sim.lands.50kb)
 m.div.50kb.2 <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS + rhoS:tmrcaS, data = sim.lands.50kb)
@@ -493,8 +493,8 @@ sim.lands.50kb$rhoS <- (sim.lands.50kb$rho - mean(sim.lands.50kb$rho)) / sd(sim.
 
 sim.lands.50kb$bin <- 1:nrow(sim.lands.50kb)
 
-sim.lands.50kb.rep50 <- sim.lands.50kb
-sim.lands.50kb.rep50$Replicate <- 10
+sim.lands.50kb.rep10 <- sim.lands.50kb
+sim.lands.50kb.rep10$Replicate <- 10
 
 m.div.50kb <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS, data = sim.lands.50kb)
 plot(resid(m.div.50kb)~fitted(m.div.50kb))
@@ -522,7 +522,7 @@ r2.sim.50kb <- transform(r2.sim.50kb, sd=apply(r2.sim.50kb, 1, sd, na.rm = TRUE)
 ### all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
-sim.lands.50kb.all <- rbind(sim.lands.50kb.rep5, sim.lands.50kb.rep2, sim.lands.50kb.rep3, sim.lands.50kb.rep4, sim.lands.50kb.rep5, sim.lands.50kb.rep6, sim.lands.50kb.rep7, sim.lands.50kb.rep8, sim.lands.50kb.rep9, sim.lands.50kb.rep50)
+sim.lands.50kb.all <- rbind(sim.lands.50kb.rep1, sim.lands.50kb.rep2, sim.lands.50kb.rep3, sim.lands.50kb.rep4, sim.lands.50kb.rep5, sim.lands.50kb.rep6, sim.lands.50kb.rep7, sim.lands.50kb.rep8, sim.lands.50kb.rep9, sim.lands.50kb.rep10)
 
 m.div.50kb <- lm(diversity ~ (thetaS + rhoS + tmrcaS + thetaS:tmrcaS)*as.factor(Replicate), data = sim.lands.50kb.all)
 plot(resid(m.div.50kb)~fitted(m.div.50kb))
@@ -568,8 +568,8 @@ sim.lands.200kb$rhoS <- (sim.lands.200kb$rho - mean(sim.lands.200kb$rho)) / sd(s
 
 sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
 
-sim.lands.200kb.rep5 <- sim.lands.200kb
-sim.lands.200kb.rep5$Replicate <- 1
+sim.lands.200kb.rep1 <- sim.lands.200kb
+sim.lands.200kb.rep1$Replicate <- 1
 
 m.div.200kb <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS, data = sim.lands.200kb)
 plot(resid(m.div.200kb)~fitted(m.div.200kb))
@@ -1117,8 +1117,8 @@ sim.lands.200kb$rhoS <- (sim.lands.200kb$rho - mean(sim.lands.200kb$rho)) / sd(s
 
 sim.lands.200kb$bin <- 1:nrow(sim.lands.200kb)
 
-sim.lands.200kb.rep50 <- sim.lands.200kb
-sim.lands.200kb.rep50$Replicate <- 10
+sim.lands.200kb.rep10 <- sim.lands.200kb
+sim.lands.200kb.rep10$Replicate <- 10
 
 m.div.200kb <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS, data = sim.lands.200kb)
 plot(resid(m.div.200kb)~fitted(m.div.200kb))
@@ -1164,7 +1164,7 @@ vif(g.div.200kb.3)
 ### all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
-sim.lands.200kb.all <- rbind(sim.lands.200kb.rep5, sim.lands.200kb.rep2, sim.lands.200kb.rep3, sim.lands.200kb.rep4, sim.lands.200kb.rep5, sim.lands.200kb.rep6, sim.lands.200kb.rep7, sim.lands.200kb.rep8, sim.lands.200kb.rep9, sim.lands.200kb.rep50)
+sim.lands.200kb.all <- rbind(sim.lands.200kb.rep1, sim.lands.200kb.rep2, sim.lands.200kb.rep3, sim.lands.200kb.rep4, sim.lands.200kb.rep5, sim.lands.200kb.rep6, sim.lands.200kb.rep7, sim.lands.200kb.rep8, sim.lands.200kb.rep9, sim.lands.200kb.rep10)
 
 m.div.200kb <- lm(diversity ~ (thetaS + rhoS + tmrcaS + thetaS:tmrcaS)*as.factor(Replicate), data = sim.lands.200kb.all)
 plot(resid(m.div.200kb)~fitted(m.div.200kb))
@@ -1210,8 +1210,8 @@ sim.lands.1Mb$rhoS <- (sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)) / sd(sim.lan
 
 sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
 
-sim.lands.1Mb.rep5 <- sim.lands.1Mb
-sim.lands.1Mb.rep5$Replicate <- 1
+sim.lands.1Mb.rep1 <- sim.lands.1Mb
+sim.lands.1Mb.rep1$Replicate <- 1
 
 m.div.1Mb <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS, data = sim.lands.1Mb)
 plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
@@ -1771,8 +1771,8 @@ sim.lands.1Mb$rhoS <- (sim.lands.1Mb$rho - mean(sim.lands.1Mb$rho)) / sd(sim.lan
 
 sim.lands.1Mb$bin <- 1:nrow(sim.lands.1Mb)
 
-sim.lands.1Mb.rep50 <- sim.lands.1Mb
-sim.lands.1Mb.rep50$Replicate <- 10
+sim.lands.1Mb.rep10 <- sim.lands.1Mb
+sim.lands.1Mb.rep10$Replicate <- 10
 
 m.div.1Mb <- lm(diversity ~ thetaS + rhoS + tmrcaS + thetaS:tmrcaS, data = sim.lands.1Mb)
 plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
@@ -1819,7 +1819,7 @@ vif(g.div.1Mb.1)
 ### all replicates:
 
 ```{r, message=FALSE, warning=FALSE}
-sim.lands.1Mb.all <- rbind(sim.lands.1Mb.rep5, sim.lands.1Mb.rep2, sim.lands.1Mb.rep3, sim.lands.1Mb.rep4, sim.lands.1Mb.rep5, sim.lands.1Mb.rep6, sim.lands.1Mb.rep7, sim.lands.1Mb.rep8, sim.lands.1Mb.rep9, sim.lands.1Mb.rep50)
+sim.lands.1Mb.all <- rbind(sim.lands.1Mb.rep1, sim.lands.1Mb.rep2, sim.lands.1Mb.rep3, sim.lands.1Mb.rep4, sim.lands.1Mb.rep5, sim.lands.1Mb.rep6, sim.lands.1Mb.rep7, sim.lands.1Mb.rep8, sim.lands.1Mb.rep9, sim.lands.1Mb.rep10)
 
 m.div.1Mb <- lm(diversity ~ (thetaS + rhoS + tmrcaS + thetaS:tmrcaS)*as.factor(Replicate), data = sim.lands.1Mb.all)
 plot(resid(m.div.1Mb)~fitted(m.div.1Mb))
@@ -5125,7 +5125,7 @@ rep_2.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_2.tmrca.50kb$avg <- apply(rep_2.tmrca.50kb[4:ncol(rep_2.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep2 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep2.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep2 <- as.data.frame(cbind(rep_2.pi.50kb$avg, sim.theta.50kb$Rate, rep2.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep2$thetaS <- (true.lands.50kb.rep2$theta - mean(true.lands.50kb.rep2$theta)) / sd(true.lands.50kb.rep2$theta)
@@ -5209,7 +5209,7 @@ rep_3.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_3.tmrca.50kb$avg <- apply(rep_3.tmrca.50kb[4:ncol(rep_3.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep3 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep3.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep3 <- as.data.frame(cbind(rep_3.pi.50kb$avg, sim.theta.50kb$Rate, rep3.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep3$thetaS <- (true.lands.50kb.rep3$theta - mean(true.lands.50kb.rep3$theta)) / sd(true.lands.50kb.rep3$theta)
@@ -5293,7 +5293,7 @@ rep_4.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_4.tmrca.50kb$avg <- apply(rep_4.tmrca.50kb[4:ncol(rep_4.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep4 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep4.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep4 <- as.data.frame(cbind(rep_4.pi.50kb$avg, sim.theta.50kb$Rate, rep4.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep4$thetaS <- (true.lands.50kb.rep4$theta - mean(true.lands.50kb.rep4$theta)) / sd(true.lands.50kb.rep4$theta)
@@ -5377,7 +5377,7 @@ rep_5.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_5.tmrca.50kb$avg <- apply(rep_5.tmrca.50kb[4:ncol(rep_5.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep5 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep5.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep5 <- as.data.frame(cbind(rep_5.pi.50kb$avg, sim.theta.50kb$Rate, rep5.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep5$thetaS <- (true.lands.50kb.rep5$theta - mean(true.lands.50kb.rep5$theta)) / sd(true.lands.50kb.rep5$theta)
@@ -5461,7 +5461,7 @@ rep_6.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_6.tmrca.50kb$avg <- apply(rep_6.tmrca.50kb[4:ncol(rep_6.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep6 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep6.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep6 <- as.data.frame(cbind(rep_6.pi.50kb$avg, sim.theta.50kb$Rate, rep6.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep6$thetaS <- (true.lands.50kb.rep6$theta - mean(true.lands.50kb.rep6$theta)) / sd(true.lands.50kb.rep6$theta)
@@ -5545,7 +5545,7 @@ rep_7.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_7.tmrca.50kb$avg <- apply(rep_7.tmrca.50kb[4:ncol(rep_7.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep7 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep7.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep7 <- as.data.frame(cbind(rep_7.pi.50kb$avg, sim.theta.50kb$Rate, rep7.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep7$thetaS <- (true.lands.50kb.rep7$theta - mean(true.lands.50kb.rep7$theta)) / sd(true.lands.50kb.rep7$theta)
@@ -5630,7 +5630,7 @@ rep_8.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_8.tmrca.50kb$avg <- apply(rep_8.tmrca.50kb[4:ncol(rep_8.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep8 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep8.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep8 <- as.data.frame(cbind(rep_8.pi.50kb$avg, sim.theta.50kb$Rate, rep8.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep8$thetaS <- (true.lands.50kb.rep8$theta - mean(true.lands.50kb.rep8$theta)) / sd(true.lands.50kb.rep8$theta)
@@ -5714,7 +5714,7 @@ rep_9.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneo
 rep_9.tmrca.50kb$avg <- apply(rep_9.tmrca.50kb[4:ncol(rep_9.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep9 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep9.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep9 <- as.data.frame(cbind(rep_9.pi.50kb$avg, sim.theta.50kb$Rate, rep9.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep9$thetaS <- (true.lands.50kb.rep9$theta - mean(true.lands.50kb.rep9$theta)) / sd(true.lands.50kb.rep9$theta)
@@ -5798,7 +5798,7 @@ rep_10.tmrca.50kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_10.tmrca.50kb$avg <- apply(rep_10.tmrca.50kb[4:ncol(rep_10.tmrca.50kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.50kb.rep10 <- as.data.frame(cbind(rep_1.pi.50kb$avg, sim.theta.50kb$Rate, rep10.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
+true.lands.50kb.rep10 <- as.data.frame(cbind(rep_10.pi.50kb$avg, sim.theta.50kb$Rate, rep10.sim.tmrca.50kb$AverageTmrca, sim.rho.50kb$Rate))
 names(true.lands.50kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 
 true.lands.50kb.rep10$thetaS <- (true.lands.50kb.rep10$theta - mean(true.lands.50kb.rep10$theta)) / sd(true.lands.50kb.rep10$theta)
@@ -5890,7 +5890,7 @@ molten.theta <- melt(theta.plot, id.vars = "bin")
 theta.map.50kb.bgs <- ggplot(data = molten.theta, aes(x = bin * 50, y = value, colour = variable)) + theme_bw()
 theta.map.50kb.bgs <- theta.map.50kb.bgs + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.50kb.bgs <- theta.map.50kb.bgs + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
-theta.map.50kb.bgs <- theta.map.50kb.bgs + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.50kb.bgs <- theta.map.50kb.bgs + scale_x_continuous(breaks = c(5000, 10000, 15000, 20000)) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map.50kb.bgs <- theta.map.50kb.bgs + labs(title = NULL, x = NULL, y = NULL)
 theta.map.50kb.bgs <- theta.map.50kb.bgs + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 theta.map.50kb.bgs
@@ -6009,7 +6009,7 @@ rep_2.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_2.tmrca.200kb$avg <- apply(rep_2.tmrca.200kb[4:ncol(rep_2.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep2 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep2.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep2 <- as.data.frame(cbind(rep_2.pi.200kb$avg, sim.theta.200kb$Rate, rep2.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep2) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep2$thetaS <- (true.lands.200kb.rep2$theta - mean(true.lands.200kb.rep2$theta)) / sd(true.lands.200kb.rep2$theta)
 true.lands.200kb.rep2$tmrcaS <- (true.lands.200kb.rep2$tmrca - mean(true.lands.200kb.rep2$tmrca)) / sd(true.lands.200kb.rep2$tmrca)
@@ -6092,7 +6092,7 @@ rep_3.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_3.tmrca.200kb$avg <- apply(rep_3.tmrca.200kb[4:ncol(rep_3.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep3 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep3.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep3 <- as.data.frame(cbind(rep_3.pi.200kb$avg, sim.theta.200kb$Rate, rep3.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep3$thetaS <- (true.lands.200kb.rep3$theta - mean(true.lands.200kb.rep3$theta)) / sd(true.lands.200kb.rep3$theta)
 true.lands.200kb.rep3$tmrcaS <- (true.lands.200kb.rep3$tmrca - mean(true.lands.200kb.rep3$tmrca)) / sd(true.lands.200kb.rep3$tmrca)
@@ -6175,7 +6175,7 @@ rep_4.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_4.tmrca.200kb$avg <- apply(rep_4.tmrca.200kb[4:ncol(rep_4.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep4 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep4.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep4 <- as.data.frame(cbind(rep_4.pi.200kb$avg, sim.theta.200kb$Rate, rep4.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep4) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep4$thetaS <- (true.lands.200kb.rep4$theta - mean(true.lands.200kb.rep4$theta)) / sd(true.lands.200kb.rep4$theta)
 true.lands.200kb.rep4$tmrcaS <- (true.lands.200kb.rep4$tmrca - mean(true.lands.200kb.rep4$tmrca)) / sd(true.lands.200kb.rep4$tmrca)
@@ -6258,7 +6258,7 @@ rep_5.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_5.tmrca.200kb$avg <- apply(rep_5.tmrca.200kb[4:ncol(rep_5.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep5 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep5.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep5 <- as.data.frame(cbind(rep_5.pi.200kb$avg, sim.theta.200kb$Rate, rep5.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep5$thetaS <- (true.lands.200kb.rep5$theta - mean(true.lands.200kb.rep5$theta)) / sd(true.lands.200kb.rep5$theta)
 true.lands.200kb.rep5$tmrcaS <- (true.lands.200kb.rep5$tmrca - mean(true.lands.200kb.rep5$tmrca)) / sd(true.lands.200kb.rep5$tmrca)
@@ -6341,7 +6341,7 @@ rep_6.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_6.tmrca.200kb$avg <- apply(rep_6.tmrca.200kb[4:ncol(rep_6.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep6 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep6.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep6 <- as.data.frame(cbind(rep_6.pi.200kb$avg, sim.theta.200kb$Rate, rep6.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep6) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep6$thetaS <- (true.lands.200kb.rep6$theta - mean(true.lands.200kb.rep6$theta)) / sd(true.lands.200kb.rep6$theta)
 true.lands.200kb.rep6$tmrcaS <- (true.lands.200kb.rep6$tmrca - mean(true.lands.200kb.rep6$tmrca)) / sd(true.lands.200kb.rep6$tmrca)
@@ -6424,7 +6424,7 @@ rep_7.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_7.tmrca.200kb$avg <- apply(rep_7.tmrca.200kb[4:ncol(rep_7.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep7 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep7.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep7 <- as.data.frame(cbind(rep_7.pi.200kb$avg, sim.theta.200kb$Rate, rep7.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep7) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep7$thetaS <- (true.lands.200kb.rep7$theta - mean(true.lands.200kb.rep7$theta)) / sd(true.lands.200kb.rep7$theta)
 true.lands.200kb.rep7$tmrcaS <- (true.lands.200kb.rep7$tmrca - mean(true.lands.200kb.rep7$tmrca)) / sd(true.lands.200kb.rep7$tmrca)
@@ -6507,7 +6507,7 @@ rep_8.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_8.tmrca.200kb$avg <- apply(rep_8.tmrca.200kb[4:ncol(rep_8.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep8 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep8.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep8 <- as.data.frame(cbind(rep_8.pi.200kb$avg, sim.theta.200kb$Rate, rep8.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep8) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep8$thetaS <- (true.lands.200kb.rep8$theta - mean(true.lands.200kb.rep8$theta)) / sd(true.lands.200kb.rep8$theta)
 true.lands.200kb.rep8$tmrcaS <- (true.lands.200kb.rep8$tmrca - mean(true.lands.200kb.rep8$tmrca)) / sd(true.lands.200kb.rep8$tmrca)
@@ -6590,7 +6590,7 @@ rep_9.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogene
 rep_9.tmrca.200kb$avg <- apply(rep_9.tmrca.200kb[4:ncol(rep_9.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep9 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep9.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep9 <- as.data.frame(cbind(rep_9.pi.200kb$avg, sim.theta.200kb$Rate, rep9.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep9) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep9$thetaS <- (true.lands.200kb.rep9$theta - mean(true.lands.200kb.rep9$theta)) / sd(true.lands.200kb.rep9$theta)
 true.lands.200kb.rep9$tmrcaS <- (true.lands.200kb.rep9$tmrca - mean(true.lands.200kb.rep9$tmrca)) / sd(true.lands.200kb.rep9$tmrca)
@@ -6673,7 +6673,7 @@ rep_10.tmrca.200kb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogen
 rep_10.tmrca.200kb$avg <- apply(rep_10.tmrca.200kb[4:ncol(rep_10.tmrca.200kb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.200kb.rep10 <- as.data.frame(cbind(rep_1.pi.200kb$avg, sim.theta.200kb$Rate, rep10.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
+true.lands.200kb.rep10 <- as.data.frame(cbind(rep_10.pi.200kb$avg, sim.theta.200kb$Rate, rep10.sim.tmrca.200kb$AverageTmrca, sim.rho.200kb$Rate))
 names(true.lands.200kb.rep10) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.200kb.rep10$thetaS <- (true.lands.200kb.rep10$theta - mean(true.lands.200kb.rep10$theta)) / sd(true.lands.200kb.rep10$theta)
 true.lands.200kb.rep10$tmrcaS <- (true.lands.200kb.rep10$tmrca - mean(true.lands.200kb.rep10$tmrca)) / sd(true.lands.200kb.rep10$tmrca)
@@ -6765,7 +6765,7 @@ molten.theta <- melt(theta.plot, id.vars = "bin")
 theta.map.200kb.bgs <- ggplot(data = molten.theta, aes(x = bin * 200, y = value, colour = variable)) + theme_bw()
 theta.map.200kb.bgs <- theta.map.200kb.bgs + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.200kb.bgs <- theta.map.200kb.bgs + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
-theta.map.200kb.bgs <- theta.map.200kb.bgs + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.200kb.bgs <- theta.map.200kb.bgs + scale_x_continuous(breaks = c(5000, 10000, 15000, 20000)) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map.200kb.bgs <- theta.map.200kb.bgs + labs(title = NULL, x = NULL, y = NULL)
 theta.map.200kb.bgs <- theta.map.200kb.bgs + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 theta.map.200kb.bgs
@@ -6965,7 +6965,7 @@ rep_3.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_3.tmrca.1Mb$avg <- apply(rep_3.tmrca.1Mb[4:ncol(rep_3.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep3 <- as.data.frame(cbind(rep_2.pi.1Mb$avg, sim.theta.1Mb$Rate, rep3.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep3 <- as.data.frame(cbind(rep_3.pi.1Mb$avg, sim.theta.1Mb$Rate, rep3.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep3) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep3$thetaS <- (true.lands.1Mb.rep3$theta - mean(true.lands.1Mb.rep3$theta)) / sd(true.lands.1Mb.rep3$theta)
 true.lands.1Mb.rep3$tmrcaS <- (true.lands.1Mb.rep3$tmrca - mean(true.lands.1Mb.rep3$tmrca)) / sd(true.lands.1Mb.rep3$tmrca)
@@ -7131,7 +7131,7 @@ rep_5.tmrca.1Mb <- read.table("dm_bgs_sims/10r/NonHomogeneous/iSMC/NonHomogeneou
 rep_5.tmrca.1Mb$avg <- apply(rep_5.tmrca.1Mb[4:ncol(rep_5.tmrca.1Mb)], 1, mean)
 
 # first the linear modeling with the true (simulated) landscapes
-true.lands.1Mb.rep5 <- as.data.frame(cbind(rep_4.pi.1Mb$avg, sim.theta.1Mb$Rate, rep5.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
+true.lands.1Mb.rep5 <- as.data.frame(cbind(rep_5.pi.1Mb$avg, sim.theta.1Mb$Rate, rep5.sim.tmrca.1Mb$AverageTmrca, sim.rho.1Mb$Rate))
 names(true.lands.1Mb.rep5) <- c("diversity", "theta", "tmrca", "rho")
 true.lands.1Mb.rep5$thetaS <- (true.lands.1Mb.rep5$theta - mean(true.lands.1Mb.rep5$theta)) / sd(true.lands.1Mb.rep5$theta)
 true.lands.1Mb.rep5$tmrcaS <- (true.lands.1Mb.rep5$tmrca - mean(true.lands.1Mb.rep5$tmrca)) / sd(true.lands.1Mb.rep5$tmrca)
@@ -7637,7 +7637,7 @@ molten.theta <- melt(theta.plot, id.vars = "bin")
 theta.map.1Mb.bgs <- ggplot(data = molten.theta, aes(x = bin * 1000, y = value, colour = variable)) + theme_bw()
 theta.map.1Mb.bgs <- theta.map.1Mb.bgs + geom_line(data = molten.theta, aes(size = variable)) + scale_size_manual(values = c(1.2, rep(0.4, 10)))
 theta.map.1Mb.bgs <- theta.map.1Mb.bgs + scale_color_manual(values = c("black", brewer.pal(n = 9, name = "Reds"), "orange"))
-theta.map.1Mb.bgs <- theta.map.1Mb.bgs + scale_x_continuous(breaks = pretty_breaks()) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
+theta.map.1Mb.bgs <- theta.map.1Mb.bgs + scale_x_continuous(breaks = c(5000, 10000, 15000, 20000)) + scale_y_continuous(breaks = pretty_breaks(), labels = scale.3d)
 theta.map.1Mb.bgs <- theta.map.1Mb.bgs + labs(title = NULL, x = "Position (kb)", y = NULL)
 theta.map.1Mb.bgs <- theta.map.1Mb.bgs + theme(text = element_text(size = 20), axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20), legend.position = "none", legend.title = NULL)
 theta.map.1Mb.bgs
@@ -7714,7 +7714,7 @@ cowplot::save_plot("Figure4.pdf", r2.comb.plot, device = "pdf", base_height = 9,
 theta.maps.bgs <- plot_grid(theta.map.50kb.bgs, theta.map.200kb.bgs, theta.map.1Mb.bgs, nrow = 3, ncol = 1)
 
 theta.maps.comb <- plot_grid(theta.maps.coal, theta.maps.bgs, labels = "AUTO", nrow = 1, ncol = 2)
-save_plot("Figure2.pdf", theta.maps.comb, base_height = 16, base_width = 12)
+save_plot("Figure2.pdf", theta.maps.comb, base_height = 18, base_width = 14)
 
 # vsualise true join landscapes
 dm_2L_exome <- read.table("dm_bgs_sims/GeneAnnotations/exons_chr2L.csv", header = F, sep = ",")
